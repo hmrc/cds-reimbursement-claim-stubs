@@ -1,0 +1,19 @@
+{
+  "description": "The description of the test case",
+  "schema": {
+    "description": "The schema against which the data in each test is validated",
+    "type": "string"
+  },
+  "tests": [
+    {
+      "description": "Test for a valid instance",
+      "data": "the instance to validate",
+      "valid": true
+    },
+    {
+      "description": "Test for an invalid instance",
+      "data": 15,
+      "valid": false
+    }
+  ]
+}
