@@ -29,7 +29,13 @@ final case class ResponseCommon(
 )
 
 object ResponseCommon {
-  implicit val format                                       = Json.reads[ResponseCommon]
+  implicit val responseCommonReads: Reads[ResponseCommon] = (
+    (JsPath \ "Status").read[String] and
+      (JsPath \ "ProcessingDateTime").read[LocalDateTime] and
+      (JsPath \ "CdfPayCaseNumber").read[String] and
+      (JsPath \ "CdfPayService").read[String]
+  )(ResponseCommon.apply _)
+
   implicit val responseCommonWrites: Writes[ResponseCommon] = (
     (JsPath \ "Status").write[String] and
       (JsPath \ "ProcessingDateTime").write[LocalDateTime] and
@@ -40,7 +46,11 @@ object ResponseCommon {
 final case class PostNewClaimsResponse(responseCommon: ResponseCommon)
 
 object PostNewClaimsResponse {
-  implicit val format = Json.reads[PostNewClaimsResponse]
+
+  implicit val responseCommonReads: Reads[PostNewClaimsResponse] =
+    (__ \ "ResponseCommon")
+      .format[ResponseCommon]
+      .inmap(PostNewClaimsResponse.apply, unlift(PostNewClaimsResponse.unapply))
 
   implicit val postNewClaimsResponseWrites: Writes[PostNewClaimsResponse] =
     (__ \ "ResponseCommon")
@@ -53,7 +63,11 @@ final case class EisResponse(
 )
 
 object EisResponse {
-  implicit val format = Json.reads[EisResponse]
+
+  implicit val postNewClaimsResponseReads: Reads[EisResponse] =
+    (__ \ "PostNewClaimsResponse")
+      .format[PostNewClaimsResponse]
+      .inmap(EisResponse.apply, unlift(EisResponse.unapply))
 
   implicit val postNewClaimsResponseWrites: Writes[EisResponse] =
     (__ \ "PostNewClaimsResponse")

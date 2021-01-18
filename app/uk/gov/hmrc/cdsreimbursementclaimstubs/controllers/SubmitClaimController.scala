@@ -57,7 +57,7 @@ class SubmitClaimController @Inject() (cc: ControllerComponents) extends Backend
           logger.warn(s"Could not validate nor parse request body: $e")
           BadRequest
         },
-        _ => Ok(Json.toJson(makeEisReturnResponse()))
+        _ => Ok(Json.toJson(makeEisResponse()))
       )
   }
 
@@ -67,7 +67,7 @@ class SubmitClaimController @Inject() (cc: ControllerComponents) extends Backend
   private def ndrcCaseNumber(): String =
     s"NDRC-${nRandomDigits(4)}"
 
-  def makeEisReturnResponse(): EisResponse =
+  def makeEisResponse(): EisResponse =
     EisResponse(
       PostNewClaimsResponse(
         ResponseCommon(
