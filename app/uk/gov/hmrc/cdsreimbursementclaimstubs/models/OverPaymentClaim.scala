@@ -19,7 +19,7 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.models
 import play.api.libs.json.Json
 
 final case class OverPaymentClaim(
-  claimantEori: String
+  claimantEORI: String
 )
 
 object OverPaymentClaim {

@@ -45,7 +45,6 @@ class SubmitClaimController @Inject() (cc: ControllerComponents) extends Backend
 
   def submitClaim: Action[JsValue] = Action(parse.json) { implicit request =>
     val validator = SchemaValidator(Some(Version4))
-
     validator
       .validate(schemaToBeValidated, request.body)
       .fold(
@@ -54,7 +53,9 @@ class SubmitClaimController @Inject() (cc: ControllerComponents) extends Backend
           BadRequest
         },
         json =>
-          json.asOpt[OverPaymentClaim] match {
+          (json \ "postNewClaimsRequest" \ "requestDetail" \ "claimantEORI")
+            .asOpt[String]
+            .map(OverPaymentClaim(_)) match {
             case None =>
               logger.warn("could not get overpayment claim data")
               BadRequest
@@ -70,7 +71,7 @@ class SubmitClaimController @Inject() (cc: ControllerComponents) extends Backend
                     case Right(eisResponse) => Ok(Json.toJson(eisResponse))
                   }
                 case None =>
-                  logger.warn(s"could not find profile with claimant eori: ${overPaymentClaim.claimantEori}")
+                  logger.warn(s"could not find profile with claimant eori: ${overPaymentClaim.claimantEORI}")
                   BadRequest
               }
           }

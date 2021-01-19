@@ -131,7 +131,7 @@ object CDSProfile {
     s"${nRandomDigits(25)}"
 
   def getCDSProfile(overPaymentClaim: OverPaymentClaim): Option[CDSProfile] =
-    cdsProfiles.find(_.predicate(EORI(overPaymentClaim.claimantEori)))
+    cdsProfiles.find(_.predicate(EORI(overPaymentClaim.claimantEORI)))
 
   private val cdsProfiles: List[CDSProfile] =
     List(
