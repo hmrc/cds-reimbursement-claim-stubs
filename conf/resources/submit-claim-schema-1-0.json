@@ -1,0 +1,999 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "postNewClaimsRequest": {
+      "type": "object",
+      "properties": {
+        "requestCommon": {
+          "type": "object",
+          "properties": {
+            "originatingSystem": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 30
+            },
+            "receiptDate": {
+              "$ref": "#/definitions/Timestamp"
+            },
+            "acknowledgementReference": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32
+            }
+          },
+          "required": [
+            "originatingSystem",
+            "receiptDate",
+            "acknowledgementReference"
+          ],
+          "additionalProperties": false
+        },
+        "requestDetail": {
+          "type": "object",
+          "properties": {
+            "CDFPayService": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4,
+              "enum": [
+                "NDRC",
+                "SCTY"
+              ]
+            },
+            "dateReceived": {
+              "$ref": "#/definitions/Date"
+            },
+            "claimType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "enum": [
+                "C285",
+                "C&E1179"
+              ]
+            },
+            "caseType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "enum": [
+                "Individual",
+                "Bulk",
+                "CMA"
+              ]
+            },
+            "customDeclarationType": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 5,
+              "enum": [
+                "MRN",
+                "Entry"
+              ]
+            },
+            "declarationMode": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 18,
+              "enum": [
+                "Parent Declaration",
+                "All Declarations"
+              ]
+            },
+            "claimDate": {
+              "$ref": "#/definitions/Date"
+            },
+            "claimAmountTotal": {
+              "$ref": "#/definitions/AmountType"
+            },
+            "disposalMethod": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "enum": [
+                "Export",
+                "Postal Export",
+                "Donation to Charity",
+                "Destruction",
+                "Placed in Custom Warehouse",
+                "Export in Baggage"
+              ]
+            },
+            "reimbursementMethod": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 15,
+              "enum": [
+                "Deferment",
+                "Bank Transfer",
+                "Payable Order"
+              ]
+            },
+            "basisOfClaim": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50,
+              "enum": [
+                "Duplicate Entry",
+                "Duty Suspension",
+                "End Use",
+                "Incorrect Commodity Code",
+                "Incorrect CPC",
+                "Incorrect Value",
+                "Incorrect EORI & Deferment Acc. Num.",
+                "IP",
+                "Miscellaneous",
+                "OPR",
+                "Personal Effects",
+                "Preference",
+                "RGR",
+                "Proof of Return/Refund Given",
+                "Not in Accordance with Contract",
+                "Defective",
+                "Damaged Before Clearance",
+                "Undeliverable"
+              ]
+            },
+            "claimant": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50,
+              "enum": [
+                "Importer",
+                "Representative"
+              ]
+            },
+            "payeeIndicator": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50,
+              "enum": [
+                "Importer",
+                "Representative"
+              ]
+            },
+            "newEORI": {
+              "$ref": "#/definitions/EORI"
+            },
+            "newDAN": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 7
+            },
+            "authorityTypeProvided": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8,
+              "enum": [
+                "SpecAuth",
+                "StndAuth"
+              ]
+            },
+            "claimantEORI": {
+              "$ref": "#/definitions/EORI"
+            },
+            "claimantEmailAddress": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 241
+            },
+            "goodsDetails": {
+              "$ref": "#/definitions/GoodsInformation"
+            },
+            "EORIDetails": {
+              "type": "object",
+              "properties": {
+                "agentEORIDetails": {
+                  "$ref": "#/definitions/EORIInformation"
+                },
+                "importerEORIDetails": {
+                  "$ref": "#/definitions/EORIInformation"
+                }
+              },
+              "required": [
+                "agentEORIDetails",
+                "importerEORIDetails"
+              ],
+              "additionalProperties": false
+            },
+            "MRNDetails": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MRNDetail"
+              }
+            },
+            "DuplicateMRNDetails": {
+              "$ref": "#/definitions/MRNDetail"
+            },
+            "entryDetails": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EntryDetail"
+              }
+            },
+            "duplicateEntryDetails": {
+              "$ref": "#/definitions/EntryDetail"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "requestCommon",
+        "requestDetail"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "postNewClaimsRequest"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "CountryCode": {
+      "type": "string",
+      "enum": [
+        "AD",
+        "AE",
+        "AF",
+        "AG",
+        "AI",
+        "AL",
+        "AM",
+        "AN",
+        "AO",
+        "AQ",
+        "AR",
+        "AS",
+        "AT",
+        "AU",
+        "AW",
+        "AX",
+        "AZ",
+        "BA",
+        "BB",
+        "BD",
+        "BE",
+        "BF",
+        "BG",
+        "BH",
+        "BI",
+        "BJ",
+        "BL",
+        "BM",
+        "BN",
+        "BO",
+        "BQ",
+        "BR",
+        "BS",
+        "BT",
+        "BV",
+        "BW",
+        "BY",
+        "BZ",
+        "CA",
+        "CC",
+        "CD",
+        "CF",
+        "CG",
+        "CH",
+        "CI",
+        "CK",
+        "CL",
+        "CM",
+        "CN",
+        "CO",
+        "CR",
+        "CS",
+        "CU",
+        "CV",
+        "CW",
+        "CX",
+        "CY",
+        "CZ",
+        "DE",
+        "DJ",
+        "DK",
+        "DM",
+        "DO",
+        "DZ",
+        "EC",
+        "EE",
+        "EG",
+        "EH",
+        "ER",
+        "ES",
+        "ET",
+        "EU",
+        "FI",
+        "FJ",
+        "FK",
+        "FM",
+        "FO",
+        "FR",
+        "GA",
+        "GB",
+        "GD",
+        "GE",
+        "GF",
+        "GG",
+        "GH",
+        "GI",
+        "GL",
+        "GM",
+        "GN",
+        "GP",
+        "GQ",
+        "GR",
+        "GS",
+        "GT",
+        "GU",
+        "GW",
+        "GY",
+        "HK",
+        "HM",
+        "HN",
+        "HR",
+        "HT",
+        "HU",
+        "ID",
+        "IE",
+        "IL",
+        "IM",
+        "IN",
+        "IO",
+        "IQ",
+        "IR",
+        "IS",
+        "IT",
+        "JE",
+        "JM",
+        "JO",
+        "JP",
+        "KE",
+        "KG",
+        "KH",
+        "KI",
+        "KM",
+        "KN",
+        "KP",
+        "KR",
+        "KW",
+        "KY",
+        "KZ",
+        "LA",
+        "LB",
+        "LC",
+        "LI",
+        "LK",
+        "LR",
+        "LS",
+        "LT",
+        "LU",
+        "LV",
+        "LY",
+        "MA",
+        "MC",
+        "MD",
+        "ME",
+        "MF",
+        "MG",
+        "MH",
+        "MK",
+        "ML",
+        "MM",
+        "MN",
+        "MO",
+        "MP",
+        "MQ",
+        "MR",
+        "MS",
+        "MT",
+        "MU",
+        "MV",
+        "MW",
+        "MX",
+        "MY",
+        "MZ",
+        "NA",
+        "NC",
+        "NE",
+        "NF",
+        "NG",
+        "NI",
+        "NL",
+        "NO",
+        "NP",
+        "NR",
+        "NT",
+        "NU",
+        "NZ",
+        "OM",
+        "PA",
+        "PE",
+        "PF",
+        "PG",
+        "PH",
+        "PK",
+        "PL",
+        "PM",
+        "PN",
+        "PR",
+        "PS",
+        "PT",
+        "PW",
+        "PY",
+        "QA",
+        "RE",
+        "RO",
+        "RS",
+        "RU",
+        "RW",
+        "SA",
+        "SB",
+        "SC",
+        "SD",
+        "SE",
+        "SG",
+        "SH",
+        "SI",
+        "SJ",
+        "SK",
+        "SL",
+        "SM",
+        "SN",
+        "SO",
+        "SR",
+        "SS",
+        "ST",
+        "SV",
+        "SX",
+        "SY",
+        "SZ",
+        "TC",
+        "TD",
+        "TF",
+        "TG",
+        "TH",
+        "TJ",
+        "TK",
+        "TL",
+        "TM",
+        "TN",
+        "TO",
+        "TP",
+        "TR",
+        "TT",
+        "TV",
+        "TW",
+        "TZ",
+        "UA",
+        "UG",
+        "UM",
+        "UN",
+        "US",
+        "UY",
+        "UZ",
+        "VA",
+        "VC",
+        "VE",
+        "VG",
+        "VI",
+        "VN",
+        "VU",
+        "WF",
+        "WS",
+        "YE",
+        "YT",
+        "ZA",
+        "ZM",
+        "ZW"
+      ]
+    },
+    "GoodsInformation": {
+      "type": "object",
+      "properties": {
+        "placeOfImport": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 70
+        },
+        "isPrivateImporter": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 3,
+          "enum": [
+            "Yes",
+            "No"
+          ]
+        },
+        "groundsForRepaymentApplication": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "enum": [
+            "Mail order goods",
+            "Duties no provided",
+            "Overpayment",
+            "Special circumstances"
+          ]
+        },
+        "descOfGoods": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      },
+      "additionalProperties": false
+    },
+    "EORIInformation": {
+      "type": "object",
+      "properties": {
+        "EORINumber": {
+          "$ref": "#/definitions/EORI"
+        },
+        "CDSFullName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "legalEntityType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "EORIStartDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "EORIEndDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "CDSEstablishmentAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "contactInformation": {
+          "$ref": "#/definitions/ContactInformation"
+        },
+        "VATDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VATDetails"
+          }
+        }
+      },
+      "required": [
+        "EORINumber",
+        "CDSEstablishmentAddress"
+      ],
+      "additionalProperties": false
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "contactPerson": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "addressline1": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "addressline2": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "addressline3": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "street": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 70
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "countryCode": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "postalCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 9
+        },
+        "telephone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30
+        },
+        "emailAddress": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 241
+        }
+      },
+      "additionalProperties": false
+    },
+    "ContactInformation": {
+      "type": "object",
+      "properties": {
+        "contactPerson": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "addressline1": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "addressline2": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "addressline3": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "street": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 70
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "countryCode": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "postalCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 9
+        },
+        "telephoneNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30
+        },
+        "faxNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "emailAddress": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 241
+        }
+      },
+      "additionalProperties": false
+    },
+    "VATDetails": {
+      "type": "object",
+      "properties": {
+        "VATID": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 15
+        },
+        "countryCode": {
+          "$ref": "#/definitions/CountryCode"
+        }
+      },
+      "required": [
+        "VATID",
+        "countryCode"
+      ],
+      "additionalProperties": false
+    },
+    "MRNDetail": {
+      "type": "object",
+      "properties": {
+        "MRNNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18
+        },
+        "acceptanceDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "declarantReferenceNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "mainDeclarationReference": {
+          "type": "boolean"
+        },
+        "procedureCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2
+        },
+        "declarantDetails": {
+          "$ref": "#/definitions/MRNInformation"
+        },
+        "accountDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountDetail"
+          }
+        },
+        "consigneeDetails": {
+          "$ref": "#/definitions/MRNInformation"
+        },
+        "bankInfo": {
+          "type": "object",
+          "properties": {
+            "consigneeBankDetails": {
+              "$ref": "#/definitions/BankDetails"
+            },
+            "declarantBankDetails": {
+              "$ref": "#/definitions/BankDetails"
+            }
+          },
+          "additionalProperties": false
+        },
+        "NDRCDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NDRCDetail"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "MRNInformation": {
+      "type": "object",
+      "properties": {
+        "EORI": {
+          "$ref": "#/definitions/EORI"
+        },
+        "legalName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 70
+        },
+        "establishmentAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "contactDetails": {
+          "$ref": "#/definitions/ContactInformation"
+        }
+      },
+      "required": [
+        "EORI",
+        "legalName",
+        "establishmentAddress",
+        "contactDetails"
+      ],
+      "additionalProperties": false
+    },
+    "AccountDetail": {
+      "type": "object",
+      "properties": {
+        "accountType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 7,
+          "enum": [
+            "001",
+            "002",
+            "003",
+            "004",
+            "005"
+          ]
+        },
+        "accountNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10
+        },
+        "EORI": {
+          "$ref": "#/definitions/EORI"
+        },
+        "legalName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 70
+        },
+        "contactDetails": {
+          "$ref": "#/definitions/ContactInformation"
+        }
+      },
+      "required": [
+        "accountType",
+        "accountNumber",
+        "EORI",
+        "legalName"
+      ],
+      "additionalProperties": false
+    },
+    "AccountDetailsOLD": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false
+      }
+    },
+    "BankDetails": {
+      "type": "object",
+      "properties": {
+        "accountHolderName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "sortCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 6
+        },
+        "accountNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8
+        }
+      },
+      "required": [
+        "accountHolderName",
+        "sortCode",
+        "accountNumber"
+      ],
+      "additionalProperties": false
+    },
+    "EntryDetail": {
+      "type": "object",
+      "properties": {
+        "entryNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18
+        },
+        "entryDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "declarantReferenceNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "mainDeclarationReference": {
+          "type": "boolean"
+        },
+        "declarantDetails": {
+          "$ref": "#/definitions/MRNInformation"
+        },
+        "accountDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountDetail"
+          }
+        },
+        "consigneeDetails": {
+          "$ref": "#/definitions/MRNInformation"
+        },
+        "bankInfo": {
+          "type": "object",
+          "properties": {
+            "consigneeBankDetails": {
+              "$ref": "#/definitions/BankDetails"
+            },
+            "declarantBankDetails": {
+              "$ref": "#/definitions/BankDetails"
+            }
+          },
+          "additionalProperties": false
+        },
+        "NDRCDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NDRCDetail"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "NDRCDetail": {
+      "type": "object",
+      "properties": {
+        "paymentMethod": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 3,
+          "enum": [
+            "001",
+            "002",
+            "003",
+            "004",
+            "005"
+          ]
+        },
+        "paymentReference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18
+        },
+        "CMAEligible": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1,
+          "enum": [
+            "0",
+            "1"
+          ]
+        },
+        "taxType": {
+          "$ref": "#/definitions/TaxType"
+        },
+        "amount": {
+          "$ref": "#/definitions/AmountType"
+        },
+        "claimAmount": {
+          "$ref": "#/definitions/AmountType"
+        }
+      },
+      "required": [
+        "paymentMethod",
+        "paymentReference",
+        "taxType",
+        "amount"
+      ],
+      "additionalProperties": false
+    },
+    "TaxType": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3,
+      "enum": [
+        "A00",
+        "A20",
+        "A30",
+        "A35",
+        "A40",
+        "A45",
+        "B00",
+        "A50",
+        "A70",
+        "A80",
+        "A85",
+        "A90",
+        "A95",
+        "B05"
+      ]
+    },
+    "EORI": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 17,
+      "pattern": "^[A-Z]{2}[0-9A-Z]+$"
+    },
+    "AmountType": {
+      "type": "string",
+      "pattern": "^-?[0-9]{1,11}[.][0-9]{1,2}|$^-?[0-9]{1,11}$"
+    },
+    "Timestamp": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "pattern": "^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"
+    },
+    "Date": {
+      "type": "string",
+      "pattern": "^(\\d{8})$"
+    }
+  }
+}
