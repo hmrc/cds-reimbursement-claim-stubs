@@ -20,16 +20,12 @@ import com.eclipsesource.schema.drafts.Version4
 import com.eclipsesource.schema.drafts.Version4._
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import com.google.inject.{Inject, Singleton}
-import org.scalacheck.Gen
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents}
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.EisResponse._
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.GenUtils.sample
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.{EisResponse, PostNewClaimsResponse, ResponseCommon}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.OverPaymentClaim
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import java.time.LocalDateTime
 import scala.io.Source
 
 @Singleton()
@@ -47,7 +43,7 @@ class SubmitClaimController @Inject() (cc: ControllerComponents) extends Backend
     )
     .get
 
-  def submitClaim(): Action[JsValue] = Action(parse.json) { implicit request =>
+  def submitClaim: Action[JsValue] = Action(parse.json) { implicit request =>
     val validator = SchemaValidator(Some(Version4))
 
     validator
@@ -57,25 +53,27 @@ class SubmitClaimController @Inject() (cc: ControllerComponents) extends Backend
           logger.warn(s"Could not validate nor parse request body: $e")
           BadRequest
         },
-        _ => Ok(Json.toJson(makeEisResponse()))
+        json =>
+          json.asOpt[OverPaymentClaim] match {
+            case None =>
+              logger.warn("could not get overpayment claim data")
+              BadRequest
+            case Some(overPaymentClaim) =>
+              CDSProfile.getCDSProfile(overPaymentClaim) match {
+                case Some(cDSProfile) =>
+                  cDSProfile.submitClaimResponse.response match {
+                    case Left(value) =>
+                      value match {
+                        case Left(wAFErrorResponse) => Ok(Json.toJson(wAFErrorResponse))
+                        case Right(eisErrorResponse) => Ok(Json.toJson(eisErrorResponse))
+                      }
+                    case Right(eisResponse) => Ok(Json.toJson(eisResponse))
+                  }
+                case None =>
+                  logger.warn(s"could not find profile with claimant eori: ${overPaymentClaim.claimantEori}")
+                  BadRequest
+              }
+          }
       )
   }
-
-  private def nRandomDigits(n: Int): String =
-    List.fill(n)(sample(Gen.numChar)).mkString("")
-
-  private def ndrcCaseNumber(): String =
-    s"NDRC-${nRandomDigits(4)}"
-
-  def makeEisResponse(): EisResponse =
-    EisResponse(
-      PostNewClaimsResponse(
-        ResponseCommon(
-          "OK", //TODO: will write a generator once we know what all the enumerations are
-          LocalDateTime.now,
-          ndrcCaseNumber(),
-          "NDRC"
-        )
-      )
-    )
 }

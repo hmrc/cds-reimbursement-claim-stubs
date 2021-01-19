@@ -16,46 +16,58 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models
 
-import play.api.libs.functional.syntax._
+import julienrf.json.derived
 import play.api.libs.json._
 
-import java.time.LocalDateTime
+sealed trait ParameterNameEnum
+object ParameterNameEnum {
+  final case object POSITION extends ParameterNameEnum
+  implicit val format = derived.oformat[ParameterNameEnum]()
+}
+
+sealed trait ParameterValueEnum
+object ParameterValueEnum {
+  final case object FAIL extends ParameterValueEnum
+  implicit val format = derived.oformat[ParameterValueEnum]()
+}
+
+final case class ReturnParameter(paramName: ParameterNameEnum, paramValue: ParameterValueEnum)
+
+object ReturnParameter{
+  implicit val format: OFormat[ReturnParameter] = derived.oformat[ReturnParameter]()
+}
+
+sealed trait ResponseCommonStatus
+object ResponseCommonStatus {
+  final case object OK extends ResponseCommonStatus
+  implicit val format: OFormat[ResponseCommonStatus] = derived.oformat[ResponseCommonStatus]()
+}
+
+sealed trait CDFinancialPayService
+object CDFinancialPayService {
+  final case object NDRC extends CDFinancialPayService
+  final case object SCTY extends CDFinancialPayService
+
+  implicit val format: OFormat[CDFinancialPayService] = derived.oformat[CDFinancialPayService]()
+}
 
 final case class ResponseCommon(
-  status: String,
-  processingDateTime: LocalDateTime,
-  cdfPayCaseNumber: String,
-  cdfPayService: String
+  status: ResponseCommonStatus,
+  processingDateTime: String,
+  CdfPayService: Option[CDFinancialPayService],
+  CdfPayCaseNumber: Option[String],
+  correlationId: Option[String],
+  errorMessage: Option[String],
+  returnParameters: List[ReturnParameter]
 )
 
 object ResponseCommon {
-  implicit val responseCommonReads: Reads[ResponseCommon] = (
-    (JsPath \ "Status").read[String] and
-      (JsPath \ "ProcessingDateTime").read[LocalDateTime] and
-      (JsPath \ "CdfPayCaseNumber").read[String] and
-      (JsPath \ "CdfPayService").read[String]
-  )(ResponseCommon.apply _)
-
-  implicit val responseCommonWrites: Writes[ResponseCommon] = (
-    (JsPath \ "Status").write[String] and
-      (JsPath \ "ProcessingDateTime").write[LocalDateTime] and
-      (JsPath \ "CdfPayCaseNumber").write[String] and
-      (JsPath \ "CdfPayService").write[String]
-  )(unlift(ResponseCommon.unapply))
+  implicit val format: OFormat[ResponseCommon] = Json.format[ResponseCommon]
 }
 final case class PostNewClaimsResponse(responseCommon: ResponseCommon)
 
 object PostNewClaimsResponse {
-
-  implicit val responseCommonReads: Reads[PostNewClaimsResponse] =
-    (__ \ "ResponseCommon")
-      .format[ResponseCommon]
-      .inmap(PostNewClaimsResponse.apply, unlift(PostNewClaimsResponse.unapply))
-
-  implicit val postNewClaimsResponseWrites: Writes[PostNewClaimsResponse] =
-    (__ \ "ResponseCommon")
-      .format[ResponseCommon]
-      .inmap(PostNewClaimsResponse.apply, unlift(PostNewClaimsResponse.unapply))
+  implicit val format: OFormat[PostNewClaimsResponse] = Json.format[PostNewClaimsResponse]
 }
 
 final case class EisResponse(
@@ -63,14 +75,5 @@ final case class EisResponse(
 )
 
 object EisResponse {
-
-  implicit val postNewClaimsResponseReads: Reads[EisResponse] =
-    (__ \ "PostNewClaimsResponse")
-      .format[PostNewClaimsResponse]
-      .inmap(EisResponse.apply, unlift(EisResponse.unapply))
-
-  implicit val postNewClaimsResponseWrites: Writes[EisResponse] =
-    (__ \ "PostNewClaimsResponse")
-      .format[PostNewClaimsResponse]
-      .inmap(EisResponse.apply, unlift(EisResponse.unapply))
+  implicit val format: OFormat[EisResponse] = derived.oformat[EisResponse]()
 }
