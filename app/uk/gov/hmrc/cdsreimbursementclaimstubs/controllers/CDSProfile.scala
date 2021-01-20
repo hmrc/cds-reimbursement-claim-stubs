@@ -84,7 +84,7 @@ object CDSProfile {
     )
   )
 
-  val EIS_403__WAF_ERROR: WAFErrorResponse = WAFErrorResponse(
+  val EIS_403_WAF_ERROR: WAFErrorResponse = WAFErrorResponse(
     """
       |<html>
       |<head>
@@ -153,7 +153,7 @@ object CDSProfile {
       ),
       CDSProfile(
         _ === EORI("EB12345678901234V"),
-        SubmitClaimResponse(Left(Left(EIS_403__WAF_ERROR)))
+        SubmitClaimResponse(Left(Left(EIS_403_WAF_ERROR)))
       ),
       CDSProfile(
         _ === EORI("FB12345678901234U"),
