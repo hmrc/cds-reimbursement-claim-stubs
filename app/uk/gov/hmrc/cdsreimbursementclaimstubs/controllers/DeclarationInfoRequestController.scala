@@ -21,8 +21,9 @@ import com.eclipsesource.schema.drafts.Version4
 import com.eclipsesource.schema.drafts.Version4._
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import com.google.inject.{Inject, Singleton}
-import play.api.libs.json.{JsString, JsValue, Json}
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents}
+import play.twirl.api.Html
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.DeclarationErrorResponse._
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.DeclarationInfoResponses._
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
@@ -67,7 +68,7 @@ class DeclarationInfoRequestController @Inject()(cc: ControllerComponents) exten
         toErrorResponse(error)
       },
       declarationId => declarationId match {
-        case "57WAFResponse11111" => Forbidden(Json.toJson(WafError))
+        case "57WAFResponse11111" => Forbidden(Html(WafError.value))
         case "57TimeoutResponse1" => toErrorResponse(Timeout)
         case "57CouldNotProcess1" => toErrorResponse(CouldNotBeProcessed)
         case "57NoDeclarationF11" => toErrorResponse(NoDeclarationFound)
