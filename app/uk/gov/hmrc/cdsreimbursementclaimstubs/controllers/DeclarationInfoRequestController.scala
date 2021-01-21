@@ -39,7 +39,7 @@ class DeclarationInfoRequestController @Inject()(cc: ControllerComponents) exten
         Json.parse(
           Source
             .fromInputStream(
-              this.getClass.getResourceAsStream("/resources/OverpaymentDeclarationDisplayRequest-Schema.json")
+              this.getClass.getResourceAsStream("/resources/ACC14-v1-3-0-overpayment-display-request-schema.json")
             )
             .mkString
         )
@@ -73,8 +73,8 @@ class DeclarationInfoRequestController @Inject()(cc: ControllerComponents) exten
         case "57CouldNotProcess1" => toErrorResponse(CouldNotBeProcessed)
         case "57NoDeclarationF11" => toErrorResponse(NoDeclarationFound)
         case "57NoSecurityDepos1" => toErrorResponse(NoSecurityDeposits)
-        case "57EMPTYRESPONSE111" => toOkResponse(emptyResponse)
-        case "57MINIMUMRESPONSE1" => toOkResponse(minimumResponse(declarationId))
+        case "57EmptyResponse111" => toOkResponse(emptyResponse)
+        case "57MinimumResponse1" => toOkResponse(minimumResponse(declarationId))
         case _ => toOkResponse(fullResponse(declarationId))
       }
     )
