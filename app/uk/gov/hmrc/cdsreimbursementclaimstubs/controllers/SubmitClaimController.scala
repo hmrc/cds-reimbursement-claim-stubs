@@ -65,8 +65,14 @@ class SubmitClaimController @Inject() (cc: ControllerComponents) extends Backend
                   cDSProfile.submitClaimResponse.response match {
                     case Left(value) =>
                       value match {
-                        case Left(wAFErrorResponse) => Ok(Json.toJson(wAFErrorResponse))
-                        case Right(eisErrorResponse) => Ok(Json.toJson(eisErrorResponse))
+                        case Left(wAFErrorResponse) => Forbidden(Json.toJson(wAFErrorResponse))
+                        case Right(eisErrorResponse) =>
+                          eisErrorResponse.errorDetail.errorCode match {
+                            case "400" => BadRequest(Json.toJson(eisErrorResponse))
+                            case "401" => Unauthorized(Json.toJson(eisErrorResponse))
+                            case "405" => MethodNotAllowed(Json.toJson(eisErrorResponse))
+                            case "500" => InternalServerError(Json.toJson(eisErrorResponse))
+                          }
                       }
                     case Right(eisResponse) => Ok(Json.toJson(eisResponse))
                   }
