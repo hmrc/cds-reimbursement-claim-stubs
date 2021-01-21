@@ -8,6 +8,7 @@ object AppDependencies {
     "uk.gov.hmrc"       %% "stub-data-generator"        % "0.5.3",
     "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5",
     "org.julienrf"      %% "play-json-derived-codecs"  % "7.0.0",
+    "org.typelevel"     %% "cats-core"                  % "2.3.1",
     compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
     "com.github.ghik"    % "silencer-lib"               % silencerVersion % Provided cross CrossVersion.full
   )

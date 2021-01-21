@@ -36,7 +36,7 @@ class SubmitClaimController @Inject() (cc: ControllerComponents) extends Backend
       Json.parse(
         Source
           .fromInputStream(
-            this.getClass.getResourceAsStream("/resources/submit-claim-schema-1-0.json")
+            this.getClass.getResourceAsStream("/resources/TPI05-v1-0-0-submit-claim-schema.json")
           )
           .mkString
       )
