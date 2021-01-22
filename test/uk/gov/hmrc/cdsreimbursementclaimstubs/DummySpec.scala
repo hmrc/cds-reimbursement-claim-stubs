@@ -16,9 +16,10 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers
 
-class DummySpec extends WordSpec with Matchers {
+class DummySpec extends AnyWordSpec with Matchers {
 
   "This test" must {
     "pass" in {

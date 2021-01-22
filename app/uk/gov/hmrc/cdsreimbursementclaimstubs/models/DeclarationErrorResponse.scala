@@ -40,6 +40,7 @@ object DeclarationErrorResponse {
   val NoXForwaredHostHeader = makeEis("No X-Forwarded-Host header")
   val NoAuthorizationHeader = makeEis("No Bearer Token in the Authorization header", UNAUTHORIZED)
   val NoDeclarationId = makeEis("No declarationID was provided")
+  val DeclarationIdInvalid = makeEis("DeclarationID is invalid")
 
   def makeEis(message: String, status: Int = BAD_REQUEST): EisErrorResponse = make(message,status,"eis")
   def makeBackend(message: String, status: Int = BAD_REQUEST): EisErrorResponse = make(message,status,"backend")

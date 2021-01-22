@@ -16,6 +16,16 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.utils
 
+object DeclarationInfoHelpers {
+  def isMRNValid(in:String):Boolean = {
+    val regex = """\d{2}[a-zA-Z]{2}\w{13}\d""".r
+    in match {
+      case regex(_*) => true
+      case _ => false
+    }
+  }
+}
+
 object DeclarationInfoResponses {
 
   val emptyResponse =

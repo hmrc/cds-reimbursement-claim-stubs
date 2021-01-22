@@ -28,7 +28,7 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.DeclarationErrorResponse._
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.DeclarationInfoResponses._
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-
+import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.DeclarationInfoHelpers._
 import scala.io.Source
 
 @Singleton
@@ -59,9 +59,10 @@ class DeclarationInfoRequestController @Inject()(cc: ControllerComponents) exten
       _ <- request.headers.get("X-Forwarded-Host").toRight(NoXForwaredHostHeader)
       _ <- request.headers.get("Authorization").toRight(NoAuthorizationHeader)
       _ <- validator.validate(schemaToBeValidated, request.body).asEither.leftMap(err => makeEis(err.toString(), BAD_REQUEST))
-      declarationId <- (request.body \ "overpaymentDeclarationDisplayRequest" \ "requestDetail" \ "declarationId")
-        .toEither.leftMap(_ => NoDeclarationId)
-    } yield declarationId.as[String]
+      decId <- (request.body \ "overpaymentDeclarationDisplayRequest" \ "requestDetail" \ "declarationId")
+        .toEither.map(_.as[String]).leftMap(_ => NoDeclarationId)
+      validDecId <- Either.cond(isMRNValid(decId), decId, DeclarationIdInvalid)
+    } yield validDecId
       ).fold(
       error => {
         logger.warn(s"Returning http status ${error.errorDetail.errorCode}: ${error}")
