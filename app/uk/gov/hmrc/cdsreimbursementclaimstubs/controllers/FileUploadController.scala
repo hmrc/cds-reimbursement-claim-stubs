@@ -56,7 +56,8 @@ class FileUploadController @Inject()(cc:ControllerComponents) extends BackendCon
       _ <- request.headers.get("X-Forwarded-Host").toRight(badRequest("No X-Forwarded-Host header"))
       _ <- request.headers.get("Authorization").toRight(badRequest("No Bearer Token in the Authorization header"))
       _ <- request.headers.get("Date").toRight(badRequest("Missing Date header"))
-      xml <- request.body.asXml.toRight(badRequest("Body cannot be parsed as xml"))
+      soap <- request.body.asXml.toRight(badRequest("Body cannot be parsed as xml"))
+      xml <- Right(removeSoapEnvelopeAndBody(soap))
       _ <- validateXML(xml.toString()).toEither.leftMap(errors => badRequest(errors.mkString(", ")))
       declarationId <- extractPropery("DeclarationId",xml)
       _ <- hasProperty("Eori",xml)
@@ -84,6 +85,8 @@ class FileUploadController @Inject()(cc:ControllerComponents) extends BackendCon
     val values = (property \ "value").map(_.text)
     Either.cond(keys.contains(name), values(keys.indexOf(name)), badRequest(s"Missing property: $name"))
   }
+
+  def removeSoapEnvelopeAndBody(ns:NodeSeq):NodeSeq = ns \ "Body" \ "_"
 
   def validateXML(xml: String): Validated[List[String], scala.xml.Elem] =
     Validated
