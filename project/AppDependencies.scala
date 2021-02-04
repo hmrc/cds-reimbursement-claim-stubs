@@ -9,6 +9,7 @@ object AppDependencies {
     "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5",
     "org.julienrf"      %% "play-json-derived-codecs"  % "7.0.0",
     "org.typelevel"     %% "cats-core"                  % "2.3.1",
+    "org.scala-lang.modules" %% "scala-xml"             % "2.0.0-M4",
     compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
     "com.github.ghik"    % "silencer-lib"               % silencerVersion % Provided cross CrossVersion.full
   )

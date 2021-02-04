@@ -4,5 +4,7 @@ POST       /claim                                 uk.gov.hmrc.cdsreimbursementcl
 
 POST       /declaration                           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DeclarationInfoRequestController.getDeclaration
 
+POST       /filetransfer                          uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.FileUploadController.uploadFile
+
 ->         /                                      health.Routes
 GET        /admin/metrics                         com.kenshoo.play.metrics.MetricsController.metrics
