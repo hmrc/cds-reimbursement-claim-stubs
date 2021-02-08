@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.cdsreimbursementclaimstubs.models
+package uk.gov.hmrc.cdsreimbursementclaimstubs.utils
 
-import play.api.libs.json.Json
+import java.time.format.DateTimeFormatter
+import java.time.{LocalDateTime, ZoneId}
 
-final case class OverPaymentClaim(
-  claimantEORI: String
-)
+object TimeUtils {
 
-object OverPaymentClaim {
-  implicit val format = Json.format[OverPaymentClaim]
+  val iso8061DateTimeFormat: DateTimeFormatter =
+    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneId.systemDefault())
+
+  def iso8061DateTimeNow: String = iso8061DateTimeFormat.format(LocalDateTime.now)
+
 }

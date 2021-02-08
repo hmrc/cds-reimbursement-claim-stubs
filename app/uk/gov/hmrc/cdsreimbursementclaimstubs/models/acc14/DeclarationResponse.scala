@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.cdsreimbursementclaimstubs.models
+package uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14
 
-import org.scalacheck.Gen
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14ErrorResponse.Acc14ErrorResponseType
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14Response.Acc14ResponseType
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.WafErrorResponse
 
-object GenUtils {
-
-  def sample[A](g: Gen[A]): A =
-    g.sample.getOrElse(sys.error(s"could not generate sample value"))
-
-}
+final case class DeclarationResponse(
+  response: Either[Either[WafErrorResponse, Acc14ErrorResponseType], Acc14ResponseType]
+)
