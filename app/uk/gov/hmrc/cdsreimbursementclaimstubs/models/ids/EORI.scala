@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.cdsreimbursementclaimstubs.models
+package uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids
 
-final case class SubmitClaimResponse(
-  response: Either[Either[WAFErrorResponse, EisErrorResponse], EisResponse]
-)
+import cats.Eq
+
+final case class EORI(value: String) extends AnyVal
+
+object EORI {
+  implicit val eq: Eq[EORI] = Eq.fromUniversalEquals
+}

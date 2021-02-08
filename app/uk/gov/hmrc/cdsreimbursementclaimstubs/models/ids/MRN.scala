@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.cdsreimbursementclaimstubs.models
+package uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids
 
-import play.api.libs.json.{Json, OFormat}
+import cats.Eq
 
-final case class WAFErrorResponse (value : String) extends AnyVal
+final case class MRN(value: String) extends AnyVal
 
-object WAFErrorResponse{
-  implicit val format: OFormat[WAFErrorResponse] = Json.format[WAFErrorResponse]
+object MRN {
+  implicit val eq: Eq[MRN] = Eq.fromUniversalEquals
 }
+

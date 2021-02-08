@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.cdsreimbursementclaimstubs.models
+package uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05
 
-import cats.Eq
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.Tpi05ErrorResponse.Tpi05ErrorResponseType
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.Tpi05Response.Tpi05ResponseType
 
-final case class EORI(value: String) extends AnyVal
-
-object EORI {
-  implicit val eq: Eq[EORI] = Eq.fromUniversalEquals
-}
+final case class SubmitClaimResponse(
+  response: Either[Either[WafErrorResponse, Tpi05ErrorResponseType], Tpi05ResponseType]
+)

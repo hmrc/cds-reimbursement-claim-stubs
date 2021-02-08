@@ -1,8 +1,7 @@
 # Add all the application routes to the app.routes file
 
-POST       /claim                                 uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.SubmitClaimController.submitClaim
+POST       /tpi/postoverpaymentclaim/v1                         uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.ClaimController.submitClaim
+POST       /accounts/overpaymentdeclarationdisplay/v1           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DeclarationController.getDeclaration
 
-POST       /declaration                           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DeclarationInfoRequestController.getDeclaration
-
-->         /                                      health.Routes
-GET        /admin/metrics                         com.kenshoo.play.metrics.MetricsController.metrics
+->         /                                                    health.Routes
+GET        /admin/metrics                                       com.kenshoo.play.metrics.MetricsController.metrics
