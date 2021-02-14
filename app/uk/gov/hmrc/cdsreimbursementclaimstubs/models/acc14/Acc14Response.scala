@@ -20,7 +20,7 @@ import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.TimeUtils
 
 final case class Acc14Response(
-                                value: JsValue
+  value: JsValue
 )
 
 object Acc14Response {
@@ -123,145 +123,91 @@ object Acc14Response {
   def getFullAcc14Response(declarationId: String) = Acc14Response(
     Json.parse(
       s"""
-         |{
-         |    "overpaymentDeclarationDisplayResponse": {
-         |        "responseCommon": {
-         |            "status": "OK",
-         |            "processingDate": "${TimeUtils.iso8061DateTimeNow}"
-         |        },
-         |        "responseDetail": {
-         |            "declarationId": "$declarationId",
-         |            "acceptanceDate": "2019-08-13",
-         |            "declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
-         |            "securityReason": "IPR",
-         |            "btaDueDate": "2019-09-13",
-         |            "procedureCode": "71",
-         |            "btaSource": "DMS",
-         |            "declarantDetails": {
-         |                "declarantEORI": "AA12345678901234Z",
-         |                "legalName": "Fred Bloggs and Co Ltd",
-         |                "establishmentAddress": {
-         |                    "addressLine1": "10 Rillington Place",
-         |                    "addressLine2": "London",
-         |                    "addressLine3": "Pimlico",
-         |                    "postalCode": "W11 1RH",
-         |                    "countryCode": "GB"
-         |                },
-         |                "contactDetails": {
-         |                    "contactName": "Angela Smith",
-         |                    "addressLine1": "J P Jones Insolvency Ltd",
-         |                    "addressLine2": "14 Briar Lane",
-         |                    "addressLine3": "Pimlico",
-         |                    "postalCode": "W11 1QT",
-         |                    "countryCode": "GB",
-         |                    "telephone": "0270 112 3476",
-         |                    "emailAddress": "fred@bloggs.com"
-         |                }
-         |            },
-         |            "consigneeDetails": {
-         |                "consigneeEORI": "GB562485153000",
-         |                "legalName": "Swift Goods Ltd",
-         |                "establishmentAddress": {
-         |                    "addressLine1": "14 Briar Lane",
-         |                    "addressLine2": "London",
-         |                    "addressLine3": "Pimlico",
-         |                    "countryCode": "GB"
-         |                },
-         |                "contactDetails": {
-         |                    "contactName": "Frank Sidebotham",
-         |                    "addressLine1": "J P Jones Insolvency Ltd",
-         |                    "addressLine2": "14 Briar Lane",
-         |                    "addressLine3": "Pimlico",
-         |                    "postalCode": "W11 1QT",
-         |                    "countryCode": "GB",
-         |                    "telephone": "0207 678 3243",
-         |                    "emailAddress": "enquiries@swftgoods.com"
-         |                }
-         |            },
-         |            "accountDetails": [
-         |                {
-         |                    "accountType": "001",
-         |                    "accountNumber": "8901112",
-         |                    "eori": "8432569",
-         |                    "legalName": "Fred Bloggs and Co Ltd",
-         |                    "contactDetails": {
-         |                        "contactName": "Angela Smith",
-         |                        "addressLine1": "J P Jones Insolvency Ltd",
-         |                        "addressLine2": "14 Briar Lane",
-         |                        "addressLine3": "Holborn",
-         |                        "addressLine4": "London",
-         |                        "countryCode": "GB",
-         |                        "telephone": "0270 112 3476",
-         |                        "emailAddress": "fred@bloggs.com"
-         |                    }
-         |                },
-         |                {
-         |                    "accountType": "002",
-         |                    "accountNumber": "8901113",
-         |                    "eori": "8432563",
-         |                    "legalName": "Fred Bloggs and Co Ltd",
-         |                    "contactDetails": {
-         |                        "contactName": "Angela Smith",
-         |                        "addressLine1": "J P Jones Insolvency Ltd",
-         |                        "addressLine2": "14 Briar Lane",
-         |                        "addressLine3": "London",
-         |                        "countryCode": "GB",
-         |                        "telephone": "0270 112 3476",
-         |                        "emailAddress": "fred@bloggs.com"
-         |                    }
-         |                }
-         |            ],
-         |            "bankDetails": {
-         |                "consigneeBankDetails": {
-         |                    "accountHolderName": "Swift Goods Ltd",
-         |                    "sortCode": "125841",
-         |                    "accountNumber": "01478523"
-         |                },
-         |                "declarantBankDetails": {
-         |                    "accountHolderName": "Fred Bloggs and Co Ltd",
-         |                    "sortCode": "653214",
-         |                    "accountNumber": "54789632"
-         |                }
-         |            },
-         |            "securityDetails": [
-         |                {
-         |                    "securityDepositId": "ABC0123456",
-         |                    "totalAmount": "14585.52",
-         |                    "amountPaid": "14585.52",
-         |                    "paymentMethod": "001",
-         |                    "paymentReference": "SGL SECURITY 001",
-         |                    "taxDetails": [
-         |                        {
-         |                            "taxType": "A00",
-         |                            "amount": "6000.00"
-         |                        },
-         |                        {
-         |                            "taxType": "584",
-         |                            "amount": "8085.52"
-         |                        }
-         |                    ]
-         |                },
-         |                {
-         |                    "securityDepositId": "DEF6543210",
-         |                    "totalAmount": "500.00",
-         |                    "amountPaid": "300.00",
-         |                    "paymentMethod": "002",
-         |                    "paymentReference": "SGL SECURITY 002",
-         |                    "taxDetails": [
-         |                        {
-         |                            "taxType": "B00",
-         |                            "amount": "100.00"
-         |                        },
-         |                        {
-         |                            "taxType": "478",
-         |                            "amount": "200.00"
-         |                        }
-         |                    ]
-         |                }
-         |            ]
-         |        }
-         |    }
-         |}
+        |{
+        |	"overpaymentDeclarationDisplayResponse": {
+        |		"responseCommon": {
+        |			"status": "OK",
+        |			"processingDate": "2021-02-12T11:34:54Z"
+        |		},
+        |		"responseDetail": {
+        |			"declarationId": "$declarationId",
+        |			"acceptanceDate": "2021-02-12",
+        |			"procedureCode": "2",
+        |			"declarantDetails": {
+        |				"declarantEORI": "AA12345678901234Z",
+        |				"legalName": "Automation Central LTD",
+        |				"establishmentAddress": {
+        |					"addressLine1": "10 Automation Road",
+        |					"addressLine3": "Coventry",
+        |					"postalCode": "CV3 6EA",
+        |					"countryCode": "GB"
+        |				},
+        |				"contactDetails": {
+        |					"contactName": "Automation Central LTD",
+        |					"addressLine1": "10 Automation Road",
+        |					"addressLine3": "Coventry",
+        |					"postalCode": "CV3 6EA",
+        |					"countryCode": "GB"
+        |				}
+        |			},
+        |			"consigneeDetails": {
+        |				"consigneeEORI": "AA12345678901234Z",
+        |				"legalName": "Automation Central LTD",
+        |				"establishmentAddress": {
+        |					"addressLine1": "10 Automation Road",
+        |					"addressLine3": "Coventry",
+        |					"postalCode": "CV3 6EA",
+        |					"countryCode": "GB"
+        |				},
+        |				"contactDetails": {
+        |					"contactName": "Automation Central LTD",
+        |					"addressLine1": "10 Automation Road",
+        |					"addressLine3": "Coventry",
+        |					"postalCode": "CV3 6EA",
+        |					"countryCode": "GB"
+        |				}
+        |			},
+        |			"bankDetails": {
+        |				"consigneeBankDetails": {
+        |					"accountHolderName": "CDS E2E To E2E Bank",
+        |					"sortCode": "308844",
+        |					"accountNumber": "12345678"
+        |				},
+        |				"declarantBankDetails": {
+        |					"accountHolderName": "CDS E2E To E2E Bank",
+        |					"sortCode": "308844",
+        |					"accountNumber": "12345678"
+        |				}
+        |			},
+        |			"ndrcDetails": [
+        |				{
+        |					"taxType": "A80",
+        |					"amount": "218.00",
+        |					"paymentMethod": "001",
+        |					"paymentReference": "GB201430007000"
+        |				},
+        |				{
+        |					"taxType": "A95",
+        |					"amount": "211.00",
+        |					"paymentMethod": "001",
+        |					"paymentReference": "GB201430007000"
+        |				},
+        |				{
+        |					"taxType": "A90",
+        |					"amount": "228.00",
+        |					"paymentMethod": "001",
+        |					"paymentReference": "GB201430007000"
+        |				},
+        |				{
+        |					"taxType": "A85",
+        |					"amount": "171.00",
+        |					"paymentMethod": "001",
+        |					"paymentReference": "GB201430007000"
+        |				}
+        |			]
+        |		}
+        |	}
+        |}
         |""".stripMargin
     )
   )
@@ -269,144 +215,90 @@ object Acc14Response {
   def getEoriMismatchResponse(declarationId: String) = Acc14Response(
     Json.parse(
       s"""
-         |   {
-         |    "overpaymentDeclarationDisplayResponse": {
-         |        "responseCommon": {
-         |            "status": "OK",
-         |            "processingDate": "${TimeUtils.iso8061DateTimeNow}"
-         |        },
-         |        "responseDetail": {
-         |            "declarationId": "$declarationId",
-         |            "acceptanceDate": "2019-08-13",
-         |            "declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
-         |            "securityReason": "IPR",
-         |            "btaDueDate": "2019-09-13",
-         |            "procedureCode": "71",
-         |            "btaSource": "DMS",
-         |            "declarantDetails": {
-         |                "declarantEORI": "DOES-NOT-MATCH-ANY-EORI",
-         |                "legalName": "Fred Bloggs and Co Ltd",
-         |                "establishmentAddress": {
-         |                    "addressLine1": "10 Rillington Place",
-         |                    "addressLine2": "London",
-         |                    "addressLine3": "Pimlico",
-         |                    "postalCode": "W11 1RH",
-         |                    "countryCode": "GB"
-         |                },
-         |                "contactDetails": {
-         |                    "contactName": "Angela Smith",
-         |                    "addressLine1": "J P Jones Insolvency Ltd",
-         |                    "addressLine2": "14 Briar Lane",
-         |                    "addressLine3": "Pimlico",
-         |                    "postalCode": "W11 1QT",
-         |                    "countryCode": "GB",
-         |                    "telephone": "0270 112 3476",
-         |                    "emailAddress": "fred@bloggs.com"
-         |                }
-         |            },
-         |            "consigneeDetails": {
-         |                "consigneeEORI": "GB562485153000",
-         |                "legalName": "Swift Goods Ltd",
-         |                "establishmentAddress": {
-         |                    "addressLine1": "14 Briar Lane",
-         |                    "addressLine2": "London",
-         |                    "addressLine3": "Pimlico",
-         |                    "countryCode": "GB"
-         |                },
-         |                "contactDetails": {
-         |                    "contactName": "Frank Sidebotham",
-         |                    "addressLine1": "J P Jones Insolvency Ltd",
-         |                    "addressLine2": "14 Briar Lane",
-         |                    "addressLine3": "Pimlico",
-         |                    "postalCode": "W11 1QT",
-         |                    "countryCode": "GB",
-         |                    "telephone": "0207 678 3243",
-         |                    "emailAddress": "enquiries@swftgoods.com"
-         |                }
-         |            },
-         |            "accountDetails": [
-         |                {
-         |                    "accountType": "001",
-         |                    "accountNumber": "8901112",
-         |                    "eori": "8432569",
-         |                    "legalName": "Fred Bloggs and Co Ltd",
-         |                    "contactDetails": {
-         |                        "contactName": "Angela Smith",
-         |                        "addressLine1": "J P Jones Insolvency Ltd",
-         |                        "addressLine2": "14 Briar Lane",
-         |                        "addressLine3": "Holborn",
-         |                        "addressLine4": "London",
-         |                        "countryCode": "GB",
-         |                        "telephone": "0270 112 3476",
-         |                        "emailAddress": "fred@bloggs.com"
-         |                    }
-         |                },
-         |                {
-         |                    "accountType": "002",
-         |                    "accountNumber": "8901113",
-         |                    "eori": "8432563",
-         |                    "legalName": "Fred Bloggs and Co Ltd",
-         |                    "contactDetails": {
-         |                        "contactName": "Angela Smith",
-         |                        "addressLine1": "J P Jones Insolvency Ltd",
-         |                        "addressLine2": "14 Briar Lane",
-         |                        "addressLine3": "London",
-         |                        "countryCode": "GB",
-         |                        "telephone": "0270 112 3476",
-         |                        "emailAddress": "fred@bloggs.com"
-         |                    }
-         |                }
-         |            ],
-         |            "bankDetails": {
-         |                "consigneeBankDetails": {
-         |                    "accountHolderName": "Swift Goods Ltd",
-         |                    "sortCode": "125841",
-         |                    "accountNumber": "01478523"
-         |                },
-         |                "declarantBankDetails": {
-         |                    "accountHolderName": "Fred Bloggs and Co Ltd",
-         |                    "sortCode": "653214",
-         |                    "accountNumber": "54789632"
-         |                }
-         |            },
-         |            "securityDetails": [
-         |                {
-         |                    "securityDepositId": "ABC0123456",
-         |                    "totalAmount": "14585.52",
-         |                    "amountPaid": "14585.52",
-         |                    "paymentMethod": "001",
-         |                    "paymentReference": "SGL SECURITY 001",
-         |                    "taxDetails": [
-         |                        {
-         |                            "taxType": "A00",
-         |                            "amount": "6000.00"
-         |                        },
-         |                        {
-         |                            "taxType": "584",
-         |                            "amount": "8085.52"
-         |                        }
-         |                    ]
-         |                },
-         |                {
-         |                    "securityDepositId": "DEF6543210",
-         |                    "totalAmount": "500.00",
-         |                    "amountPaid": "300.00",
-         |                    "paymentMethod": "002",
-         |                    "paymentReference": "SGL SECURITY 002",
-         |                    "taxDetails": [
-         |                        {
-         |                            "taxType": "B00",
-         |                            "amount": "100.00"
-         |                        },
-         |                        {
-         |                            "taxType": "478",
-         |                            "amount": "200.00"
-         |                        }
-         |                    ]
-         |                }
-         |            ]
-         |        }
-         |    }
+         |{
+         |	"overpaymentDeclarationDisplayResponse": {
+         |		"responseCommon": {
+         |			"status": "OK",
+         |			"processingDate": "2021-02-12T11:34:54Z"
+         |		},
+         |		"responseDetail": {
+         |			"declarationId": "$declarationId",
+         |			"acceptanceDate": "2021-02-12",
+         |			"procedureCode": "2",
+         |			"declarantDetails": {
+         |				"declarantEORI": "GB201430007000",
+         |				"legalName": "Automation Central LTD",
+         |				"establishmentAddress": {
+         |					"addressLine1": "10 Automation Road",
+         |					"addressLine3": "Coventry",
+         |					"postalCode": "CV3 6EA",
+         |					"countryCode": "GB"
+         |				},
+         |				"contactDetails": {
+         |					"contactName": "Automation Central LTD",
+         |					"addressLine1": "10 Automation Road",
+         |					"addressLine3": "Coventry",
+         |					"postalCode": "CV3 6EA",
+         |					"countryCode": "GB"
+         |				}
+         |			},
+         |			"consigneeDetails": {
+         |				"consigneeEORI": "GB201430007000",
+         |				"legalName": "Automation Central LTD",
+         |				"establishmentAddress": {
+         |					"addressLine1": "10 Automation Road",
+         |					"addressLine3": "Coventry",
+         |					"postalCode": "CV3 6EA",
+         |					"countryCode": "GB"
+         |				},
+         |				"contactDetails": {
+         |					"contactName": "Automation Central LTD",
+         |					"addressLine1": "10 Automation Road",
+         |					"addressLine3": "Coventry",
+         |					"postalCode": "CV3 6EA",
+         |					"countryCode": "GB"
+         |				}
+         |			},
+         |			"bankDetails": {
+         |				"consigneeBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				},
+         |				"declarantBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				}
+         |			},
+         |			"ndrcDetails": [
+         |				{
+         |					"taxType": "A80",
+         |					"amount": "218.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000"
+         |				},
+         |				{
+         |					"taxType": "A95",
+         |					"amount": "211.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000"
+         |				},
+         |				{
+         |					"taxType": "A90",
+         |					"amount": "228.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000"
+         |				},
+         |				{
+         |					"taxType": "A85",
+         |					"amount": "171.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000"
+         |				}
+         |			]
+         |		}
+         |	}
          |}
          |""".stripMargin
     )
