@@ -44,7 +44,8 @@ object Tpi05Response {
         |            "status": "OK",
         |            "processingDate": "${TimeUtils.iso8061DateTimeNow}",
         |            "CDFPayService": "NDRC",
-        |            "CDFPayCaseNumber": "${GenUtils.caseNumber}"
+        |            "CDFPayCaseNumber": "${GenUtils.caseNumber}",
+        |            "correlationId": "${GenUtils.correlationId}"
         |        }
         |    }
         |}
