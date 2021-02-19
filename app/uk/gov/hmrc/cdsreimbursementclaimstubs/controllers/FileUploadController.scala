@@ -48,6 +48,9 @@ class FileUploadController @Inject()(cc:ControllerComponents) extends BackendCon
   }
 
   val uploadFile:Action[AnyContent] = Action { request =>
+    logger.error("========================================   F I L E   U P L O A D   ==================================================")
+    logger.error(request.headers.toMap.toString())
+    logger.error(request.body.toString())
     (for {
       _ <- Either.cond(request.method.toUpperCase == "POST", "POST", badRequest("Only Http POST is accepted"))
       _ <- request.headers.get("Accept").map(_.toLowerCase == "application/xml").toRight(badRequest("Incorrect Accept header"))
@@ -68,9 +71,9 @@ class FileUploadController @Inject()(cc:ControllerComponents) extends BackendCon
         Status(error.status)(error.body)
       },
         declarationId => declarationId match {
-          case "64DECInvalidData11" => BadRequest(badRequest("Invalid Data").body)
-          case "64DECAuthFailed111" => InternalServerError( error(500,"Authentication Failed").body)
-          case _ => NoContent
+          case "64DECInvalidData11" => BadRequest(badRequest("Invalid Data").body).as("application/xml")
+          case "64DECAuthFailed111" => InternalServerError( error(500,"Authentication Failed").body).as("application/xml")
+          case _ => NoContent.as("application/xml")
         }
 
       )
