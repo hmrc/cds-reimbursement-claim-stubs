@@ -24,6 +24,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.MockHttpResponse
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids.EORI
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.Tpi05Response.Tpi05ResponseType
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.{Tpi05ErrorResponse, Tpi05Response}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -52,7 +53,9 @@ class ClaimController @Inject() (cc: ControllerComponents) extends BackendContro
       .fold(
         e => {
           logger.warn(s"Could not validate nor parse request body: $e")
-          BadRequest
+          Ok(
+            Json.toJson(Tpi05Response.returnTpi05HttpResponse(Tpi05ResponseType.OK_RESPONSE).value)
+          ) //temporary solution until the payload to this call is implemented
         },
         json =>
           (json \ "postNewClaimsRequest" \ "requestDetail" \ "claimantEORI")
@@ -77,7 +80,8 @@ class ClaimController @Inject() (cc: ControllerComponents) extends BackendContro
                             case (INTERNAL_SERVER_ERROR, responseBody) => InternalServerError(Json.toJson(responseBody))
                           }
                       }
-                    case Right(tpi05Response) => Ok(Json.toJson(Tpi05Response.returnTpi05HttpResponse(tpi05Response).value))
+                    case Right(tpi05Response) =>
+                      Ok(Json.toJson(Tpi05Response.returnTpi05HttpResponse(tpi05Response).value))
                   }
                 case None =>
                   logger.warn(s"could not find profile with claimant eori: $str")

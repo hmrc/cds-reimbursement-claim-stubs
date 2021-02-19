@@ -164,7 +164,9 @@ object Acc14Response {
         |					"addressLine1": "10 Automation Road",
         |					"addressLine3": "Coventry",
         |					"postalCode": "CV3 6EA",
-        |					"countryCode": "GB"
+        |					"countryCode": "GB",
+        |         "telephone": "+4420723934397",
+        |         "emailAddress" : "automation@gmail.com"
         |				}
         |			},
         |			"bankDetails": {
@@ -226,7 +228,7 @@ object Acc14Response {
          |			"acceptanceDate": "2021-02-12",
          |			"procedureCode": "2",
          |			"declarantDetails": {
-         |				"declarantEORI": "GB201430007000",
+         |				"declarantEORI": "9GB03I52858027018",
          |				"legalName": "Automation Central LTD",
          |				"establishmentAddress": {
          |					"addressLine1": "10 Automation Road",
@@ -243,7 +245,7 @@ object Acc14Response {
          |				}
          |			},
          |			"consigneeDetails": {
-         |				"consigneeEORI": "GB201430007000",
+         |				"consigneeEORI": "9GB03I52858027018",
          |				"legalName": "Automation Central LTD",
          |				"establishmentAddress": {
          |					"addressLine1": "10 Automation Road",
