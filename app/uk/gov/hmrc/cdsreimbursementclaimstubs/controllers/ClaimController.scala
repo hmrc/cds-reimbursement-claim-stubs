@@ -53,9 +53,7 @@ class ClaimController @Inject() (cc: ControllerComponents) extends BackendContro
       .fold(
         e => {
           logger.warn(s"Could not validate nor parse request body: $e")
-          Ok(
-            Json.toJson(Tpi05Response.returnTpi05HttpResponse(Tpi05ResponseType.OK_RESPONSE).value)
-          ) //temporary solution until the payload to this call is implemented
+          InternalServerError
         },
         json =>
           (json \ "postNewClaimsRequest" \ "requestDetail" \ "claimantEORI")

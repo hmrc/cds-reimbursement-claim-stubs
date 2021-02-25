@@ -203,7 +203,7 @@
                 "$ref": "#/definitions/MRNDetail"
               }
             },
-            "DuplicateMRNDetails": {
+            "duplicateMRNDetails": {
               "$ref": "#/definitions/MRNDetail"
             },
             "entryDetails": {
@@ -216,6 +216,9 @@
               "$ref": "#/definitions/EntryDetail"
             }
           },
+          "required": [
+            "CDFPayService"
+          ],
           "additionalProperties": false
         }
       },
@@ -513,8 +516,7 @@
           "minLength": 1,
           "maxLength": 50,
           "enum": [
-            "Mail order goods",
-            "Duties no provided",
+            "Mail order goods - duties not due",
             "Overpayment",
             "Special circumstances"
           ]
@@ -576,17 +578,17 @@
           "minLength": 1,
           "maxLength": 160
         },
-        "addressline1": {
+        "addressLine1": {
           "type": "string",
           "minLength": 1,
           "maxLength": 35
         },
-        "addressline2": {
+        "addressLine2": {
           "type": "string",
           "minLength": 1,
           "maxLength": 35
         },
-        "addressline3": {
+        "AddressLine3": {
           "type": "string",
           "minLength": 1,
           "maxLength": 35
@@ -630,17 +632,17 @@
           "minLength": 1,
           "maxLength": 160
         },
-        "addressline1": {
+        "addressLine1": {
           "type": "string",
           "minLength": 1,
           "maxLength": 35
         },
-        "addressline2": {
+        "addressLine2": {
           "type": "string",
           "minLength": 1,
           "maxLength": 35
         },
-        "addressline3": {
+        "addressLine3": {
           "type": "string",
           "minLength": 1,
           "maxLength": 35
@@ -735,14 +737,14 @@
         "consigneeDetails": {
           "$ref": "#/definitions/MRNInformation"
         },
-        "bankInfo": {
+        "bankDetails": {
           "type": "object",
           "properties": {
             "consigneeBankDetails": {
-              "$ref": "#/definitions/BankDetails"
+              "$ref": "#/definitions/BankDetail"
             },
             "declarantBankDetails": {
-              "$ref": "#/definitions/BankDetails"
+              "$ref": "#/definitions/BankDetail"
             }
           },
           "additionalProperties": false
@@ -788,19 +790,12 @@
         "accountType": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 7,
-          "enum": [
-            "001",
-            "002",
-            "003",
-            "004",
-            "005"
-          ]
+          "maxLength": 7
         },
         "accountNumber": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 10
+          "maxLength": 18
         },
         "EORI": {
           "$ref": "#/definitions/EORI"
@@ -822,14 +817,7 @@
       ],
       "additionalProperties": false
     },
-    "AccountDetailsOLD": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false
-      }
-    },
-    "BankDetails": {
+    "BankDetail": {
       "type": "object",
       "properties": {
         "accountHolderName": {
@@ -886,14 +874,14 @@
         "consigneeDetails": {
           "$ref": "#/definitions/MRNInformation"
         },
-        "bankInfo": {
+        "bankDetails": {
           "type": "object",
           "properties": {
             "consigneeBankDetails": {
-              "$ref": "#/definitions/BankDetails"
+              "$ref": "#/definitions/BankDetail"
             },
             "declarantBankDetails": {
-              "$ref": "#/definitions/BankDetails"
+              "$ref": "#/definitions/BankDetail"
             }
           },
           "additionalProperties": false
