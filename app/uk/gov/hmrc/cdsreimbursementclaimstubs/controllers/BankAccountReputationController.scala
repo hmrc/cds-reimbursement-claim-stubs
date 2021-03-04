@@ -18,7 +18,7 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 
 import com.google.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.request.BarsPersonalAssessRequest
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response.{BARSResponse, ReputationErrorResponse, ReputationResponse}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
@@ -34,19 +34,24 @@ class BankAccountReputationController @Inject()(cc: ControllerComponents) extend
   def personalReputation(): Action[JsValue] = Action(parse.json) { implicit request =>
     (for {
       assessRequest <- Try(request.body.as[BarsPersonalAssessRequest]).toEither.leftMap(error => InternalServerError(error.getMessage))
-      _ <- Either.cond(
-        assessRequest.account.accountNumber.length == 8, (), BadRequest(Json.toJson(ReputationErrorResponse("INVALID_ACCOUNT_NUMBER", s"${assessRequest.account.accountNumber}: invalid account number"))))
-      _ <- Either.cond(assessRequest.account.sortCode.length == 6, (), BadRequest(Json.toJson(ReputationErrorResponse("INVALID_SORTCODE", s"${assessRequest.account.sortCode}: invalid sortcode"))))
+      _ <- Either.cond(assessRequest.account.accountNumber.length == 8, (), invalidAccountNumber(assessRequest.account.sortCode))
+      _ <- Either.cond(assessRequest.account.sortCode.length == 6, (), invalidSortCode(assessRequest.account.sortCode) )
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
   }
 
   def businessReputation(): Action[JsValue] = Action(parse.json) { implicit request =>
     (for {
       assessRequest <- Try(request.body.as[BarsPersonalAssessRequest]).toEither.leftMap(error => InternalServerError(error.getMessage))
-      _ <- Either.cond(assessRequest.account.accountNumber.length == 8, (), BadRequest(Json.toJson(ReputationErrorResponse("INVALID_ACCOUNT_NUMBER", s"${assessRequest.account.accountNumber}: invalid account number"))))
-      _ <- Either.cond(assessRequest.account.sortCode.length == 6, (), BadRequest(Json.toJson(ReputationErrorResponse("INVALID_SORTCODE", s"${assessRequest.account.sortCode}: invalid sortcode"))))
+      _ <- Either.cond(assessRequest.account.accountNumber.length == 8, (), invalidAccountNumber(assessRequest.account.sortCode))
+      _ <- Either.cond(assessRequest.account.sortCode.length == 6, (), invalidSortCode(assessRequest.account.sortCode) )
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
   }
+
+  def invalidAccountNumber(acountNumber:String):Result =
+    BadRequest(Json.toJson(ReputationErrorResponse("INVALID_ACCOUNT_NUMBER", s"$acountNumber: invalid account number")))
+
+  def invalidSortCode(sortCode:String):Result =
+    BadRequest(Json.toJson(ReputationErrorResponse("INVALID_SORTCODE", s"$sortCode: invalid sortcode")))
 
   def parseValidAccountNumber(accountNumber: String): BARSResponse = {
     accountNumber match {
