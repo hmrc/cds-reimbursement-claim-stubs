@@ -37,6 +37,38 @@
 |40ABCDEFGHIJKLMNO3|405| Request made with incorrect HTTP method |
 |50ABCDEFGHIJKLMNO1|500| Time outs, server is down, eis system errors etc  |
 
+
+# Bank Account Reputation Responses
+Any sort code which is not 6 digits long will be rejected with http 400 (BadRequest)
+Any account number which is not 8 digits long will be rejected with http 400 (BadRequest)
+
+In the following examples the sort code does not matter (as long as it's 6 digits)
+
+About the fields below and their possible values [click here](https://github.com/hmrc/bank-account-reputation/blob/master/docs/assess/v3/assess.md#accountnumberwithsortcodeisvalid)
+
+|Account Number| accountNumberWithSortCodeIsValid | accountExists |
+|---|---|---|
+|11001001|Yes | Some(Yes)|
+|11001002|Yes | Some(Indeterminate)|
+|11001003|Yes | Some(Error)|
+|11001004|Yes | Some(No)|
+|11002001|Indeterminate | Some(Yes)|
+|11002002|Indeterminate | Some(Indeterminate)|
+|11002003|Indeterminate | Some(Error)|
+|11002004|Indeterminate | Some(No)|
+|11003001|Error | Some(Yes)|
+|11003002|Error | Some(Indeterminate)|
+|11003003|Error | Some(Error)|
+|11003004|Error | Some(No)|
+|11004004|No | Some(No)|
+|11004009|No | None|
+|Anything Else|Yes|Some(Yes)|
+
+
+
 ### License
 
 This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
+
+
+[]: https://github.com/hmrc/bank-account-reputation/blob/master/docs/assess/v3/assess.md#accountnumberwithsortcodeisvalid
