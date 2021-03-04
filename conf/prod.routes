@@ -3,6 +3,8 @@
 POST       /tpi/postoverpaymentclaim/v1                         uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.ClaimController.submitClaim
 POST       /accounts/overpaymentdeclarationdisplay/v1           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DeclarationController.getDeclaration
 POST       /filetransfer/init/v1                                uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.CcsFileSubmission.submitFile
+POST       /business/v2/assess                                  uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.personalReputation
+POST       /personal/v3/assess                                  uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.businessReputation
 
 ->         /                                                    health.Routes
 GET        /admin/metrics                                       com.kenshoo.play.metrics.MetricsController.metrics
