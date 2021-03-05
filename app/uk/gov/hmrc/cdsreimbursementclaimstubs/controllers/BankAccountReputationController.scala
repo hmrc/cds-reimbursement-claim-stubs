@@ -19,7 +19,7 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 import com.google.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.request.BarsPersonalAssessRequest
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.request.{BarsAccount, BarsBusinessAssessRequest, BarsPersonalAssessRequest}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response.{BARSResponse, ReputationErrorResponse, ReputationResponse}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -31,20 +31,30 @@ import scala.util.Try
 @Singleton()
 class BankAccountReputationController @Inject()(cc: ControllerComponents) extends BackendController(cc) with Logging {
 
+  val digitsOnly = "\\d+"
+
   def personalReputation(): Action[JsValue] = Action(parse.json) { implicit request =>
     (for {
       assessRequest <- Try(request.body.as[BarsPersonalAssessRequest]).toEither.leftMap(error => InternalServerError(error.getMessage))
-      _ <- Either.cond(assessRequest.account.accountNumber.length == 8, (), invalidAccountNumber(assessRequest.account.sortCode))
-      _ <- Either.cond(assessRequest.account.sortCode.length == 6, (), invalidSortCode(assessRequest.account.sortCode) )
+      _ <- Either.cond(isAccountNumberValid(assessRequest.account.accountNumber), (), invalidAccountNumber(assessRequest.account.sortCode))
+      _ <- Either.cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode) )
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
   }
 
   def businessReputation(): Action[JsValue] = Action(parse.json) { implicit request =>
     (for {
-      assessRequest <- Try(request.body.as[BarsPersonalAssessRequest]).toEither.leftMap(error => InternalServerError(error.getMessage))
-      _ <- Either.cond(assessRequest.account.accountNumber.length == 8, (), invalidAccountNumber(assessRequest.account.sortCode))
-      _ <- Either.cond(assessRequest.account.sortCode.length == 6, (), invalidSortCode(assessRequest.account.sortCode) )
+      assessRequest <- Try(request.body.as[BarsBusinessAssessRequest]).toEither.leftMap(error => InternalServerError(error.getMessage))
+      _ <- Either.cond(isAccountNumberValid(assessRequest.account.accountNumber), (), invalidAccountNumber(assessRequest.account.sortCode))
+      _ <- Either.cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode) )
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
+  }
+
+  def isSortCodeValid(sortCode:String):Boolean = {
+    sortCode.length == 6 && sortCode.matches(digitsOnly)
+  }
+
+  def isAccountNumberValid(accountNumber:String):Boolean = {
+    accountNumber.length == 6 && accountNumber.matches(digitsOnly)
   }
 
   def invalidAccountNumber(acountNumber:String):Result =
