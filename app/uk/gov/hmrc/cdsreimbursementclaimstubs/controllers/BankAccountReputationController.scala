@@ -54,7 +54,7 @@ class BankAccountReputationController @Inject()(cc: ControllerComponents) extend
   }
 
   def isAccountNumberValid(accountNumber:String):Boolean = {
-    accountNumber.length == 6 && accountNumber.matches(digitsOnly)
+    accountNumber.length == 8 && accountNumber.matches(digitsOnly)
   }
 
   def invalidAccountNumber(acountNumber:String):Result =
