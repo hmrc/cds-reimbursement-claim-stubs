@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2017 rel. 3 sp1 (x64) (http://www.altova.com) by DST (H M Revenue & Customs) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:mdg="http://www.hmrc.gsi.gov.uk/mdg/batchFileInterfaceMetadataSchema" targetNamespace="http://www.hmrc.gsi.gov.uk/mdg/batchFileInterfaceMetadataSchema" elementFormDefault="qualified" attributeFormDefault="qualified" vc:minVersion="1.1">
+	<xs:import namespace="http://schemas.xmlsoap.org/soap/envelope/" schemaLocation="http://schemas.xmlsoap.org/soap/envelope/"/>
 	<xs:element name="BatchFileInterfaceMetadata">
 		<xs:annotation>
 			<xs:documentation>The Metadata File contains information about the Batch Interface File that is used to control the transport and management of the file by the MDG File Transport Framework.</xs:documentation>
