@@ -26,17 +26,11 @@ final case class Acc14Response(
 object Acc14Response {
 
   sealed trait Acc14ResponseType extends Product with Serializable
-
   object Acc14ResponseType {
-
     case object OK_MINIMUM_RESPONSE extends Acc14ResponseType
-
     case class OK_PARTIAL_RESPONSE(declarationId: String) extends Acc14ResponseType
-
     case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-
     case class OK_WITH_MISMATCH_ON_EORI(declarationId: String) extends Acc14ResponseType
-
   }
 
   def returnAcc14Response(acc14ResponseType: Acc14ResponseType): Acc14Response =
