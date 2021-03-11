@@ -4,14 +4,14 @@
 
 ## Simulate User Journey
 
-|MRN|EORI|Declaration Response| Claim Submission Response
-|---|---|---|---|
-|10ABCDEFGHIJKLMNO0|AA12345678901234Z| Eori numbers match - full response  | Successful submission | 
-|10ABCDEFGHIJKLMNO1|AA12345678901234Y| Eori numbers match - partial response  | Successful submission | 
-|20ABCDEFGHIJKLMNO1|AB12345678901234A| Eori numbers match - partial response | Successful submission but error response inside payload |
-|90ABCDEFGHIJKLMNO0|AE12345678901234Z| Eori numbers match - full response  | Failed submission | 
-|30ABCDEFGHIJKLMNO0|AC12345678901234Z| Eori not present  | Successful submission |
-|40ABCDEFGHIJKLMNO1|AD12345678901234A| Eori present but no match  | Successful submission |
+| GG EORI           | MRN                | Importer EORI     | Declarant EORI    | Declaration Response                  | Claim Submission Response                               |
+|-------------------|--------------------|-------------------|-------------------|---------------------------------------|---------------------------------------------------------|
+| AA12345678901234Z | 10ABCDEFGHIJKLMNO0 | GB123456789012345 | GB123456789012345 | Eori numbers match - full response    | Successful submission                                   |
+| AA12345678901234Y | 10ABCDEFGHIJKLMNO1 |                   |                   | Eori numbers match - partial response | Successful submission                                   |
+| AB12345678901234A | 20ABCDEFGHIJKLMNO1 |                   |                   | Eori numbers match - partial response | Successful submission but error response inside payload |
+| AE12345678901234Z | 90ABCDEFGHIJKLMNO0 | GB123456789012345 | GB123456789012345 | Eori numbers match - full response    | Failed submission                                       |
+| AC12345678901234Z | 30ABCDEFGHIJKLMNO0 |                   |                   | Eori not present                      | Successful submission                                   |
+| AD12345678901234A | 40ABCDEFGHIJKLMNO1 |                   |                   | Eori present but no match             | Successful submission                                   |
 
 # TPI05 API Simulated Responses
 
@@ -30,7 +30,7 @@
 
 |MRN|Http Response Code| Status |
 |---|---|---|
-|21ABCDEFGHIJKLMNO0|200| Success - minimum response (no declaration information) 
+|21ABCDEFGHIJKLMNO0|200| Success - minimum response (no declaration information)
 |22ABCDEFGHIJKLMNO1|200| Success - full response |
 |41ABCDEFGHIJKLMNO1|400| Bad request - missing declaration |
 |41ABCDEFGHIJKLMNO2|400| Bad request - no security deposit |
