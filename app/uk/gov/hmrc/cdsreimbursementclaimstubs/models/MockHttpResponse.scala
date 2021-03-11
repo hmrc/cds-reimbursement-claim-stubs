@@ -26,11 +26,11 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.Tpi05Response.Tpi05Re
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.{SubmitClaimResponse, WafErrorResponse}
 
 final case class MockHttpResponse(
-  mrnPredicate: MRN => Boolean,
-  eoriPredicate: EORI => Boolean,
-  submitClaimResponse: SubmitClaimResponse,
-  declarationResponse: DeclarationResponse
-)
+                                   mrnPredicate: MRN => Boolean,
+                                   eoriPredicate: EORI => Boolean,
+                                   submitClaimResponse: SubmitClaimResponse,
+                                   declarationResponse: DeclarationResponse
+                                 )
 
 object MockHttpResponse {
 
@@ -43,7 +43,7 @@ object MockHttpResponse {
         _ === MRN("10ABCDEFGHIJKLMNO0"),
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("10ABCDEFGHIJKLMNO0")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("10ABCDEFGHIJKLMNO0", "GB123456789012345", "GB123456789012345")))
       ),
       MockHttpResponse(
         _ === MRN("10ABCDEFGHIJKLMNO1"),
@@ -55,13 +55,13 @@ object MockHttpResponse {
         _ === MRN("20ABCDEFGHIJKLMNO1"),
         _ === EORI("AB12345678901234A"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_BUT_ERROR_RETURN_IN_PAYLOAD)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("20ABCDEFGHIJKLMNO1")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("20ABCDEFGHIJKLMNO1", "GB123456789012345", "GB123456789012345")))
       ),
       MockHttpResponse(
         _ === MRN("90ABCDEFGHIJKLMNO0"),
         _ === EORI("AE12345678901234Z"),
         SubmitClaimResponse(Left(Right(Tpi05ErrorResponseType.MISSING_MANDATORY_FIELD))),
-        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("90ABCDEFGHIJKLMNO0")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("90ABCDEFGHIJKLMNO0", "GB123456789012345", "GB123456789012345")))
       ),
       MockHttpResponse(
         _ === MRN("30ABCDEFGHIJKLMNO0"),
@@ -121,7 +121,7 @@ object MockHttpResponse {
         _ === MRN("30ABCDEFGHIJKLMNO1"),
         _ === EORI("GB12345678901234T"),
         SubmitClaimResponse(Left(Right(Tpi05ErrorResponseType.TIME_OUT))),
-        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("30ABCDEFGHIJKLMNO1")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("30ABCDEFGHIJKLMNO1", "GB123456789012345", "GB123456789012345")))
       ),
       MockHttpResponse(
         _ === MRN("21ABCDEFGHIJKLMNO0"),
@@ -133,7 +133,7 @@ object MockHttpResponse {
         _ === MRN("22ABCDEFGHIJKLMNO1"),
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Left(Right(Tpi05ErrorResponseType.TIME_OUT))),
-        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("AA12345678901234Z")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("AA12345678901234Z", "GB123456789012345", "GB123456789012345")))
       ),
       MockHttpResponse(
         _ === MRN("41ABCDEFGHIJKLMNO1"),
