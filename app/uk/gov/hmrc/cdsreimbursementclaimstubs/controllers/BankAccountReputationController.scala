@@ -16,15 +16,15 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 
+import cats.implicits._
 import com.google.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.request.{BarsAccount, BarsBusinessAssessRequest, BarsPersonalAssessRequest}
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response.{BARSResponse, ReputationErrorResponse, ReputationResponse}
+import play.api.mvc.{Action, ControllerComponents, Result}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.request.{BarsBusinessAssessRequest, BarsPersonalAssessRequest}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response.ReputationResponse._
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response.{BARSResponse, ReputationErrorResponse}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response.ReputationResponse._
-import cats.implicits._
 
 import scala.util.Try
 
