@@ -151,7 +151,7 @@ object Acc14Response {
          |				}
          |			},
          |			"consigneeDetails": {
-         |				"consigneeEORI": "$importerEORI,
+         |				"consigneeEORI": "$importerEORI",
          |				"legalName": "Automation Central LTD",
          |				"establishmentAddress": {
          |					"addressLine1": "10 Automation Road",
