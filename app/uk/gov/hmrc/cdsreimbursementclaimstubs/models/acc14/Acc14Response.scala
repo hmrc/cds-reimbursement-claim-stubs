@@ -135,35 +135,35 @@ object Acc14Response {
          |			"procedureCode": "2",
          |			"declarantDetails": {
          |				"declarantEORI": "$declarantEORI",
-         |				"legalName": "Automation Central LTD",
+         |				"legalName": "Foxpro Central LTD",
          |				"establishmentAddress": {
-         |					"addressLine1": "10 Automation Road",
+         |					"addressLine1": "12 Skybricks Road",
          |					"addressLine3": "Coventry",
          |					"postalCode": "CV3 6EA",
          |					"countryCode": "GB"
          |				},
          |				"contactDetails": {
-         |					"contactName": "Automation Central LTD",
-         |					"addressLine1": "10 Automation Road",
-         |					"addressLine3": "Coventry",
-         |					"postalCode": "CV3 6EA",
+         |					"contactName": "Info Tech LTD",
+         |					"addressLine1": "45 Church Road",
+         |					"addressLine3": "Leeds",
+         |					"postalCode": "LS1 2HA",
          |					"countryCode": "GB"
          |				}
          |			},
          |			"consigneeDetails": {
          |				"consigneeEORI": "$importerEORI",
-         |				"legalName": "Automation Central LTD",
+         |				"legalName": "IT Solutions LTD",
          |				"establishmentAddress": {
-         |					"addressLine1": "10 Automation Road",
-         |					"addressLine3": "Coventry",
-         |					"postalCode": "CV3 6EA",
+         |					"addressLine1": "19 Bricks Road",
+         |					"addressLine3": "Newcastle",
+         |					"postalCode": "NE12 5BT",
          |					"countryCode": "GB"
          |				},
          |				"contactDetails": {
-         |					"contactName": "Automation Central LTD",
-         |					"addressLine1": "10 Automation Road",
-         |					"addressLine3": "Coventry",
-         |					"postalCode": "CV3 6EA",
+         |					"contactName": "Online Sales LTD",
+         |					"addressLine1": "11 Mount Road",
+         |					"addressLine3": "London",
+         |					"postalCode": "E10 7PP",
          |					"countryCode": "GB",
          |         "telephone": "+4420723934397",
          |         "emailAddress" : "automation@gmail.com"
@@ -229,16 +229,16 @@ object Acc14Response {
          |			"procedureCode": "2",
          |			"declarantDetails": {
          |				"declarantEORI": "GB03I52858027018",
-         |				"legalName": "Automation Central LTD",
+         |				"legalName": "Starbucks LTD",
          |				"establishmentAddress": {
-         |					"addressLine1": "10 Automation Road",
-         |					"addressLine3": "Coventry",
-         |					"postalCode": "CV3 6EA",
+         |					"addressLine1": "16 Buckingham Road",
+         |					"addressLine3": "London",
+         |					"postalCode": "E10 6EA",
          |					"countryCode": "GB"
          |				},
          |				"contactDetails": {
-         |					"contactName": "Automation Central LTD",
-         |					"addressLine1": "10 Automation Road",
+         |					"contactName": "Core Central LTD",
+         |					"addressLine1": "46 Motorway Road",
          |					"addressLine3": "Coventry",
          |					"postalCode": "CV3 6EA",
          |					"countryCode": "GB"
@@ -246,18 +246,18 @@ object Acc14Response {
          |			},
          |			"consigneeDetails": {
          |				"consigneeEORI": "GB03I52858027018",
-         |				"legalName": "Automation Central LTD",
+         |				"legalName": "Expertise LTD",
          |				"establishmentAddress": {
-         |					"addressLine1": "10 Automation Road",
-         |					"addressLine3": "Coventry",
-         |					"postalCode": "CV3 6EA",
+         |					"addressLine1": "1 Cross Road",
+         |					"addressLine3": "Aberdeen",
+         |					"postalCode": "AB10 1AA",
          |					"countryCode": "GB"
          |				},
          |				"contactDetails": {
-         |					"contactName": "Automation Central LTD",
-         |					"addressLine1": "10 Automation Road",
-         |					"addressLine3": "Coventry",
-         |					"postalCode": "CV3 6EA",
+         |					"contactName": "Bright Central LTD",
+         |					"addressLine1": "101 Skylands Road",
+         |					"addressLine3": "Brighton",
+         |					"postalCode": "BN1 1BN",
          |					"countryCode": "GB"
          |				}
          |			},
