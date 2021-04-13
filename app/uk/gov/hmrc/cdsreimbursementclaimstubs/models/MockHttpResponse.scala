@@ -39,6 +39,87 @@ object MockHttpResponse {
 
   private val httpResponses: List[MockHttpResponse] =
     List(
+
+      //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("10AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("20AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("20AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("10AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("20AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("20AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+
+      //TPI05 OK_RESPONSE, ACC14 OK_PARTIAL_RESPONSE
+      MockHttpResponse(
+        _ === MRN("10BBBBBBBBBBBBBBB1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("10BBBBBBBBBBBBBBB1")))
+      ),
+      MockHttpResponse(
+        _ === MRN("20BBBBBBBBBBBBBBB1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("20BBBBBBBBBBBBBBB1")))
+      ),
+      MockHttpResponse(
+        _ === MRN("10BBBBBBBBBBBBBBB2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("10BBBBBBBBBBBBBBB2")))
+      ),
+      MockHttpResponse(
+        _ === MRN("20BBBBBBBBBBBBBBB2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("20BBBBBBBBBBBBBBB2")))
+      ),
+
+      //TPI05 OK_RESPONSE, ACC14 OK_MINIMUM_RESPONSE
+      MockHttpResponse(
+        _ === MRN("10CCCCCCCCCCCCCCC1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
+      ),
+      MockHttpResponse(
+        _ === MRN("20CCCCCCCCCCCCCCC1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
+      ),
+      MockHttpResponse(
+        _ === MRN("10CCCCCCCCCCCCCCC1"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
+      ),
+      MockHttpResponse(
+        _ === MRN("20CCCCCCCCCCCCCCC1"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
+      ),
+
+
+
       MockHttpResponse(
         _ === MRN("10ABCDEFGHIJKLMNO0"),
         _ === EORI("AA12345678901234Z"),
