@@ -106,13 +106,13 @@ object MockHttpResponse {
         DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
       ),
       MockHttpResponse(
-        _ === MRN("10CCCCCCCCCCCCCCC1"),
+        _ === MRN("10CCCCCCCCCCCCCCC2"),
         _ === EORI("GB000000000000002"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
       ),
       MockHttpResponse(
-        _ === MRN("20CCCCCCCCCCCCCCC1"),
+        _ === MRN("20CCCCCCCCCCCCCCC2"),
         _ === EORI("GB000000000000002"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
