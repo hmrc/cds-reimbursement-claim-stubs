@@ -22,7 +22,7 @@ lazy val microservice = Project(appName, file("."))
       "-Yrangepos",
       "-language:postfixOps"
     ),
-    scalacOptions in Test --= Seq("-Ywarn-value-discard"),
+    Test / scalacOptions --= Seq("-Ywarn-value-discard"),
     scalacOptions += "-P:silencer:pathFilters=routes"
   )
   .settings(scalaVersion := "2.12.12")
