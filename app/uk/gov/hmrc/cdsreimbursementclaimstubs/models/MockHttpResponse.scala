@@ -65,6 +65,12 @@ object MockHttpResponse {
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("20AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
       ),
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAAA3"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_NORTHERN_IRELAND("10AAAAAAAAAAAAAAA3", "GB000000000000002", "GB000000000000002")))
+      ),
 
       //TPI05 OK_RESPONSE, ACC14 OK_PARTIAL_RESPONSE
       MockHttpResponse(

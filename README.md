@@ -12,6 +12,7 @@
 | AE12345678901234Z | 90ABCDEFGHIJKLMNO0 | GB123456789012345 | GB123456789012345 | Eori numbers match - full response    | Failed submission                                       |
 | AC12345678901234Z | 30ABCDEFGHIJKLMNO0 |                   |                   | Eori not present                      | Successful submission                                   |
 | AD12345678901234A | 40ABCDEFGHIJKLMNO1 |                   |                   | Eori present but no match             | Successful submission                                   |
+| GB000000000000002 | 10AAAAAAAAAAAAAAA3 | GB000000000000002 | GB000000000000002 | Eori numbers match - Northern Ireland | Successful submission                                   |
 
 # TPI05 API Simulated Responses
 
@@ -25,6 +26,7 @@
 |EB12345678901234V|403| WAF error|
 |FB12345678901234U|405| HTTP method not allowed|
 |GB12345678901234T|500| Time outs, server is down, eis system errors etc|
+|10AAAAAAAAAAAAAAA3|200| 200 OK|
 
 # ACC14 API Simulated Responses
 
@@ -36,6 +38,7 @@
 |41ABCDEFGHIJKLMNO2|400| Bad request - no security deposit |
 |40ABCDEFGHIJKLMNO3|405| Request made with incorrect HTTP method |
 |50ABCDEFGHIJKLMNO1|500| Time outs, server is down, eis system errors etc  |
+|10AAAAAAAAAAAAAAA3|200| Success - full response with Northern Ireland tax codes|
 
 
 # Bank Account Reputation Responses
