@@ -33,6 +33,7 @@ object Acc14Response {
     case class OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_WITH_MISMATCH_ON_EORI(declarationId: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_NORTHERN_IRELAND (declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
+    case class OK_RESPONSE_NO_CONTACT_DETAILS(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
   }
 
   def returnAcc14Response(acc14ResponseType: Acc14ResponseType): Acc14Response =
@@ -43,6 +44,7 @@ object Acc14Response {
       case Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseWithAdditionalTaxCodes(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_WITH_MISMATCH_ON_EORI(declarationId) => getEoriMismatchResponse(declarationId)
       case Acc14ResponseType.OK_FULL_RESPONSE_NORTHERN_IRELAND(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseWithNorthernIrelandTaxCodes(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS(declarationId, importerEORI, declarantEORI) => getFullAcc14WithoutContactDetails(declarationId,importerEORI,declarantEORI)
     }
 
   def getMinimumAcc14Response = Acc14Response(
@@ -516,5 +518,84 @@ object Acc14Response {
          |""".stripMargin
     )
   )
+
+  def getFullAcc14WithoutContactDetails(movementReferenceNumber: String, importerEORI: String, declarantEORI: String) = Acc14Response(
+    Json.parse(
+      s"""
+         |{
+         |	"overpaymentDeclarationDisplayResponse": {
+         |		"responseCommon": {
+         |			"status": "OK",
+         |			"processingDate": "2021-02-12T11:34:54Z"
+         |		},
+         |		"responseDetail": {
+         |			"declarationId": "$movementReferenceNumber",
+         |			"acceptanceDate": "2021-02-12",
+         |			"procedureCode": "2",
+         |			"declarantDetails": {
+         |				"declarantEORI": "$declarantEORI",
+         |				"legalName": "Foxpro Central LTD",
+         |				"establishmentAddress": {
+         |					"addressLine1": "12 Skybricks Road",
+         |					"addressLine3": "Coventry",
+         |					"postalCode": "CV3 6EA",
+         |					"countryCode": "GB"
+         |				}
+         |			},
+         |			"consigneeDetails": {
+         |				"consigneeEORI": "$importerEORI",
+         |				"legalName": "IT Solutions LTD",
+         |				"establishmentAddress": {
+         |					"addressLine1": "19 Bricks Road",
+         |					"addressLine3": "Newcastle",
+         |					"postalCode": "NE12 5BT",
+         |					"countryCode": "GB"
+         |				}
+         |			},
+         |			"bankDetails": {
+         |				"consigneeBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				},
+         |				"declarantBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				}
+         |			},
+         |			"ndrcDetails": [
+         |				{
+         |					"taxType": "A80",
+         |					"amount": "218.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000"
+         |				},
+         |				{
+         |					"taxType": "A95",
+         |					"amount": "211.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000"
+         |				},
+         |				{
+         |					"taxType": "A90",
+         |					"amount": "228.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000"
+         |				},
+         |				{
+         |					"taxType": "A85",
+         |					"amount": "171.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000"
+         |				}
+         |			]
+         |		}
+         |	}
+         |}
+         |""".stripMargin
+    )
+  )
+
 
 }
