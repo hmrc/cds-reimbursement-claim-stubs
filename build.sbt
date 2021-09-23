@@ -30,6 +30,8 @@ lazy val microservice = Project(appName, file("."))
   .settings(Compile / resourceDirectory := baseDirectory.value / "/conf")
   .configs(IntegrationTest)
   .settings(integrationTestSettings(): _*)
-  .settings(resolvers += Resolver.jcenterRepo)
   .settings(PlayKeys.playDefaultPort := 7502)
-  .settings(resolvers ++= Seq(Resolver.jcenterRepo, "emueller-bintray" at "https://dl.bintray.com/emueller/maven"))
+  .settings(resolvers ++= Seq(
+    Resolver.jcenterRepo,
+    "third-party-maven-releases" at "https://artefacts.tax.service.gov.uk/artifactory/third-party-maven-releases/"
+  ))
