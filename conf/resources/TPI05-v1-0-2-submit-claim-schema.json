@@ -782,8 +782,7 @@
       "required": [
         "EORI",
         "legalName",
-        "establishmentAddress",
-        "contactDetails"
+        "establishmentAddress"
       ],
       "additionalProperties": false
     },
