@@ -192,25 +192,29 @@ object Acc14Response {
          |					"taxType": "A80",
          |					"amount": "218.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
          |				},
          |				{
          |					"taxType": "A95",
          |					"amount": "211.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |           "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A90",
          |					"amount": "228.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A85",
          |					"amount": "171.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				}
          |			]
          |		}
@@ -286,43 +290,50 @@ object Acc14Response {
          |					"taxType": "A20",
          |					"amount": "218.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A35",
          |					"amount": "211.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A90",
          |					"amount": "228.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
          |				},
          |				{
          |					"taxType": "A85",
          |					"amount": "171.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |        {
          |					"taxType": "A95",
          |					"amount": "171.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |        {
          |					"taxType": "421",
          |					"amount": "171.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
          |				},
          |        {
          |					"taxType": "623",
          |					"amount": "171.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": ""
          |				}
          |			]
          |		}
@@ -396,25 +407,29 @@ object Acc14Response {
          |					"taxType": "A80",
          |					"amount": "218.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
          |				},
          |				{
          |					"taxType": "A95",
          |					"amount": "211.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A90",
          |					"amount": "228.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A85",
          |					"amount": "171.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				}
          |			]
          |		}
@@ -491,25 +506,29 @@ object Acc14Response {
          |					"taxType": "A80",
          |					"amount": "218.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
          |				},
          |				{
          |					"taxType": "421",
          |					"amount": "211.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "623",
          |					"amount": "228.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "99C",
          |					"amount": "171.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				}
          |			]
          |		}
@@ -569,25 +588,29 @@ object Acc14Response {
          |					"taxType": "A80",
          |					"amount": "218.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
          |				},
          |				{
          |					"taxType": "A95",
          |					"amount": "211.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A90",
          |					"amount": "228.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A85",
          |					"amount": "171.00",
          |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000"
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
          |				}
          |			]
          |		}
