@@ -301,13 +301,13 @@ object MockHttpResponse {
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS("10AAAAAAAAAAAAAAA6", "GB000000000000006", "GB000000000000006")))
       ),
+      //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE (other scenario - different duties)
       MockHttpResponse(
         _ === MRN("10XXXXXXXXXXXXXXX1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1("10XXXXXXXXXXXXXXX1", "GB000000000000001", "GB000000000000001")))
       ),
-      //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE (other scenario - different duties)
       MockHttpResponse(
         _ === MRN("10YYYYYYYYYYYYYYY1"),
         _ === EORI("GB000000000000001"),
