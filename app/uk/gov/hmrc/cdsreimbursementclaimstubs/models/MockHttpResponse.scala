@@ -40,12 +40,120 @@ object MockHttpResponse {
   private val httpResponses: List[MockHttpResponse] =
     List(
 
-      //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE
+      //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE (standard scenario)
+      MockHttpResponse(
+        _ === MRN("01AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("02AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("02AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("03AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("03AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("04AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("04AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("05AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("05AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("06AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("06AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("07AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("07AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("08AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("08AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("09AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("09AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
       MockHttpResponse(
         _ === MRN("10AAAAAAAAAAAAAAA1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("10AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("11AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("11AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("12AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("12AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("13AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("13AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("14AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("14AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("15AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("15AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("16AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("16AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("17AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("17AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("18AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("18AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("19AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("19AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
       ),
       MockHttpResponse(
         _ === MRN("20AAAAAAAAAAAAAAA1"),
@@ -54,10 +162,118 @@ object MockHttpResponse {
         DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("20AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")))
       ),
       MockHttpResponse(
+        _ === MRN("01AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("02AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("02AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("03AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("03AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("04AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("04AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("05AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("05AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("06AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("06AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("07AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("07AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("08AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("08AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("09AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("09AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
         _ === MRN("10AAAAAAAAAAAAAAA2"),
         _ === EORI("GB000000000000002"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("10AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("11AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("11AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("12AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("12AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("13AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("13AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("14AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("14AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("15AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("15AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("16AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("16AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("17AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("17AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("18AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("18AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+      ),
+      MockHttpResponse(
+        _ === MRN("19AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000002"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("19AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
       ),
       MockHttpResponse(
         _ === MRN("20AAAAAAAAAAAAAAA2"),
@@ -65,6 +281,8 @@ object MockHttpResponse {
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("20AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
       ),
+
+      //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE (other scenario)
       MockHttpResponse(
         _ === MRN("50AAAAAAAAAAAAAAA1"),
         _ === EORI("GB000000000000005"),
@@ -83,7 +301,25 @@ object MockHttpResponse {
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS("10AAAAAAAAAAAAAAA6", "GB000000000000006", "GB000000000000006")))
       ),
-
+      MockHttpResponse(
+        _ === MRN("10XXXXXXXXXXXXXXX1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1("10XXXXXXXXXXXXXXX1", "GB000000000000001", "GB000000000000001")))
+      ),
+      //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE (other scenario - different duties)
+      MockHttpResponse(
+        _ === MRN("10YYYYYYYYYYYYYYY1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2("10YYYYYYYYYYYYYYY1", "GB000000000000001", "GB000000000000001")))
+      ),
+      MockHttpResponse(
+        _ === MRN("10ZZZZZZZZZZZZZZZ1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_3("10ZZZZZZZZZZZZZZZ1", "GB000000000000001", "GB000000000000001")))
+      ),
 
 
       //TPI05 OK_RESPONSE, ACC14 OK_PARTIAL_RESPONSE
