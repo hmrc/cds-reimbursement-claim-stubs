@@ -162,6 +162,45 @@ object Acc14Response {
          |					"countryCode": "GB"
          |				}
          |			},
+         |          "accountDetails":
+         |          [
+         |              {
+         |                  "accountType": "a",
+         |                  "accountNumber": "1",
+         |                  "eori": "$importerEORI",
+         |                  "legalName": "a",
+         |                  "contactDetails":
+         |                  {
+         |                      "contactName": "a",
+         |                      "addressLine1": "a",
+         |                      "addressLine2": "a",
+         |                      "addressLine3": "a",
+         |                      "addressLine4": "a",
+         |                      "postalCode": "a",
+         |                      "countryCode": "UK",
+         |                      "telephone": "a",
+         |                      "emailAddress": "a"
+         |                  }
+         |              },
+         |              {
+         |                  "accountType": "b",
+         |                  "accountNumber": "2",
+         |                  "eori": "$importerEORI",
+         |                  "legalName": "b",
+         |                  "contactDetails":
+         |                  {
+         |                      "contactName": "b",
+         |                      "addressLine1": "b",
+         |                      "addressLine2": "b",
+         |                      "addressLine3": "b",
+         |                      "addressLine4": "b",
+         |                      "postalCode": "b",
+         |                      "countryCode": "UK",
+         |                      "telephone": "b",
+         |                      "emailAddress": "b"
+         |                  }
+         |              }
+         |          ],
          |			"consigneeDetails": {
          |				"consigneeEORI": "$importerEORI",
          |				"legalName": "IT Solutions LTD",
