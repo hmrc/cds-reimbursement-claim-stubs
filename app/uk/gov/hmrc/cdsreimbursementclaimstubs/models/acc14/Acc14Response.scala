@@ -177,7 +177,7 @@ object Acc14Response {
          |                      "addressLine3": "a",
          |                      "addressLine4": "a",
          |                      "postalCode": "a",
-         |                      "countryCode": "UK",
+         |                      "countryCode": "GB",
          |                      "telephone": "a",
          |                      "emailAddress": "a"
          |                  }
@@ -195,7 +195,7 @@ object Acc14Response {
          |                      "addressLine3": "b",
          |                      "addressLine4": "b",
          |                      "postalCode": "b",
-         |                      "countryCode": "UK",
+         |                      "countryCode": "GB",
          |                      "telephone": "b",
          |                      "emailAddress": "b"
          |                  }
