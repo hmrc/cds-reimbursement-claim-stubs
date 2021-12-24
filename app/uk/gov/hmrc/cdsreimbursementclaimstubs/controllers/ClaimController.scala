@@ -47,6 +47,7 @@ class ClaimController @Inject() (cc: ControllerComponents) extends BackendContro
 
   def submitClaim: Action[JsValue] = Action(parse.json) { implicit request =>
     val validator = SchemaValidator(Some(Version4))
+
     validator
       .validate(schemaToBeValidated, request.body)
       .fold(
