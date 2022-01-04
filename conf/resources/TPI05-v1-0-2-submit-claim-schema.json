@@ -135,7 +135,7 @@
                 "Not in Accordance with Contract",
                 "Defective",
                 "Damaged Before Clearance",
-                "Undeliverable"
+                "Special Circumstances"
               ]
             },
             "claimant": {
@@ -528,6 +528,28 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 500
+        },
+        "anySpecialCircumstances": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "atTheImporterOrDeclarantAddress": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 27,
+          "enum": [
+            "Importer",
+            "Declarant",
+            "Representative",
+            "Other"
+          ]
+        },
+        "dateOfInspection": {
+          "$ref": "#/definitions/Date"
+        },
+        "inspectionAddress": {
+          "$ref": "#/definitions/InspectionAddress"
         }
       },
       "additionalProperties": false
@@ -623,6 +645,35 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 241
+        }
+      },
+      "additionalProperties": false
+    },
+    "InspectionAddress": {
+      "type": "object",
+      "properties": {
+        "addressLine1": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "addressLine2": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "countryCode": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "postalCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 9
         }
       },
       "additionalProperties": false
