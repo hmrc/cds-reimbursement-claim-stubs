@@ -540,7 +540,7 @@
           "maxLength": 27,
           "enum": [
             "Importer",
-            "Declarant",
+            "Declarant or Representative",
             "Representative",
             "Other"
           ]
@@ -613,7 +613,7 @@
           "minLength": 1,
           "maxLength": 35
         },
-        "AddressLine3": {
+        "addressLine3": {
           "type": "string",
           "minLength": 1,
           "maxLength": 35
@@ -636,7 +636,7 @@
           "minLength": 1,
           "maxLength": 9
         },
-        "telephone": {
+        "telephoneNumber": {
           "type": "string",
           "minLength": 1,
           "maxLength": 30
