@@ -39,7 +39,7 @@ class CcsFileSubmission @Inject()(cc: ControllerComponents)
     with Logging
     with EitherSyntax {
 
-  val saxParserFactory: SAXParserFactory = {
+  lazy val saxParserFactory: SAXParserFactory = {
     val schemaLang = javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI
     val xsdFile    = getClass.getResourceAsStream("/resources/DEC64-v1-0-0-file-upload.xsd")
     val xsdStream  = new javax.xml.transform.stream.StreamSource(xsdFile)
