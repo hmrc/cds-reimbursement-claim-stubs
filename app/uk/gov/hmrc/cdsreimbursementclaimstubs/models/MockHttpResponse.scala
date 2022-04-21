@@ -273,7 +273,7 @@ object MockHttpResponse {
         _ === MRN("19AAAAAAAAAAAAAAA2"),
         _ === EORI("GB000000000000002"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE("19AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES("19AAAAAAAAAAAAAAA2", "GB000000000000002", "GB000000000000002")))
       ),
       MockHttpResponse(
         _ === MRN("20AAAAAAAAAAAAAAA2"),
