@@ -65,7 +65,15 @@ About the fields below and their possible values [click here](https://github.com
 |11003004|Error | Some(No)|
 |11004004|No | Some(No)|
 |11004009|No | None|
+|11004009|No | None|
 |Anything Else|Yes|Some(Yes)|
+
+# BARS Simulated Responses
+
+| Account Number                  | Http Response Code | Status                    |
+|---------------------------------|-------------------|---------------------------|
+| 90909090                        | 503             | SERVICE_UNAVAILABLE       
+| Anything else | 200               | OK |
 
 
 

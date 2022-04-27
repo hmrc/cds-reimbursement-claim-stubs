@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 
+import cats._
 import cats.implicits._
 import com.google.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue, Json}
@@ -34,18 +35,22 @@ class BankAccountReputationController @Inject()(cc: ControllerComponents) extend
   val digitsOnly = "\\d+"
 
   def personalReputation(): Action[JsValue] = Action(parse.json) { implicit request =>
+    logger.debug(s"processing personal request $request ${request.headers} ${request.body}")
     (for {
-      assessRequest <- Try(request.body.as[BarsPersonalAssessRequest]).toEither.leftMap(error => InternalServerError(error.getMessage))
+      assessRequest <- Try(request.body.as[BarsPersonalAssessRequest]).toEither.leftMap(error => BadRequest(error.getMessage))
       _ <- Either.cond(isAccountNumberValid(assessRequest.account.accountNumber), (), invalidAccountNumber(assessRequest.account.sortCode))
       _ <- Either.cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode) )
+      _ <- specialAccountBehaviour(assessRequest.account.accountNumber)
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
   }
 
   def businessReputation(): Action[JsValue] = Action(parse.json) { implicit request =>
+    logger.debug(s"processing business request $request  ${request.headers} ${request.body}")
     (for {
-      assessRequest <- Try(request.body.as[BarsBusinessAssessRequest]).toEither.leftMap(error => InternalServerError(error.getMessage))
+      assessRequest <- Try(request.body.as[BarsBusinessAssessRequest]).toEither.leftMap(error => BadRequest(error.getMessage))
       _ <- Either.cond(isAccountNumberValid(assessRequest.account.accountNumber), (), invalidAccountNumber(assessRequest.account.sortCode))
       _ <- Either.cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode) )
+
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
   }
 
@@ -62,6 +67,11 @@ class BankAccountReputationController @Inject()(cc: ControllerComponents) extend
 
   def invalidSortCode(sortCode:String):Result =
     BadRequest(Json.toJson(ReputationErrorResponse("INVALID_SORTCODE", s"$sortCode: invalid sortcode")))
+
+  def specialAccountBehaviour(accountNumber: String): Either[Result, Unit] = accountNumber match {
+    case "90909090" => Left(ServiceUnavailable(Json.toJson(ReputationErrorResponse("SERVICE_UNAVAILABLE", "please try again later"))))
+    case _ => Right(())
+  }
 
   def parseValidAccountNumber(accountNumber: String): BARSResponse = {
     accountNumber match {
@@ -87,7 +97,5 @@ class BankAccountReputationController @Inject()(cc: ControllerComponents) extend
       case _ => BARSResponse(Yes, Yes, Some(Yes))
     }
   }
-
-
 }
 
