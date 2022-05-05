@@ -321,6 +321,21 @@ object MockHttpResponse {
         DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_3("10ZZZZZZZZZZZZZZZ1", "GB000000000000001", "GB000000000000001")))
       ),
 
+      //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE (other duties and VAT duties)
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAAA7"),
+        _ === EORI("GB000000000000007"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_VAT("10AAAAAAAAAAAAAAA7", "GB000000000000007", "GB000000000000007")))
+      ),
+
+      //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE (VAT duties)
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAAA8"),
+        _ === EORI("GB000000000000008"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_VAT("10AAAAAAAAAAAAAAA8", "GB000000000000008", "GB000000000000008")))
+      ),
 
       //TPI05 OK_RESPONSE, ACC14 OK_PARTIAL_RESPONSE
       MockHttpResponse(

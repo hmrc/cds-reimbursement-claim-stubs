@@ -33,6 +33,8 @@ object Acc14Response {
     case class OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_OTHER_DUTIES_3(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_OTHER_DUTIES_VAT(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_VAT(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_WITH_MISMATCH_ON_EORI(declarationId: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_NORTHERN_IRELAND (declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
@@ -47,6 +49,8 @@ object Acc14Response {
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDuties1(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDuties2(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_3(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDuties3(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_VAT(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDutiesAndVatDuties(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_VAT(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseVatDuties(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseWithAdditionalTaxCodes(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_WITH_MISMATCH_ON_EORI(declarationId) => getEoriMismatchResponse(declarationId)
       case Acc14ResponseType.OK_FULL_RESPONSE_NORTHERN_IRELAND(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseWithNorthernIrelandTaxCodes(declarationId, importerEORI, declarantEORI)
@@ -670,6 +674,216 @@ object Acc14Response {
          |				{
          |					"taxType": "99B",
          |					"amount": "20000000.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
+         |				}
+         |			]
+         |		}
+         |	}
+         |}
+         |""".stripMargin
+    )
+  )
+
+  def getFullAcc14ResponseOtherDutiesAndVatDuties(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
+    Json.parse(
+      s"""
+         |{
+         |	"overpaymentDeclarationDisplayResponse": {
+         |		"responseCommon": {
+         |			"status": "OK",
+         |			"processingDate": "2021-02-12T11:34:54Z"
+         |		},
+         |		"responseDetail": {
+         |			"declarationId": "$declarationId",
+         |			"acceptanceDate": "2021-02-12",
+         |			"procedureCode": "2",
+         |			"declarantDetails": {
+         |				"declarantEORI": "$declarantEORI",
+         |				"legalName": "Foxpro Central LTD",
+         |				"establishmentAddress": {
+         |					"addressLine1": "12 Skybricks Road",
+         |					"addressLine3": "Coventry",
+         |					"postalCode": "CV3 6EA",
+         |					"countryCode": "GB"
+         |				},
+         |				"contactDetails": {
+         |					"contactName": "Info Tech LTD",
+         |					"addressLine1": "45 Church Road",
+         |					"addressLine3": "Leeds",
+         |					"postalCode": "LS1 2HA",
+         |					"countryCode": "GB"
+         |				}
+         |			},
+         |			"consigneeDetails": {
+         |				"consigneeEORI": "$importerEORI",
+         |				"legalName": "IT Solutions LTD",
+         |				"establishmentAddress": {
+         |					"addressLine1": "19 Bricks Road",
+         |					"addressLine3": "Newcastle",
+         |					"postalCode": "NE12 5BT",
+         |					"countryCode": "GB"
+         |				},
+         |				"contactDetails": {
+         |					"contactName": "Online Sales LTD",
+         |					"addressLine1": "11 Mount Road",
+         |					"addressLine3": "London",
+         |					"postalCode": "E10 7PP",
+         |					"countryCode": "GB",
+         |         "telephone": "+4420723934397",
+         |         "emailAddress" : "automation@gmail.com"
+         |				}
+         |			},
+         |			"bankDetails": {
+         |				"consigneeBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				},
+         |				"declarantBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				}
+         |			},
+         |			"ndrcDetails": [
+         |				{
+         |					"taxType": "B00",
+         |					"amount": "10.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |           "cmaEligible": "1"
+         |				},
+         |				{
+         |					"taxType": "B05",
+         |					"amount": "20.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
+         |				},
+         |				{
+         |					"taxType": "589",
+         |					"amount": "10.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
+         |				},
+         |				{
+         |					"taxType": "595",
+         |					"amount": "20.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
+         |				},
+         |				{
+         |					"taxType": "591",
+         |					"amount": "10.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
+         |				},
+         |				{
+         |					"taxType": "592",
+         |					"amount": "20.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
+         |				},
+         |				{
+         |					"taxType": "99A",
+         |					"amount": "10000000.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
+         |				},
+         |				{
+         |					"taxType": "99B",
+         |					"amount": "20000000.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
+         |				}
+         |			]
+         |		}
+         |	}
+         |}
+         |""".stripMargin
+    )
+  )
+
+  def getFullAcc14ResponseVatDuties(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
+    Json.parse(
+      s"""
+         |{
+         |	"overpaymentDeclarationDisplayResponse": {
+         |		"responseCommon": {
+         |			"status": "OK",
+         |			"processingDate": "2021-02-12T11:34:54Z"
+         |		},
+         |		"responseDetail": {
+         |			"declarationId": "$declarationId",
+         |			"acceptanceDate": "2021-02-12",
+         |			"procedureCode": "2",
+         |			"declarantDetails": {
+         |				"declarantEORI": "$declarantEORI",
+         |				"legalName": "Foxpro Central LTD",
+         |				"establishmentAddress": {
+         |					"addressLine1": "12 Skybricks Road",
+         |					"addressLine3": "Coventry",
+         |					"postalCode": "CV3 6EA",
+         |					"countryCode": "GB"
+         |				},
+         |				"contactDetails": {
+         |					"contactName": "Info Tech LTD",
+         |					"addressLine1": "45 Church Road",
+         |					"addressLine3": "Leeds",
+         |					"postalCode": "LS1 2HA",
+         |					"countryCode": "GB"
+         |				}
+         |			},
+         |			"consigneeDetails": {
+         |				"consigneeEORI": "$importerEORI",
+         |				"legalName": "IT Solutions LTD",
+         |				"establishmentAddress": {
+         |					"addressLine1": "19 Bricks Road",
+         |					"addressLine3": "Newcastle",
+         |					"postalCode": "NE12 5BT",
+         |					"countryCode": "GB"
+         |				},
+         |				"contactDetails": {
+         |					"contactName": "Online Sales LTD",
+         |					"addressLine1": "11 Mount Road",
+         |					"addressLine3": "London",
+         |					"postalCode": "E10 7PP",
+         |					"countryCode": "GB",
+         |         "telephone": "+4420723934397",
+         |         "emailAddress" : "automation@gmail.com"
+         |				}
+         |			},
+         |			"bankDetails": {
+         |				"consigneeBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				},
+         |				"declarantBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				}
+         |			},
+         |			"ndrcDetails": [
+         |				{
+         |					"taxType": "B00",
+         |					"amount": "10.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |           "cmaEligible": "1"
+         |				},
+         |				{
+         |					"taxType": "B05",
+         |					"amount": "20.00",
          |					"paymentMethod": "001",
          |					"paymentReference": "GB201430007000",
          |          "cmaEligible": "0"
