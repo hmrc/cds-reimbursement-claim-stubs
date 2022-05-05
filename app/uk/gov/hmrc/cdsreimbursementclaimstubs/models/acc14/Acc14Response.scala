@@ -789,20 +789,6 @@ object Acc14Response {
          |					"paymentMethod": "001",
          |					"paymentReference": "GB201430007000",
          |          "cmaEligible": "0"
-         |				},
-         |				{
-         |					"taxType": "99A",
-         |					"amount": "10000000.00",
-         |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000",
-         |          "cmaEligible": "1"
-         |				},
-         |				{
-         |					"taxType": "99B",
-         |					"amount": "20000000.00",
-         |					"paymentMethod": "001",
-         |					"paymentReference": "GB201430007000",
-         |          "cmaEligible": "0"
          |				}
          |			]
          |		}

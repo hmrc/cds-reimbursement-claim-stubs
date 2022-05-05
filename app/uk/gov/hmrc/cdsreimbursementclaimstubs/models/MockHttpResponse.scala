@@ -334,7 +334,7 @@ object MockHttpResponse {
         _ === MRN("10AAAAAAAAAAAAAAA8"),
         _ === EORI("GB000000000000008"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_VAT("10AAAAAAAAAAAAAAA8", "GB000000000000008", "GB000000000000008")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_VAT("10AAAAAAAAAAAAAAA8", "GB000000000000008", "GB000000000000008")))
       ),
 
       //TPI05 OK_RESPONSE, ACC14 OK_PARTIAL_RESPONSE
