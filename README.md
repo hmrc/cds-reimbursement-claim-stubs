@@ -70,10 +70,11 @@ About the fields below and their possible values [click here](https://github.com
 
 # BARS Simulated Responses
 
-| Account Number                  | Http Response Code | Status                    |
-|---------------------------------|-------------------|---------------------------|
-| 90909090                        | 503             | SERVICE_UNAVAILABLE       
-| Anything else | 200               | OK |
+| Account Number | Http Response Code | Status                    |
+|----------------|--------------------|---------------------------|
+| 90909090       | 503                | SERVICE_UNAVAILABLE       
+| 90909091       | 400                | BAD_REQUEST
+| Anything else  | 200                | OK |
 
 
 
