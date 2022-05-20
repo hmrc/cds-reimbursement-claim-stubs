@@ -70,6 +70,7 @@ class BankAccountReputationController @Inject()(cc: ControllerComponents) extend
 
   def specialAccountBehaviour(accountNumber: String): Either[Result, Unit] = accountNumber match {
     case "90909090" => Left(ServiceUnavailable(Json.toJson(ReputationErrorResponse("SERVICE_UNAVAILABLE", "please try again later"))))
+    case "90909091" => Left(BadRequest(Json.toJson(ReputationErrorResponse("BAD_REQUEST", "please check API reference"))))
     case _ => Right(())
   }
 
