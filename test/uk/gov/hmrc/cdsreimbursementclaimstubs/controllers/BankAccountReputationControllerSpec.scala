@@ -96,7 +96,7 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       }
     }
 
-    "processing a special account bars request that generates a 400 from test stub " should {
+    "processing a special account bars request that generates a 400 from the personal endpoint test stub " should {
       val jsonAccount: JsValue = Json.toJson(BarsPersonalAssessRequest(
         BarsAccount("123456", "90909091"),
         BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))))
@@ -113,7 +113,23 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       }
     }
 
-    "processing a special account bars request that generates a 503 from test stub " should {
+    "processing a special account bars request that generates a 400 from the business endpoint test stub " should {
+      val jsonAccount: JsValue =
+        Json.toJson(BarsBusinessAssessRequest(BarsAccount("123456", "90909091"), Option.empty[BarsBusiness]))
+      val request = FakeRequest("POST", "/business/v2/assess")
+        .withHeaders(("Content-Type" ,"application/json"))
+        .withBody(jsonAccount)
+      val result = controller.businessReputation().apply(request)
+
+      "return 400 (BAD_REQUEST)" in {
+        status(result) should ===(BAD_REQUEST)
+      }
+      "return an appropriate error response" in {
+        contentAsJson(result).as[ReputationErrorResponse] should ===(ReputationErrorResponse("BAD_REQUEST", "please check API reference"))
+      }
+    }
+
+    "processing a special account bars request that generates a 503 from the personal endpoint test stub " should {
       val jsonAccount: JsValue = Json.toJson(BarsPersonalAssessRequest(
         BarsAccount("123456", "90909090"),
         BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))))
@@ -121,6 +137,22 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
         .withHeaders(("Content-Type" ,"application/json"))
         .withBody(jsonAccount)
       val result = controller.personalReputation().apply(request)
+
+      "return 503 (SERVICE_UNAVAILABLE)" in {
+        status(result) should ===(SERVICE_UNAVAILABLE)
+      }
+      "return an appropriate error response" in {
+        contentAsJson(result).as[ReputationErrorResponse] should ===(ReputationErrorResponse("SERVICE_UNAVAILABLE", "please try again later"))
+      }
+    }
+
+    "processing a special account bars request that generates a 503 from the business endpoint test stub " should {
+      val jsonAccount: JsValue =
+        Json.toJson(BarsBusinessAssessRequest(BarsAccount("123456", "90909090"), Option.empty[BarsBusiness]))
+      val request = FakeRequest("POST", "/business/v2/assess")
+        .withHeaders(("Content-Type" ,"application/json"))
+        .withBody(jsonAccount)
+      val result = controller.businessReputation().apply(request)
 
       "return 503 (SERVICE_UNAVAILABLE)" in {
         status(result) should ===(SERVICE_UNAVAILABLE)

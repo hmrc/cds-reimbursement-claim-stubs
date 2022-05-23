@@ -50,7 +50,7 @@ class BankAccountReputationController @Inject()(cc: ControllerComponents) extend
       assessRequest <- Try(request.body.as[BarsBusinessAssessRequest]).toEither.leftMap(error => BadRequest(error.getMessage))
       _ <- Either.cond(isAccountNumberValid(assessRequest.account.accountNumber), (), invalidAccountNumber(assessRequest.account.sortCode))
       _ <- Either.cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode) )
-
+      _ <- specialAccountBehaviour(assessRequest.account.accountNumber)
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
   }
 
