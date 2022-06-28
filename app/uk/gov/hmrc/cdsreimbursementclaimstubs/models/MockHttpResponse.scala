@@ -513,12 +513,78 @@ object MockHttpResponse {
       )
     )
 
+  // If any extra securities use cases are identified all you need to do is add extra case
+  // statements to match the new criteria.
   def getSecuritiesDeclaration(mrn: MRN, reasonForSecurity: String): Option[DeclarationResponse] = {
-    Some(
-      DeclarationResponse(
-        Right(
-          Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000001", "GB000000000000001"))
-      )
-    )
+    (mrn, reasonForSecurity) match {
+      case (MRN("01AAAAAAAAAAAAAAA1"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000001", "GB000000000000001"))
+          )
+        )
+      case (MRN("01AAAAAAAAAAAAAAA2"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000002", "GB000000000000002"))
+          )
+        )
+      case (MRN("19AAAAAAAAAAAAAAA2"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000002", "GB000000000000002"))
+          )
+        )
+      case (MRN("41ABCDEFGHIJKLMNO2"), "RED") =>
+        Some(
+          DeclarationResponse(
+            Left(
+              Right(
+                Acc14ErrorResponseType.NO_SECURITY_DEPOSITS
+              )
+            )
+          )
+        )
+      case (MRN("41ABCDEFGHIJKLMNO1"), _) =>
+        Some(
+          DeclarationResponse(
+            Left(
+              Right(
+                Acc14ErrorResponseType.BAD_REQUEST_MISSING_DECLARATION
+              )
+            )
+          )
+        )
+      case (MRN("50ABCDEFGHIJKLMNO1"), _) =>
+        Some(
+          DeclarationResponse(
+            Left(
+              Right(
+                Acc14ErrorResponseType.TIME_OUT
+              )
+            )
+          )
+        )
+      case (MRN("40ABCDEFGHIJKLMNO3"), _) =>
+        Some(
+          DeclarationResponse(
+            Left(
+              Right(
+                Acc14ErrorResponseType.HTTP_METHOD_NOT_ALLOWED
+              )
+            )
+          )
+        )
+      case _ =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000001", "GB000000000000001"))
+          )
+        )
+    }
   }
 }

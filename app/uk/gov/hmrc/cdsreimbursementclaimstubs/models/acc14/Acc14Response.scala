@@ -30,7 +30,6 @@ object Acc14Response {
     case object OK_MINIMUM_RESPONSE extends Acc14ResponseType
     case class OK_PARTIAL_RESPONSE(declarationId: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_SECURITIES(declarationId: String, reasonForSecurity: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_OTHER_DUTIES_3(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
@@ -40,6 +39,8 @@ object Acc14Response {
     case class OK_WITH_MISMATCH_ON_EORI(declarationId: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_NORTHERN_IRELAND (declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_RESPONSE_NO_CONTACT_DETAILS(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_SECURITIES(declarationId: String, reasonForSecurity: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(declarationId: String, reasonForSecurity: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
   }
 
   def returnAcc14Response(acc14ResponseType: Acc14ResponseType): Acc14Response =
@@ -47,7 +48,6 @@ object Acc14Response {
       case Acc14ResponseType.OK_MINIMUM_RESPONSE => getMinimumAcc14Response
       case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId) => getPartialAcc14Response(declarationId)
       case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) => getFullAcc14Response(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(declarationId, reasonForSecurity, importerEORI, declarantEORI) => getFullAcc14ResponseWithReasonForSecurity(declarationId, reasonForSecurity, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDuties1(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDuties2(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_3(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDuties3(declarationId, importerEORI, declarantEORI)
@@ -57,6 +57,8 @@ object Acc14Response {
       case Acc14ResponseType.OK_WITH_MISMATCH_ON_EORI(declarationId) => getEoriMismatchResponse(declarationId)
       case Acc14ResponseType.OK_FULL_RESPONSE_NORTHERN_IRELAND(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseWithNorthernIrelandTaxCodes(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS(declarationId, importerEORI, declarantEORI) => getFullAcc14WithoutContactDetails(declarationId,importerEORI,declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(declarationId, reasonForSecurity, importerEORI, declarantEORI) => getFullAcc14ResponseWithReasonForSecurity(declarationId, reasonForSecurity, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(declarationId, reasonForSecurity, importerEORI, declarantEORI) => getFullAcc14ResponseWithAdditionalTaxCodesAndReasonForSecurity(declarationId, reasonForSecurity, importerEORI, declarantEORI)
     }
 
   def getMinimumAcc14Response = Acc14Response(
@@ -299,6 +301,210 @@ object Acc14Response {
         |    }
         |}
         |""".stripMargin)
+  )
+
+  def getFullAcc14ResponseWithAdditionalTaxCodesAndReasonForSecurity(declarationId: String, reasonForSecurity: String, importerEORI: String, declarantEORI: String) = Acc14Response(
+    Json.parse(
+      s"""
+         |{
+         |    "overpaymentDeclarationDisplayResponse":
+         |    {
+         |        "responseCommon":
+         |        {
+         |            "status": "OK",
+         |            "processingDate": "2001-12-17T09:30:47Z"
+         |        },
+         |        "responseDetail":
+         |        {
+         |            "declarationId": "547MW5G74O87",
+         |            "acceptanceDate": "2019-08-13",
+         |            "declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
+         |            "securityReason": "IPR",
+         |            "btaDueDate": "2019-09-13",
+         |            "procedureCode": "71",
+         |            "btaSource": "DMS",
+         |            "declarantDetails":
+         |            {
+         |                "declarantEORI": "GB3745678934000",
+         |                "legalName": "Fred Bloggs and Co Ltd",
+         |                "establishmentAddress":
+         |                {
+         |                    "addressLine1": "10 Rillington Place",
+         |                    "addressLine2": "London",
+         |                    "addressLine3": "Pimlico",
+         |                    "postalCode": "W11 1RH",
+         |                    "countryCode": "GB"
+         |                },
+         |                "contactDetails":
+         |                {
+         |                    "contactName": "Angela Smith",
+         |                    "addressLine1": "J P Jones Insolvency Ltd",
+         |                    "addressLine2": "14 Briar Lane",
+         |                    "addressLine3": "Pimlico",
+         |                    "postalCode": "W11 1QT",
+         |                    "countryCode": "GB",
+         |                    "telephone": "0270 112 3476",
+         |                    "emailAddress": "fred@bloggs.com"
+         |                }
+         |            },
+         |            "consigneeDetails":
+         |            {
+         |                "consigneeEORI": "GB562485153000",
+         |                "legalName": "Swift Goods Ltd",
+         |                "establishmentAddress":
+         |                {
+         |                    "addressLine1": "14 Briar Lane",
+         |                    "addressLine2": "London",
+         |                    "addressLine3": "Pimlico",
+         |                    "countryCode": "GB"
+         |                },
+         |                "contactDetails":
+         |                {
+         |                    "contactName": "Frank Sidebotham",
+         |                    "addressLine1": "J P Jones Insolvency Ltd",
+         |                    "addressLine2": "14 Briar Lane",
+         |                    "addressLine3": "Pimlico",
+         |                    "postalCode": "W11 1QT",
+         |                    "countryCode": "GB",
+         |                    "telephone": "0207 678 3243",
+         |                    "emailAddress": "enquiries@swftgoods.com"
+         |                }
+         |            },
+         |            "accountDetails":
+         |            [
+         |                {
+         |                    "accountType": "001",
+         |                    "accountNumber": "8901112",
+         |                    "eori": "8432569",
+         |                    "legalName": "Fred Bloggs and Co Ltd",
+         |                    "contactDetails":
+         |                    {
+         |                        "contactName": "Angela Smith",
+         |                        "addressLine1": "J P Jones Insolvency Ltd",
+         |                        "addressLine2": "14 Briar Lane",
+         |                        "addressLine3": "Holborn",
+         |                        "addressLine4": "London",
+         |                        "countryCode": "GB",
+         |                        "telephone": "0270 112 3476",
+         |                        "emailAddress": "fred@bloggs.com"
+         |                    }
+         |                },
+         |                {
+         |                    "accountType": "002",
+         |                    "accountNumber": "8901113",
+         |                    "eori": "8432563",
+         |                    "legalName": "Fred Bloggs and Co Ltd",
+         |                    "contactDetails":
+         |                    {
+         |                        "contactName": "Angela Smith",
+         |                        "addressLine1": "J P Jones Insolvency Ltd",
+         |                        "addressLine2": "14 Briar Lane",
+         |                        "addressLine3": "London",
+         |                        "countryCode": "GB",
+         |                        "telephone": "0270 112 3476",
+         |                        "emailAddress": "fred@bloggs.com"
+         |                    }
+         |                }
+         |            ],
+         |            "bankDetails":
+         |            {
+         |                "consigneeBankDetails":
+         |                {
+         |                    "accountHolderName": "Swift Goods Ltd",
+         |                    "sortCode": "125841",
+         |                    "accountNumber": "01478523"
+         |                },
+         |                "declarantBankDetails":
+         |                {
+         |                    "accountHolderName": "Fred Bloggs and Co Ltd",
+         |                    "sortCode": "653214",
+         |                    "accountNumber": "54789632"
+         |                }
+         |            },
+         |            "securityDetails":
+         |            [
+         |                {
+         |                    "securityDepositId": "ABC0123456",
+         |                    "totalAmount": "14585.52",
+         |                    "amountPaid": "14585.52",
+         |                    "paymentMethod": "001",
+         |                    "paymentReference": "SGL SECURITY 001",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A20",
+         |                            "amount": "6000.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A35",
+         |                            "amount": "8085.52"
+         |                        },
+         |                        {
+         |                            "taxType": "A90",
+         |                            "amount": "5000.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A85",
+         |                            "amount": "14126.28"
+         |                        },
+         |                        {
+         |                            "taxType": "A95",
+         |                            "amount": "7224.12"
+         |                        },
+         |                        {
+         |                            "taxType": "421",
+         |                            "amount": "4818.11"
+         |                        },
+         |                        {
+         |                            "taxType": "623",
+         |                            "amount": "9805.00"
+         |                        }
+         |                    ]
+         |                },
+         |                {
+         |                    "securityDepositId": "DEF6543210",
+         |                    "totalAmount": "500.00",
+         |                    "amountPaid": "300.00",
+         |                    "paymentMethod": "002",
+         |                    "paymentReference": "SGL SECURITY 002",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A20",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A35",
+         |                            "amount": "110.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A90",
+         |                            "amount": "130.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A85",
+         |                            "amount": "170.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A95",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "421",
+         |                            "amount": "300.00"
+         |                        },
+         |                        {
+         |                            "taxType": "623",
+         |                            "amount": "275.00"
+         |                        }
+         |                    ]
+         |                }
+         |            ]
+         |        }
+         |    }
+         |}
+         |""".stripMargin
+    )
   )
 
   def getFullAcc14Response(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(

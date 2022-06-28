@@ -17,6 +17,7 @@
 package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 
 import cats.syntax.EitherSyntax
+import cats.syntax.eq._
 import com.eclipsesource.schema.drafts.Version4
 import com.eclipsesource.schema.drafts.Version4._
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
@@ -67,6 +68,18 @@ class DeclarationController @Inject() (cc: ControllerComponents)
               MockHttpResponse.getSecuritiesDeclaration(MRN(declarationId), reasonForSecurity) match {
                 case Some(declarationResponse) =>
                   declarationResponse.response match {
+                    case Left(value) =>
+                      value match {
+                        case Right(acc14ErrorResponse) =>
+                          Acc14ErrorResponse.returnAcc14ErrorResponse(acc14ErrorResponse) match {
+                            case error if error.httpStatus === BAD_REQUEST =>
+                              BadRequest(error.value)
+                            case error if error.httpStatus === INTERNAL_SERVER_ERROR =>
+                              InternalServerError(error.value)
+                            case error if error.httpStatus === METHOD_NOT_ALLOWED =>
+                              MethodNotAllowed(error.value)
+                          }
+                      }
                     case Right(acc14Response) => {
                       logger.info(s"acc-14 profile returned is : ${acc14Response}")
                       Ok(Json.toJson(Acc14Response.returnAcc14Response(acc14Response).value))
