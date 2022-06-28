@@ -512,4 +512,13 @@ object MockHttpResponse {
         DeclarationResponse(Left(Right(Acc14ErrorResponseType.TIME_OUT)))
       )
     )
+
+  def getSecuritiesDeclaration(mrn: MRN, reasonForSecurity: String): Option[DeclarationResponse] = {
+    Some(
+      DeclarationResponse(
+        Right(
+          Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000001", "GB000000000000001"))
+      )
+    )
+  }
 }

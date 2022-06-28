@@ -24,11 +24,10 @@ import com.google.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents, Request}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.MockHttpResponse
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.{Acc14ErrorResponse, Acc14Response}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.{Acc14ErrorResponse, Acc14Request, Acc14Response}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids.MRN
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-
 import scala.io.Source
 
 @Singleton
@@ -60,12 +59,21 @@ class DeclarationController @Inject() (cc: ControllerComponents)
           BadRequest
         },
         json =>
-          (json \ "overpaymentDeclarationDisplayRequest" \ "requestDetail" \ "declarationId")
-            .asOpt[String] match {
+          (json \ "overpaymentDeclarationDisplayRequest" \ "requestDetail").asOpt[Acc14Request] match {
             case None =>
               logger.warn("could not find declaration id")
               BadRequest
-            case Some(str) =>
+            case Some(Acc14Request(declarationId, Some(reasonForSecurity))) =>
+              MockHttpResponse.getSecuritiesDeclaration(MRN(declarationId), reasonForSecurity) match {
+                case Some(declarationResponse) =>
+                  declarationResponse.response match {
+                    case Right(acc14Response) => {
+                      logger.info(s"acc-14 profile returned is : ${acc14Response}")
+                      Ok(Json.toJson(Acc14Response.returnAcc14Response(acc14Response).value))
+                    }
+                  }
+              }
+            case Some(Acc14Request(str, None)) =>
               MockHttpResponse.getDeclarationHttpResponse(MRN(str)) match {
                 case Some(httpResponse) =>
                   logger.info(s"declaration id received :${str}")
