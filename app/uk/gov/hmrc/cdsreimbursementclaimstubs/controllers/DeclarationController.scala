@@ -85,6 +85,9 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                       Ok(Json.toJson(Acc14Response.returnAcc14Response(acc14Response).value))
                     }
                   }
+                case None =>
+                  logger.warn(s"could not find profile with MRN: $declarationId and reason for security $reasonForSecurity")
+                  BadRequest
               }
             case Some(Acc14Request(str, None)) =>
               MockHttpResponse.getDeclarationHttpResponse(MRN(str)) match {
