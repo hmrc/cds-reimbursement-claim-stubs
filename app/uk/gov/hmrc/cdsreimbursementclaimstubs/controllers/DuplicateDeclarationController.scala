@@ -56,6 +56,8 @@ class DuplicateDeclarationController @Inject() (cc: ControllerComponents)
             BadRequest
           case Some(TPI04Request(_, "ACS")) =>
             Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-1234"), Some("Open"))))
+          case Some(TPI04Request("08AAAAAAAAAAAAAAA2", "RED")) =>
+            Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-1234"), Some("Open"))))
           case _ =>
             Ok(Json.toJson(TPI04Response(caseFound = false, None, None)))
         }
