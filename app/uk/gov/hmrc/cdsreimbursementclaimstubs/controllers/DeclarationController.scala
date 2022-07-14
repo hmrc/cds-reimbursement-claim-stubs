@@ -70,6 +70,7 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                   declarationResponse.response match {
                     case Left(value) =>
                       value match {
+                        case Left(wafErrorResponse) => Forbidden(Json.toJson(wafErrorResponse.value))
                         case Right(acc14ErrorResponse) =>
                           Acc14ErrorResponse.returnAcc14ErrorResponse(acc14ErrorResponse) match {
                             case error if error.httpStatus === BAD_REQUEST =>
@@ -80,19 +81,20 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                               MethodNotAllowed(error.value)
                           }
                       }
-                    case Right(acc14Response) => {
-                      logger.info(s"acc-14 profile returned is : ${acc14Response}")
+                    case Right(acc14Response) =>
+                      logger
+                        .info(s"acc-14 profile returned for $declarationId and $reasonForSecurity is : $acc14Response")
                       Ok(Json.toJson(Acc14Response.returnAcc14Response(acc14Response).value))
-                    }
                   }
                 case None =>
-                  logger.warn(s"could not find profile with MRN: $declarationId and reason for security $reasonForSecurity")
+                  logger
+                    .warn(s"could not find profile with MRN: $declarationId and reason for security $reasonForSecurity")
                   BadRequest
               }
             case Some(Acc14Request(str, None)) =>
               MockHttpResponse.getDeclarationHttpResponse(MRN(str)) match {
                 case Some(httpResponse) =>
-                  logger.info(s"declaration id received :${str}")
+                  logger.info(s"declaration id received :$str")
                   httpResponse.declarationResponse.response match {
                     case Left(value) =>
                       value match {
@@ -104,12 +106,12 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                             case (UNAUTHORIZED, responseBody) => Unauthorized(Json.toJson(responseBody))
                             case (METHOD_NOT_ALLOWED, responseBody) => MethodNotAllowed(Json.toJson(responseBody))
                             case (INTERNAL_SERVER_ERROR, responseBody) => InternalServerError(Json.toJson(responseBody))
+                            case (status, responseBody) => Status(status)(Json.toJson(responseBody))
                           }
                       }
-                    case Right(acc14Response) => {
-                      logger.info(s"acc-14 profile returned is : ${acc14Response}")
+                    case Right(acc14Response) =>
+                      logger.info(s"acc-14 profile returned is : $acc14Response")
                       Ok(Json.toJson(Acc14Response.returnAcc14Response(acc14Response).value))
-                    }
                   }
                 case None =>
                   logger.warn(s"could not find profile with claimant eori: $str")

@@ -20,8 +20,8 @@ import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.TimeUtils
 
 final case class Acc14Response(
-                                value: JsValue
-                              )
+  value: JsValue
+)
 
 object Acc14Response {
 
@@ -29,36 +29,77 @@ object Acc14Response {
   object Acc14ResponseType {
     case object OK_MINIMUM_RESPONSE extends Acc14ResponseType
     case class OK_PARTIAL_RESPONSE(declarationId: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_OTHER_DUTIES_3(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_OTHER_DUTIES_VAT(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_VAT(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
+    case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_OTHER_DUTIES_3(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_OTHER_DUTIES_VAT(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_VAT(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
     case class OK_WITH_MISMATCH_ON_EORI(declarationId: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_NORTHERN_IRELAND (declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_RESPONSE_NO_CONTACT_DETAILS(declarationId: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_SECURITIES(declarationId: String, reasonForSecurity: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(declarationId: String, reasonForSecurity: String, importerEORI: String, declarantEORI: String) extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_NORTHERN_IRELAND(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
+    case class OK_RESPONSE_NO_CONTACT_DETAILS(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_SECURITIES(
+      declarationId: String,
+      reasonForSecurity: String,
+      importerEORI: String,
+      declarantEORI: String
+    ) extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(
+      declarationId: String,
+      reasonForSecurity: String,
+      importerEORI: String,
+      declarantEORI: String
+    ) extends Acc14ResponseType
   }
 
   def returnAcc14Response(acc14ResponseType: Acc14ResponseType): Acc14Response =
     acc14ResponseType match {
       case Acc14ResponseType.OK_MINIMUM_RESPONSE => getMinimumAcc14Response
       case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId) => getPartialAcc14Response(declarationId)
-      case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) => getFullAcc14Response(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDuties1(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDuties2(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_3(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDuties3(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_VAT(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseOtherDutiesAndVatDuties(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_VAT(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseVatDuties(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseWithAdditionalTaxCodes(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14Response(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14ResponseOtherDuties1(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14ResponseOtherDuties2(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_3(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14ResponseOtherDuties3(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_VAT(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14ResponseOtherDutiesAndVatDuties(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_VAT(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14ResponseVatDuties(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14ResponseWithAdditionalTaxCodes(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_WITH_MISMATCH_ON_EORI(declarationId) => getEoriMismatchResponse(declarationId)
-      case Acc14ResponseType.OK_FULL_RESPONSE_NORTHERN_IRELAND(declarationId, importerEORI, declarantEORI) => getFullAcc14ResponseWithNorthernIrelandTaxCodes(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS(declarationId, importerEORI, declarantEORI) => getFullAcc14WithoutContactDetails(declarationId,importerEORI,declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(declarationId, reasonForSecurity, importerEORI, declarantEORI) => getFullAcc14ResponseWithReasonForSecurity(declarationId, reasonForSecurity, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(declarationId, reasonForSecurity, importerEORI, declarantEORI) => getFullAcc14ResponseWithAdditionalTaxCodesAndReasonForSecurity(declarationId, reasonForSecurity, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_NORTHERN_IRELAND(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14ResponseWithNorthernIrelandTaxCodes(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14WithoutContactDetails(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType
+            .OK_FULL_RESPONSE_SECURITIES(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
+        getFullAcc14ResponseWithReasonForSecurity(declarationId, reasonForSecurity, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(
+            declarationId,
+            reasonForSecurity,
+            importerEORI,
+            declarantEORI
+          ) =>
+        getFullAcc14ResponseWithAdditionalTaxCodesAndReasonForSecurity(
+          declarationId,
+          reasonForSecurity,
+          importerEORI,
+          declarantEORI
+        )
     }
 
   def getMinimumAcc14Response = Acc14Response(
@@ -140,9 +181,13 @@ object Acc14Response {
     )
   )
 
-  def getFullAcc14ResponseWithReasonForSecurity(declarationId: String, reasonForSecurity: String, importerEORI: String, declarantEORI: String) = Acc14Response(
-    Json.parse(
-      s"""
+  def getFullAcc14ResponseWithReasonForSecurity(
+    declarationId: String,
+    reasonForSecurity: String,
+    importerEORI: String,
+    declarantEORI: String
+  ) = Acc14Response(
+    Json.parse(s"""
         |{
         |    "overpaymentDeclarationDisplayResponse":
         |    {
@@ -303,7 +348,12 @@ object Acc14Response {
         |""".stripMargin)
   )
 
-  def getFullAcc14ResponseWithAdditionalTaxCodesAndReasonForSecurity(declarationId: String, reasonForSecurity: String, importerEORI: String, declarantEORI: String) = Acc14Response(
+  def getFullAcc14ResponseWithAdditionalTaxCodesAndReasonForSecurity(
+    declarationId: String,
+    reasonForSecurity: String,
+    importerEORI: String,
+    declarantEORI: String
+  ) = Acc14Response(
     Json.parse(
       s"""
          |{
@@ -316,16 +366,16 @@ object Acc14Response {
          |        },
          |        "responseDetail":
          |        {
-         |            "declarationId": "547MW5G74O87",
+         |            "declarationId": "$declarationId",
          |            "acceptanceDate": "2019-08-13",
          |            "declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
-         |            "securityReason": "IPR",
+         |            "securityReason": "$reasonForSecurity",
          |            "btaDueDate": "2019-09-13",
          |            "procedureCode": "71",
          |            "btaSource": "DMS",
          |            "declarantDetails":
          |            {
-         |                "declarantEORI": "GB3745678934000",
+         |                "declarantEORI": "$declarantEORI",
          |                "legalName": "Fred Bloggs and Co Ltd",
          |                "establishmentAddress":
          |                {
@@ -349,7 +399,7 @@ object Acc14Response {
          |            },
          |            "consigneeDetails":
          |            {
-         |                "consigneeEORI": "GB562485153000",
+         |                "consigneeEORI": "$importerEORI",
          |                "legalName": "Swift Goods Ltd",
          |                "establishmentAddress":
          |                {
@@ -644,9 +694,10 @@ object Acc14Response {
     )
   )
 
-  def getFullAcc14ResponseOtherDuties1(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
-    Json.parse(
-      s"""
+  def getFullAcc14ResponseOtherDuties1(declarationId: String, importerEORI: String, declarantEORI: String) =
+    Acc14Response(
+      Json.parse(
+        s"""
          |{
          |	"overpaymentDeclarationDisplayResponse": {
          |		"responseCommon": {
@@ -760,12 +811,13 @@ object Acc14Response {
          |	}
          |}
          |""".stripMargin
+      )
     )
-  )
 
-  def getFullAcc14ResponseOtherDuties2(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
-    Json.parse(
-      s"""
+  def getFullAcc14ResponseOtherDuties2(declarationId: String, importerEORI: String, declarantEORI: String) =
+    Acc14Response(
+      Json.parse(
+        s"""
          |{
          |	"overpaymentDeclarationDisplayResponse": {
          |		"responseCommon": {
@@ -928,12 +980,13 @@ object Acc14Response {
          |	}
          |}
          |""".stripMargin
+      )
     )
-  )
 
-  def getFullAcc14ResponseOtherDuties3(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
-    Json.parse(
-      s"""
+  def getFullAcc14ResponseOtherDuties3(declarationId: String, importerEORI: String, declarantEORI: String) =
+    Acc14Response(
+      Json.parse(
+        s"""
          |{
          |	"overpaymentDeclarationDisplayResponse": {
          |		"responseCommon": {
@@ -1054,12 +1107,13 @@ object Acc14Response {
          |	}
          |}
          |""".stripMargin
+      )
     )
-  )
 
-  def getFullAcc14ResponseOtherDutiesAndVatDuties(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
-    Json.parse(
-      s"""
+  def getFullAcc14ResponseOtherDutiesAndVatDuties(declarationId: String, importerEORI: String, declarantEORI: String) =
+    Acc14Response(
+      Json.parse(
+        s"""
          |{
          |	"overpaymentDeclarationDisplayResponse": {
          |		"responseCommon": {
@@ -1166,8 +1220,8 @@ object Acc14Response {
          |	}
          |}
          |""".stripMargin
+      )
     )
-  )
 
   def getFullAcc14ResponseVatDuties(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
     Json.parse(
@@ -1253,9 +1307,10 @@ object Acc14Response {
     )
   )
 
-  def getFullAcc14ResponseWithAdditionalTaxCodes(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
-    Json.parse(
-      s"""
+  def getFullAcc14ResponseWithAdditionalTaxCodes(declarationId: String, importerEORI: String, declarantEORI: String) =
+    Acc14Response(
+      Json.parse(
+        s"""
          |{
          |	"overpaymentDeclarationDisplayResponse": {
          |		"responseCommon": {
@@ -1369,8 +1424,8 @@ object Acc14Response {
          |	}
          |}
          |""".stripMargin
+      )
     )
-  )
 
   def getEoriMismatchResponse(declarationId: String) = Acc14Response(
     Json.parse(
@@ -1468,8 +1523,11 @@ object Acc14Response {
     )
   )
 
-
-  def getFullAcc14ResponseWithNorthernIrelandTaxCodes(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
+  def getFullAcc14ResponseWithNorthernIrelandTaxCodes(
+    declarationId: String,
+    importerEORI: String,
+    declarantEORI: String
+  ) = Acc14Response(
     Json.parse(
       s"""
          |{
@@ -1567,9 +1625,10 @@ object Acc14Response {
     )
   )
 
-  def getFullAcc14WithoutContactDetails(movementReferenceNumber: String, importerEORI: String, declarantEORI: String) = Acc14Response(
-    Json.parse(
-      s"""
+  def getFullAcc14WithoutContactDetails(movementReferenceNumber: String, importerEORI: String, declarantEORI: String) =
+    Acc14Response(
+      Json.parse(
+        s"""
          |{
          |	"overpaymentDeclarationDisplayResponse": {
          |		"responseCommon": {
@@ -1646,8 +1705,7 @@ object Acc14Response {
          |	}
          |}
          |""".stripMargin
+      )
     )
-  )
-
 
 }
