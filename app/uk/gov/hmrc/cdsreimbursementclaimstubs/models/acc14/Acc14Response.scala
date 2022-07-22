@@ -332,11 +332,11 @@ object Acc14Response {
         |                    "taxDetails":
         |                    [
         |                        {
-        |                            "taxType": "B00",
+        |                            "taxType": "A00",
         |                            "amount": "100.00"
         |                        },
         |                        {
-        |                            "taxType": "478",
+        |                            "taxType": "B00",
         |                            "amount": "200.00"
         |                        }
         |                    ]
