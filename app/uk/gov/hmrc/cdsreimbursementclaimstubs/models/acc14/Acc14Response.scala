@@ -318,7 +318,7 @@ object Acc14Response {
         |                            "amount": "6000.00"
         |                        },
         |                        {
-        |                            "taxType": "584",
+        |                            "taxType": "B00",
         |                            "amount": "8085.52"
         |                        }
         |                    ]
