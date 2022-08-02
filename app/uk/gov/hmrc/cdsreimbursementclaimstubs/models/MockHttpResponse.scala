@@ -562,6 +562,23 @@ object MockHttpResponse {
       case (MRN("41ABCDEFGHIJKLMNO1"), _) => Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.BAD_REQUEST_MISSING_DECLARATION))))
       case (MRN("50ABCDEFGHIJKLMNO1"), _) => Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.TIME_OUT))))
       case (MRN("40ABCDEFGHIJKLMNO3"), _) => Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.HTTP_METHOD_NOT_ALLOWED))))
+      case (MRN("01MDPAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "MDP", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01MDLAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "MDL", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01ACSAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "ACS", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01CEPAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "CEP", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01CSDAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "CSD", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01TTFAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "T24", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01TASIXAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "TA6", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01TATHRAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "TA3", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01TATWOAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "TA2", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01IPRAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "IPR", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01OPRAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "OPR", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01ENUAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "ENU", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01REDAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "RED", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01MODAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "MOD", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01MDCAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "MDC", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01CRQAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "CRQ", "GB000000000000001", "GB000000000000001"))))
+      case (MRN("01PDDAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "PDD", "GB000000000000001", "GB000000000000001"))))
       case _ => None
     }
   }
