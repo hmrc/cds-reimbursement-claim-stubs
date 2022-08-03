@@ -327,7 +327,7 @@ object Acc14Response {
         |                    "securityDepositId": "DEF6543210",
         |                    "totalAmount": "500.00",
         |                    "amountPaid": "300.00",
-        |                    "paymentMethod": "002",
+        |                    "paymentMethod": "004",
         |                    "paymentReference": "SGL SECURITY 002",
         |                    "taxDetails":
         |                    [
@@ -515,7 +515,7 @@ object Acc14Response {
          |                    "securityDepositId": "DEF6543210",
          |                    "totalAmount": "500.00",
          |                    "amountPaid": "300.00",
-         |                    "paymentMethod": "002",
+         |                    "paymentMethod": "004",
          |                    "paymentReference": "SGL SECURITY 002",
          |                    "taxDetails":
          |                    [
