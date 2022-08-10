@@ -557,6 +557,7 @@ object MockHttpResponse {
       case (MRN("18AAAAAAAAAAAAAAA2"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000002", "GB000000000000002"))))
       case (MRN("19AAAAAAAAAAAAAAA2"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000002", "GB000000000000002"))))
       case (MRN("20AAAAAAAAAAAAAAA2"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000002", "GB000000000000002"))))
+      case (MRN("30ABCDEFGHIJKLMNO1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecurity, "GB000000000000001", "GB000000000000001"))))
       case (MRN("41ABCDEFGHIJKLMNO2"), "RED") => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(mrn.value, reasonForSecurity, "AA12345678901234Z", "AA12345678901234Z"))))
       case (MRN("41ABCDEFGHIJKLMNO2"), _) => Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.NO_SECURITY_DEPOSITS))))
       case (MRN("41ABCDEFGHIJKLMNO1"), _) => Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.BAD_REQUEST_MISSING_DECLARATION))))
