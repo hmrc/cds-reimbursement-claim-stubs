@@ -563,6 +563,7 @@ object MockHttpResponse {
       case (MRN("41ABCDEFGHIJKLMNO1"), _) => Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.BAD_REQUEST_MISSING_DECLARATION))))
       case (MRN("50ABCDEFGHIJKLMNO1"), _) => Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.TIME_OUT))))
       case (MRN("40ABCDEFGHIJKLMNO3"), _) => Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.HTTP_METHOD_NOT_ALLOWED))))
+      case (MRN("60ABCDEFGHIJKLMNO1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_BANK_DETAILS(mrn.value, reasonForSecurity, "GB000000000000001", "GB000000000000001"))))
       case (MRN("01MDPAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "MDP", "GB000000000000001", "GB000000000000001"))))
       case (MRN("01MDLAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "MDL", "GB000000000000001", "GB000000000000001"))))
       case (MRN("01ACSAAAAAAAAAAAA1"), _) => Some(DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "ACS", "GB000000000000001", "GB000000000000001"))))

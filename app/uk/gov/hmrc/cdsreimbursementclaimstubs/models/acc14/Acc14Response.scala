@@ -48,6 +48,12 @@ object Acc14Response {
         extends Acc14ResponseType
     case class OK_RESPONSE_NO_CONTACT_DETAILS(declarationId: String, importerEORI: String, declarantEORI: String)
         extends Acc14ResponseType
+    case class OK_RESPONSE_NO_BANK_DETAILS(
+      declarationId: String,
+      reasonForSecurity: String,
+      importerEORI: String,
+      declarantEORI: String
+    ) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_SECURITIES(
       declarationId: String,
       reasonForSecurity: String,
@@ -85,6 +91,9 @@ object Acc14Response {
         getFullAcc14ResponseWithNorthernIrelandTaxCodes(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14WithoutContactDetails(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType
+            .OK_RESPONSE_NO_BANK_DETAILS(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
+        getFullAcc14WithoutBankDetails(declarationId, reasonForSecurity, importerEORI, declarantEORI)
       case Acc14ResponseType
             .OK_FULL_RESPONSE_SECURITIES(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
         getFullAcc14ResponseWithReasonForSecurity(declarationId, reasonForSecurity, importerEORI, declarantEORI)
@@ -179,6 +188,158 @@ object Acc14Response {
          |}
          |""".stripMargin
     )
+  )
+
+  def getFullAcc14WithoutBankDetails(
+    declarationId: String,
+    reasonForSecurity: String,
+    importerEORI: String,
+    declarantEORI: String
+  ) = Acc14Response(
+    Json.parse(s"""
+         |{
+         |    "overpaymentDeclarationDisplayResponse":
+         |    {
+         |        "responseCommon":
+         |        {
+         |            "status": "OK",
+         |            "processingDate": "2001-12-17T09:30:47Z"
+         |        },
+         |        "responseDetail":
+         |        {
+         |            "declarationId": "$declarationId",
+         |            "acceptanceDate": "2019-08-13",
+         |            "declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
+         |            "securityReason": "$reasonForSecurity",
+         |            "btaDueDate": "2019-09-13",
+         |            "procedureCode": "71",
+         |            "btaSource": "DMS",
+         |            "declarantDetails":
+         |            {
+         |                "declarantEORI": "$declarantEORI",
+         |                "legalName": "Fred Bloggs and Co Ltd",
+         |                "establishmentAddress":
+         |                {
+         |                    "addressLine1": "10 Rillington Place",
+         |                    "addressLine2": "London",
+         |                    "addressLine3": "Pimlico",
+         |                    "postalCode": "W11 1RH",
+         |                    "countryCode": "GB"
+         |                },
+         |                "contactDetails":
+         |                {
+         |                    "contactName": "Angela Smith",
+         |                    "addressLine1": "J P Jones Insolvency Ltd",
+         |                    "addressLine2": "14 Briar Lane",
+         |                    "addressLine3": "Pimlico",
+         |                    "postalCode": "W11 1QT",
+         |                    "countryCode": "GB",
+         |                    "telephone": "0270 112 3476",
+         |                    "emailAddress": "fred@bloggs.com"
+         |                }
+         |            },
+         |            "consigneeDetails":
+         |            {
+         |                "consigneeEORI": "$importerEORI",
+         |                "legalName": "Swift Goods Ltd",
+         |                "establishmentAddress":
+         |                {
+         |                    "addressLine1": "14 Briar Lane",
+         |                    "addressLine2": "London",
+         |                    "addressLine3": "Pimlico",
+         |                    "countryCode": "GB"
+         |                },
+         |                "contactDetails":
+         |                {
+         |                    "contactName": "Frank Sidebotham",
+         |                    "addressLine1": "J P Jones Insolvency Ltd",
+         |                    "addressLine2": "14 Briar Lane",
+         |                    "addressLine3": "Pimlico",
+         |                    "postalCode": "W11 1QT",
+         |                    "countryCode": "GB",
+         |                    "telephone": "0207 678 3243",
+         |                    "emailAddress": "enquiries@swftgoods.com"
+         |                }
+         |            },
+         |            "accountDetails":
+         |            [
+         |                {
+         |                    "accountType": "001",
+         |                    "accountNumber": "8901112",
+         |                    "eori": "8432569",
+         |                    "legalName": "Fred Bloggs and Co Ltd",
+         |                    "contactDetails":
+         |                    {
+         |                        "contactName": "Angela Smith",
+         |                        "addressLine1": "J P Jones Insolvency Ltd",
+         |                        "addressLine2": "14 Briar Lane",
+         |                        "addressLine3": "Holborn",
+         |                        "addressLine4": "London",
+         |                        "countryCode": "GB",
+         |                        "telephone": "0270 112 3476",
+         |                        "emailAddress": "fred@bloggs.com"
+         |                    }
+         |                },
+         |                {
+         |                    "accountType": "002",
+         |                    "accountNumber": "8901113",
+         |                    "eori": "8432563",
+         |                    "legalName": "Fred Bloggs and Co Ltd",
+         |                    "contactDetails":
+         |                    {
+         |                        "contactName": "Angela Smith",
+         |                        "addressLine1": "J P Jones Insolvency Ltd",
+         |                        "addressLine2": "14 Briar Lane",
+         |                        "addressLine3": "London",
+         |                        "countryCode": "GB",
+         |                        "telephone": "0270 112 3476",
+         |                        "emailAddress": "fred@bloggs.com"
+         |                    }
+         |                }
+         |            ],
+         |            "securityDetails":
+         |            [
+         |                {
+         |                    "securityDepositId": "ABC0123456",
+         |                    "totalAmount": "14585.52",
+         |                    "amountPaid": "14585.52",
+         |                    "paymentMethod": "001",
+         |                    "paymentReference": "SGL SECURITY 001",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A00",
+         |                            "amount": "6000.00"
+         |                        },
+         |                        {
+         |                            "taxType": "B00",
+         |                            "amount": "8085.52"
+         |                        }
+         |                    ]
+         |                },
+         |                {
+         |                    "securityDepositId": "DEF6543210",
+         |                    "totalAmount": "500.00",
+         |                    "amountPaid": "300.00",
+         |                    "paymentMethod": "004",
+         |                    "paymentReference": "SGL SECURITY 002",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A00",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "B00",
+         |                            "amount": "200.00"
+         |                        }
+         |                    ]
+         |                }
+         |            ]
+         |        }
+         |    }
+         |}
+         |""".stripMargin)
   )
 
   def getFullAcc14ResponseWithReasonForSecurity(
