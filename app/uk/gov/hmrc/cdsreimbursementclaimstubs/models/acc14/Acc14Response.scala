@@ -418,7 +418,7 @@ object Acc14Response {
         |                {
         |                    "accountType": "001",
         |                    "accountNumber": "8901112",
-        |                    "eori": "8432569",
+        |                    "eori": "GB000000000000001",
         |                    "legalName": "Fred Bloggs and Co Ltd",
         |                    "contactDetails":
         |                    {
@@ -435,7 +435,7 @@ object Acc14Response {
         |                {
         |                    "accountType": "002",
         |                    "accountNumber": "8901113",
-        |                    "eori": "8432563",
+        |                    "eori": "GB000000000000001",
         |                    "legalName": "Fred Bloggs and Co Ltd",
         |                    "contactDetails":
         |                    {
@@ -586,7 +586,7 @@ object Acc14Response {
          |                {
          |                    "accountType": "001",
          |                    "accountNumber": "8901112",
-         |                    "eori": "8432569",
+         |                    "eori": "GB000000000000001",
          |                    "legalName": "Fred Bloggs and Co Ltd",
          |                    "contactDetails":
          |                    {
@@ -603,7 +603,7 @@ object Acc14Response {
          |                {
          |                    "accountType": "002",
          |                    "accountNumber": "8901113",
-         |                    "eori": "8432563",
+         |                    "eori": "GB000000000000001",
          |                    "legalName": "Fred Bloggs and Co Ltd",
          |                    "contactDetails":
          |                    {
