@@ -55,13 +55,18 @@ class CcsFileSubmission @Inject()(cc: ControllerComponents)
       _ <- validateXML(request.body.toString()).toEither.leftMap(errors => badRequest(errors.mkString(", ")))
     } yield ()
 
+    logger.info(s"uploading file")
+
     result
       .fold(
         error => {
           logger.warn(s"Returning http status 400: ${error.message}")
           Status(error.status)(error.body)
         },
-        _ => NoContent.as(MimeTypes.XML)
+        _ => {
+          logger.info(s"successfully uploaded file")
+          NoContent.as(MimeTypes.XML)
+        }
       )
   }
 
