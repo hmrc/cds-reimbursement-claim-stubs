@@ -50,7 +50,7 @@ class DuplicateDeclarationController @Inject() (cc: ControllerComponents)
         BadRequest
       },
       json => {
-        (json \ "getDuplicateClaimRequest" \ "requestDetail").asOpt[TPI04Request] match {
+        (json \ "getExistingClaimRequest" \ "requestDetail").asOpt[TPI04Request] match {
           case None =>
             logger.warn(s"We could not find either the declaration id or the reason for security, but this will only happen if the schema changes")
             BadRequest
