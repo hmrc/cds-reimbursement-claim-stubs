@@ -5,7 +5,7 @@ POST       /accounts/overpaymentdeclarationdisplay/v1                 uk.gov.hmr
 POST       /filetransfer/init/v1                                      uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.CcsFileSubmission.submitFile
 POST       /personal/v3/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.personalReputation
 POST       /business/v2/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.businessReputation
-POST       /tpi/getduplicateclaim/v1                                  uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DuplicateDeclarationController.getDuplicateDeclarations
+POST       /tpi/getexistingclaim/v1                                  uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DuplicateDeclarationController.getDuplicateDeclarations
 
 ->         /                                                          health.Routes
 GET        /admin/metrics                                             com.kenshoo.play.metrics.MetricsController.metrics
