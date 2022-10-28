@@ -38,7 +38,7 @@ class ClaimController @Inject() (cc: ControllerComponents) extends BackendContro
       Json.parse(
         Source
           .fromInputStream(
-            this.getClass.getResourceAsStream("/resources/TPI05-v1-0-7-0000-submit-claim-schema.json")
+            this.getClass.getResourceAsStream("/resources/TPI05-v1-0-8-submit-claim-schema.json")
           )
           .mkString
       )
