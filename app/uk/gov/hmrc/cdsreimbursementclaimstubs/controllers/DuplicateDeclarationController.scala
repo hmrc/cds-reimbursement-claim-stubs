@@ -28,13 +28,11 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import scala.io.Source
 
 @Singleton
-class DuplicateDeclarationController @Inject() (cc: ControllerComponents)
-  extends BackendController(cc)
-    with Logging {
+class DuplicateDeclarationController @Inject() (cc: ControllerComponents) extends BackendController(cc) with Logging {
 
   private lazy val schemaToBeValidated: SchemaType = Json.fromJson[SchemaType](schemaJson).get
-  private lazy val validator = SchemaValidator(Some(Version4))
-  private lazy val schemaJson = Json.parse(
+  private lazy val validator                       = SchemaValidator(Some(Version4))
+  private lazy val schemaJson                      = Json.parse(
     Source
       .fromInputStream(
         this.getClass.getResourceAsStream("/resources/TPI04_EIS_Request.json")
@@ -44,26 +42,31 @@ class DuplicateDeclarationController @Inject() (cc: ControllerComponents)
 
   // TODO: Add extract cases when we have concrete examples.
   def getDuplicateDeclarations: Action[JsValue] = Action(parse.json) { implicit request =>
-    validator.validate(schemaToBeValidated, request.body).fold(
-      error => {
-        logger.warn(s"Could not validate nor parse request body: $error")
-        BadRequest
-      },
-      json => {
-        (json \ "getExistingClaimRequest" \ "requestDetail").asOpt[TPI04Request] match {
-          case None =>
-            logger.warn(s"We could not find either the declaration id or the reason for security, but this will only happen if the schema changes")
-            BadRequest
-          case Some(TPI04Request(_, "ACS")) =>
-            Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-1234"), Some("Open"))))
-          case Some(TPI04Request("08AAAAAAAAAAAAAAA2", "RED")) =>
-            Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-1234"), Some("Open"))))
-          case Some(TPI04Request("30ABCDEFGHIJKLMNO1", _)) =>
-            Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-0003"), Some("Open"))))
-          case _ =>
-            Ok(Json.toJson(TPI04Response(caseFound = false, None, None)))
-        }
-      }
-    )
+    val payload = request.body
+    println(Json.prettyPrint(payload))
+    validator
+      .validate(schemaToBeValidated, payload)
+      .fold(
+        error => {
+          logger.warn(s"Could not validate nor parse request body: $error")
+          BadRequest
+        },
+        json =>
+          (json \ "getExistingClaimRequest" \ "requestDetail").asOpt[TPI04Request] match {
+            case None =>
+              logger.warn(
+                s"We could not find either the declaration id or the reason for security, but this will only happen if the schema changes"
+              )
+              BadRequest
+            case Some(TPI04Request(_, "ACS")) =>
+              Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-1234"), Some("Open"))))
+            case Some(TPI04Request("08AAAAAAAAAAAAAAA2", "RED")) =>
+              Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-1234"), Some("Open"))))
+            case Some(TPI04Request("30ABCDEFGHIJKLMNO1", _)) =>
+              Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-0003"), Some("Open"))))
+            case _ =>
+              Ok(Json.toJson(TPI04Response(caseFound = false, None, None)))
+          }
+      )
   }
 }

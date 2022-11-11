@@ -52,8 +52,10 @@ class DeclarationController @Inject() (cc: ControllerComponents)
 
   def getDeclaration: Action[JsValue] = Action(parse.json) { implicit request: Request[JsValue] =>
     val validator = SchemaValidator(Some(Version4))
+    val payload   = request.body
+    println(Json.prettyPrint(payload))
     validator
-      .validate(schemaToBeValidated, request.body)
+      .validate(schemaToBeValidated, payload)
       .fold(
         e => {
           logger.warn(s"Could not validate nor parse request body: $e")

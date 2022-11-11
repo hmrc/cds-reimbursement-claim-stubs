@@ -485,11 +485,65 @@ object Acc14Response {
         |                    ]
         |                },
         |                {
+        |                    "securityDepositId": "DEF6543213",
+        |                    "totalAmount": "500.00",
+        |                    "amountPaid": "300.00",
+        |                    "paymentMethod": "002",
+        |                    "paymentReference": "SGL SECURITY 002",
+        |                    "taxDetails":
+        |                    [
+        |                        {
+        |                            "taxType": "A00",
+        |                            "amount": "100.00"
+        |                        },
+        |                        {
+        |                            "taxType": "B00",
+        |                            "amount": "200.00"
+        |                        }
+        |                    ]
+        |                },
+        |                {
+        |                    "securityDepositId": "DEF6543212",
+        |                    "totalAmount": "500.00",
+        |                    "amountPaid": "300.00",
+        |                    "paymentMethod": "003",
+        |                    "paymentReference": "SGL SECURITY 003",
+        |                    "taxDetails":
+        |                    [
+        |                        {
+        |                            "taxType": "A00",
+        |                            "amount": "100.00"
+        |                        },
+        |                        {
+        |                            "taxType": "B00",
+        |                            "amount": "200.00"
+        |                        }
+        |                    ]
+        |                },
+        |                {
         |                    "securityDepositId": "DEF6543210",
         |                    "totalAmount": "500.00",
         |                    "amountPaid": "300.00",
         |                    "paymentMethod": "004",
-        |                    "paymentReference": "SGL SECURITY 002",
+        |                    "paymentReference": "SGL SECURITY 004",
+        |                    "taxDetails":
+        |                    [
+        |                        {
+        |                            "taxType": "A00",
+        |                            "amount": "100.00"
+        |                        },
+        |                        {
+        |                            "taxType": "B00",
+        |                            "amount": "200.00"
+        |                        }
+        |                    ]
+        |                },
+        |                {
+        |                    "securityDepositId": "DEF6543211",
+        |                    "totalAmount": "500.00",
+        |                    "amountPaid": "300.00",
+        |                    "paymentMethod": "005",
+        |                    "paymentReference": "SGL SECURITY 005",
         |                    "taxDetails":
         |                    [
         |                        {
@@ -673,11 +727,125 @@ object Acc14Response {
          |                    ]
          |                },
          |                {
+         |                    "securityDepositId": "DEF6543213",
+         |                    "totalAmount": "500.00",
+         |                    "amountPaid": "300.00",
+         |                    "paymentMethod": "002",
+         |                    "paymentReference": "SGL SECURITY 002",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A20",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A35",
+         |                            "amount": "110.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A90",
+         |                            "amount": "130.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A85",
+         |                            "amount": "170.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A95",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "421",
+         |                            "amount": "300.00"
+         |                        },
+         |                        {
+         |                            "taxType": "623",
+         |                            "amount": "275.00"
+         |                        }
+         |                    ]
+         |                },
+         |                {
+         |                    "securityDepositId": "DEF6543212",
+         |                    "totalAmount": "500.00",
+         |                    "amountPaid": "300.00",
+         |                    "paymentMethod": "003",
+         |                    "paymentReference": "SGL SECURITY 003",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A20",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A35",
+         |                            "amount": "110.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A90",
+         |                            "amount": "130.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A85",
+         |                            "amount": "170.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A95",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "421",
+         |                            "amount": "300.00"
+         |                        },
+         |                        {
+         |                            "taxType": "623",
+         |                            "amount": "275.00"
+         |                        }
+         |                    ]
+         |                },
+         |                {
          |                    "securityDepositId": "DEF6543210",
          |                    "totalAmount": "500.00",
          |                    "amountPaid": "300.00",
          |                    "paymentMethod": "004",
-         |                    "paymentReference": "SGL SECURITY 002",
+         |                    "paymentReference": "SGL SECURITY 004",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A20",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A35",
+         |                            "amount": "110.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A90",
+         |                            "amount": "130.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A85",
+         |                            "amount": "170.00"
+         |                        },
+         |                        {
+         |                            "taxType": "A95",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "421",
+         |                            "amount": "300.00"
+         |                        },
+         |                        {
+         |                            "taxType": "623",
+         |                            "amount": "275.00"
+         |                        }
+         |                    ]
+         |                },
+         |                {
+         |                    "securityDepositId": "DEF6543211",
+         |                    "totalAmount": "500.00",
+         |                    "amountPaid": "300.00",
+         |                    "paymentMethod": "005",
+         |                    "paymentReference": "SGL SECURITY 005",
          |                    "taxDetails":
          |                    [
          |                        {
