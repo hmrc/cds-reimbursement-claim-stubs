@@ -48,8 +48,12 @@ class ClaimController @Inject() (cc: ControllerComponents) extends BackendContro
   def submitClaim: Action[JsValue] = Action(parse.json) { implicit request =>
     val validator = SchemaValidator(Some(Version4))
 
+    val payload = request.body
+
+    println(Json.prettyPrint(payload))
+
     validator
-      .validate(schemaToBeValidated, request.body)
+      .validate(schemaToBeValidated, payload)
       .fold(
         e => {
           logger.warn(s"Could not validate nor parse request body: $e")
