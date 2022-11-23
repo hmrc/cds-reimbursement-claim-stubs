@@ -19,7 +19,7 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi04
 import play.api.libs.json.{JsObject, Json, OWrites}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.TimeUtils
 
-case class TPI04Response (
+case class TPI04Response(
   caseFound: Boolean,
   caseNumber: Option[String],
   caseStatus: Option[String]
@@ -27,26 +27,28 @@ case class TPI04Response (
 
 object TPI04Response {
   implicit val tpi04ReponseWrites: OWrites[TPI04Response] = new OWrites[TPI04Response] {
-    override def writes(o: TPI04Response): JsObject = {
+    override def writes(o: TPI04Response): JsObject =
       Json.obj(
         "getExistingClaimResponse" -> Json.obj(
-          "responseCommon" -> Json.obj(
-            "status" -> "OK",
-            "processingDate" -> s"${TimeUtils.iso8061DateTimeNow}",
-            "CDFPayService" -> "SCTY",
-            "CDFPayCaseFound" -> o.caseFound,
-            "goods" -> Json.obj(
-              "itemNumber" -> "0001",
-              "goodsDescription" -> "Something expensive"
-            ),
-            "totalClaimAmount" -> "1000.00"
-          ).++(
-            o.caseNumber.map(caseNumber => Json.obj("CDFPayCaseNumber" -> caseNumber)).getOrElse(Json.obj())
-          ).++(
-            o.caseStatus.map(status => Json.obj("caseStatus" -> status)).getOrElse(Json.obj())
-          )
+          "responseCommon" -> Json
+            .obj(
+              "status"           -> "OK",
+              "processingDate"   -> s"${TimeUtils.iso8061DateTimeNow}",
+              "CDFPayService"    -> "SCTY",
+              "CDFPayCaseFound"  -> o.caseFound,
+              "goods"            -> Json.obj(
+                "itemNumber"       -> "0001",
+                "goodsDescription" -> "Something expensive"
+              ),
+              "totalClaimAmount" -> "1000.00"
+            )
+            .++(
+              o.caseNumber.map(caseNumber => Json.obj("CDFPayCaseNumber" -> caseNumber)).getOrElse(Json.obj())
+            )
+            .++(
+              o.caseStatus.map(status => Json.obj("caseStatus" -> status)).getOrElse(Json.obj())
+            )
         )
       )
-    }
   }
 }

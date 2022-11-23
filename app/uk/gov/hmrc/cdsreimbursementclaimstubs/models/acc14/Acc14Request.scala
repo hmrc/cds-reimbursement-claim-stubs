@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14
 
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
 
 case class Acc14Request(declarationId: String, reasonForSecurity: Option[String])
 
@@ -25,5 +25,5 @@ object Acc14Request {
   implicit val acc14RequestReads: Reads[Acc14Request] = (
     (JsPath \ "declarationId").read[String] and
       (JsPath \ "securityReason").readNullable[String]
-    )(Acc14Request.apply _)
+  )(Acc14Request.apply _)
 }

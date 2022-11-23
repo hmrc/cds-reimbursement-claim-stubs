@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response
 
-import play.api.libs.json._
 import cats.kernel.Eq
+import play.api.libs.json._
 
 sealed trait ReputationResponse extends Product with Serializable
 
@@ -37,7 +37,7 @@ object ReputationResponse {
       val incomingValue = json.as[String]
       valuesMap.get(incomingValue) match {
         case Some(value) => JsSuccess(value)
-        case None        =>
+        case None =>
           JsError(
             s"Bank account reputation was: $incomingValue not one of: ${allValues.map(_.toString).mkString(", ")}"
           )

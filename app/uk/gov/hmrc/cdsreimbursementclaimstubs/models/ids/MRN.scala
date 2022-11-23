@@ -23,4 +23,3 @@ final case class MRN(value: String) extends AnyVal
 object MRN {
   implicit val eq: Eq[MRN] = Eq.fromUniversalEquals
 }
-

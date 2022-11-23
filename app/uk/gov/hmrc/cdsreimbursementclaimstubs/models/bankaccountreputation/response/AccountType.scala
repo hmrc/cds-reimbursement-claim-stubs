@@ -33,7 +33,7 @@ object AccountType {
       val incomingValue = json.as[String]
       valuesMap.get(incomingValue) match {
         case Some(value) => JsSuccess(value)
-        case None        =>
+        case None =>
           JsError(s"AccountTypeRequest was: $incomingValue not one of: ${allValues.map(_.toString).mkString(", ")}")
       }
     }

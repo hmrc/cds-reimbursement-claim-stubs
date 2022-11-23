@@ -18,16 +18,15 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.models
 
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDateTime, ZoneId}
-
 import scala.xml.Elem
 
-final case class Dec64Error(status:Int, message:String, body:Elem)
+final case class Dec64Error(status: Int, message: String, body: Elem)
 
 object Dec64 {
 
-  def badRequest(message:String) = error(400,message)
+  def badRequest(message: String) = error(400, message)
 
-  def error(statusCode:Int, errorMessage:String):Dec64Error = {
+  def error(statusCode: Int, errorMessage: String): Dec64Error = {
     val dateFormat = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss z").withZone(ZoneId.systemDefault())
 
     val body = <cds:errorDetail xmlns:cds="http://www.hmrc.gsi.gov.uk/cds">
@@ -41,6 +40,6 @@ object Dec64 {
       </cds:sourceFaultDetail>
     </cds:errorDetail>
 
-    Dec64Error(statusCode,errorMessage,body)
+    Dec64Error(statusCode, errorMessage, body)
   }
 }

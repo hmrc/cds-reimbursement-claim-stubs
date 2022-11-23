@@ -28,25 +28,24 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
 import javax.xml.parsers.SAXParserFactory
-import javax.xml.validation.SchemaFactory
 import scala.util.Try
 import scala.xml.parsing.NoBindingFactoryAdapter
 import scala.xml.{NodeSeq, SAXParseException}
 
 @Singleton
-class CcsFileSubmission @Inject()(cc: ControllerComponents)
+class CcsFileSubmission @Inject() (cc: ControllerComponents)
     extends BackendController(cc)
     with Logging
     with EitherSyntax {
 
   lazy val saxParserFactory: SAXParserFactory = {
-    val schemaLang = javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI
-    val xsdFile    = getClass.getResourceAsStream("/resources/DEC64-v1-0-0-file-upload.xsd")
-//    val xsdStream  = new javax.xml.transform.stream.StreamSource(xsdFile)
-//    val schema     = SchemaFactory.newInstance(schemaLang).newSchema(xsdStream)
-    val factory    = SAXParserFactory.newInstance()
+    // val schemaLang = javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI
+    // val xsdFile    = getClass.getResourceAsStream("/resources/DEC64-v1-0-0-file-upload.xsd")
+    // val xsdStream  = new javax.xml.transform.stream.StreamSource(xsdFile)
+    // val schema     = SchemaFactory.newInstance(schemaLang).newSchema(xsdStream)
+    val factory = SAXParserFactory.newInstance()
     factory.setNamespaceAware(true)
-//    factory.setSchema(schema)
+    // factory.setSchema(schema)
     factory
   }
 
