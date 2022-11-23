@@ -19,12 +19,13 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 import com.eclipsesource.schema.drafts.Version4
 import com.eclipsesource.schema.drafts.Version4._
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
-import javax.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi04.{TPI04Request, TPI04Response}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
+
+import javax.inject.{Inject, Singleton}
 import scala.io.Source
 
 @Singleton

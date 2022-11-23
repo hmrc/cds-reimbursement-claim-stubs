@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi04
 
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
 
 case class TPI04Request(declarationId: String, reasonForSecurity: String)
 
@@ -25,5 +25,5 @@ object TPI04Request {
   implicit val tpi04RequestReads: Reads[TPI04Request] = (
     (JsPath \ "declarationID").read[String] and
       (JsPath \ "reasonForSecurity").read[String]
-    )(TPI04Request.apply _)
+  )(TPI04Request.apply _)
 }

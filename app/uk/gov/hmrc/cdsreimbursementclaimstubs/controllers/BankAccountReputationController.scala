@@ -30,51 +30,65 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import scala.util.Try
 
 @Singleton()
-class BankAccountReputationController @Inject()(cc: ControllerComponents) extends BackendController(cc) with Logging {
+class BankAccountReputationController @Inject() (cc: ControllerComponents) extends BackendController(cc) with Logging {
 
   val digitsOnly = "\\d+"
 
   def personalReputation(): Action[JsValue] = Action(parse.json) { implicit request =>
     logger.debug(s"processing personal request $request ${request.headers} ${request.body}")
     (for {
-      assessRequest <- Try(request.body.as[BarsPersonalAssessRequest]).toEither.leftMap(error => BadRequest(error.getMessage))
-      _ <- Either.cond(isAccountNumberValid(assessRequest.account.accountNumber), (), invalidAccountNumber(assessRequest.account.sortCode))
-      _ <- Either.cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode) )
-      _ <- specialAccountBehaviour(assessRequest.account.accountNumber)
+      assessRequest <-
+        Try(request.body.as[BarsPersonalAssessRequest]).toEither.leftMap(error => BadRequest(error.getMessage))
+      _             <- Either.cond(
+                         isAccountNumberValid(assessRequest.account.accountNumber),
+                         (),
+                         invalidAccountNumber(assessRequest.account.sortCode)
+                       )
+      _             <-
+        Either
+          .cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode))
+      _             <- specialAccountBehaviour(assessRequest.account.accountNumber)
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
   }
 
   def businessReputation(): Action[JsValue] = Action(parse.json) { implicit request =>
     logger.debug(s"processing business request $request  ${request.headers} ${request.body}")
     (for {
-      assessRequest <- Try(request.body.as[BarsBusinessAssessRequest]).toEither.leftMap(error => BadRequest(error.getMessage))
-      _ <- Either.cond(isAccountNumberValid(assessRequest.account.accountNumber), (), invalidAccountNumber(assessRequest.account.sortCode))
-      _ <- Either.cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode) )
-      _ <- specialAccountBehaviour(assessRequest.account.accountNumber)
+      assessRequest <-
+        Try(request.body.as[BarsBusinessAssessRequest]).toEither.leftMap(error => BadRequest(error.getMessage))
+      _             <- Either.cond(
+                         isAccountNumberValid(assessRequest.account.accountNumber),
+                         (),
+                         invalidAccountNumber(assessRequest.account.sortCode)
+                       )
+      _             <-
+        Either
+          .cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode))
+      _             <- specialAccountBehaviour(assessRequest.account.accountNumber)
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
   }
 
-  def isSortCodeValid(sortCode:String):Boolean = {
+  def isSortCodeValid(sortCode: String): Boolean =
     sortCode.length == 6 && sortCode.matches(digitsOnly)
-  }
 
-  def isAccountNumberValid(accountNumber:String):Boolean = {
+  def isAccountNumberValid(accountNumber: String): Boolean =
     accountNumber.length == 8 && accountNumber.matches(digitsOnly)
-  }
 
-  def invalidAccountNumber(acountNumber:String):Result =
+  def invalidAccountNumber(acountNumber: String): Result =
     BadRequest(Json.toJson(ReputationErrorResponse("INVALID_ACCOUNT_NUMBER", s"$acountNumber: invalid account number")))
 
-  def invalidSortCode(sortCode:String):Result =
+  def invalidSortCode(sortCode: String): Result =
     BadRequest(Json.toJson(ReputationErrorResponse("INVALID_SORTCODE", s"$sortCode: invalid sortcode")))
 
   def specialAccountBehaviour(accountNumber: String): Either[Result, Unit] = accountNumber match {
-    case "90909090" => Left(ServiceUnavailable(Json.toJson(ReputationErrorResponse("SERVICE_UNAVAILABLE", "please try again later"))))
-    case "90909091" => Left(BadRequest(Json.toJson(ReputationErrorResponse("BAD_REQUEST", "please check API reference"))))
+    case "90909090" =>
+      Left(ServiceUnavailable(Json.toJson(ReputationErrorResponse("SERVICE_UNAVAILABLE", "please try again later"))))
+    case "90909091" =>
+      Left(BadRequest(Json.toJson(ReputationErrorResponse("BAD_REQUEST", "please check API reference"))))
     case _ => Right(())
   }
 
-  def parseValidAccountNumber(accountNumber: String): BARSResponse = {
+  def parseValidAccountNumber(accountNumber: String): BARSResponse =
     accountNumber match {
       case "11001001" => BARSResponse(Yes, Yes, Some(Yes))
       case "11001002" => BARSResponse(Yes, Yes, Some(Indeterminate))
@@ -97,6 +111,4 @@ class BankAccountReputationController @Inject()(cc: ControllerComponents) extend
 
       case _ => BARSResponse(Yes, Yes, Some(Yes))
     }
-  }
 }
-

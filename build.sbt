@@ -4,6 +4,8 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName = "cds-reimbursement-claim-stubs"
 
+ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
+
 addCommandAlias("fmt", "all scalafmtSbt scalafmt test:scalafmt")
 addCommandAlias("check", "all scalafmtSbtCheck scalafmtCheck test:scalafmtCheck")
 
@@ -30,7 +32,9 @@ lazy val microservice = Project(appName, file("."))
   .configs(IntegrationTest)
   .settings(integrationTestSettings(): _*)
   .settings(PlayKeys.playDefaultPort := 7502)
-  .settings(resolvers ++= Seq(
-    Resolver.jcenterRepo,
-    "third-party-maven-releases" at "https://artefacts.tax.service.gov.uk/artifactory/third-party-maven-releases/"
-  ))
+  .settings(
+    resolvers ++= Seq(
+      Resolver.jcenterRepo,
+      "third-party-maven-releases" at "https://artefacts.tax.service.gov.uk/artifactory/third-party-maven-releases/"
+    )
+  )

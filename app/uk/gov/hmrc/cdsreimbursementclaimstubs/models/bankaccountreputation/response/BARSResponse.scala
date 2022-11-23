@@ -22,7 +22,7 @@ final case class BARSResponse(
   accountNumberWithSortCodeIsValid: ReputationResponse,
   sortCodeIsPresentOnEISCD: ReputationResponse,
   accountExists: Option[ReputationResponse] = None
-                                         )
+)
 
 object BARSResponse {
 

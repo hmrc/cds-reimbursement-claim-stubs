@@ -1,11 +1,26 @@
 # Add all the application routes to the app.routes file
 
+# TPI05
 POST       /tpi/postoverpaymentclaim/v1                               uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.ClaimController.submitClaim
+
+# ACC14
 POST       /accounts/overpaymentdeclarationdisplay/v1                 uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DeclarationController.getDeclaration
+
+# DEC64
 POST       /filetransfer/init/v1                                      uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.CcsFileSubmission.submitFile
+
 POST       /personal/v3/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.personalReputation
 POST       /business/v2/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.businessReputation
-POST       /tpi/getexistingclaim/v1                                  uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DuplicateDeclarationController.getDuplicateDeclarations
+
+# TPI04
+POST       /tpi/getexistingclaim/v1                                   uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DuplicateDeclarationController.getDuplicateDeclarations
+
+# TPI01
+POST       /tpi/getreimbursementclaims/v1                             uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.TPI01Controller.getReimbursementClaims
+
+# TPI02
+POST       /tpi/getspecificclaim/v1                                   uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.TPI02Controller.getSpecificClaim
+
 
 ->         /                                                          health.Routes
 GET        /admin/metrics                                             com.kenshoo.play.metrics.MetricsController.metrics
