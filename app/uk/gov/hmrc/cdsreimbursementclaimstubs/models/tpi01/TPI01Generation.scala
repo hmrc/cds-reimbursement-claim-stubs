@@ -56,6 +56,7 @@ trait TPI01Generation extends SchemaValidation {
 
     responseDetail
   }
+  
 
   def tpi01SetCaseStatus(index: Int, caseStatus: CaseStatus): ResponseDetail = {
 
@@ -105,6 +106,30 @@ trait TPI01Generation extends SchemaValidation {
       case "22" => PendingComplianceCheckQuery
       case "23" => PendingComplianceCheck
     }
+  
+    def caseStatusSCTY(caseStatus: String): CaseStatus =
+    caseStatus match {
+      case "1" => Open
+      case "2" => PendingApproval
+      case "3" => PendingPayment
+      case "4" => PartialRefund
+      case "5" => ResolvedRefund
+      case "6" => ResolvedWithdrawn
+      case "7" => PendingQuery
+      case "8" => ResolvedManualBTA
+      case "9" => PendingC18
+      case "10" => ClosedC18Raised
+      case "11" => RTBHLetterInitiated
+      case "12" => AwaitingRTBHLetterResponse
+      case "13" => ReminderLetterInitiated
+      case "14" => AwaitingReminderLetterResponse
+      case "15" => DecisionLetterInitiated
+      case "16" => PartialBTA
+      case "17" => PartialBTARefund
+      case "18" => ResolvedAutoBTA
+      case "19" => ResolvedManualBTARefund
+      case "20" => OpenExtensionGranted
+    }  
 
   case object Open extends CaseStatus {
     override def toString: String = "Open"
@@ -212,7 +237,58 @@ trait TPI01Generation extends SchemaValidation {
   case object PendingComplianceCheck extends CaseStatus {
     override def toString: String = "Pending-Compliance Check"
   }
-
+   case object PendingPayment extends CaseStatus {
+    override def toString: String = "Pending-Payment"
+  }
+   case object PartialRefund extends CaseStatus {
+    override def toString: String = "Partial Refund"
+  }
+  case object ResolvedRefund extends CaseStatus {
+    override def toString: String = "Resolved-Refund"
+  }
+  case object PendingQuery extends CaseStatus {
+    override def toString: String = "Pending-Query"
+  }
+  case object ResolvedManualBTA extends CaseStatus {
+    override def toString: String = "Resolved-Manual BTA"
+  }
+  case object PendingC18 extends CaseStatus {
+    override def toString: String = "Pending-C18"
+  }
+  case object ClosedC18Raised extends CaseStatus {
+    override def toString: String = "Closed-C18 Raised"
+  }
+  case object RTBHLetterInitiated extends CaseStatus {
+    override def toString: String = "RTBH Letter Initiated"
+  }
+  case object AwaitingRTBHLetterResponse extends CaseStatus {
+    override def toString: String = "Awaiting RTBH Letter Response"
+  }
+  case object ReminderLetterInitiated extends CaseStatus {
+    override def toString: String = "Reminder Letter Initiated"
+  }
+  case object AwaitingReminderLetterResponse extends CaseStatus {
+    override def toString: String = "Awaiting Reminder Letter Response"
+  }
+  case object DecisionLetterInitiated extends CaseStatus {
+    override def toString: String = "Decision Letter Initiated"
+  }
+  case object PartialBTA extends CaseStatus {
+    override def toString: String = "Partial BTA"
+  }
+  case object PartialBTARefund extends CaseStatus {
+    override def toString: String = "Partial BTA/Refund"
+  }
+  case object ResolvedAutoBTA extends CaseStatus {
+    override def toString: String = "Resolved-Auto BTA"
+  }
+  case object ResolvedManualBTARefund extends CaseStatus {
+    override def toString: String = "Resolved-Manual BTA/Refund"
+  }
+  case object OpenExtensionGranted extends CaseStatus {
+    override def toString: String = "Open-Extension Granted"
+  }    
+  
   private def createNDRCCase(value: Int, status: CaseStatus): NDRCCaseDetails = {
     val eori = f"GB$value%012d"
     NDRCCaseDetails(

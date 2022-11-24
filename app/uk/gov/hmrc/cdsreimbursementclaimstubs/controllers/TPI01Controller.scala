@@ -41,6 +41,11 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
             val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
             val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
             validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))
+          case "GB744638982008" =>
+            val detail         = tpi01Claims(20)
+            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
+            validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))  
           case "GB744638982002" =>
             parseResponse("tpi01/response-200-no-claims-found.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case "GB744638982003" =>
