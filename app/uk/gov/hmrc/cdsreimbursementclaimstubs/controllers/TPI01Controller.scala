@@ -42,7 +42,7 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
             val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
             validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))
           case "GB744638982008" =>
-            val detail         = tpi01Claims(20)
+            val detail         = tpi01AllSubstatusClaims()
             val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
             val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
             validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))  
@@ -68,11 +68,11 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
           case "TPI01_EORI_ERROR" =>
             parseResponse("tpi01/response-200-invalid-eori.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case e if e.startsWith("GB0000000000") =>
-            val caseStatusIndex = e.replace("GB0000000000", "")
-            val caseStatus      = caseStatusNDRC(caseStatusIndex)
+            val caseSubStatusIndex = e.replace("GB0000000000", "")
+            val caseSubStatus      = caseSubStatusNDRC(caseSubStatusIndex)
             val responseCommon  = ResponseCommon("OK", "2017-03-21T09:30:47Z")
             val response        = Response(
-              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseStatus(caseStatusIndex.toInt, caseStatus)))
+              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatus(caseSubStatusIndex.toInt, caseSubStatus)))
             )
             Ok(Json.toJson(response))
           case _ => 

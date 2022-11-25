@@ -27,9 +27,9 @@ trait TPI01Generation extends SchemaValidation {
 
     val ndrcCases = (1 to amountOfEach).flatMap { index =>
       Seq(
-        createNDRCCase(index, Open),
+        createNDRCCase(index, OpenNDRC),
         createNDRCCase(index + amountOfEach, PendingQueried),
-        createNDRCCase(index + (amountOfEach * 2), NDRCClosed)
+        createNDRCCase(index + (amountOfEach * 2), ResolvedApproved)
       )
     }
 
@@ -37,9 +37,9 @@ trait TPI01Generation extends SchemaValidation {
 
     val sctyCases = (newIndex until newIndex + amountOfEach).flatMap { index =>
       Seq(
-        createSCTYCase(index, Open),
-        createSCTYCase(index + amountOfEach, Pending),
-        createSCTYCase(index + (amountOfEach * 2), SCTYClosed)
+        createSCTYCase(index, OpenSCTY),
+        createSCTYCase(index + amountOfEach, PendingC18),
+        createSCTYCase(index + (amountOfEach * 2), ClosedC18Raised)
       )
     }
 
@@ -56,11 +56,85 @@ trait TPI01Generation extends SchemaValidation {
 
     responseDetail
   }
-  
 
-  def tpi01SetCaseStatus(index: Int, caseStatus: CaseStatus): ResponseDetail = {
+  def tpi01AllSubstatusClaims(): ResponseDetail = {
+    val ndrcCaseStatuses: Seq[CaseSubStatusNDRC] = Seq(
+      OpenNDRC,
+      OpenAnalysis,
+      PendingApprovalNDRC,
+      PendingQueried,
+      ResolvedWithdrawnNDRC,
+      RejectedFailedValidation,
+      ResolvedRejected,
+      OpenRework,
+      Paused,
+      ResolvedNoReply,
+      ResolvedRefused,
+      PendingPaymentConfirmation,
+      ResolvedApproved,
+      ResolvedPartialRefused,
+      PendingDecisionLetter,
+      Approved,
+      AnalysisRework,
+      ReworkPaymentDetails,
+      PendingRTBH,
+      RTBHSent,
+      PendingComplianceRecommendation,
+      PendingComplianceCheckQuery,
+      PendingComplianceCheck,
+      ReplyToRTBH)
 
-    val ndrcCases = Seq(createNDRCCase(s"100$index".toInt, caseStatus))
+    val ndrcCases = ndrcCaseStatuses.zipWithIndex.flatMap { case (caseSubStatus, index) =>
+      Seq(
+        createNDRCCase(index, caseSubStatus),
+      )
+    }
+
+    val ndrcLength = ndrcCaseStatuses.length
+
+    val sctyCaseStatuses : Seq[CaseSubStatusSCTY] = Seq(
+      OpenSCTY,
+      PendingApprovalSCTY,
+      PendingPayment,
+      PartialRefund,
+      ResolvedRefund,
+      ResolvedWithdrawnSCTY,
+      PendingQuery,
+      ResolvedManualBTA,
+      PendingC18,
+      ClosedC18Raised,
+      RTBHLetterInitiated,
+      AwaitingRTBHLetterResponse,
+      AwaitingReminderLetterResponse,
+      DecisionLetterInitiated,
+      PartialBTA,
+      PartialBTARefund,
+      ResolvedAutoBTA,
+      ResolvedManualBTARefund,
+      OpenExtensionGranted)
+
+    val sctyCases = sctyCaseStatuses.zipWithIndex.flatMap { case (caseSubStatus, index) =>
+      Seq(
+        createSCTYCase(ndrcLength + index, caseSubStatus),
+      )
+    }
+
+    val responseDetail = ResponseDetail(
+      NDRCCasesFound = true,
+      SCTYCasesFound = true,
+      CDFPayCase = CDFPayCase(
+        ndrcCases.size.toString,
+        sctyCases.size.toString,
+        ndrcCases,
+        sctyCases
+      )
+    )
+
+    responseDetail
+  }
+  def tpi01SetCaseSubStatus(index: Int, caseSubStatus: CaseSubStatusNDRC): ResponseDetail = {
+
+    val ndrcCases = Seq(createNDRCCase(s"100$index".toInt, caseSubStatus))
 
     val sctyCases = Seq()
 
@@ -79,14 +153,25 @@ trait TPI01Generation extends SchemaValidation {
   }
 
   sealed trait CaseStatus
-
-  def caseStatusNDRC(caseStatus: String): CaseStatus =
-    caseStatus match {
-      case "1" => Open
+  case object InProgress extends CaseStatus {
+    override def toString: String = "In progress"
+  }
+  case object Pending extends CaseStatus {
+    override def toString: String = "Pending"
+  }
+  case object Closed extends CaseStatus {
+    override def toString: String = "Closed"
+  }
+  sealed trait CaseSubStatusNDRC {
+    val caseStatus: CaseStatus
+  }
+  def caseSubStatusNDRC(caseSubStatusNDRC: String): CaseSubStatusNDRC =
+    caseSubStatusNDRC match {
+      case "1" => OpenNDRC
       case "2" => OpenAnalysis
-      case "3" => PendingApproval
+      case "3" => PendingApprovalNDRC
       case "4" => PendingQueried
-      case "5" => ResolvedWithdrawn
+      case "5" => ResolvedWithdrawnNDRC
       case "6" => RejectedFailedValidation
       case "7" => ResolvedRejected
       case "8" => OpenRework
@@ -105,16 +190,178 @@ trait TPI01Generation extends SchemaValidation {
       case "21" => PendingComplianceRecommendation
       case "22" => PendingComplianceCheckQuery
       case "23" => PendingComplianceCheck
+      case "24" => ReplyToRTBH
     }
-  
-    def caseStatusSCTY(caseStatus: String): CaseStatus =
-    caseStatus match {
-      case "1" => Open
-      case "2" => PendingApproval
+  case object OpenNDRC extends CaseSubStatusNDRC {
+    override def toString: String = "Open"
+
+    override val caseStatus: CaseStatus = InProgress
+  }
+  case object OpenAnalysis extends CaseSubStatusNDRC {
+    override def toString: String = "Open-Analysis"
+
+    override val caseStatus: CaseStatus = InProgress
+
+  }
+  case object PendingApprovalNDRC extends CaseSubStatusNDRC {
+    override def toString: String = "Pending-Approval"
+
+    override val caseStatus: CaseStatus = Pending
+
+  }
+  case object PendingQueried extends CaseSubStatusNDRC {
+    override def toString: String = "Pending-Queried"
+
+    override val caseStatus: CaseStatus = Pending
+
+  }
+  case object ResolvedWithdrawnNDRC extends CaseSubStatusNDRC {
+    override def toString: String = "Resolved-Withdrawn"
+
+    override val caseStatus: CaseStatus = Closed
+
+  }
+  case object RejectedFailedValidation extends CaseSubStatusNDRC {
+    override def toString: String = "Rejected-Failed Validation"
+
+    override val caseStatus: CaseStatus = Closed
+
+  }
+  case object ResolvedRejected extends CaseSubStatusNDRC {
+    override def toString: String = "Resolved-Rejected"
+
+    override val caseStatus: CaseStatus = Closed
+
+  }
+  case object OpenRework extends CaseSubStatusNDRC {
+    override def toString: String = "Open-Rework"
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+  case object Paused extends CaseSubStatusNDRC {
+    override def toString: String = "Paused"
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+  case object ResolvedNoReply extends CaseSubStatusNDRC {
+    override def toString: String = "Resolved-No Reply"
+
+    override val caseStatus: CaseStatus = Closed
+
+
+  }
+  case object ResolvedRefused extends CaseSubStatusNDRC {
+    override def toString: String = "Resolved-Refused"
+
+    override val caseStatus: CaseStatus = Closed
+
+
+  }
+  case object PendingPaymentConfirmation extends CaseSubStatusNDRC {
+    override def toString: String = "Pending Payment Confirmation"
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+  case object ResolvedApproved extends CaseSubStatusNDRC {
+    override def toString: String = "Resolved-Approved"
+
+    override val caseStatus: CaseStatus = Closed
+
+
+  }
+  case object ResolvedPartialRefused extends CaseSubStatusNDRC {
+    override def toString: String = "Resolved-Partial Refused"
+
+    override val caseStatus: CaseStatus = Closed
+
+
+  }
+  case object PendingDecisionLetter extends CaseSubStatusNDRC {
+    override def toString: String = "Pending Decision Letter"
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+  case object Approved extends CaseSubStatusNDRC {
+    override def toString: String = "Approved"
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+  case object AnalysisRework extends CaseSubStatusNDRC {
+    override def toString: String = "Analysis-Rework"
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+  case object ReworkPaymentDetails extends CaseSubStatusNDRC {
+    override def toString: String = "Rework-Payment Details"
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+  case object PendingRTBH extends CaseSubStatusNDRC {
+    override def toString: String = "Pending-RTBH"
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+  case object RTBHSent extends CaseSubStatusNDRC {
+    override def toString: String = "RTBH Sent"
+
+    override val caseStatus: CaseStatus = Pending
+
+
+  }
+  case object PendingComplianceRecommendation extends CaseSubStatusNDRC {
+    override def toString: String = "Pending-Compliance Recommendation"
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+  case object PendingComplianceCheckQuery extends CaseSubStatusNDRC {
+    override def toString: String = "Pending-Compliance Check Query"
+
+    override val caseStatus: CaseStatus = Pending
+
+
+  }
+  case object PendingComplianceCheck extends CaseSubStatusNDRC {
+    override def toString: String = "Pending-Compliance Check"
+
+    override val caseStatus: CaseStatus = InProgress
+
+  }
+  case object ReplyToRTBH extends CaseSubStatusNDRC {
+    override def toString: String = "Reply To RTBH"
+
+    override val caseStatus: CaseStatus = Pending
+
+
+  }
+  sealed trait CaseSubStatusSCTY {
+    val caseStatus: CaseStatus
+  }
+  def caseSubStatusSCTY(caseSubStatusSCTY: String): CaseSubStatusSCTY =
+    caseSubStatusSCTY match {
+      case "1" => OpenSCTY
+      case "2" => PendingApprovalSCTY
       case "3" => PendingPayment
       case "4" => PartialRefund
       case "5" => ResolvedRefund
-      case "6" => ResolvedWithdrawn
+      case "6" => ResolvedWithdrawnSCTY
       case "7" => PendingQuery
       case "8" => ResolvedManualBTA
       case "9" => PendingC18
@@ -129,179 +376,157 @@ trait TPI01Generation extends SchemaValidation {
       case "18" => ResolvedAutoBTA
       case "19" => ResolvedManualBTARefund
       case "20" => OpenExtensionGranted
-    }  
-
-  case object Open extends CaseStatus {
+    }
+  case object OpenSCTY extends CaseSubStatusSCTY {
     override def toString: String = "Open"
-  }
 
-  case object Pending extends CaseStatus {
+    override val caseStatus: CaseStatus = InProgress
+
+  }
+  case object PendingApprovalSCTY extends CaseSubStatusSCTY {
     override def toString: String = "Pending-Approval"
-  }
 
-  case object SCTYClosed extends CaseStatus {
-    override def toString: String = "Closed-C18 Raised"
-  }
+    override val caseStatus: CaseStatus = InProgress
 
-  case object NDRCClosed extends CaseStatus {
-    override def toString: String = "Resolved-Approved"
   }
-
-  case object OpenAnalysis extends CaseStatus {
-    override def toString: String = "Open-Analysis"
-  }
-
-  case object PendingApproval extends CaseStatus {
-    override def toString: String = "Pending-Approval"
-  }
-
-  case object PendingQueried extends CaseStatus {
-    override def toString: String = "Pending-Queried"
-  }
-
-  case object ResolvedWithdrawn extends CaseStatus {
-    override def toString: String = "Resolved-Withdrawn"
-  }
-
-  case object RejectedFailedValidation extends CaseStatus {
-    override def toString: String = "Rejected-Failed Validation"
-  }
-
-  case object ResolvedRejected extends CaseStatus {
-    override def toString: String = "Resolved-Rejected"
-  }
-
-  case object OpenRework extends CaseStatus {
-    override def toString: String = "Open-Rework"
-  }
-
-  case object Paused extends CaseStatus {
-    override def toString: String = "Paused"
-  }
-
-  case object ResolvedNoReply extends CaseStatus {
-    override def toString: String = "Resolved-No Reply"
-  }
-
-  case object ResolvedRefused extends CaseStatus {
-    override def toString: String = "Resolved-Refused"
-  }
-
-  case object PendingPaymentConfirmation extends CaseStatus {
-    override def toString: String = "Pending Payment Confirmation"
-  }
-  case object ResolvedApproved extends CaseStatus {
-    override def toString: String = "Resolved-Approved"
-  }
-
-  case object ResolvedPartialRefused extends CaseStatus {
-    override def toString: String = "Resolved-Partial Refused"
-  }
-
-  case object PendingDecisionLetter extends CaseStatus {
-    override def toString: String = "Pending Decision Letter"
-  }
-
-  case object Approved extends CaseStatus {
-    override def toString: String = "Approved"
-  }
-
-  case object AnalysisRework extends CaseStatus {
-    override def toString: String = "Analysis-Rework"
-  }
-
-  case object ReworkPaymentDetails extends CaseStatus {
-    override def toString: String = "Rework-Payment Details"
-  }
-
-  case object PendingRTBH extends CaseStatus {
-    override def toString: String = "Pending-RTBH"
-  }
-
-  case object RTBHSent extends CaseStatus {
-    override def toString: String = "RTBH-Sent"
-  }
-
-  case object ReplyToRTBH extends CaseStatus {
-    override def toString: String = "Reply To RTBH"
-  }
-
-  case object PendingComplianceRecommendation extends CaseStatus {
-    override def toString: String = "Pending-Compliance Recommendation"
-  }
-
-  case object PendingComplianceCheckQuery extends CaseStatus {
-    override def toString: String = "Pending-Compliance Check Query"
-  }
-
-  case object PendingComplianceCheck extends CaseStatus {
-    override def toString: String = "Pending-Compliance Check"
-  }
-   case object PendingPayment extends CaseStatus {
+  case object PendingPayment extends CaseSubStatusSCTY {
     override def toString: String = "Pending-Payment"
+
+     override val caseStatus: CaseStatus = Pending
   }
-   case object PartialRefund extends CaseStatus {
+  case object PartialRefund extends CaseSubStatusSCTY {
     override def toString: String = "Partial Refund"
+
+     override val caseStatus: CaseStatus = Closed
+
+
+
   }
-  case object ResolvedRefund extends CaseStatus {
+  case object ResolvedRefund extends CaseSubStatusSCTY {
     override def toString: String = "Resolved-Refund"
+
+    override val caseStatus: CaseStatus = Closed
+
+
   }
-  case object PendingQuery extends CaseStatus {
+  case object ResolvedWithdrawnSCTY extends CaseSubStatusSCTY {
+    override def toString: String = "Resolved-Withdrawn"
+
+    override val caseStatus: CaseStatus = Closed
+
+
+  }
+  case object PendingQuery extends CaseSubStatusSCTY {
     override def toString: String = "Pending-Query"
+
+    override val caseStatus: CaseStatus = Pending
+
+
   }
-  case object ResolvedManualBTA extends CaseStatus {
+  case object ResolvedManualBTA extends CaseSubStatusSCTY {
     override def toString: String = "Resolved-Manual BTA"
+
+    override val caseStatus: CaseStatus = Closed
+
+
   }
-  case object PendingC18 extends CaseStatus {
+  case object PendingC18 extends CaseSubStatusSCTY {
     override def toString: String = "Pending-C18"
+
+    override val caseStatus: CaseStatus = Pending
+
+
   }
-  case object ClosedC18Raised extends CaseStatus {
+  case object ClosedC18Raised extends CaseSubStatusSCTY {
     override def toString: String = "Closed-C18 Raised"
+
+    override val caseStatus: CaseStatus = Closed
+
+
   }
-  case object RTBHLetterInitiated extends CaseStatus {
+  case object RTBHLetterInitiated extends CaseSubStatusSCTY {
     override def toString: String = "RTBH Letter Initiated"
+
+    override val caseStatus: CaseStatus = Pending
+
+
   }
-  case object AwaitingRTBHLetterResponse extends CaseStatus {
+  case object AwaitingRTBHLetterResponse extends CaseSubStatusSCTY {
     override def toString: String = "Awaiting RTBH Letter Response"
+
+    override val caseStatus: CaseStatus = Pending
+
+
   }
-  case object ReminderLetterInitiated extends CaseStatus {
+  case object ReminderLetterInitiated extends CaseSubStatusSCTY {
     override def toString: String = "Reminder Letter Initiated"
+
+    override val caseStatus: CaseStatus = Pending
+
+
   }
-  case object AwaitingReminderLetterResponse extends CaseStatus {
+  case object AwaitingReminderLetterResponse extends CaseSubStatusSCTY {
     override def toString: String = "Awaiting Reminder Letter Response"
+
+    override val caseStatus: CaseStatus = Pending
+
+
   }
-  case object DecisionLetterInitiated extends CaseStatus {
+  case object DecisionLetterInitiated extends CaseSubStatusSCTY {
     override def toString: String = "Decision Letter Initiated"
+
+    override val caseStatus: CaseStatus = Pending
+
+
   }
-  case object PartialBTA extends CaseStatus {
+  case object PartialBTA extends CaseSubStatusSCTY {
     override def toString: String = "Partial BTA"
+
+    override val caseStatus: CaseStatus = Pending
+
+
   }
-  case object PartialBTARefund extends CaseStatus {
+  case object PartialBTARefund extends CaseSubStatusSCTY {
     override def toString: String = "Partial BTA/Refund"
+
+    override val caseStatus: CaseStatus = Pending
+
+
   }
-  case object ResolvedAutoBTA extends CaseStatus {
+  case object ResolvedAutoBTA extends CaseSubStatusSCTY {
     override def toString: String = "Resolved-Auto BTA"
+
+    override val caseStatus: CaseStatus = Closed
+
+
   }
-  case object ResolvedManualBTARefund extends CaseStatus {
+  case object ResolvedManualBTARefund extends CaseSubStatusSCTY {
     override def toString: String = "Resolved-Manual BTA/Refund"
+
+    override val caseStatus: CaseStatus = Closed
+
+
   }
-  case object OpenExtensionGranted extends CaseStatus {
+  case object OpenExtensionGranted extends CaseSubStatusSCTY {
     override def toString: String = "Open-Extension Granted"
-  }    
-  
-  private def createNDRCCase(value: Int, status: CaseStatus): NDRCCaseDetails = {
+
+    override val caseStatus: CaseStatus = InProgress
+
+
+  }
+
+  private def createNDRCCase(value: Int, subStatus: CaseSubStatusNDRC): NDRCCaseDetails = {
     val eori = f"GB$value%012d"
     NDRCCaseDetails(
       s"NDRC-${value.toString}",
       Some("MRN23014"),
       "20200501",
       if (
-        status == NDRCClosed || status == ResolvedWithdrawn || status == RejectedFailedValidation || status == ResolvedRejected ||
-        status == ResolvedNoReply || status == ResolvedRefused || status == ResolvedApproved || status == ResolvedPartialRefused
+        subStatus.caseStatus == Closed
       )
         Some("20210501")
       else None,
-      status.toString,
+      subStatus.toString,
       eori,
       eori,
       Some(eori),
@@ -313,16 +538,16 @@ trait TPI01Generation extends SchemaValidation {
     )
   }
 
-  private def createSCTYCase(value: Int, status: CaseStatus): SCTYCaseDetails = {
+  private def createSCTYCase(value: Int, subStatus: CaseSubStatusSCTY): SCTYCaseDetails = {
     val eori = f"GB$value%012d"
     SCTYCaseDetails(
       s"SCTY-${value.toString}",
       Some("123456789A12122022"),
       LocalDate.now().minusDays(value).format(DateTimeFormatter.ofPattern("yyyyMMdd")),
-      if (status == SCTYClosed) Some(LocalDate.now().minusDays(value).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+      if (subStatus.caseStatus == Closed) Some(LocalDate.now().minusDays(value).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
       else None,
       "ACS",
-      status.toString,
+      subStatus.toString,
       eori,
       eori,
       Some(eori),
