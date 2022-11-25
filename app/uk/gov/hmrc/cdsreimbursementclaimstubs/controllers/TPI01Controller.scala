@@ -72,7 +72,15 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
             val caseSubStatus      = caseSubStatusNDRC(caseSubStatusIndex)
             val responseCommon  = ResponseCommon("OK", "2017-03-21T09:30:47Z")
             val response        = Response(
-              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatus(caseSubStatusIndex.toInt, caseSubStatus)))
+              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatusNDRC(caseSubStatusIndex.toInt, caseSubStatus)))
+            )
+            Ok(Json.toJson(response))
+          case e if e.startsWith("GB1000000000") =>
+            val caseSubStatusIndex = e.replace("GB1000000000", "")
+            val caseSubStatus = caseSubStatusSCTY(caseSubStatusIndex)
+            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response = Response(
+              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatusSCTY(caseSubStatusIndex.toInt, caseSubStatus)))
             )
             Ok(Json.toJson(response))
           case _ => 

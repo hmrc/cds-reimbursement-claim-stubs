@@ -132,11 +132,31 @@ trait TPI01Generation extends SchemaValidation {
 
     responseDetail
   }
-  def tpi01SetCaseSubStatus(index: Int, caseSubStatus: CaseSubStatusNDRC): ResponseDetail = {
+  def tpi01SetCaseSubStatusNDRC(index: Int, caseSubStatus: CaseSubStatusNDRC): ResponseDetail = {
 
     val ndrcCases = Seq(createNDRCCase(s"100$index".toInt, caseSubStatus))
 
     val sctyCases = Seq()
+
+    val responseDetail = ResponseDetail(
+      NDRCCasesFound = true,
+      SCTYCasesFound = true,
+      CDFPayCase = CDFPayCase(
+        ndrcCases.size.toString,
+        sctyCases.size.toString,
+        ndrcCases,
+        sctyCases
+      )
+    )
+
+    responseDetail
+  }
+
+  def tpi01SetCaseSubStatusSCTY(index: Int, caseSubStatus: CaseSubStatusSCTY): ResponseDetail = {
+
+    val ndrcCases = Seq()
+
+    val sctyCases = Seq(createSCTYCase(s"100$index".toInt, caseSubStatus))
 
     val responseDetail = ResponseDetail(
       NDRCCasesFound = true,
@@ -521,9 +541,7 @@ trait TPI01Generation extends SchemaValidation {
       s"NDRC-${value.toString}",
       Some("MRN23014"),
       "20200501",
-      if (
-        subStatus.caseStatus == Closed
-      )
+      if (subStatus.caseStatus == Closed)
         Some("20210501")
       else None,
       subStatus.toString,
