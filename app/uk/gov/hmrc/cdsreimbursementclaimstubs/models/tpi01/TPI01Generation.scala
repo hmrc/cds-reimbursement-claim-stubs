@@ -338,7 +338,7 @@ trait TPI01Generation extends SchemaValidation {
 
   }
   case object RTBHSent extends CaseSubStatusNDRC {
-    override def toString: String = "RTBH Sent"
+    override def toString: String = "RTBH-Sent"
 
     override val caseStatus: CaseStatus = Pending
 
