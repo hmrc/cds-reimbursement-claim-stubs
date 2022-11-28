@@ -61,7 +61,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse("tpi02/response-200-no-claims-found.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+                parseResponse("tpi02/response-200-no-claims-found-ndrc.json", Ok, Some("tpi02/tpi02-response-schema.json"))
             }
           case e if e.startsWith("NDRC") =>
             tpi01Claims(20).CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
@@ -78,7 +78,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse("tpi02/response-200-no-claims-found.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+                parseResponse("tpi02/response-200-no-claims-found-ndrc.json", Ok, Some("tpi02/tpi02-response-schema.json"))
             }
           case e if e.startsWith("SCTY") =>
             tpi01Claims(20).CDFPayCase.SCTYCases.find(_.CDFPayCaseNumber == e) match {
@@ -93,7 +93,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = true
                 )
               case None =>
-                parseResponse("tpi02/response-200-no-claims-found.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+                parseResponse("tpi02/response-200-no-claims-found-scty.json", Ok, Some("tpi02/tpi02-response-schema.json"))
             }
           case _ => parseResponse("tpi02/response-200.json", Ok, Some("tpi02/tpi02-response-schema.json"))
         }

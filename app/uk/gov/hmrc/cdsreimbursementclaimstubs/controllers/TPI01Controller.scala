@@ -70,6 +70,8 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
               PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseStatus(caseStatusIndex.toInt, caseStatus)))
             )
             Ok(Json.toJson(response))
+          case _ => 
+            parseResponse("tpi01/response-200-no-claims-found.json", Ok, Some("tpi01/tpi01-response-schema.json"))
         }
       }
     }
