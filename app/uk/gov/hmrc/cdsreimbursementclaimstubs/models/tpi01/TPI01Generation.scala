@@ -194,7 +194,7 @@ trait TPI01Generation extends SchemaValidation {
   }
 
   case object RTBHSent extends CaseStatus {
-    override def toString: String = "RTBH Sent"
+    override def toString: String = "RTBH-Sent"
   }
 
   case object ReplyToRTBH extends CaseStatus {
