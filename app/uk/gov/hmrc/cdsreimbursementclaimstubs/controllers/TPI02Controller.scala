@@ -35,19 +35,56 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
 
   final val getSpecificClaim: Action[JsValue] =
     Action(parse.json) { implicit request =>
+      println("request")
       validateRequest("tpi02/tpi02-request-schema.json") {
+        println("I'm working!")
         val cdfPayCaseNumber =
           (request.body \ "getSpecificCaseRequest" \ "requestDetail" \ "CDFPayCaseNumber").as[String]
+        println(cdfPayCaseNumber)
         cdfPayCaseNumber match {
           case "4374422407" =>
             parseResponse("tpi02/response-200-no-claims-found.json", Ok, Some("tpi02/tpi02-response-schema.json"))
           case "4374422406" => parseResponse("tpi02/response-400-mandatory-missing-field.json", BadRequest)
           case "4374422405" => parseResponse("tpi02/response-400-pattern-error.json", BadRequest)
           case "4374422404" => parseResponse("tpi02/response-500-system-timeout.json", InternalServerError)
+          case e if e.startsWith("NDRC-200") =>
+            tpi01AllSubstatusClaims().CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
+              case Some(value) =>
+                println(value)
+                val extractedIndex = e.replace("NDRC-200", "").toInt
+                val claimType = if (extractedIndex % 2 == 0) "C285" else "C&E1179"
+                tpi02Claim(
+                  claimType,
+                  NDRC,
+                  e,
+                  value.caseStatus,
+                  value.closedDate.isDefined,
+                  multiple = true,
+                  entryNumber = false
+                )
+              case None =>
+                println("None found!")
+                parseResponse("tpi02/response-200-no-claims-found-ndrc.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+            }
+          case e if e.startsWith("SCTY-200") =>
+            tpi01AllSubstatusClaims().CDFPayCase.SCTYCases.find(_.CDFPayCaseNumber == e) match {
+              case Some(value) =>
+                tpi02Claim(
+                  "",
+                  SCTY,
+                  e,
+                  value.caseStatus,
+                  value.closedDate.isDefined,
+                  multiple = false,
+                  entryNumber = true
+                )
+              case None =>
+                parseResponse("tpi02/response-200-no-claims-found-scty.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+            }
           case e if e.startsWith("NDRC-100") =>
             val extractedIndex = e.replace("NDRC-100", "")
             val caseStatus     = caseSubStatusNDRC(extractedIndex)
-            tpi01SetCaseSubStatusNDRC(extractedIndex.toInt, caseStatus).CDFPayCase.NDRCCases
+            tpi01SetCaseSubStatusNDRC(s"100${extractedIndex}".toInt, caseStatus).CDFPayCase.NDRCCases
               .find(_.CDFPayCaseNumber == e) match {
               case Some(value) =>
                 val claimType = if (extractedIndex.toInt % 2 == 0) "C285" else "C&E1179"
@@ -62,6 +99,24 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                 )
               case None =>
                 parseResponse("tpi02/response-200-no-claims-found-ndrc.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+            }
+          case e if e.startsWith("SCTY-100") =>
+            val extractedIndex = e.replace("SCTY-100", "")
+            val caseStatus = caseSubStatusSCTY(extractedIndex)
+            tpi01SetCaseSubStatusSCTY(s"100${extractedIndex}".toInt, caseStatus).CDFPayCase.SCTYCases
+              .find(_.CDFPayCaseNumber == e) match {
+              case Some(value) =>
+                tpi02Claim(
+                  "SCTY",
+                  SCTY,
+                  e,
+                  value.caseStatus,
+                  value.closedDate.isDefined,
+                  multiple = true,
+                  entryNumber = false
+                )
+              case None =>
+                parseResponse("tpi02/response-200-no-claims-found-scty.json", Ok, Some("tpi02/tpi02-response-schema.json"))
             }
           case e if e.startsWith("NDRC") =>
             tpi01Claims(20).CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
@@ -95,7 +150,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
               case None =>
                 parseResponse("tpi02/response-200-no-claims-found-scty.json", Ok, Some("tpi02/tpi02-response-schema.json"))
             }
-          case _ => parseResponse("tpi02/response-200.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+          case _ => parseResponse("tpi02/response-200-no-claims-found.json", Ok, Some("tpi02/tpi02-response-schema.json"))
         }
       }
     }

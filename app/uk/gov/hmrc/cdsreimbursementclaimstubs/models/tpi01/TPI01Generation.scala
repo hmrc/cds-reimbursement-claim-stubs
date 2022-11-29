@@ -86,7 +86,7 @@ trait TPI01Generation extends SchemaValidation {
 
     val ndrcCases = ndrcCaseStatuses.zipWithIndex.flatMap { case (caseSubStatus, index) =>
       Seq(
-        createNDRCCase(index, caseSubStatus),
+        createNDRCCase(s"200$index".toInt, caseSubStatus),
       )
     }
 
@@ -115,7 +115,7 @@ trait TPI01Generation extends SchemaValidation {
 
     val sctyCases = sctyCaseStatuses.zipWithIndex.flatMap { case (caseSubStatus, index) =>
       Seq(
-        createSCTYCase(ndrcLength + index, caseSubStatus),
+        createSCTYCase(s"200${ndrcLength + index}".toInt, caseSubStatus),
       )
     }
 
@@ -134,7 +134,7 @@ trait TPI01Generation extends SchemaValidation {
   }
   def tpi01SetCaseSubStatusNDRC(index: Int, caseSubStatus: CaseSubStatusNDRC): ResponseDetail = {
 
-    val ndrcCases = Seq(createNDRCCase(s"100$index".toInt, caseSubStatus))
+    val ndrcCases = Seq(createNDRCCase(index, caseSubStatus))
 
     val sctyCases = Seq()
 
@@ -156,7 +156,7 @@ trait TPI01Generation extends SchemaValidation {
 
     val ndrcCases = Seq()
 
-    val sctyCases = Seq(createSCTYCase(s"100$index".toInt, caseSubStatus))
+    val sctyCases = Seq(createSCTYCase(index, caseSubStatus))
 
     val responseDetail = ResponseDetail(
       NDRCCasesFound = true,
