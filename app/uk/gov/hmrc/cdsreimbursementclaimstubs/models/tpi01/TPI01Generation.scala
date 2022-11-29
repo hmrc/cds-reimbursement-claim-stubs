@@ -69,6 +69,7 @@ trait TPI01Generation extends SchemaValidation {
       OpenRework,
       Paused,
       ResolvedNoReply,
+      RTBHSent,
       ResolvedRefused,
       PendingPaymentConfirmation,
       ResolvedApproved,
@@ -78,44 +79,44 @@ trait TPI01Generation extends SchemaValidation {
       AnalysisRework,
       ReworkPaymentDetails,
       PendingRTBH,
-      RTBHSent,
+      ReplyToRTBH,
       PendingComplianceRecommendation,
       PendingComplianceCheckQuery,
-      PendingComplianceCheck,
-      ReplyToRTBH)
+      PendingComplianceCheck)
 
     val ndrcCases = ndrcCaseStatuses.zipWithIndex.flatMap { case (caseSubStatus, index) =>
+      val caseNumber = s"200${index + 1}".toInt
       Seq(
-        createNDRCCase(s"200$index".toInt, caseSubStatus),
+        createNDRCCase(caseNumber, caseSubStatus)
       )
     }
 
-    val ndrcLength = ndrcCaseStatuses.length
-
-    val sctyCaseStatuses : Seq[CaseSubStatusSCTY] = Seq(
+    val sctyCaseStatuses: Seq[CaseSubStatusSCTY] = Seq(
       OpenSCTY,
       PendingApprovalSCTY,
       PendingPayment,
       PartialRefund,
       ResolvedRefund,
-      ResolvedWithdrawnSCTY,
       PendingQuery,
       ResolvedManualBTA,
       PendingC18,
       ClosedC18Raised,
       RTBHLetterInitiated,
       AwaitingRTBHLetterResponse,
+      ReminderLetterInitiated,
       AwaitingReminderLetterResponse,
       DecisionLetterInitiated,
       PartialBTA,
       PartialBTARefund,
       ResolvedAutoBTA,
       ResolvedManualBTARefund,
-      OpenExtensionGranted)
+      OpenExtensionGranted,
+      ResolvedWithdrawnSCTY)
 
     val sctyCases = sctyCaseStatuses.zipWithIndex.flatMap { case (caseSubStatus, index) =>
+      val caseNumber = s"200${index + 1}".toInt
       Seq(
-        createSCTYCase(s"200${ndrcLength + index}".toInt, caseSubStatus),
+        createSCTYCase(caseNumber, caseSubStatus),
       )
     }
 
@@ -132,9 +133,12 @@ trait TPI01Generation extends SchemaValidation {
 
     responseDetail
   }
-  def tpi01SetCaseSubStatusNDRC(index: Int, caseSubStatus: CaseSubStatusNDRC): ResponseDetail = {
 
-    val ndrcCases = Seq(createNDRCCase(index, caseSubStatus))
+  def tpi01SetCaseSubStatusNDRC(caseSubStatusIndex: Int): ResponseDetail = {
+
+    val caseNumber = s"100$caseSubStatusIndex".toInt
+    val caseSubStatus = caseSubStatusNDRC(caseSubStatusIndex)
+    val ndrcCases = Seq(createNDRCCase(caseNumber, caseSubStatus))
 
     val sctyCases = Seq()
 
@@ -152,11 +156,13 @@ trait TPI01Generation extends SchemaValidation {
     responseDetail
   }
 
-  def tpi01SetCaseSubStatusSCTY(index: Int, caseSubStatus: CaseSubStatusSCTY): ResponseDetail = {
+  def tpi01SetCaseSubStatusSCTY(caseSubStatusIndex: Int): ResponseDetail = {
 
     val ndrcCases = Seq()
 
-    val sctyCases = Seq(createSCTYCase(index, caseSubStatus))
+    val caseSubStatus = caseSubStatusSCTY(caseSubStatusIndex)
+    val caseNumber = s"100$caseSubStatusIndex".toInt
+    val sctyCases = Seq(createSCTYCase(caseNumber, caseSubStatus))
 
     val responseDetail = ResponseDetail(
       NDRCCasesFound = true,
@@ -185,32 +191,32 @@ trait TPI01Generation extends SchemaValidation {
   sealed trait CaseSubStatusNDRC {
     val caseStatus: CaseStatus
   }
-  def caseSubStatusNDRC(caseSubStatusNDRC: String): CaseSubStatusNDRC =
+  def caseSubStatusNDRC(caseSubStatusNDRC: Int): CaseSubStatusNDRC =
     caseSubStatusNDRC match {
-      case "1" => OpenNDRC
-      case "2" => OpenAnalysis
-      case "3" => PendingApprovalNDRC
-      case "4" => PendingQueried
-      case "5" => ResolvedWithdrawnNDRC
-      case "6" => RejectedFailedValidation
-      case "7" => ResolvedRejected
-      case "8" => OpenRework
-      case "9" => Paused
-      case "10" => ResolvedNoReply
-      case "11" => ResolvedRefused
-      case "12" => PendingPaymentConfirmation
-      case "13" => ResolvedApproved
-      case "14" => ResolvedPartialRefused
-      case "15" => PendingDecisionLetter
-      case "16" => Approved
-      case "17" => AnalysisRework
-      case "18" => ReworkPaymentDetails
-      case "19" => PendingRTBH
-      case "20" => RTBHSent
-      case "21" => PendingComplianceRecommendation
-      case "22" => PendingComplianceCheckQuery
-      case "23" => PendingComplianceCheck
-      case "24" => ReplyToRTBH
+      case 1 => OpenNDRC
+      case 2 => OpenAnalysis
+      case 3 => PendingApprovalNDRC
+      case 4 => PendingQueried
+      case 5 => ResolvedWithdrawnNDRC
+      case 6 => RejectedFailedValidation
+      case 7 => ResolvedRejected
+      case 8 => OpenRework
+      case 9 => Paused
+      case 10 => ResolvedNoReply
+      case 11 => ResolvedRefused
+      case 12 => PendingPaymentConfirmation
+      case 13 => ResolvedApproved
+      case 14 => ResolvedPartialRefused
+      case 15 => PendingDecisionLetter
+      case 16 => Approved
+      case 17 => AnalysisRework
+      case 18 => ReworkPaymentDetails
+      case 19 => PendingRTBH
+      case 20 => RTBHSent
+      case 21 => PendingComplianceRecommendation
+      case 22 => PendingComplianceCheckQuery
+      case 23 => PendingComplianceCheck
+      case 24 => ReplyToRTBH
     }
   case object OpenNDRC extends CaseSubStatusNDRC {
     override def toString: String = "Open"
@@ -374,28 +380,28 @@ trait TPI01Generation extends SchemaValidation {
   sealed trait CaseSubStatusSCTY {
     val caseStatus: CaseStatus
   }
-  def caseSubStatusSCTY(caseSubStatusSCTY: String): CaseSubStatusSCTY =
+  def caseSubStatusSCTY(caseSubStatusSCTY: Int): CaseSubStatusSCTY =
     caseSubStatusSCTY match {
-      case "1" => OpenSCTY
-      case "2" => PendingApprovalSCTY
-      case "3" => PendingPayment
-      case "4" => PartialRefund
-      case "5" => ResolvedRefund
-      case "6" => ResolvedWithdrawnSCTY
-      case "7" => PendingQuery
-      case "8" => ResolvedManualBTA
-      case "9" => PendingC18
-      case "10" => ClosedC18Raised
-      case "11" => RTBHLetterInitiated
-      case "12" => AwaitingRTBHLetterResponse
-      case "13" => ReminderLetterInitiated
-      case "14" => AwaitingReminderLetterResponse
-      case "15" => DecisionLetterInitiated
-      case "16" => PartialBTA
-      case "17" => PartialBTARefund
-      case "18" => ResolvedAutoBTA
-      case "19" => ResolvedManualBTARefund
-      case "20" => OpenExtensionGranted
+      case 1 => OpenSCTY
+      case 2 => PendingApprovalSCTY
+      case 3 => PendingPayment
+      case 4 => PartialRefund
+      case 5 => ResolvedRefund
+      case 6 => ResolvedWithdrawnSCTY
+      case 7 => PendingQuery
+      case 8 => ResolvedManualBTA
+      case 9 => PendingC18
+      case 10 => ClosedC18Raised
+      case 11 => RTBHLetterInitiated
+      case 12 => AwaitingRTBHLetterResponse
+      case 13 => ReminderLetterInitiated
+      case 14 => AwaitingReminderLetterResponse
+      case 15 => DecisionLetterInitiated
+      case 16 => PartialBTA
+      case 17 => PartialBTARefund
+      case 18 => ResolvedAutoBTA
+      case 19 => ResolvedManualBTARefund
+      case 20 => OpenExtensionGranted
     }
   case object OpenSCTY extends CaseSubStatusSCTY {
     override def toString: String = "Open"
@@ -535,10 +541,10 @@ trait TPI01Generation extends SchemaValidation {
 
   }
 
-  private def createNDRCCase(value: Int, subStatus: CaseSubStatusNDRC): NDRCCaseDetails = {
-    val eori = f"GB$value%012d"
+  private def createNDRCCase(caseNumber: Int, subStatus: CaseSubStatusNDRC): NDRCCaseDetails = {
+    val eori = f"GB$caseNumber%012d"
     NDRCCaseDetails(
-      s"NDRC-${value.toString}",
+      s"NDRC-${caseNumber.toString}",
       Some("MRN23014"),
       "20200501",
       if (subStatus.caseStatus == Closed)
@@ -548,29 +554,29 @@ trait TPI01Generation extends SchemaValidation {
       eori,
       eori,
       Some(eori),
-      Some(s"${value}00.00"),
-      Some(s"${value}00.00"),
-      Some(s"${value}00.00"),
+      Some("9000.00"),
+      Some("9000.00"),
+      Some("9000.00"),
       Some("KWMREF1"),
       Some("Duplicate Entry")
     )
   }
 
-  private def createSCTYCase(value: Int, subStatus: CaseSubStatusSCTY): SCTYCaseDetails = {
-    val eori = f"GB$value%012d"
+  private def createSCTYCase(caseNumber: Int, subStatus: CaseSubStatusSCTY): SCTYCaseDetails = {
+    val eori = f"GB$caseNumber%012d"
     SCTYCaseDetails(
-      s"SCTY-${value.toString}",
+      s"SCTY-${caseNumber.toString}",
       Some("123456789A12122022"),
-      LocalDate.now().minusDays(value).format(DateTimeFormatter.ofPattern("yyyyMMdd")),
-      if (subStatus.caseStatus == Closed) Some(LocalDate.now().minusDays(value).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+      LocalDate.now().minusDays(caseNumber).format(DateTimeFormatter.ofPattern("yyyyMMdd")),
+      if (subStatus.caseStatus == Closed) Some(LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
       else None,
       "ACS",
       subStatus.toString,
       eori,
       eori,
       Some(eori),
-      Some(s"${value}00.00"),
-      Some(s"${value}00.00"),
+      Some("9000.00"),
+      Some("9000.00"),
       Some("KWMREF1")
     )
   }
