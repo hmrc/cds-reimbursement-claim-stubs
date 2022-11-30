@@ -57,17 +57,28 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
             parseResponse("tpi01/response-200-NDRC.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case "GB744638982007" =>
             parseResponse("tpi01/response-200-SCTY.json", Ok, Some("tpi01/tpi01-response-schema.json"))
+          case "GB744638982008" =>
+            val detail = tpi01AllSubstatusClaims()
+            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
+            validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))
           case "TPI01_MISSING" => parseResponse("tpi01/response-400-mandatory-missing-field.json", BadRequest)
           case "TPI01_PATTERN" => parseResponse("tpi01/response-400-pattern-error.json", BadRequest)
           case "TPI01_500" => parseResponse("tpi01/response-500-system-timeout.json", InternalServerError)
           case "TPI01_EORI_ERROR" =>
             parseResponse("tpi01/response-200-invalid-eori.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case e if e.startsWith("GB0000000000") =>
-            val caseStatusIndex = e.replace("GB0000000000", "")
-            val caseStatus      = caseStatusNDRC(caseStatusIndex)
+            val caseSubStatusIndex = e.replace("GB0000000000", "")
             val responseCommon  = ResponseCommon("OK", "2017-03-21T09:30:47Z")
             val response        = Response(
-              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseStatus(caseStatusIndex.toInt, caseStatus)))
+              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatusNDRC(caseSubStatusIndex.toInt)))
+            )
+            Ok(Json.toJson(response))
+          case e if e.startsWith("GB1000000000") =>
+            val caseSubStatusIndex = e.replace("GB1000000000", "")
+            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response = Response(
+              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatusSCTY(caseSubStatusIndex.toInt)))
             )
             Ok(Json.toJson(response))
           case _ => 
