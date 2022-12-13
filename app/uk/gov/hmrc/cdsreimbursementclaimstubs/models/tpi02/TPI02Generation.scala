@@ -100,7 +100,7 @@ trait TPI02Generation extends SchemaValidation {
       "ACS",
       "10",
       caseStatus,
-      Some(Seq(Goods("12", Some("Goods description")))),
+      Some(Seq(Goods("12", Some("Digital media")), Goods("13", Some("")), Goods("14", Some("drum kit")))),
       "GB12345678912",
       "GB98765432101",
       Some("GB98745632101"),
