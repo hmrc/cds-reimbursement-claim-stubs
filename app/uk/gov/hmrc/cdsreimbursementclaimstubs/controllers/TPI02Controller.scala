@@ -56,7 +56,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   e,
                   value.caseStatus,
                   value.closedDate.isDefined,
-                  multiple = true,
+                  multiple = extractedIndex % 2 == 1,
                   entryNumber = false
                 )
               case None =>
@@ -72,24 +72,24 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = false,
-                  entryNumber = true
+                  entryNumber = false
                 )
               case None =>
                 parseResponse("tpi02/response-200-no-claims-found-scty.json", Ok, Some("tpi02/tpi02-response-schema.json"))
             }
           case e if e.startsWith("NDRC-100") =>
-            val extractedIndex = e.replace("NDRC-100", "")
-            tpi01SetCaseSubStatusNDRC(extractedIndex.toInt).CDFPayCase.NDRCCases
+            val extractedIndex = e.replace("NDRC-100", "").toInt
+            tpi01SetCaseSubStatusNDRC(extractedIndex).CDFPayCase.NDRCCases
               .find(_.CDFPayCaseNumber == e) match {
               case Some(value) =>
-                val claimType = if (extractedIndex.toInt % 2 == 0) "C285" else "C&E1179"
+                val claimType = if (extractedIndex % 2 == 0) "C285" else "C&E1179"
                 tpi02Claim(
                   claimType,
                   NDRC,
                   e,
                   value.caseStatus,
                   value.closedDate.isDefined,
-                  multiple = true,
+                  multiple = extractedIndex % 2 == 1,
                   entryNumber = false
                 )
               case None =>
@@ -117,13 +117,14 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
               case Some(value) =>
                 val extractedIndex = e.replace("NDRC-", "").toInt
                 val claimType      = if (extractedIndex % 2 == 0) "C285" else "C&E1179"
+                val multiple = extractedIndex % 2 == 1
                 tpi02Claim(
                   claimType,
                   NDRC,
                   e,
                   value.caseStatus,
                   value.closedDate.isDefined,
-                  multiple = true,
+                  multiple,
                   entryNumber = false
                 )
               case None =>
@@ -139,7 +140,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = false,
-                  entryNumber = true
+                  entryNumber = false
                 )
               case None =>
                 parseResponse("tpi02/response-200-no-claims-found-scty.json", Ok, Some("tpi02/tpi02-response-schema.json"))
