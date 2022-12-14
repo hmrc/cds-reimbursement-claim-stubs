@@ -48,8 +48,7 @@ trait TPI02Generation extends SchemaValidation {
                   claimType,
                   closed,
                   entryNumber,
-                  if (entryNumber) Some(Seq.empty) else mrnDetails(multiple),
-                  if (entryNumber) entryDetails(multiple) else Some(Seq.empty)
+                  multiple
                 )
               )
             else None,
@@ -121,8 +120,7 @@ trait TPI02Generation extends SchemaValidation {
     claimType: String,
     closed: Boolean,
     entryNumber: Boolean,
-    mrnDetails: Option[Seq[ProcedureDetail]],
-    entryDetails: Option[Seq[EntryDetail]]
+    multiple: Boolean,
   ): NDRCCase =
     NDRCCase(
       NDRCAmounts = NDRCAmounts(
@@ -140,7 +138,7 @@ trait TPI02Generation extends SchemaValidation {
         caseNumber,
         if (entryNumber) Some("123456789A12122022") else Some("MRN23014"),
         claimType,
-        "Bulk",
+        if (multiple) "Bulk" else "Individual",
         caseStatus,
         Some("A description of goods"),
         None,
@@ -152,8 +150,8 @@ trait TPI02Generation extends SchemaValidation {
         Some("Claimant name"),
         Some("Claimant email address"),
         if (closed) Some("20210501") else None,
-        MRNDetails = mrnDetails,
-        entryDetails = entryDetails,
+        if (entryNumber) Some(Seq.empty) else mrnDetails(multiple),
+        if (entryNumber) entryDetails(multiple) else Some(Seq.empty),
         reimbursement = Some(Seq(Reimbursement("20200501", "6402.06", "A30", "P")))
       )
     )
