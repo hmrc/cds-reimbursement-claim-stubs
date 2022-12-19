@@ -44,7 +44,7 @@ class DuplicateDeclarationController @Inject() (cc: ControllerComponents) extend
   // TODO: Add extract cases when we have concrete examples.
   def getDuplicateDeclarations: Action[JsValue] = Action(parse.json) { implicit request =>
     val payload = request.body
-    println(Json.prettyPrint(payload))
+    logger.info(Json.prettyPrint(payload))
     validator
       .validate(schemaToBeValidated, payload)
       .fold(
