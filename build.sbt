@@ -32,9 +32,4 @@ lazy val microservice = Project(appName, file("."))
   .configs(IntegrationTest)
   .settings(integrationTestSettings(): _*)
   .settings(PlayKeys.playDefaultPort := 7502)
-  .settings(
-    resolvers ++= Seq(
-      Resolver.jcenterRepo,
-      "third-party-maven-releases" at "https://artefacts.tax.service.gov.uk/artifactory/third-party-maven-releases/"
-    )
-  )
+  .settings(resolvers ++= Seq(Resolver.jcenterRepo))

@@ -50,7 +50,7 @@ class ClaimController @Inject() (cc: ControllerComponents) extends BackendContro
 
     val payload = request.body
 
-    println(Json.prettyPrint(payload))
+    logger.info(Json.prettyPrint(payload))
 
     validator
       .validate(schemaToBeValidated, payload)
@@ -68,7 +68,7 @@ class ClaimController @Inject() (cc: ControllerComponents) extends BackendContro
             case Some(str) =>
               MockHttpResponse.getSubmitClaimHttpResponse(EORI(str)) match {
                 case Some(httpResponse) =>
-                  println(httpResponse.toString)
+                  logger.info(httpResponse.toString)
                   httpResponse.submitClaimResponse.response match {
                     case Left(value) =>
                       value match {

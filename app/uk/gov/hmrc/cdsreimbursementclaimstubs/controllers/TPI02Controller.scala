@@ -47,7 +47,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
           case e if e.startsWith("NDRC-200") =>
             tpi01AllSubstatusClaims().CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
               case Some(value) =>
-                println(value)
+                log.logger.info(value.toString)
                 val extractedIndex = e.replace("NDRC-200", "").toInt
                 val claimType = if (extractedIndex % 2 == 0) "C285" else "C&E1179"
                 tpi02Claim(
