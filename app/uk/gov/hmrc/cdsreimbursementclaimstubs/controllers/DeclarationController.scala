@@ -54,7 +54,7 @@ class DeclarationController @Inject() (cc: ControllerComponents)
   def getDeclaration: Action[JsValue] = Action(parse.json) { implicit request: Request[JsValue] =>
     val validator = SchemaValidator(Some(Version4))
     val payload   = request.body
-    println(Json.prettyPrint(payload))
+    logger.info(Json.prettyPrint(payload))
     validator
       .validate(schemaToBeValidated, payload)
       .fold(
