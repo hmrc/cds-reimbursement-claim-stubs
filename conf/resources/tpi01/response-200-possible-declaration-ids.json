@@ -11,7 +11,7 @@
         "SCTYCaseTotal": "3",
         "SCTYCases": [
           {
-            "CDFPayCaseNumber": "SEC-2109",
+            "CDFPayCaseNumber": "SCTY-2001",
             "declarationID": "190007914H11112019",
             "claimStartDate": "20210320",
             "closedDate": "20211220",
@@ -25,7 +25,7 @@
             "declarantReferenceNumber": "broomer007"
           },
           {
-            "CDFPayCaseNumber": "SEC-2110",
+            "CDFPayCaseNumber": "SCTY-2002",
             "declarationID": "19GBIYU5AIAR3BWD57",
             "claimStartDate": "20210320",
             "closedDate": "20211220",
@@ -39,7 +39,7 @@
             "declarantReferenceNumber": "broomer007"
           },
           {
-            "CDFPayCaseNumber": "SEC-2111",
+            "CDFPayCaseNumber": "SCTY-2003",
             "claimStartDate": "20210320",
             "closedDate": "20211220",
             "reasonForSecurity": "ACS",
