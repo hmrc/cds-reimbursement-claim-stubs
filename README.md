@@ -86,10 +86,10 @@ About the fields below and their possible values [click here](https://github.com
 | GB744638982008   | 200                | Success response including one of each TPI01 Case Status (odd case numbers are multiple cases, even are single)     |
 | GB744638982009   | 200                | Success response including duplicate case numbers                                                                   |
 | GB744638982010   | 200                | Success response including one case without declarationId, one with decarlationId as entry number and one valid MRN |
-| TPI01_EORI_ERROR | 200                | Error response invalid EORI                                                                                         |
-| TPI01_MISSING    | 400                | Error response BadRequest for fields missing                                                                        |
-| TPI01_PATTERN    | 400                | Error response BadRequest for pattern error                                                                         |
-| TPI01_500        | 500                | Error response InternalServerError for system timeout                                                               |
+| TPI01EORIERROR | 200                | Error response invalid EORI                                                                                         |
+| TPI01MISSING    | 400                | Error response BadRequest for fields missing                                                                        |
+| TPI01PATTERN    | 400                | Error response BadRequest for pattern error                                                                         |
+| TPI01500        | 500                | Error response InternalServerError for system timeout                                                               |
 
 ### For testing a specific case status use the following
 
