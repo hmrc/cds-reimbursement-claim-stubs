@@ -68,10 +68,10 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
             parseResponse("tpi01/response-200-possible-declaration-ids.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case "GB744638982011" =>
             parseResponse("tpi01/response-200-duplicate-2.json", Ok, Some("tpi01/tpi01-response-schema.json"))
-          case "TPI01_MISSING" => parseResponse("tpi01/response-400-mandatory-missing-field.json", BadRequest)
-          case "TPI01_PATTERN" => parseResponse("tpi01/response-400-pattern-error.json", BadRequest)
-          case "TPI01_500" => parseResponse("tpi01/response-500-system-timeout.json", InternalServerError)
-          case "TPI01_EORI_ERROR" =>
+          case "TPI01MISSING" => parseResponse("tpi01/response-400-mandatory-missing-field.json", BadRequest)
+          case "TPI01PATTERN" => parseResponse("tpi01/response-400-pattern-error.json", BadRequest)
+          case "TPI01500" => parseResponse("tpi01/response-500-system-timeout.json", InternalServerError)
+          case "TPI01EORIERROR" =>
             parseResponse("tpi01/response-200-invalid-eori.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case e if e.startsWith("GB0000000000") =>
             val caseSubStatusIndex = e.replace("GB0000000000", "")

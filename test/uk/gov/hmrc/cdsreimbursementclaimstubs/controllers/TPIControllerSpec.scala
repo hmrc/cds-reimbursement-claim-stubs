@@ -45,17 +45,17 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
       OK
     )
     testGetReimbursementClaims("return 400 - field missing")(
-      "TPI01_MISSING",
+      "TPI01MISSING",
       "tpi01/response-400-mandatory-missing-field.json",
       BAD_REQUEST
     )
     testGetReimbursementClaims("return 400 - pattern error")(
-      "TPI01_PATTERN",
+      "TPI01PATTERN",
       "tpi01/response-400-pattern-error.json",
       BAD_REQUEST
     )
     testGetReimbursementClaims("return 500")(
-      "TPI01_500",
+      "TPI01500",
       "tpi01/response-500-system-timeout.json",
       INTERNAL_SERVER_ERROR
     )
