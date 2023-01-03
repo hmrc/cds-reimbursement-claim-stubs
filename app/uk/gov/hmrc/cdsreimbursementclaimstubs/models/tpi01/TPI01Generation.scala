@@ -566,7 +566,7 @@ trait TPI01Generation extends SchemaValidation {
     val eori = f"GB$caseNumber%012d"
     SCTYCaseDetails(
       s"SCTY-${caseNumber.toString}",
-      Some("123456789A12122022"),
+      Some("12AA3456789ABCDEF2022"),
       LocalDate.now().minusDays(caseNumber).format(DateTimeFormatter.ofPattern("yyyyMMdd")),
       if (subStatus.caseStatus == Closed) Some(LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
       else None,
