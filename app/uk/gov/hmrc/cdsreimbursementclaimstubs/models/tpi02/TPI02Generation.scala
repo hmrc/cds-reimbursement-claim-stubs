@@ -65,12 +65,7 @@ trait TPI02Generation extends SchemaValidation {
 
   private def mrnDetails(multiple: Boolean): Option[Seq[ProcedureDetail]] =
     if (multiple) {
-      Some(
-        Seq(
-          ProcedureDetail("MRN23014", mainDeclarationReference = true),
-          ProcedureDetail("MRN34231", mainDeclarationReference = false)
-        )
-      )
+      Some((1 to 10).map(i => ProcedureDetail(s"MRN0000$i", mainDeclarationReference = i == 1)))
     } else {
       None
     }
