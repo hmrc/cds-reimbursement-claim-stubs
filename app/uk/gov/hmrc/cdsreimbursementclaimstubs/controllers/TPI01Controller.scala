@@ -68,6 +68,8 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
             parseResponse("tpi01/response-200-possible-declaration-ids.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case "GB744638982011" =>
             parseResponse("tpi01/response-200-duplicate-2.json", Ok, Some("tpi01/tpi01-response-schema.json"))
+          case "GB744638982012" =>
+            parseResponse("tpi01/response-200-NDRC-multiple-mrn.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case "TPI01MISSING" => parseResponse("tpi01/response-400-mandatory-missing-field.json", BadRequest)
           case "TPI01PATTERN" => parseResponse("tpi01/response-400-pattern-error.json", BadRequest)
           case "TPI01500" => parseResponse("tpi01/response-500-system-timeout.json", InternalServerError)
