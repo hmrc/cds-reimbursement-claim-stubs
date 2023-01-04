@@ -72,7 +72,7 @@ trait TPI02Generation extends SchemaValidation {
         )
       )
     } else {
-      Some(Seq(ProcedureDetail("MRN23014", mainDeclarationReference = true)))
+      None
     }
 
   private def entryDetails(multiple: Boolean): Option[Seq[EntryDetail]] =
