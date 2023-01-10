@@ -69,7 +69,10 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
           case "GB744638982011" =>
             parseResponse("tpi01/response-200-duplicate-2.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case "GB744638982012" =>
-            parseResponse("tpi01/response-200-NDRC-multiple-mrn.json", Ok, Some("tpi01/tpi01-response-schema.json"))
+            val detail = tpi01Claims(20)
+            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
+            validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))
           case "TPI01MISSING" => parseResponse("tpi01/response-400-mandatory-missing-field.json", BadRequest)
           case "TPI01PATTERN" => parseResponse("tpi01/response-400-pattern-error.json", BadRequest)
           case "TPI01500" => parseResponse("tpi01/response-500-system-timeout.json", InternalServerError)
