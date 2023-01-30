@@ -16,10 +16,10 @@ POST       /business/v2/assess                                        uk.gov.hmr
 POST       /tpi/getexistingclaim/v1                                   uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DuplicateDeclarationController.getDuplicateDeclarations
 
 # TPI01
-POST       /tpi/getreimbursementclaims/v1                             uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.TPI01Controller.getReimbursementClaims
+POST       /tpi/getpostclearancecases/v1                              uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.TPI01Controller.getReimbursementClaims
 
 # TPI02
-POST       /tpi/getspecificclaim/v1                                   uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.TPI02Controller.getSpecificClaim
+POST       /tpi/getspecificcase/v1                                    uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.TPI02Controller.getSpecificClaim
 
 
 ->         /                                                          health.Routes
