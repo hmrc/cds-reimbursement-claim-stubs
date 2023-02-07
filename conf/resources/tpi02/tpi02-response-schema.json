@@ -312,9 +312,7 @@
                 "reasonForSecurity",
                 "procedureCode",
                 "caseStatus",
-                "declarantEORI",
-                "importerEORI",
-                "claimStartDate"
+                "declarantEORI"
               ],
               "additionalProperties": false
             }

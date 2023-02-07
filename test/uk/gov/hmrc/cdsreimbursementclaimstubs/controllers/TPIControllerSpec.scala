@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,16 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
       "tpi01/response-200-no-claims-found.json",
       OK
     )
+    testGetReimbursementClaims("return 200 - success response NDRC")(
+      "GB744638982006",
+      "tpi01/response-200-NDRC.json",
+      OK
+    )
+    testGetReimbursementClaims("return 200 - success response SCTY")(
+      "GB744638982007",
+      "tpi01/response-200-SCTY.json",
+      OK
+    )
     testGetReimbursementClaims("return 400 - field missing")(
       "TPI01MISSING",
       "tpi01/response-400-mandatory-missing-field.json",
@@ -65,6 +75,16 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
     testGetSpecificClaim("return 200 - success response no claims found")(
       "4374422407",
       "tpi02/response-200-no-claims-found.json",
+      OK
+    )
+    testGetSpecificClaim("return 200 - SCTY full")(
+      "SCTY-2109",
+      "tpi02/response-200-SCTY-2109.json",
+      OK
+    )
+    testGetSpecificClaim("return 200 - SCTY minimal")(
+      "SCTY-2110",
+      "tpi02/response-200-SCTY-2110.json",
       OK
     )
     testGetSpecificClaim("return 400 - field missing")(
