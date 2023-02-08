@@ -9,16 +9,51 @@
           "type": "object",
           "properties": {
             "status": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "OK"
+              ]
             },
             "processingDate": {
-              "type": "string"
+              "$ref": "#/definitions/Timestamp"
+            },
+            "correlationID": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 36
+            },
+            "errorMessage": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "returnParameters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "paramName": {
+                    "type": "string",
+                    "enum": [
+                      "POSITION"
+                    ]
+                  },
+                  "paramValue": {
+                    "type": "string",
+                    "enum": [
+                      "FAIL"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
             }
           },
           "required": [
             "status",
             "processingDate"
-          ]
+          ],
+          "additionalProperties": false
         },
         "responseDetail": {
           "type": "object",
@@ -30,241 +65,282 @@
               "type": "boolean"
             },
             "CDFPayCase": {
-              "type": "object",
-              "properties": {
-                "NDRCCaseTotal": {
-                  "type": "string"
-                },
-                "NDRCCases": {
-                  "type": "array",
-                  "items": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "CDFPayCaseNumber": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 18
-                        },
-                        "declarationID": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 18
-                        },
-                        "claimStartDate": {
-                          "type": "string",
-                          "pattern": "^(\\d{8})$"
-                        },
-                        "closedDate": {
-                          "type": "string",
-                          "pattern": "^(\\d{8})$"
-                        },
-                        "caseStatus": {
-                          "type": "string",
-                          "enum": [
-                            "Open",
-                            "Open-Analysis",
-                            "Pending-Approval",
-                            "Pending-Queried",
-                            "Resolved-Withdrawn",
-                            "Rejected-Failed Validation",
-                            "Resolved-Rejected",
-                            "Open-Rework",
-                            "Paused",
-                            "Resolved-No Reply",
-                            "RTBH-Sent",
-                            "Resolved-Refused",
-                            "Pending Payment Confirmation",
-                            "Resolved-Approved",
-                            "Resolved-Partial Refused",
-                            "Pending Decision Letter",
-                            "Analysis-Rework",
-                            "Rework-Payment Details",
-                            "Reply To RTBH"
-                          ]
-                        },
-                        "declarantEORI": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 17,
-                          "pattern": "^[A-Z]{2}[0-9A-Z]+$"
-                        },
-                        "importerEORI": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 17,
-                          "pattern": "^[A-Z]{2}[0-9A-Z]+$"
-                        },
-                        "claimantEORI": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 17,
-                          "pattern": "^[A-Z]{2}[0-9A-Z]+$"
-                        },
-                        "totalCustomsClaimAmount": {
-                          "type": "string",
-                          "pattern": "^-?[0-9]{1,11}[.][0-9]{1,2}|$^-?[0-9]{1,11}$"
-                        },
-                        "totalVATClaimAmount": {
-                          "type": "string",
-                          "pattern": "^-?[0-9]{1,11}[.][0-9]{1,2}|$^-?[0-9]{1,11}$"
-                        },
-                        "totalExciseClaimAmount": {
-                          "type": "string",
-                          "pattern": "^-?[0-9]{1,11}[.][0-9]{1,2}|$^-?[0-9]{1,11}$"
-                        },
-                        "declarantReferenceNumber": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 35
-                        },
-                        "basisOfClaim": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "CDFPayCaseNumber",
-                        "claimStartDate",
-                        "caseStatus",
-                        "declarantEORI",
-                        "importerEORI"
-                      ]
-                    }
-                  ]
-                },
-                "SCTYCaseTotal": {
-                  "type": "string"
-                },
-                "SCTYCases": {
-                  "type": "array",
-                  "items": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "CDFPayCaseNumber": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 18
-                        },
-                        "declarationID": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 18
-                        },
-                        "claimStartDate": {
-                          "type": "string",
-                          "pattern": "^(\\d{8})$"
-                        },
-                        "closedDate": {
-                          "type": "string",
-                          "pattern": "^(\\d{8})$"
-                        },
-                        "reasonForSecurity": {
-                          "type": "string",
-                          "minLength": 3,
-                          "maxLength": 3,
-                          "enum": [
-                            "ACS",
-                            "CEP",
-                            "CRQ",
-                            "CSD",
-                            "ENU",
-                            "IPR",
-                            "MDC",
-                            "MDL",
-                            "MDP",
-                            "MOD",
-                            "OPR",
-                            "PDD",
-                            "RED",
-                            "T24",
-                            "TA2",
-                            "TA3",
-                            "TA6"
-                          ]
-                        },
-                        "caseStatus": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 40,
-                          "enum": [
-                            "Open",
-                            "Pending-Approval",
-                            "Pending-Payment",
-                            "Partial-Refund",
-                            "Resolved-Refund",
-                            "Resolved-Withdrawn",
-                            "Pending-Query",
-                            "Resolved-Manual BTA",
-                            "Pending-C18",
-                            "Closed-C18 Raised",
-                            "RTBH Letter Initiated",
-                            "Awaiting RTBH Letter",
-                            "Reminder Letter Initiated",
-                            "Awaiting Reminder Letter Response",
-                            "Decision Letter Initiated",
-                            "Partial BTA",
-                            "Partial BTA/Refund",
-                            "Resolved-Auto BTA",
-                            "Resolved-Manual BTA/Refund",
-                            "Open-Extension Granted"
-                          ]
-                        },
-                        "declarantEORI": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 17,
-                          "pattern": "^[A-Z]{2}[0-9A-Z]+$"
-                        },
-                        "importerEORI": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 17,
-                          "pattern": "^[A-Z]{2}[0-9A-Z]+$"
-                        },
-                        "claimantEORI": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 17,
-                          "pattern": "^[A-Z]{2}[0-9A-Z]+$"
-                        },
-                        "totalCustomsClaimAmount": {
-                          "type": "string",
-                          "pattern": "^-?[0-9]{1,11}[.][0-9]{1,2}|$^-?[0-9]{1,11}$"
-                        },
-                        "totalVATClaimAmount": {
-                          "type": "string",
-                          "pattern": "^-?[0-9]{1,11}[.][0-9]{1,2}|$^-?[0-9]{1,11}$"
-                        },
-                        "declarantReferenceNumber": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "CDFPayCaseNumber",
-                        "declarationID",
-                        "reasonForSecurity",
-                        "caseStatus",
-                        "declarantEORI"
-                      ]
-                    }
-                  ]
-                }
-              }
+              "$ref": "#/definitions/CDFPayCaseDetail"
             }
           },
           "required": [
             "NDRCCasesFound",
             "SCTYCasesFound"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "responseCommon"
-      ]
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
     "getPostClearanceCasesResponse"
-  ]
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "CDFPayCaseDetail": {
+      "type": "object",
+      "properties": {
+        "NDRCCaseTotal": {
+          "$ref": "#/definitions/TotalClaims"
+        },
+        "NDRCCases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NDRCCase"
+          }
+        },
+        "SCTYCaseTotal": {
+          "$ref": "#/definitions/TotalClaims"
+        },
+        "SCTYCases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SCTYCase"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "NDRCCase": {
+      "type": "object",
+      "properties": {
+        "CDFPayCaseNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18
+        },
+        "declarationID": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18
+        },
+        "claimStartDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "closedDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "caseStatus": {
+          "$ref": "#/definitions/CaseStatus"
+        },
+        "declarantEORI": {
+          "$ref": "#/definitions/EORI"
+        },
+        "importerEORI": {
+          "$ref": "#/definitions/EORI"
+        },
+        "claimantEORI": {
+          "$ref": "#/definitions/EORI"
+        },
+        "totalCustomsClaimAmount": {
+          "$ref": "#/definitions/AmountType"
+        },
+        "totalVATClaimAmount": {
+          "$ref": "#/definitions/AmountType"
+        },
+        "totalExciseClaimAmount": {
+          "$ref": "#/definitions/AmountType"
+        },
+        "declarantReferenceNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "basisOfClaim": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "enum": [
+            "Duplicate Entry",
+            "Duty Suspension",
+            "End Use",
+            "Incorrect Commodity Code",
+            "Incorrect CPC",
+            "Incorrect Value",
+            "Incorrect EORI & Deferment Acc. Num.",
+            "IP",
+            "Miscellaneous",
+            "OPR",
+            "Personal Effects",
+            "Preference",
+            "RGR",
+            "Proof of Return/Refund Given",
+            "Not In Accordance With Contract",
+            "Defective",
+            "Damaged Before Clearance",
+            "Evidence That Goods Have Not Entered The EU",
+            "Incorrect Excise Value",
+            "Incorrect Additional Information Code",
+            "Special Circumstances"
+          ]
+        }
+      },
+      "required": [
+        "CDFPayCaseNumber",
+        "claimStartDate",
+        "caseStatus",
+        "declarantEORI",
+        "importerEORI"
+      ],
+      "additionalProperties": false
+    },
+    "SCTYCase": {
+      "type": "object",
+      "properties": {
+        "CDFPayCaseNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18
+        },
+        "declarationID": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18
+        },
+        "claimStartDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "closedDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "reasonForSecurity": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 3,
+          "enum": [
+            "ACS",
+            "CEP",
+            "CRQ",
+            "CSD",
+            "ENU",
+            "IPR",
+            "MDC",
+            "MDL",
+            "MDP",
+            "MOD",
+            "OPR",
+            "PDD",
+            "RED",
+            "T24",
+            "TA2",
+            "TA3",
+            "TA6"
+          ]
+        },
+        "caseStatus": {
+          "$ref": "#/definitions/CaseStatus"
+        },
+        "declarantEORI": {
+          "$ref": "#/definitions/EORI"
+        },
+        "importerEORI": {
+          "$ref": "#/definitions/EORI"
+        },
+        "claimantEORI": {
+          "$ref": "#/definitions/EORI"
+        },
+        "totalCustomsClaimAmount": {
+          "$ref": "#/definitions/AmountType"
+        },
+        "totalVATClaimAmount": {
+          "$ref": "#/definitions/AmountType"
+        },
+        "declarantReferenceNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        }
+      },
+      "required": [
+        "CDFPayCaseNumber",
+        "declarationID",
+        "reasonForSecurity",
+        "caseStatus",
+        "declarantEORI"
+      ],
+      "additionalProperties": false
+    },
+    "EORI": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 17,
+      "pattern": "^[A-Z]{2}[0-9A-Z]+$"
+    },
+    "AmountType": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 14,
+      "pattern": "^-?[0-9]{1,11}[.][0-9]{1,2}|$^-?[0-9]{1,11}$"
+    },
+    "Timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"
+    },
+    "CaseStatus": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "enum": [
+        "Open",
+        "Open-Analysis",
+        "Pending-Approval",
+        "Pending-Queried",
+        "Resolved-Withdrawn",
+        "Rejected-Failed Validation",
+        "Resolved-Rejected",
+        "Open-Rework",
+        "Paused",
+        "Resolved-No Reply",
+        "RTBH-Sent",
+        "Resolved-Refused",
+        "Pending Payment Confirmation",
+        "Resolved-Approved",
+        "Resolved-Partial Refused",
+        "Pending Decision Letter",
+        "Approved",
+        "Analysis-Rework",
+        "Rework-Payment Details",
+        "Reply To RTBH",
+        "Pending-Compliance Recommendation",
+        "Pending-Compliance Check Query",
+        "Pending-Compliance Check",
+        "Pending-Payment",
+        "Partial Refund",
+        "Resolved-Refund",
+        "Pending-Query",
+        "Resolved-Manual BTA",
+        "Pending-C18",
+        "Closed-C18 Raised",
+        "RTBH Letter Initiated",
+        "Awaiting RTBH Letter Response",
+        "Reminder Letter Initiated",
+        "Awaiting Reminder Letter Response",
+        "Decision Letter Initiated",
+        "Partial BTA",
+        "Partial BTA/Refund",
+        "Resolved-Auto BTA",
+        "Resolved-Manual BTA/Refund",
+        "Open-Extension Granted"
+      ]
+    },
+    "Date": {
+      "type": "string",
+      "pattern": "^(\\d{8})$"
+    },
+    "TotalClaims": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4,
+      "pattern": "^[0-9]+$"
+    }
+  }
 }

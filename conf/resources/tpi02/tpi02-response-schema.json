@@ -19,7 +19,7 @@
             "processingDate": {
               "$ref": "#/definitions/timestamp"
             },
-            "correlationId": {
+            "correlationID": {
               "type": "string",
               "minLength": 1,
               "maxLength": 36
@@ -394,6 +394,11 @@
             "G",
             "I"
           ]
+        },
+        "paymentReference": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 18
         }
       },
       "required": [
@@ -480,9 +485,7 @@
         "Partial BTA/Refund",
         "Resolved-Auto BTA",
         "Resolved-Manual BTA/Refund",
-        "Open-Extension Granted",
-        "RTBH Sent",
-        "Pending-RTBH"
+        "Open-Extension Granted"
       ]
     },
     "procedureDetail": {
