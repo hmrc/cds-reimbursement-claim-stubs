@@ -82,7 +82,8 @@ trait TPI01Generation extends SchemaValidation {
       ReplyToRTBH,
       PendingComplianceRecommendation,
       PendingComplianceCheckQuery,
-      PendingComplianceCheck)
+      PendingComplianceCheck
+    )
 
     val ndrcCases = ndrcCaseStatuses.zipWithIndex.flatMap { case (caseSubStatus, index) =>
       val caseNumber = s"200${index + 1}".toInt
@@ -111,12 +112,13 @@ trait TPI01Generation extends SchemaValidation {
       ResolvedAutoBTA,
       ResolvedManualBTARefund,
       OpenExtensionGranted,
-      ResolvedWithdrawnSCTY)
+      ResolvedWithdrawnSCTY
+    )
 
     val sctyCases = sctyCaseStatuses.zipWithIndex.flatMap { case (caseSubStatus, index) =>
       val caseNumber = s"200${index + 1}".toInt
       Seq(
-        createSCTYCase(caseNumber, caseSubStatus),
+        createSCTYCase(caseNumber, caseSubStatus)
       )
     }
 
@@ -136,9 +138,9 @@ trait TPI01Generation extends SchemaValidation {
 
   def tpi01SetCaseSubStatusNDRC(caseSubStatusIndex: Int): ResponseDetail = {
 
-    val caseNumber = s"100$caseSubStatusIndex".toInt
+    val caseNumber    = s"100$caseSubStatusIndex".toInt
     val caseSubStatus = caseSubStatusNDRC(caseSubStatusIndex)
-    val ndrcCases = Seq(createNDRCCase(caseNumber, caseSubStatus))
+    val ndrcCases     = Seq(createNDRCCase(caseNumber, caseSubStatus))
 
     val sctyCases = Seq()
 
@@ -161,8 +163,8 @@ trait TPI01Generation extends SchemaValidation {
     val ndrcCases = Seq()
 
     val caseSubStatus = caseSubStatusSCTY(caseSubStatusIndex)
-    val caseNumber = s"100$caseSubStatusIndex".toInt
-    val sctyCases = Seq(createSCTYCase(caseNumber, caseSubStatus))
+    val caseNumber    = s"100$caseSubStatusIndex".toInt
+    val sctyCases     = Seq(createSCTYCase(caseNumber, caseSubStatus))
 
     val responseDetail = ResponseDetail(
       NDRCCasesFound = true,
@@ -204,8 +206,8 @@ trait TPI01Generation extends SchemaValidation {
       case 9 => Paused
       case 10 => ResolvedNoReply
       case 11 => RTBHSent
-      case 12 => ResolvedRefused 
-      case 13 => PendingPaymentConfirmation 
+      case 12 => ResolvedRefused
+      case 13 => PendingPaymentConfirmation
       case 14 => ResolvedApproved
       case 15 => ResolvedPartialRefused
       case 16 => PendingDecisionLetter
@@ -264,13 +266,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = InProgress
 
-
   }
   case object Paused extends CaseSubStatusNDRC {
     override def toString: String = "Paused"
 
     override val caseStatus: CaseStatus = InProgress
-
 
   }
   case object ResolvedNoReply extends CaseSubStatusNDRC {
@@ -278,13 +278,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Closed
 
-
   }
   case object ResolvedRefused extends CaseSubStatusNDRC {
     override def toString: String = "Resolved-Refused"
 
     override val caseStatus: CaseStatus = Closed
-
 
   }
   case object PendingPaymentConfirmation extends CaseSubStatusNDRC {
@@ -292,13 +290,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = InProgress
 
-
   }
   case object ResolvedApproved extends CaseSubStatusNDRC {
     override def toString: String = "Resolved-Approved"
 
     override val caseStatus: CaseStatus = Closed
-
 
   }
   case object ResolvedPartialRefused extends CaseSubStatusNDRC {
@@ -306,13 +302,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Closed
 
-
   }
   case object PendingDecisionLetter extends CaseSubStatusNDRC {
     override def toString: String = "Pending Decision Letter"
 
     override val caseStatus: CaseStatus = InProgress
-
 
   }
   case object Approved extends CaseSubStatusNDRC {
@@ -320,13 +314,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = InProgress
 
-
   }
   case object AnalysisRework extends CaseSubStatusNDRC {
     override def toString: String = "Analysis-Rework"
 
     override val caseStatus: CaseStatus = InProgress
-
 
   }
   case object ReworkPaymentDetails extends CaseSubStatusNDRC {
@@ -334,13 +326,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = InProgress
 
-
   }
   case object PendingRTBH extends CaseSubStatusNDRC {
     override def toString: String = "Pending-RTBH"
 
     override val caseStatus: CaseStatus = InProgress
-
 
   }
   case object RTBHSent extends CaseSubStatusNDRC {
@@ -348,20 +338,17 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Pending
 
-
   }
   case object PendingComplianceRecommendation extends CaseSubStatusNDRC {
     override def toString: String = "Pending-Compliance Recommendation"
 
     override val caseStatus: CaseStatus = InProgress
 
-
   }
   case object PendingComplianceCheckQuery extends CaseSubStatusNDRC {
     override def toString: String = "Pending-Compliance Check Query"
 
     override val caseStatus: CaseStatus = Pending
-
 
   }
   case object PendingComplianceCheck extends CaseSubStatusNDRC {
@@ -374,7 +361,6 @@ trait TPI01Generation extends SchemaValidation {
     override def toString: String = "Reply To RTBH"
 
     override val caseStatus: CaseStatus = Pending
-
 
   }
   sealed trait CaseSubStatusSCTY {
@@ -418,14 +404,12 @@ trait TPI01Generation extends SchemaValidation {
   case object PendingPayment extends CaseSubStatusSCTY {
     override def toString: String = "Pending-Payment"
 
-     override val caseStatus: CaseStatus = Pending
+    override val caseStatus: CaseStatus = Pending
   }
   case object PartialRefund extends CaseSubStatusSCTY {
     override def toString: String = "Partial Refund"
 
-     override val caseStatus: CaseStatus = Closed
-
-
+    override val caseStatus: CaseStatus = Closed
 
   }
   case object ResolvedRefund extends CaseSubStatusSCTY {
@@ -433,13 +417,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Closed
 
-
   }
   case object ResolvedWithdrawnSCTY extends CaseSubStatusSCTY {
     override def toString: String = "Resolved-Withdrawn"
 
     override val caseStatus: CaseStatus = Closed
-
 
   }
   case object PendingQuery extends CaseSubStatusSCTY {
@@ -447,13 +429,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Pending
 
-
   }
   case object ResolvedManualBTA extends CaseSubStatusSCTY {
     override def toString: String = "Resolved-Manual BTA"
 
     override val caseStatus: CaseStatus = Closed
-
 
   }
   case object PendingC18 extends CaseSubStatusSCTY {
@@ -461,13 +441,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Pending
 
-
   }
   case object ClosedC18Raised extends CaseSubStatusSCTY {
     override def toString: String = "Closed-C18 Raised"
 
     override val caseStatus: CaseStatus = Closed
-
 
   }
   case object RTBHLetterInitiated extends CaseSubStatusSCTY {
@@ -475,13 +453,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Pending
 
-
   }
   case object AwaitingRTBHLetterResponse extends CaseSubStatusSCTY {
     override def toString: String = "Awaiting RTBH Letter Response"
 
     override val caseStatus: CaseStatus = Pending
-
 
   }
   case object ReminderLetterInitiated extends CaseSubStatusSCTY {
@@ -489,13 +465,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Pending
 
-
   }
   case object AwaitingReminderLetterResponse extends CaseSubStatusSCTY {
     override def toString: String = "Awaiting Reminder Letter Response"
 
     override val caseStatus: CaseStatus = Pending
-
 
   }
   case object DecisionLetterInitiated extends CaseSubStatusSCTY {
@@ -503,13 +477,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Pending
 
-
   }
   case object PartialBTA extends CaseSubStatusSCTY {
     override def toString: String = "Partial BTA"
 
     override val caseStatus: CaseStatus = Pending
-
 
   }
   case object PartialBTARefund extends CaseSubStatusSCTY {
@@ -517,13 +489,11 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Pending
 
-
   }
   case object ResolvedAutoBTA extends CaseSubStatusSCTY {
     override def toString: String = "Resolved-Auto BTA"
 
     override val caseStatus: CaseStatus = Closed
-
 
   }
   case object ResolvedManualBTARefund extends CaseSubStatusSCTY {
@@ -531,53 +501,56 @@ trait TPI01Generation extends SchemaValidation {
 
     override val caseStatus: CaseStatus = Closed
 
-
   }
   case object OpenExtensionGranted extends CaseSubStatusSCTY {
     override def toString: String = "Open-Extension Granted"
 
     override val caseStatus: CaseStatus = InProgress
 
-
   }
 
   private def createNDRCCase(caseNumber: Int, subStatus: CaseSubStatusNDRC): NDRCCaseDetails = {
     val eori = f"GB$caseNumber%012d"
     NDRCCaseDetails(
-      s"NDRC-${caseNumber.toString}",
-      Some("MRN23014"),
-      "20200501",
-      if (subStatus.caseStatus == Closed)
-        Some("20210501")
-      else None,
-      subStatus.toString,
-      eori,
-      eori,
-      Some(eori),
-      Some("9000.00"),
-      Some("9000.00"),
-      Some("9000.00"),
-      Some("KWMREF1"),
-      Some("Duplicate Entry")
+      CDFPayCaseNumber = s"NDRC-${caseNumber.toString}",
+      declarationID = Some("MRN23014"),
+      claimStartDate = "20200501",
+      closedDate =
+        if (subStatus.caseStatus == Closed)
+          Some("20210501")
+        else None,
+      caseStatus = subStatus.toString,
+      declarantEORI = eori,
+      importerEORI = eori,
+      claimantEORI = Some(eori),
+      totalCustomsClaimAmount = Some("9000.00"),
+      totalVATClaimAmount = Some("9000.00"),
+      totalExciseClaimAmount = Some("9000.00"),
+      declarantReferenceNumber = Some("KWMREF1"),
+      basisOfClaim = Some("Duplicate Entry")
     )
   }
 
   private def createSCTYCase(caseNumber: Int, subStatus: CaseSubStatusSCTY): SCTYCaseDetails = {
     val eori = f"GB$caseNumber%012d"
+    val odd  = caseNumber % 2 == 1
     SCTYCaseDetails(
-      s"SCTY-${caseNumber.toString}",
-      Some("12AA3456789ABCDEF2022"),
-      LocalDate.now().minusDays(caseNumber).format(DateTimeFormatter.ofPattern("yyyyMMdd")),
-      if (subStatus.caseStatus == Closed) Some(LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
-      else None,
-      "ACS",
-      subStatus.toString,
-      eori,
-      eori,
-      Some(eori),
-      Some("9000.00"),
-      Some("9000.00"),
-      Some("KWMREF1")
+      CDFPayCaseNumber = s"SCTY-${caseNumber.toString}",
+      declarationID = Some("12AA3456789ABCDEF2022"),
+      claimStartDate =
+        if (odd) None else Some(LocalDate.now().minusDays(caseNumber).format(DateTimeFormatter.ofPattern("yyyyMMdd"))),
+      closedDate =
+        if (subStatus.caseStatus == Closed)
+          Some(LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+        else None,
+      reasonForSecurity = "ACS",
+      caseStatus = subStatus.toString,
+      declarantEORI = eori,
+      importerEORI = if (odd) None else Some(eori),
+      claimantEORI = Some(eori),
+      totalCustomsClaimAmount = Some("9000.00"),
+      totalVATClaimAmount = Some("9000.00"),
+      declarantReferenceNumber = Some("KWMREF1")
     )
   }
 }

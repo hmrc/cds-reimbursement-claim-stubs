@@ -87,27 +87,29 @@ trait TPI02Generation extends SchemaValidation {
     caseStatus: String,
     closed: Boolean,
     entryNumber: Boolean
-  ): SCTYCase =
+  ): SCTYCase = {
+    val odd = caseNumber.lastOption.exists(c => Character.isDigit(c) && c.toInt % 2 == 1)
     SCTYCase(
-      caseNumber,
-      if (entryNumber) Some("123456789A12122022") else Some("MRN23014"),
-      "ACS",
-      "10",
-      caseStatus,
-      Some(Seq(Goods("12", Some("Digital media")), Goods("13", Some(" ")), Goods("14", Some("drum kit")))),
-      "GB12345678912",
-      "GB98765432101",
-      Some("GB98745632101"),
-      Some("900000.00"),
-      Some("900000.00"),
-      Some("900000.00"),
-      Some("900000.00"),
-      "20210501",
-      Some("Claimant name"),
-      Some("Claimant email address"),
-      if (closed) Some("20210501") else None,
-      Some(Seq(Reimbursement("20210501", "6402.06", "A30", "P")))
+      CDFPayCaseNumber = caseNumber,
+      declarationID = if (entryNumber) Some("123456789A12122022") else Some("MRN23014"),
+      reasonForSecurity = "ACS",
+      procedureCode = "10",
+      caseStatus = caseStatus,
+      goods = Some(Seq(Goods("12", Some("Digital media")), Goods("13", Some(" ")), Goods("14", Some("drum kit")))),
+      declarantEORI = "GB12345678912",
+      importerEORI = if (odd) None else Some("GB98765432101"),
+      claimantEORI = Some("GB98745632101"),
+      totalCustomsClaimAmount = Some("900000.00"),
+      totalVATClaimAmount = Some("900000.00"),
+      totalClaimAmount = Some("900000.00"),
+      totalReimbursementAmount = Some("900000.00"),
+      claimStartDate = if (odd) None else Some("20210501"),
+      claimantName = Some("Claimant name"),
+      claimantEmailAddress = Some("Claimant email address"),
+      closedDate = if (closed) Some("20210501") else None,
+      reimbursement = Some(Seq(Reimbursement("20210501", "6402.06", "A30", "P")))
     )
+  }
 
   private def createNDRCCase(
     caseNumber: String,
@@ -115,7 +117,7 @@ trait TPI02Generation extends SchemaValidation {
     claimType: String,
     closed: Boolean,
     entryNumber: Boolean,
-    multiple: Boolean,
+    multiple: Boolean
   ): NDRCCase =
     NDRCCase(
       NDRCAmounts = NDRCAmounts(

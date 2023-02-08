@@ -70,6 +70,13 @@
             "totalCustomsClaimAmount": "12000.56",
             "totalVATClaimAmount": "3412.01",
             "declarantReferenceNumber": "broomer007"
+          },
+          {
+            "CDFPayCaseNumber": "SEC-2115",
+            "declarationID": "21LLLLLLLLLL12346",
+            "reasonForSecurity": "ACS",
+            "caseStatus": "Pending-C18",
+            "declarantEORI": "GB744638982000"
           }
         ]
       }

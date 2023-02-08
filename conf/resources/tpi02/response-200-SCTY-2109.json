@@ -1,0 +1,52 @@
+{
+    "getSpecificCaseResponse": {
+        "responseCommon": {
+            "status": "OK",
+            "processingDate": "2021-05-10T11:21:35Z"
+        },
+        "responseDetail": {
+            "CDFPayService": "SCTY",
+            "CDFPayCaseFound": true,
+            "SCTYCase": {
+                "CDFPayCaseNumber": "SCTY-2109",
+                "declarationID": "21LLLLLLLLLL12345",
+                "reasonForSecurity": "ACS",
+                "procedureCode": "10",
+                "caseStatus": "Partial Refund",
+                "goods": [
+                    {
+                        "itemNumber": "12",
+                        "goodsDescription": "Digital media"
+                    },
+                    {
+                        "itemNumber": "13",
+                        "goodsDescription": " "
+                    },
+                    {
+                        "itemNumber": "14",
+                        "goodsDescription": "drum kit"
+                    }
+                ],
+                "declarantEORI": "GB744638982000",
+                "importerEORI": "GB744638982000",
+                "claimantEORI": "GB744638982000",
+                "totalCustomsClaimAmount": "12000.56",
+                "totalVATClaimAmount": "3412.01",
+                "declarantReferenceNumber": "broomer007",
+                "totalClaimAmount": "15412.57",
+                "totalReimbursementAmount": "15412.57",
+                "claimStartDate": "20210501",
+                "claimantName": "Claimant name",
+                "claimantEmailAddress": "Claimant email address",
+                "reimbursement": [
+                    {
+                        "reimbursementDate": "20210501",
+                        "reimbursementAmount": "15412.57",
+                        "taxType": "A30",
+                        "reimbursementMethod": "P"
+                    }
+                ]
+            }
+        }
+    }
+}
