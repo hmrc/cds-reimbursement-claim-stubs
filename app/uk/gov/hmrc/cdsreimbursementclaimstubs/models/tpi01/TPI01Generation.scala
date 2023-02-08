@@ -536,7 +536,7 @@ trait TPI01Generation extends SchemaValidation {
     val odd  = caseNumber % 2 == 1
     SCTYCaseDetails(
       CDFPayCaseNumber = s"SCTY-${caseNumber.toString}",
-      declarationID = Some("12AA3456789ABCDEF2022"),
+      declarationID = Some("12AA3456789ABCDEF2"),
       claimStartDate =
         if (odd) None else Some(LocalDate.now().minusDays(caseNumber).format(DateTimeFormatter.ofPattern("yyyyMMdd"))),
       closedDate =
