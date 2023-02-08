@@ -117,7 +117,6 @@ Odd ending case numbers are multiple cases, even are individual
 | GB000000000017 | Approved                          | In Progress                 |
 | GB000000000018 | Analysis Rework                   | In Progress                 |
 | GB000000000019 | Rework-Payment Details            | In Progress                 |
-| GB000000000020 | Pending-RTBH                      | In Progress                 |
 | GB000000000021 | Reply To RTBH                     | Pending                     |
 | GB000000000022 | Pending-Compliance Recommendation | In Progress                 |
 | GB000000000023 | Pending-Compliance Check Query    | Pending                     |
