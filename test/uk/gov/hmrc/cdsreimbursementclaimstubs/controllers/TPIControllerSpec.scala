@@ -54,6 +54,15 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
       "tpi01/response-200-SCTY.json",
       OK
     )
+    testGetValidReimbursementClaims("return 200 - valid success response for GB744638982001")(
+      "GB744638982001"
+    )
+    testGetValidReimbursementClaims("return 200 - valid success response for GB000000000001")(
+      "GB000000000001"
+    )
+    testGetValidReimbursementClaims("return 200 - valid success response for GB100000000001")(
+      "GB100000000001"
+    )
     testGetReimbursementClaims("return 400 - field missing")(
       "TPI01MISSING",
       "tpi01/response-400-mandatory-missing-field.json",
@@ -126,6 +135,29 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
               .withHeaders("Authorization" -> "Bearer test1234567")
           ).value
           status(response) mustBe expectedStatusCode
+          contentType(response) mustBe Some(ContentTypes.JSON)
+          contentAsString(response) mustEqual jsonDataFromFile(expectedResponseFileName).toString()
+        }
+      }
+    }
+  }
+
+  def testGetValidReimbursementClaims(
+    expectedResponse: String
+  )(testEori: String): Unit = {
+
+    def app: Application = GuiceApplicationBuilder().configure("metrics.enabled" -> false).build()
+
+    expectedResponse when {
+      s"EORI is $testEori is supplied in request" in {
+        running(app) {
+
+          val response = route(
+            app,
+            createValidGetRequest(testEori)
+              .withHeaders("Authorization" -> "Bearer test1234567")
+          ).value
+          status(response) mustBe OK
           contentType(response) mustBe Some(ContentTypes.JSON)
         }
       }
