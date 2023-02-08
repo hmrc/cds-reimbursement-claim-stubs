@@ -78,7 +78,6 @@ trait TPI01Generation extends SchemaValidation {
       Approved,
       AnalysisRework,
       ReworkPaymentDetails,
-      PendingRTBH,
       ReplyToRTBH,
       PendingComplianceRecommendation,
       PendingComplianceCheckQuery,
@@ -194,7 +193,7 @@ trait TPI01Generation extends SchemaValidation {
     val caseStatus: CaseStatus
   }
   def caseSubStatusNDRC(caseSubStatusNDRC: Int): CaseSubStatusNDRC =
-    caseSubStatusNDRC match {
+    ((caseSubStatusNDRC % 24) + 1) match {
       case 1 => OpenNDRC
       case 2 => OpenAnalysis
       case 3 => PendingApprovalNDRC
@@ -214,7 +213,7 @@ trait TPI01Generation extends SchemaValidation {
       case 17 => Approved
       case 18 => AnalysisRework
       case 19 => ReworkPaymentDetails
-      case 20 => PendingRTBH
+      case 20 => ReworkPaymentDetails
       case 21 => ReplyToRTBH
       case 22 => PendingComplianceRecommendation
       case 23 => PendingComplianceCheckQuery
@@ -327,12 +326,7 @@ trait TPI01Generation extends SchemaValidation {
     override val caseStatus: CaseStatus = InProgress
 
   }
-  case object PendingRTBH extends CaseSubStatusNDRC {
-    override def toString: String = "Pending-RTBH"
 
-    override val caseStatus: CaseStatus = InProgress
-
-  }
   case object RTBHSent extends CaseSubStatusNDRC {
     override def toString: String = "RTBH-Sent"
 
@@ -367,7 +361,7 @@ trait TPI01Generation extends SchemaValidation {
     val caseStatus: CaseStatus
   }
   def caseSubStatusSCTY(caseSubStatusSCTY: Int): CaseSubStatusSCTY =
-    caseSubStatusSCTY match {
+    ((caseSubStatusSCTY % 20) + 1) match {
       case 1 => OpenSCTY
       case 2 => PendingApprovalSCTY
       case 3 => PendingPayment
