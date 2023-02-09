@@ -193,7 +193,7 @@ trait TPI01Generation extends SchemaValidation {
     val caseStatus: CaseStatus
   }
   def caseSubStatusNDRC(caseSubStatusNDRC: Int): CaseSubStatusNDRC =
-    ((caseSubStatusNDRC % 24) + 1) match {
+    modulo1(caseSubStatusNDRC, 24) match {
       case 1 => OpenNDRC
       case 2 => OpenAnalysis
       case 3 => PendingApprovalNDRC
@@ -361,7 +361,7 @@ trait TPI01Generation extends SchemaValidation {
     val caseStatus: CaseStatus
   }
   def caseSubStatusSCTY(caseSubStatusSCTY: Int): CaseSubStatusSCTY =
-    ((caseSubStatusSCTY % 20) + 1) match {
+    modulo1(caseSubStatusSCTY, 20) match {
       case 1 => OpenSCTY
       case 2 => PendingApprovalSCTY
       case 3 => PendingPayment
@@ -547,4 +547,7 @@ trait TPI01Generation extends SchemaValidation {
       declarantReferenceNumber = Some("KWMREF1")
     )
   }
+
+  def modulo1(value: Int, size: Int): Int =
+    ((value - 1) % size) + 1
 }
