@@ -109,6 +109,19 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
     testGetSpecificClaim("return 500")("4374422404", "tpi02/response-500-system-timeout.json", INTERNAL_SERVER_ERROR)
   }
 
+  "modulo1 function" should {
+    "produce values confined in the range" in {
+      val m = app.injector.instanceOf[TPI01Controller].modulo1 _
+      for (size <- 2 to 25; i <- 1 until size) {
+        m(i, size) mustBe i
+        m(size, size) mustBe size
+        m(size + i, size) mustBe i
+      }
+    }
+  }
+
+  def app: Application = GuiceApplicationBuilder().configure("metrics.enabled" -> false).build()
+
   def createValidGetRequest(eori: String): FakeRequest[JsObject] =
     FakeRequest("POST", routes.TPI01Controller.getReimbursementClaims.url)
       .withHeaders(headers: _*)
@@ -121,10 +134,7 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
 
   def testGetReimbursementClaims(
     expectedResponse: String
-  )(testEori: String, expectedResponseFileName: String, expectedStatusCode: Int): Unit = {
-
-    def app: Application = GuiceApplicationBuilder().configure("metrics.enabled" -> false).build()
-
+  )(testEori: String, expectedResponseFileName: String, expectedStatusCode: Int): Unit =
     expectedResponse when {
       s"EORI is $testEori is supplied in request" in {
         running(app) {
@@ -140,14 +150,10 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
         }
       }
     }
-  }
 
   def testGetValidReimbursementClaims(
     expectedResponse: String
-  )(testEori: String): Unit = {
-
-    def app: Application = GuiceApplicationBuilder().configure("metrics.enabled" -> false).build()
-
+  )(testEori: String): Unit =
     expectedResponse when {
       s"EORI is $testEori is supplied in request" in {
         running(app) {
@@ -162,14 +168,10 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
         }
       }
     }
-  }
 
   def testGetSpecificClaim(
     expectedResponse: String
-  )(testCdfPayCaseNumber: String, expectedResponseFileName: String, expectedStatusCode: Int): Unit = {
-
-    def app: Application = GuiceApplicationBuilder().configure("metrics.enabled" -> false).build()
-
+  )(testCdfPayCaseNumber: String, expectedResponseFileName: String, expectedStatusCode: Int): Unit =
     expectedResponse when {
       s"CDFpayCaseNumber is $testCdfPayCaseNumber is supplied in request" in {
         running(app) {
@@ -185,7 +187,6 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
         }
       }
     }
-  }
 
   def requestJson(eori: String): String                             =
     s"""
