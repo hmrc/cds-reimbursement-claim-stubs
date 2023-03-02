@@ -20,7 +20,7 @@ import play.api.libs.json.Json
 import play.api.mvc.Result
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi02.ndrc.{EntryDetail, NDRCAmounts, NDRCCase, NDRCDetail, ProcedureDetail}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi02.scty.{Goods, SCTYCase}
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.{NDRC, SCTY, SchemaValidation, Service}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.{NDRC, ReasonForSecurity, SCTY, SchemaValidation, Service}
 
 trait TPI02Generation extends SchemaValidation {
 
@@ -92,7 +92,7 @@ trait TPI02Generation extends SchemaValidation {
     SCTYCase(
       CDFPayCaseNumber = caseNumber,
       declarationID = if (entryNumber) Some("123456789A12122022") else Some("MRN23014"),
-      reasonForSecurity = "ACS",
+      reasonForSecurity = ReasonForSecurity.of(caseNumber),
       procedureCode = "10",
       caseStatus = caseStatus,
       goods = Some(Seq(Goods("12", Some("Digital media")), Goods("13", Some(" ")), Goods("14", Some("drum kit")))),

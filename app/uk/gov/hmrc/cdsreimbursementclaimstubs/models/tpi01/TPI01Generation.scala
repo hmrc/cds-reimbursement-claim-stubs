@@ -17,6 +17,7 @@
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi01
 
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.SchemaValidation
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.ReasonForSecurity
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -537,7 +538,7 @@ trait TPI01Generation extends SchemaValidation {
         if (subStatus.caseStatus == Closed)
           Some(LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyyMMdd")))
         else None,
-      reasonForSecurity = "ACS",
+      reasonForSecurity = ReasonForSecurity.ofIndex(caseNumber),
       caseStatus = subStatus.toString,
       declarantEORI = eori,
       importerEORI = if (odd) None else Some(eori),
