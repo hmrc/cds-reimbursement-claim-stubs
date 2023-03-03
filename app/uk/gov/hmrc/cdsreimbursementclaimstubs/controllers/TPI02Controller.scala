@@ -89,6 +89,47 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   Some("tpi02/tpi02-response-schema.json")
                 )
             }
+          case e if e.startsWith("NDRC-1200") =>
+            tpi01Claims2(20).CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
+              case Some(value) =>
+                val extractedIndex = e.replace("NDRC-1200", "").toInt
+                val claimType      = if (extractedIndex % 2 == 0) "C285" else "C&E1179"
+                val multiple       = extractedIndex % 2 == 1
+                tpi02Claim(
+                  claimType,
+                  NDRC,
+                  e,
+                  value.caseStatus,
+                  value.closedDate.isDefined,
+                  multiple,
+                  entryNumber = false
+                )
+              case None =>
+                parseResponse(
+                  "tpi02/response-200-no-claims-found-ndrc.json",
+                  Ok,
+                  Some("tpi02/tpi02-response-schema.json")
+                )
+            }
+          case e if e.startsWith("SCTY-1200") =>
+            tpi01Claims2(20).CDFPayCase.SCTYCases.find(_.CDFPayCaseNumber == e) match {
+              case Some(value) =>
+                tpi02Claim(
+                  "",
+                  SCTY,
+                  e,
+                  value.caseStatus,
+                  value.closedDate.isDefined,
+                  multiple = false,
+                  entryNumber = false
+                )
+              case None =>
+                parseResponse(
+                  "tpi02/response-200-no-claims-found-scty.json",
+                  Ok,
+                  Some("tpi02/tpi02-response-schema.json")
+                )
+            }
           case e if e.startsWith("NDRC-100") =>
             val extractedIndex = e.replace("NDRC-100", "").toInt
             tpi01SetCaseSubStatusNDRC(extractedIndex).CDFPayCase.NDRCCases
