@@ -58,6 +58,30 @@ trait TPI01Generation extends SchemaValidation {
     responseDetail
   }
 
+  def tpi01Claims2(totalAmount: Int): ResponseDetail = {
+
+    val ndrcCases = (1 to totalAmount).map { index =>
+      createNDRCCase(index, caseSubStatusNDRC(index), 120000)
+    }
+
+    val sctyCases = ((totalAmount + 1) to (totalAmount * 2)).map { index =>
+      createSCTYCase(index, caseSubStatusSCTY(index), 120000)
+    }
+
+    val responseDetail = ResponseDetail(
+      NDRCCasesFound = true,
+      SCTYCasesFound = true,
+      CDFPayCase = CDFPayCase(
+        ndrcCases.size.toString,
+        sctyCases.size.toString,
+        ndrcCases,
+        sctyCases
+      )
+    )
+
+    responseDetail
+  }
+
   def tpi01AllSubstatusClaims(): ResponseDetail = {
     val ndrcCaseStatuses: Seq[CaseSubStatusNDRC] = Seq(
       OpenNDRC,
@@ -504,14 +528,18 @@ trait TPI01Generation extends SchemaValidation {
 
   }
 
-  private def createNDRCCase(caseNumber: Int, subStatus: CaseSubStatusNDRC): NDRCCaseDetails = {
+  private def createNDRCCase(
+    caseNumber: Int,
+    subStatus: CaseSubStatusNDRC,
+    caseNumberPrefix: Int = 0
+  ): NDRCCaseDetails = {
     val eori = f"GB$caseNumber%012d"
     NDRCCaseDetails(
-      CDFPayCaseNumber = s"NDRC-${caseNumber.toString}",
+      CDFPayCaseNumber = s"NDRC-${(caseNumber + caseNumberPrefix).toString}",
       declarationID = Some("MRN23014"),
       claimStartDate = "20200501",
       closedDate =
-        if (subStatus.caseStatus == Closed)
+        if (subStatus.caseStatus == Closed && subStatus != RejectedFailedValidation)
           Some("20210501")
         else None,
       caseStatus = subStatus.toString,
@@ -526,11 +554,15 @@ trait TPI01Generation extends SchemaValidation {
     )
   }
 
-  private def createSCTYCase(caseNumber: Int, subStatus: CaseSubStatusSCTY): SCTYCaseDetails = {
+  private def createSCTYCase(
+    caseNumber: Int,
+    subStatus: CaseSubStatusSCTY,
+    caseNumberPrefix: Int = 0
+  ): SCTYCaseDetails = {
     val eori = f"GB$caseNumber%012d"
     val odd  = caseNumber % 2 == 1
     SCTYCaseDetails(
-      CDFPayCaseNumber = s"SCTY-${caseNumber.toString}",
+      CDFPayCaseNumber = s"SCTY-${(caseNumber + caseNumberPrefix).toString}",
       declarationID = Some("12AA3456789ABCDEF2"),
       claimStartDate =
         if (odd) None else Some(LocalDate.now().minusDays(caseNumber).format(DateTimeFormatter.ofPattern("yyyyMMdd"))),

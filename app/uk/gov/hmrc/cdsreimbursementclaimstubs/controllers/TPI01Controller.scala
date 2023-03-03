@@ -36,6 +36,11 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
       validateRequest("tpi01/tpi01-request-schema.json") {
         val eori = (request.body \ "getPostClearanceCasesRequest" \ "requestDetail" \ "EORI").as[String]
         eori match {
+          case "GB744638982000" =>
+            val detail         = tpi01Claims2(20)
+            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
+            validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))
           case "GB744638982001" =>
             val detail         = tpi01Claims(20)
             val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
@@ -58,20 +63,24 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
           case "GB744638982007" =>
             parseResponse("tpi01/response-200-SCTY.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case "GB744638982008" =>
-            val detail = tpi01AllSubstatusClaims()
+            val detail         = tpi01AllSubstatusClaims()
             val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
-            val response = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
+            val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
             validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))
           case "GB744638982009" =>
             parseResponse("tpi01/response-200-duplicate.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case "GB744638982010" =>
-            parseResponse("tpi01/response-200-possible-declaration-ids.json", Ok, Some("tpi01/tpi01-response-schema.json"))
+            parseResponse(
+              "tpi01/response-200-possible-declaration-ids.json",
+              Ok,
+              Some("tpi01/tpi01-response-schema.json")
+            )
           case "GB744638982011" =>
             parseResponse("tpi01/response-200-duplicate-2.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case "GB744638982012" =>
-            val detail = tpi01Claims(20)
+            val detail         = tpi01Claims(20)
             val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
-            val response = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
+            val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
             validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))
           case "TPI01MISSING" => parseResponse("tpi01/response-400-mandatory-missing-field.json", BadRequest)
           case "TPI01PATTERN" => parseResponse("tpi01/response-400-pattern-error.json", BadRequest)
@@ -80,19 +89,19 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
             parseResponse("tpi01/response-200-invalid-eori.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case e if e.startsWith("GB0000000000") =>
             val caseSubStatusIndex = e.replace("GB0000000000", "")
-            val responseCommon  = ResponseCommon("OK", "2017-03-21T09:30:47Z")
-            val response        = Response(
+            val responseCommon     = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response           = Response(
               PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatusNDRC(caseSubStatusIndex.toInt)))
             )
             Ok(Json.toJson(response))
           case e if e.startsWith("GB1000000000") =>
             val caseSubStatusIndex = e.replace("GB1000000000", "")
-            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
-            val response = Response(
+            val responseCommon     = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response           = Response(
               PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatusSCTY(caseSubStatusIndex.toInt)))
             )
             Ok(Json.toJson(response))
-          case _ => 
+          case _ =>
             parseResponse("tpi01/response-200-no-claims-found.json", Ok, Some("tpi01/tpi01-response-schema.json"))
         }
       }

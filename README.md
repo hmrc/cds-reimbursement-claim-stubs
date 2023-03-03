@@ -81,6 +81,7 @@ About the fields below and their possible values [click here](https://github.com
 ## TPI01: Get Reimbursement Claims
 | EORI number      | Http Response Code | Returned information                                                                                                |
 |------------------|--------------------|---------------------------------------------------------------------------------------------------------------------|
+| GB744638982000   | 200                | Success response including multiple reimbursement claims with all possible case statuses                                                           |
 | GB744638982001   | 200                | Success response including multiple reimbursement claims                                                            |
 | GB744638982002   | 200                | Success response including no reimbursement claims                                                                  |
 | GB744638982008   | 200                | Success response including one of each TPI01 Case Status (odd case numbers are multiple cases, even are single)     |
