@@ -19,7 +19,28 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.models
 object ReasonForSecurity {
 
   val values =
-    Seq("ACS", "MDC", "ENU", "IPR", "MOD", "MDL", "MDP", "OPR", "RED", "T24", "TA6", "TA3", "TA2", "PDD", "CRQ")
+    Seq(
+      "ACS",
+      "MDC",
+      "ENU",
+      "IPR",
+      "MOD",
+      "MDL",
+      "MDP",
+      "OPR",
+      "RED",
+      "T24",
+      "TA6",
+      "TA3",
+      "TA2",
+      "PDD",
+      "CRQ",
+      "CEP",
+      "CSD",
+      "ACS", // placeholder for future RfS code additions
+      "ACS", // placeholder for future RfS code additions
+      "ACS" // placeholder for future RfS code additions
+    )
 
   def ofIndex(index: Int): String =
     values(Math.abs(index) % values.size)
