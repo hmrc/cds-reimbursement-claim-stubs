@@ -21,6 +21,7 @@ POST       /tpi/getpostclearancecases/v1                              uk.gov.hmr
 # TPI02
 POST       /tpi/getspecificcase/v1                                    uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.TPI02Controller.getSpecificClaim
 
+GET        /customs-data-store/eori/:eori/verified-email              uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.VerifiedEmailController.getVerifiedEmail(eori: String)
 
 ->         /                                                          health.Routes
 GET        /admin/metrics                                             com.kenshoo.play.metrics.MetricsController.metrics

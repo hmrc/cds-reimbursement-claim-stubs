@@ -76,6 +76,15 @@ About the fields below and their possible values [click here](https://github.com
 | 90909091       | 400                | BAD_REQUEST         |
 | Anything else  | 200                | OK                  |
 
+# Customs Data Store Verified Email Response
+
+`GET /customs-data-store/eori/:eori/verified-email`
+
+| EORI number      | Http Response Code | Returned information | 
+|------------------|--------------------|----------------------|
+| any | 200 | ```{"address": "someemail@mail.com","timestamp": "2007-03-20T01:02:03.000Z"}```|  
+| GB999999999999999| 404 | - |
+
 # View and Upload
 
 ## TPI01: Get Reimbursement Claims
