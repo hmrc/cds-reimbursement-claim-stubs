@@ -85,6 +85,15 @@ About the fields below and their possible values [click here](https://github.com
 | any | 200 | ```{"address": "someemail@mail.com","timestamp": "2007-03-20T01:02:03.000Z"}```|  
 | GB999999999999999| 404 | - |
 
+# Customs Data Store Company Information
+
+`GET /customs-data-store/eori/:eori/company-information`
+
+| EORI number      | Http Response Code | Returned information | 
+|------------------|--------------------|----------------------|
+| any | 200 | ```{"name": "Tony Stark","consent": "1","address": {"city": "London","countryCode": "GB","postalCode": "SW11 5RZ","streetAndNumber": "86 Mysore Road"}}```|  
+| GB999999999999990| 404 | - |
+
 # View and Upload
 
 ## TPI01: Get Reimbursement Claims

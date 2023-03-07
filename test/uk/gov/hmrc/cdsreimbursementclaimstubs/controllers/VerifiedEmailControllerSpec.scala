@@ -29,7 +29,7 @@ class VerifiedEmailControllerSpec extends AnyWordSpec with Matchers {
   "A VerifiedEmailController" when {
     val controller = new VerifiedEmailController(Helpers.stubControllerComponents())
 
-    "/verified-email" should {
+    "/customs-data-store/eori/:eori/verified-email " should {
 
       "return 200 (OK) with verified email address" in {
         val result = controller.getVerifiedEmail("GB000000000000001").apply(request)
