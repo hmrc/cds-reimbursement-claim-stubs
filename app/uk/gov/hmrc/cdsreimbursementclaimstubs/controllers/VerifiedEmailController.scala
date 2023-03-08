@@ -22,16 +22,24 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.verifiedemail.VerifiedEmail
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
+import play.api.libs.json.JsValue
 
 @Singleton()
 class VerifiedEmailController @Inject() (cc: ControllerComponents) extends BackendController(cc) {
 
+  private val successfullResponse =
+    VerifiedEmailResponse("someemail@mail.com", "2007-03-20T01:02:03.000Z")
+
+  private val serviceUnavailableResponse: JsValue =
+    Json.parse("""{ "error": 503, "errorMessage": "Service Unavailable" }""")
+
   final def getVerifiedEmail(eori: String): Action[AnyContent] =
     Action { _ =>
-      if (eori == "GB999999999999999" || eori == "NOEMAIL")
-        NotFound
-      else
-        Ok(Json.toJson(VerifiedEmailResponse("someemail@mail.com", "2007-03-20T01:02:03.000Z")))
+      eori match {
+        case "NOEMAIL" | "EORINOTIMESTAMP" | "GB999999999999999" => NotFound
+        case "ETMP503ERROR" => ServiceUnavailable(serviceUnavailableResponse)
+        case "GB333186811543" | _ => Ok(Json.toJson(successfullResponse))
+      }
     }
 
 }

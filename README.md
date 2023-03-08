@@ -82,8 +82,11 @@ About the fields below and their possible values [click here](https://github.com
 
 | EORI number      | Http Response Code | Returned information | 
 |------------------|--------------------|----------------------|
-| any | 200 | ```{"address": "someemail@mail.com","timestamp": "2007-03-20T01:02:03.000Z"}```|  
 | GB999999999999999| 404 | - |
+| NOEMAIL| 404 | - |
+| EORINOTIMESTAMP| 404 | - | 
+| ETMP503ERROR| 503 | ```{"error": 503,"errorMessage":"Service Unavailable"}``` | 
+| any other EORI | 200 | ```{"address": "someemail@mail.com","timestamp": "2007-03-20T01:02:03.000Z"}```|  
 
 # Customs Data Store Company Information
 
@@ -91,8 +94,11 @@ About the fields below and their possible values [click here](https://github.com
 
 | EORI number      | Http Response Code | Returned information | 
 |------------------|--------------------|----------------------|
-| any | 200 | ```{"name": "Tony Stark","consent": "1","address": {"city": "London","countryCode": "GB","postalCode": "SW11 5RZ","streetAndNumber": "86 Mysore Road"}}```|  
 | GB999999999999990| 404 | - |
+| ETMP503ERROR| 503 | ```{"error": 503,"errorMessage":"Service Unavailable"}``` | 
+| NOEMAIL| 200 | ```{"name": "NOEMAIL","consent": "0","address": {"city": "Shipley","countryCode": "GB","postalCode": "BD18 3ER","streetAndNumber": "My Company"}}``` |
+| GB333186811543| 200 | ```{"name": "ABC Ltd","consent": "0","address": {"city": "London","countryCode": "GB","postalCode": "SW11 5RZ","streetAndNumber": "86 Mysore Road"}}``` | 
+| any other EORI | 200 | ```{"name": "Tony Stark","consent": "1","address": {"city": "London","countryCode": "GB","postalCode": "SW11 5RZ","streetAndNumber": "86 Mysore Road"}}```|  
 
 # View and Upload
 

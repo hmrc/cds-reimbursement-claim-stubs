@@ -27,25 +27,43 @@ import javax.inject.{Inject, Singleton}
 @Singleton()
 class CompanyInformationController @Inject() (cc: ControllerComponents) extends BackendController(cc) {
 
+  private val successfullResponse =
+    CompanyInformationResponse(
+      name = "Tony Stark",
+      consent = "1",
+      address = AddressInformation(
+        streetAndNumber = "86 Mysore Road",
+        city = "London",
+        postalCode = Some("SW11 5RZ"),
+        countryCode = "GB"
+      )
+    )
+
+  private val noEmailResponse =
+    CompanyInformationResponse(
+      name = "NOEMAIL",
+      consent = "0",
+      address = AddressInformation(
+        streetAndNumber = "My Company",
+        city = "Shipley",
+        postalCode = Some("BD18 3ER"),
+        countryCode = "GB"
+      )
+    )
+
+  private val serviceUnavailableResponse =
+    Json.parse("""{ "error": 503, "errorMessage": "Service Unavailable" }""")
+
   final def getCompanyInformation(eori: String): Action[AnyContent] =
     Action { _ =>
-      if (eori == "GB999999999999990")
-        NotFound
-      else
-        Ok(
-          Json.toJson(
-            CompanyInformationResponse(
-              name = "Tony Stark",
-              consent = "1",
-              address = AddressInformation(
-                streetAndNumber = "86 Mysore Road",
-                city = "London",
-                postalCode = Some("SW11 5RZ"),
-                countryCode = "GB"
-              )
-            )
-          )
-        )
+      eori match {
+        case "GB999999999999990" => NotFound
+        case "NOEMAIL" => Ok(Json.toJson(noEmailResponse))
+        case "ETMP503ERROR" => ServiceUnavailable(serviceUnavailableResponse)
+        case "GB333186811543" => Ok(Json.toJson(successfullResponse.copy(consent = "0", name = "ABC Ltd")))
+        case "EORINOTIMESTAMP" | _ => Ok(Json.toJson(successfullResponse))
+      }
+
     }
 
 }
