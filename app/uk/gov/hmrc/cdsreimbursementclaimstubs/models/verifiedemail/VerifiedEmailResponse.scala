@@ -18,8 +18,9 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.models.verifiedemail
 
 import play.api.libs.json.Json
 import play.api.libs.json.OFormat
+import play.api.libs.json.JsValue
 
-final case class VerifiedEmailResponse(address: String, timestamp: String)
+final case class VerifiedEmailResponse(address: String, timestamp: String, undeliverable: Option[JsValue] = None)
 
 object VerifiedEmailResponse {
   implicit val format: OFormat[VerifiedEmailResponse] = Json.format[VerifiedEmailResponse]

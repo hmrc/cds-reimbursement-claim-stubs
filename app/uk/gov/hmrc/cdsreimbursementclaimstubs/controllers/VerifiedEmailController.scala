@@ -30,6 +30,25 @@ class VerifiedEmailController @Inject() (cc: ControllerComponents) extends Backe
   private val successfullResponse =
     VerifiedEmailResponse("someemail@mail.com", "2007-03-20T01:02:03.000Z")
 
+  private val undeliverableMessage = Json.parse("""|{
+        |  "subject": "subject-example",
+        |  "eventId": "example-id",
+        |  "groupId": "example-group-id",
+        |  "timestamp": "2021-05-14T10:59:45.811+01:00",
+        |  "event": {
+        |    "id": "example-id",
+        |    "event": "someEvent",
+        |    "emailAddress": "email@email.com",
+        |    "detected": "2021-05-14T10:59:45.811+01:00",
+        |    "code": 12,
+        |    "reason": "Inbox full",
+        |    "enrolment": "HMRC-CUS-ORG~EORINumber~testEori"
+        |  }
+        |}""".stripMargin)
+
+  private val undeliverableResponse =
+    VerifiedEmailResponse("someemail@mail.com", "2007-03-20T01:02:03.000Z", undeliverable = Some(undeliverableMessage))
+
   private val serviceUnavailableResponse: JsValue =
     Json.parse("""{ "error": 503, "errorMessage": "Service Unavailable" }""")
 
@@ -38,6 +57,7 @@ class VerifiedEmailController @Inject() (cc: ControllerComponents) extends Backe
       eori match {
         case "NOEMAIL" | "EORINOTIMESTAMP" | "GB999999999999999" => NotFound
         case "ETMP503ERROR" => ServiceUnavailable(serviceUnavailableResponse)
+        case "GB123456789012" => Ok(Json.toJson(undeliverableResponse))
         case "GB333186811543" | _ => Ok(Json.toJson(successfullResponse))
       }
     }
