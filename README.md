@@ -39,6 +39,8 @@
 | 40ABCDEFGHIJKLMNO3 | 405                 | Request made with incorrect HTTP method                 |
 | 50ABCDEFGHIJKLMNO1 | 500                 | Time outs, server is down, eis system errors etc        |
 | 10AAAAAAAAAAAAAAA3 | 200                 | Success - full response with Northern Ireland tax codes |
+| 10AAAAAAAAAAAAAAA6 | 200                 | Success - no contact details, importer GB000000000000006, declarant GB000000000000006 |
+| 10AAAAAAAAAAAAAAA9 | 200                 | Success - no contact details, importer GB000000000000091, declarant GB000000000000092 |
 
 
 # Bank Account Reputation Responses

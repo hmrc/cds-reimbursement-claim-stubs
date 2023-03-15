@@ -454,6 +454,18 @@ object MockHttpResponse {
       ),
       //TPI05 OK_RESPONSE, ACC14 OK_PARTIAL_RESPONSE
       MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAAA9"),
+        _ === EORI("GB000000000000090"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_NO_CONTACT_DETAILS("10AAAAAAAAAAAAAAA9", "GB000000000000091", "GB000000000000092")
+          )
+        )
+      ),
+      //TPI05 OK_RESPONSE, ACC14 OK_PARTIAL_RESPONSE
+      MockHttpResponse(
         _ === MRN("10BBBBBBBBBBBBBBB1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
