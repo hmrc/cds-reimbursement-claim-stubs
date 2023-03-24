@@ -41,6 +41,10 @@
 | 10AAAAAAAAAAAAAAA3 | 200                 | Success - full response with Northern Ireland tax codes |
 | 10AAAAAAAAAAAAAAA6 | 200                 | Success - no contact details, importer GB000000000000006, declarant GB000000000000006 |
 | 10AAAAAAAAAAAAAAA9 | 200                 | Success - no contact details, importer GB000000000000091, declarant GB000000000000092 |
+| 20AAAAAAAAAAAAAAA9 | 200                 | Success - no contact details, importer GB000000000000091, declarant GB000000000000093 |
+| 30AAAAAAAAAAAAAAA9 | 200                 | Success - no contact details, importer GB000000000000094, declarant GB000000000000092 |
+| 40AAAAAAAAAAAAAAA9 | 200                 | Success - full details, importer GB000000000000094, declarant GB000000000000092 |
+| 10AAAAAAAAAAAAAAB9 | 200                 | Success - no consignee/importer, declarant GB000000000000091 |
 
 
 # Bank Account Reputation Responses

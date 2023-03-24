@@ -48,6 +48,7 @@ object Acc14Response {
         extends Acc14ResponseType
     case class OK_RESPONSE_NO_CONTACT_DETAILS(declarationId: String, importerEORI: String, declarantEORI: String)
         extends Acc14ResponseType
+    case class OK_RESPONSE_NO_CONSIGNEE(declarationId: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_RESPONSE_NO_BANK_DETAILS(
       declarationId: String,
       reasonForSecurity: String,
@@ -91,6 +92,9 @@ object Acc14Response {
         getFullAcc14ResponseWithNorthernIrelandTaxCodes(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14WithoutContactDetails(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_RESPONSE_NO_CONSIGNEE(declarationId, declarantEORI) =>
+        getFullAcc14WithoutConsignee(declarationId, declarantEORI)
+
       case Acc14ResponseType
             .OK_RESPONSE_NO_BANK_DETAILS(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
         getFullAcc14WithoutBankDetails(declarationId, reasonForSecurity, importerEORI, declarantEORI)
@@ -974,6 +978,124 @@ object Acc14Response {
          |         "emailAddress" : "automation@gmail.com"
          |				}
          |			},
+         |			"bankDetails": {
+         |				"consigneeBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				},
+         |				"declarantBankDetails": {
+         |					"accountHolderName": "CDS E2E To E2E Bank",
+         |					"sortCode": "308844",
+         |					"accountNumber": "12345678"
+         |				}
+         |			},
+         |			"ndrcDetails": [
+         |				{
+         |					"taxType": "A80",
+         |					"amount": "218.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "0"
+         |				},
+         |				{
+         |					"taxType": "A95",
+         |					"amount": "211.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |           "cmaEligible": "1"
+         |				},
+         |				{
+         |					"taxType": "A90",
+         |					"amount": "228.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
+         |				},
+         |				{
+         |					"taxType": "A85",
+         |					"amount": "171.00",
+         |					"paymentMethod": "001",
+         |					"paymentReference": "GB201430007000",
+         |          "cmaEligible": "1"
+         |				}
+         |			]
+         |		}
+         |	}
+         |}
+         |""".stripMargin
+    )
+  )
+
+  def getFullAcc14WithoutConsignee(declarationId: String, declarantEORI: String) = Acc14Response(
+    Json.parse(
+      s"""
+         |{
+         |	"overpaymentDeclarationDisplayResponse": {
+         |		"responseCommon": {
+         |			"status": "OK",
+         |			"processingDate": "2021-02-12T11:34:54Z"
+         |		},
+         |		"responseDetail": {
+         |			"declarationId": "$declarationId",
+         |			"acceptanceDate": "2021-02-12",
+         |			"procedureCode": "2",
+         |			"declarantDetails": {
+         |				"declarantEORI": "$declarantEORI",
+         |				"legalName": "Foxpro Central LTD",
+         |				"establishmentAddress": {
+         |					"addressLine1": "12 Skybricks Road",
+         |					"addressLine3": "Coventry",
+         |					"postalCode": "CV3 6EA",
+         |					"countryCode": "GB"
+         |				},
+         |				"contactDetails": {
+         |					"contactName": "Info Tech LTD",
+         |					"addressLine1": "45 Church Road",
+         |					"addressLine3": "Leeds",
+         |					"postalCode": "LS1 2HA",
+         |					"countryCode": "GB"
+         |				}
+         |			},
+         |          "accountDetails":
+         |          [
+         |              {
+         |                  "accountType": "a",
+         |                  "accountNumber": "1",
+         |                  "eori": "$declarantEORI",
+         |                  "legalName": "a",
+         |                  "contactDetails":
+         |                  {
+         |                      "contactName": "a",
+         |                      "addressLine1": "a",
+         |                      "addressLine2": "a",
+         |                      "addressLine3": "a",
+         |                      "addressLine4": "a",
+         |                      "postalCode": "a",
+         |                      "countryCode": "GB",
+         |                      "telephone": "a",
+         |                      "emailAddress": "a"
+         |                  }
+         |              },
+         |              {
+         |                  "accountType": "b",
+         |                  "accountNumber": "2",
+         |                  "eori": "$declarantEORI",
+         |                  "legalName": "b",
+         |                  "contactDetails":
+         |                  {
+         |                      "contactName": "b",
+         |                      "addressLine1": "b",
+         |                      "addressLine2": "b",
+         |                      "addressLine3": "b",
+         |                      "addressLine4": "b",
+         |                      "postalCode": "b",
+         |                      "countryCode": "GB",
+         |                      "telephone": "b",
+         |                      "emailAddress": "b"
+         |                  }
+         |              }
+         |          ],
          |			"bankDetails": {
          |				"consigneeBankDetails": {
          |					"accountHolderName": "CDS E2E To E2E Bank",
