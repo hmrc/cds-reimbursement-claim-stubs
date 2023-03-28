@@ -1233,6 +1233,77 @@ object MockHttpResponse {
             )
           )
         )
+      case (MRN("10AAAAAAAAAAAAAAA9"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000091",
+                  "GB000000000000092"
+                )
+            )
+          )
+        )
+      case (MRN("20AAAAAAAAAAAAAAA9"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000091",
+                  "GB000000000000093"
+                )
+            )
+          )
+        )
+      case (MRN("30AAAAAAAAAAAAAAA9"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000094",
+                  "GB000000000000092"
+                )
+            )
+          )
+        )
+      case (MRN("40AAAAAAAAAAAAAAA9"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_FULL_RESPONSE_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000091",
+                  "GB000000000000092"
+                )
+            )
+          )
+        )
+
+      case (MRN("10AAAAAAAAAAAAAAB9"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_NO_CONSIGNEE_RESPONSE_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000091"
+                )
+            )
+          )
+        )
+
       case _ => None
     }
 }
