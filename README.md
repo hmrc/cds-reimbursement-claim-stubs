@@ -45,6 +45,8 @@
 | 30AAAAAAAAAAAAAAA9 | 200                 | Success - no contact details, importer GB000000000000094, declarant GB000000000000092 |
 | 40AAAAAAAAAAAAAAA9 | 200                 | Success - full details, importer GB000000000000094, declarant GB000000000000092 |
 | 10AAAAAAAAAAAAAAB9 | 200                 | Success - no consignee/importer, declarant GB000000000000091 |
+| 10AAAAAAAAAAAAAAC9 | 200                 | Success - no consignee/importer, declarant GB000000000000091 |
+| 10AAAAAAAAAAAAAAD9 | 200                 | Success - no consignee/importer, declarant GB000000000000091 |
 
 
 # Bank Account Reputation Responses
