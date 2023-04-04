@@ -509,6 +509,28 @@ object MockHttpResponse {
           )
         )
       ),
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAAC9"),
+        _ === EORI("GB000000000000090"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_NO_CONSIGNEE("10AAAAAAAAAAAAAAC9", "GB000000000000091")
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAAD9"),
+        _ === EORI("GB000000000000090"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_NO_CONSIGNEE("10AAAAAAAAAAAAAAD9", "GB000000000000091")
+          )
+        )
+      ),
       //TPI05 OK_RESPONSE, ACC14 OK_PARTIAL_RESPONSE
       MockHttpResponse(
         _ === MRN("10BBBBBBBBBBBBBBB1"),
@@ -1291,6 +1313,34 @@ object MockHttpResponse {
         )
 
       case (MRN("10AAAAAAAAAAAAAAB9"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_NO_CONSIGNEE_RESPONSE_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000091"
+                )
+            )
+          )
+        )
+
+      case (MRN("10AAAAAAAAAAAAAAC9"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_NO_CONSIGNEE_RESPONSE_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000091"
+                )
+            )
+          )
+        )
+
+      case (MRN("10AAAAAAAAAAAAAAD9"), _) =>
         Some(
           DeclarationResponse(
             Right(
