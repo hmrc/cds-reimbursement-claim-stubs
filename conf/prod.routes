@@ -21,6 +21,9 @@ POST       /tpi/getpostclearancecases/v1                              uk.gov.hmr
 # TPI02
 POST       /tpi/getspecificcase/v1                                    uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.TPI02Controller.getSpecificClaim
 
+# SUB09
+GET        /subscriptions/subscriptiondisplay/v1                      uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.SUB09Controller.getSubscription(EORI: String, regime: String, acknowledgementReference: String)
+
 GET        /customs-data-store/eori/:eori/verified-email              uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.VerifiedEmailController.getVerifiedEmail(eori: String)
 GET        /customs-data-store/eori/:eori/company-information         uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.CompanyInformationController.getCompanyInformation(eori: String)
 
