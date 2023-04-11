@@ -160,11 +160,16 @@ trait TPI01Generation extends SchemaValidation {
     responseDetail
   }
 
-  def tpi01SetCaseSubStatusNDRC(caseSubStatusIndex: Int): ResponseDetail = {
+  def tpi01SetCaseSubStatusNDRC(caseSubStatusIndex: Int, isXiEori: Boolean = false): ResponseDetail = {
 
     val caseNumber    = s"100$caseSubStatusIndex".toInt
     val caseSubStatus = caseSubStatusNDRC(caseSubStatusIndex)
-    val ndrcCases     = Seq(createNDRCCase(caseNumber, caseSubStatus))
+    val ndrcCases     = Seq(createNDRCCase(
+      caseNumber,
+      caseSubStatus,
+      if (isXiEori) 50 else 0,
+      if (isXiEori) "XI" else "GB"
+    ))
 
     val sctyCases = Seq()
 
@@ -182,13 +187,18 @@ trait TPI01Generation extends SchemaValidation {
     responseDetail
   }
 
-  def tpi01SetCaseSubStatusSCTY(caseSubStatusIndex: Int): ResponseDetail = {
+  def tpi01SetCaseSubStatusSCTY(caseSubStatusIndex: Int, isXiEori: Boolean = false): ResponseDetail = {
 
     val ndrcCases = Seq()
 
     val caseSubStatus = caseSubStatusSCTY(caseSubStatusIndex)
     val caseNumber    = s"100$caseSubStatusIndex".toInt
-    val sctyCases     = Seq(createSCTYCase(caseNumber, caseSubStatus))
+    val sctyCases     = Seq(createSCTYCase(
+      caseNumber,
+      caseSubStatus,
+      if (isXiEori) 50 else 0,
+      if (isXiEori) "XI" else "GB"
+    ))
 
     val responseDetail = ResponseDetail(
       NDRCCasesFound = true,
@@ -531,9 +541,10 @@ trait TPI01Generation extends SchemaValidation {
   private def createNDRCCase(
     caseNumber: Int,
     subStatus: CaseSubStatusNDRC,
-    caseNumberPrefix: Int = 0
+    caseNumberPrefix: Int = 0,
+    eoriPrefix: String = "GB"
   ): NDRCCaseDetails = {
-    val eori = f"GB$caseNumber%012d"
+    val eori = eoriPrefix + f"${caseNumber + caseNumberPrefix}%012d"
     NDRCCaseDetails(
       CDFPayCaseNumber = s"NDRC-${(caseNumber + caseNumberPrefix).toString}",
       declarationID = Some("MRN23014"),
@@ -557,9 +568,10 @@ trait TPI01Generation extends SchemaValidation {
   private def createSCTYCase(
     caseNumber: Int,
     subStatus: CaseSubStatusSCTY,
-    caseNumberPrefix: Int = 0
+    caseNumberPrefix: Int = 0,
+    eoriPrefix: String = "GB"
   ): SCTYCaseDetails = {
-    val eori = f"GB$caseNumber%012d"
+    val eori = eoriPrefix + f"$caseNumber%012d"
     val odd  = caseNumber % 2 == 1
     SCTYCaseDetails(
       CDFPayCaseNumber = s"SCTY-${(caseNumber + caseNumberPrefix).toString}",
