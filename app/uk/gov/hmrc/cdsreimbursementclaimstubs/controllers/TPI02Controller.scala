@@ -152,9 +152,52 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   Some("tpi02/tpi02-response-schema.json")
                 )
             }
+          case e if e.startsWith("NDRC-105") =>
+            val extractedIndex = e.replace("NDRC-105", "").toInt
+            tpi01SetCaseSubStatusNDRC(extractedIndex, isXiEori = true).CDFPayCase.NDRCCases
+              .find(_.CDFPayCaseNumber == e) match {
+              case Some(value) =>
+                val claimType = if (extractedIndex % 2 == 0) "C285" else "C&E1179"
+                tpi02Claim(
+                  claimType,
+                  NDRC,
+                  e,
+                  value.caseStatus,
+                  value.closedDate.isDefined,
+                  multiple = extractedIndex % 2 == 1,
+                  entryNumber = false
+                )
+              case None =>
+                parseResponse(
+                  "tpi02/response-200-no-claims-found-ndrc.json",
+                  Ok,
+                  Some("tpi02/tpi02-response-schema.json")
+                )
+            }
           case e if e.startsWith("SCTY-100") =>
             val extractedIndex = e.replace("SCTY-100", "")
             tpi01SetCaseSubStatusSCTY(extractedIndex.toInt).CDFPayCase.SCTYCases
+              .find(_.CDFPayCaseNumber == e) match {
+              case Some(value) =>
+                tpi02Claim(
+                  "SCTY",
+                  SCTY,
+                  e,
+                  value.caseStatus,
+                  value.closedDate.isDefined,
+                  multiple = true,
+                  entryNumber = false
+                )
+              case None =>
+                parseResponse(
+                  "tpi02/response-200-no-claims-found-scty.json",
+                  Ok,
+                  Some("tpi02/tpi02-response-schema.json")
+                )
+            }
+          case e if e.startsWith("SCTY-105") =>
+            val extractedIndex = e.replace("SCTY-105", "")
+            tpi01SetCaseSubStatusSCTY(extractedIndex.toInt, isXiEori = true).CDFPayCase.SCTYCases
               .find(_.CDFPayCaseNumber == e) match {
               case Some(value) =>
                 tpi02Claim(
