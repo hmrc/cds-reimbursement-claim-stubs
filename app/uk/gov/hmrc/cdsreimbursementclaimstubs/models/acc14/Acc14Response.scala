@@ -1399,7 +1399,7 @@ object Acc14Response {
          |					"postalCode": "E10 7PP",
          |					"countryCode": "GB",
          |         "telephone": "+4420723934397",
-         |         "emailAddress" : ""
+         |         "emailAddress" : "automation@gmail.com"
          |				}
          |			},
          |			"bankDetails": {
