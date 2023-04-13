@@ -167,7 +167,7 @@ trait TPI01Generation extends SchemaValidation {
     val ndrcCases     = Seq(createNDRCCase(
       caseNumber,
       caseSubStatus,
-      if (isXiEori) 50 else 0,
+      if (isXiEori) 500 else 0,
       if (isXiEori) "XI" else "GB"
     ))
 
@@ -196,7 +196,7 @@ trait TPI01Generation extends SchemaValidation {
     val sctyCases     = Seq(createSCTYCase(
       caseNumber,
       caseSubStatus,
-      if (isXiEori) 50 else 0,
+      if (isXiEori) 500 else 0,
       if (isXiEori) "XI" else "GB"
     ))
 
