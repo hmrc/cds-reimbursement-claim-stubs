@@ -152,8 +152,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   Some("tpi02/tpi02-response-schema.json")
                 )
             }
-          case e if e.startsWith("NDRC-150") =>
-            val extractedIndex = e.replace("NDRC-150", "").toInt
+          case e if e.startsWith("NDRC-15") =>
+            val extractedIndex = e.replace("NDRC-15", "").toInt
             tpi01SetCaseSubStatusNDRC(extractedIndex, isXiEori = true).CDFPayCase.NDRCCases
               .find(_.CDFPayCaseNumber == e) match {
               case Some(value) =>
@@ -195,8 +195,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   Some("tpi02/tpi02-response-schema.json")
                 )
             }
-          case e if e.startsWith("SCTY-150") =>
-            val extractedIndex = e.replace("SCTY-150", "")
+          case e if e.startsWith("SCTY-15") =>
+            val extractedIndex = e.replace("SCTY-15", "")
             tpi01SetCaseSubStatusSCTY(extractedIndex.toInt, isXiEori = true).CDFPayCase.SCTYCases
               .find(_.CDFPayCaseNumber == e) match {
               case Some(value) =>
