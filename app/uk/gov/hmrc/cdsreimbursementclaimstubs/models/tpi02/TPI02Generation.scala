@@ -96,9 +96,9 @@ trait TPI02Generation extends SchemaValidation {
       procedureCode = "10",
       caseStatus = caseStatus,
       goods = Some(Seq(Goods("12", Some("Digital media")), Goods("13", Some(" ")), Goods("14", Some("drum kit")))),
-      declarantEORI = if (caseNumber.takeRight(4).startsWith("15")) "XI12345678914" else "GB12345678912",
-      importerEORI = if (caseNumber.takeRight(4).startsWith("15")) Some("XI98765432102") else if (odd) None else Some("GB98765432101"),
-      claimantEORI = if (caseNumber.takeRight(4).startsWith("15")) Some("XI98745632102") else Some("GB98745632101"),
+      declarantEORI = if (isXiClaim(caseNumber)) "XI12345678914" else "GB12345678912",
+      importerEORI = if (isXiClaim(caseNumber)) Some("XI98765432102") else if (odd) None else Some("GB98765432101"),
+      claimantEORI = if (isXiClaim(caseNumber)) Some("XI98745632102") else Some("GB98745632101"),
       totalCustomsClaimAmount = Some("900000.00"),
       totalVATClaimAmount = Some("900000.00"),
       totalClaimAmount = Some("900000.00"),
@@ -139,9 +139,9 @@ trait TPI02Generation extends SchemaValidation {
         caseStatus,
         Some("A description of goods"),
         None,
-        if (caseNumber.takeRight(4).startsWith("15")) "XI12345678914" else "GB12345678912",
-        if (caseNumber.takeRight(4).startsWith("15")) "XI98765432102" else "GB98765432101",
-        if (caseNumber.takeRight(4).startsWith("15")) Some("XI98745632102") else Some("GB98745632101"),
+        if (isXiClaim(caseNumber)) "XI12345678914" else "GB12345678912",
+        if (isXiClaim(caseNumber)) "XI98765432102" else "GB98765432101",
+        if (isXiClaim(caseNumber)) Some("XI98745632102") else Some("GB98745632101"),
         Some("Duty Suspension"),
         "20200501",
         Some("Claimant name"),
@@ -152,4 +152,10 @@ trait TPI02Generation extends SchemaValidation {
         reimbursement = Some(Seq(Reimbursement("20200501", "6402.06", "A30", "P")))
       )
     )
+
+  def isXiClaim(caseNumber: String): Boolean = {
+    caseNumber
+      .split("-")
+      .lastOption.exists(x => x.startsWith("15") || x.startsWith("105"))
+  }
 }
