@@ -19,7 +19,24 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-case class Acc14Request(declarationId: String, reasonForSecurity: Option[String])
+case class Acc14Request(requestedDeclarationId: String, securityReason: Option[String]) {
+
+  val declarationId = requestedDeclarationId
+    .replace("XIDC", "AAAA")
+    .replace("XICD", "AAAA")
+    .replace("XID", "AAA")
+    .replace("XIC", "AAA")
+
+  def shouldReturnDeclarantXiEori: Boolean =
+    requestedDeclarationId.contains("XID") ||
+      requestedDeclarationId.contains("XIDC") ||
+      requestedDeclarationId.contains("XICD")
+
+  def shouldReturnConsigneeXiEori: Boolean =
+    requestedDeclarationId.contains("XIC") ||
+      requestedDeclarationId.contains("XIDC") ||
+      requestedDeclarationId.contains("XICD")
+}
 
 object Acc14Request {
   implicit val acc14RequestReads: Reads[Acc14Request] = (

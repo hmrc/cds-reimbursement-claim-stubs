@@ -54,7 +54,6 @@ class DeclarationController @Inject() (cc: ControllerComponents)
   def getDeclaration: Action[JsValue] = Action(parse.json) { implicit request: Request[JsValue] =>
     val validator = SchemaValidator(Some(Version4))
     val payload   = request.body
-    logger.info(Json.prettyPrint(payload))
     validator
       .validate(schemaToBeValidated, payload)
       .fold(
@@ -65,10 +64,10 @@ class DeclarationController @Inject() (cc: ControllerComponents)
         json =>
           (json \ "overpaymentDeclarationDisplayRequest" \ "requestDetail").asOpt[Acc14Request] match {
             case None =>
-              logger.warn("could not find declaration id")
+              logger.warn("could not find declaration id in the request")
               BadRequest
-            case Some(Acc14Request(declarationId, Some(reasonForSecurity))) =>
-              MockHttpResponse.getSecuritiesDeclaration(MRN(declarationId), reasonForSecurity) match {
+            case Some(request @ Acc14Request(_, Some(reasonForSecurity))) =>
+              MockHttpResponse.getSecuritiesDeclaration(MRN(request.declarationId), reasonForSecurity) match {
                 case Some(declarationResponse) =>
                   declarationResponse.response match {
                     case Left(value) =>
@@ -85,19 +84,28 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                           }
                       }
                     case Right(acc14Response) =>
+                      val response = Acc14Response
+                        .returnAcc14Response(acc14Response)
+                        .withMrn(request.requestedDeclarationId)
+                        .withDeclarantXiEori(request.shouldReturnDeclarantXiEori)
+                        .withConsigneeXiEori(request.shouldReturnConsigneeXiEori)
                       logger
-                        .info(s"acc-14 profile returned for $declarationId and $reasonForSecurity is : $acc14Response")
-                      Ok(Json.toJson(Acc14Response.returnAcc14Response(acc14Response).value))
+                        .info(
+                          s"acc-14 profile returned for ${request.requestedDeclarationId} and $reasonForSecurity is: $response"
+                        )
+                      Ok(response.value)
                   }
                 case None =>
                   logger
-                    .warn(s"could not find profile with MRN: $declarationId and reason for security $reasonForSecurity")
+                    .warn(
+                      s"could not find declaration with MRN: ${request.declarationId} and reason for security $reasonForSecurity"
+                    )
                   BadRequest
               }
-            case Some(Acc14Request(str, None)) =>
-              MockHttpResponse.getDeclarationHttpResponse(MRN(str)) match {
+            case Some(request) =>
+              MockHttpResponse.getDeclarationHttpResponse(MRN(request.declarationId)) match {
                 case Some(httpResponse) =>
-                  logger.info(s"declaration id received :$str")
+                  logger.info(s"declaration id received: ${request.requestedDeclarationId}")
                   httpResponse.declarationResponse.response match {
                     case Left(value) =>
                       value match {
@@ -113,14 +121,20 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                           }
                       }
                     case Right(acc14Response) =>
-                      logger.info(s"acc-14 profile returned is : $acc14Response")
-                      Ok(Json.toJson(Acc14Response.returnAcc14Response(acc14Response).value))
+                      val response = Acc14Response
+                        .returnAcc14Response(acc14Response)
+                        .withMrn(request.requestedDeclarationId)
+                        .withDeclarantXiEori(request.shouldReturnDeclarantXiEori)
+                        .withConsigneeXiEori(request.shouldReturnConsigneeXiEori)
+                      logger.info(s"acc-14 profile returned is: $response")
+                      Ok(response.value)
                   }
                 case None =>
-                  logger.warn(s"could not find profile with claimant eori: $str")
+                  logger.warn(s"could not find declaration with MRN: ${request.declarationId}")
                   BadRequest
               }
           }
       )
   }
+
 }

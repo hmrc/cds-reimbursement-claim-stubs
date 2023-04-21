@@ -16,14 +16,48 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14
 
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json._
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.TimeUtils
 
-final case class Acc14Response(
-  value: JsValue
-)
+final case class Acc14Response(value: JsValue) {
+
+  def withMrn(mrn: String): Acc14Response =
+    Acc14Response(value.transform(Acc14Response.transformMrn(mrn)).getOrElse(value))
+
+  def withDeclarantXiEori(enabled: Boolean): Acc14Response =
+    if (enabled)
+      Acc14Response(value.transform(Acc14Response.transformToDeclarantXiEori).getOrElse(value))
+    else this
+
+  def withConsigneeXiEori(enabled: Boolean): Acc14Response =
+    if (enabled)
+      Acc14Response(value.transform(Acc14Response.transformToConsigneeXiEori).getOrElse(value))
+    else this
+
+  override def toString(): String =
+    Json.prettyPrint(value)
+
+}
 
 object Acc14Response {
+
+  def transformMrn(mrn: String) =
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarationId").json
+      .update(
+        __.read[JsString].map(_ => JsString(mrn))
+      )
+
+  val transformToDeclarantXiEori =
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "declarantEORI").json
+      .update(
+        __.read[JsString].map(eori => JsString(eori.value.replace("GB", "XI")))
+      )
+
+  val transformToConsigneeXiEori =
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "consigneeEORI").json
+      .update(
+        __.read[JsString].map(eori => JsString(eori.value.replace("GB", "XI")))
+      )
 
   sealed trait Acc14ResponseType extends Product with Serializable
   object Acc14ResponseType {
