@@ -65,6 +65,8 @@ object Acc14Response {
     case class OK_PARTIAL_RESPONSE(declarationId: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String)
         extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_SUBSIDY(declarationId: String, importerEORI: String, declarantEORI: String)
+      extends Acc14ResponseType
     case class OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId: String, importerEORI: String, declarantEORI: String)
         extends Acc14ResponseType
     case class OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId: String, importerEORI: String, declarantEORI: String)
@@ -120,6 +122,8 @@ object Acc14Response {
       case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId) => getPartialAcc14Response(declarationId)
       case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14Response(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(declarationId, importerEORI, declarantEORI) =>
+        getFullAcc14ResponseWithSubsidyPayment(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14ResponseOtherDuties1(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId, importerEORI, declarantEORI) =>
@@ -1348,7 +1352,7 @@ object Acc14Response {
     )
   )
 
-  def getFullAcc14Response(declarationId: String, importerEORI: String, declarantEORI: String) = Acc14Response(
+  def getFullAcc14Response(declarationId: String, importerEORI: String, declarantEORI: String, paymentMethod: String = "001") = Acc14Response(
     Json.parse(
       s"""
          |{
@@ -1452,28 +1456,28 @@ object Acc14Response {
          |				{
          |					"taxType": "A80",
          |					"amount": "218.00",
-         |					"paymentMethod": "001",
+         |					"paymentMethod": "${paymentMethod}",
          |					"paymentReference": "GB201430007000",
          |          "cmaEligible": "0"
          |				},
          |				{
          |					"taxType": "A95",
          |					"amount": "211.00",
-         |					"paymentMethod": "001",
+         |					"paymentMethod": "${paymentMethod}",
          |					"paymentReference": "GB201430007000",
          |           "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A90",
          |					"amount": "228.00",
-         |					"paymentMethod": "001",
+         |					"paymentMethod": "${paymentMethod}",
          |					"paymentReference": "GB201430007000",
          |          "cmaEligible": "1"
          |				},
          |				{
          |					"taxType": "A85",
          |					"amount": "171.00",
-         |					"paymentMethod": "001",
+         |					"paymentMethod": "${paymentMethod}",
          |					"paymentReference": "GB201430007000",
          |          "cmaEligible": "1"
          |				}
@@ -1484,6 +1488,9 @@ object Acc14Response {
          |""".stripMargin
     )
   )
+
+  def getFullAcc14ResponseWithSubsidyPayment(declarationId: String, importerEORI: String, declarantEORI: String) =
+    getFullAcc14Response(declarationId, importerEORI, declarantEORI, "006")
 
   def getFullAcc14WithoutConsignee(declarationId: String, declarantEORI: String) = Acc14Response(
     Json.parse(
