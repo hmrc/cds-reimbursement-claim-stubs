@@ -41,10 +41,10 @@ case class Customer(eori: String, claims: List[Claim] = List()) extends TPI01Gen
 }
 
 object Customer {
-  val ALL_POSSIBLE_CASE_STATUS: Customer = Customer.withAllPossibleClaims("GB744638982000")
-  val NO_CLAIMS: Customer = Customer("GB744638982001")
+  val ALL_POSSIBLE_CASE_STATUS: Customer = Customer.withAllPossibleClaims("GB999999999001")
+  val NO_CLAIMS: Customer = Customer("GB999999999002")
   val NDRC_CASES_CLOSED_AND_IN_PROGRESS: Customer = Customer.withClaims(
-    "GB744638982002",
+    "GB999999999003",
     NDRC_CASE_WITH_CASE_STATUS_OPEN,
     NDRC_CASE_WITH_CASE_STATUS_CLOSED
   )
@@ -63,12 +63,6 @@ object Customer {
       SCTY_CASE_WITH_CASE_STATUS_CLOSED
     )
     Customer(eori, claims)
-  }
-
-  val withEveryCaseStatus: Customer = {
-    // Add multiple claims
-    //    Claim.generateClaim()
-    ???
   }
 
   def withClaims(eori: String, claims: Claim*): Customer = {
