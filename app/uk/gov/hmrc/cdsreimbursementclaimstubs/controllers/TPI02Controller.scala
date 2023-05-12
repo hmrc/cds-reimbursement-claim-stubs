@@ -23,7 +23,7 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi01.TPI01Generation
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi02.TPI02Generation
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.{NDRC, SCTY, SchemaValidation}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Claim
-import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.ClaimUtils.NO_CLAIMS_FOUND
+import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.ClaimUtils.{NO_CLAIMS_FOUND, NO_CLAIMS_FOUND_NDRC, NO_CLAIMS_FOUND_SCTY}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
@@ -65,7 +65,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                NO_CLAIMS_FOUND
+                NO_CLAIMS_FOUND_NDRC
             }
           case e if e.startsWith("SCTY-200") =>
             tpi01AllSubstatusClaims().CDFPayCase.SCTYCases.find(_.CDFPayCaseNumber == e) match {
@@ -80,7 +80,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                NO_CLAIMS_FOUND
+                NO_CLAIMS_FOUND_SCTY
             }
           case e if e.startsWith("NDRC-1200") =>
             tpi01Claims2(20).CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
@@ -98,11 +98,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse(
-                  "tpi02/response-200-no-claims-found-ndrc.json",
-                  Ok,
-                  Some("tpi02/tpi02-response-schema.json")
-                )
+                NO_CLAIMS_FOUND_NDRC
             }
           case e if e.startsWith("SCTY-1200") =>
             tpi01Claims2(20).CDFPayCase.SCTYCases.find(_.CDFPayCaseNumber == e) match {
@@ -117,11 +113,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse(
-                  "tpi02/response-200-no-claims-found-scty.json",
-                  Ok,
-                  Some("tpi02/tpi02-response-schema.json")
-                )
+                NO_CLAIMS_FOUND_SCTY
             }
           case e if e.startsWith("NDRC-100") =>
             val extractedIndex = e.replace("NDRC-100", "").toInt
@@ -139,11 +131,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse(
-                  "tpi02/response-200-no-claims-found-ndrc.json",
-                  Ok,
-                  Some("tpi02/tpi02-response-schema.json")
-                )
+                NO_CLAIMS_FOUND_NDRC
             }
           case e if e.startsWith("NDRC-15") || e.startsWith("NDRC-105") =>
             val extractedIndex = e.takeRight(2).toInt
@@ -161,11 +149,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse(
-                  "tpi02/response-200-no-claims-found-ndrc.json",
-                  Ok,
-                  Some("tpi02/tpi02-response-schema.json")
-                )
+                NO_CLAIMS_FOUND_NDRC
             }
           case e if e.startsWith("SCTY-100") =>
             val extractedIndex = e.replace("SCTY-100", "")
@@ -182,11 +166,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse(
-                  "tpi02/response-200-no-claims-found-scty.json",
-                  Ok,
-                  Some("tpi02/tpi02-response-schema.json")
-                )
+                NO_CLAIMS_FOUND_SCTY
             }
           case e if e.startsWith("SCTY-15")  || e.startsWith("SCTY-105") =>
             val extractedIndex =  e.takeRight(2).toInt
@@ -203,11 +183,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse(
-                  "tpi02/response-200-no-claims-found-scty.json",
-                  Ok,
-                  Some("tpi02/tpi02-response-schema.json")
-                )
+                NO_CLAIMS_FOUND_SCTY
             }
           case e if e.startsWith("NDRC") =>
             tpi01Claims(20).CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
@@ -225,11 +201,7 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse(
-                  "tpi02/response-200-no-claims-found-ndrc.json",
-                  Ok,
-                  Some("tpi02/tpi02-response-schema.json")
-                )
+                NO_CLAIMS_FOUND_NDRC
             }
           case e if e.startsWith("SCTY") =>
             tpi01Claims(20).CDFPayCase.SCTYCases.find(_.CDFPayCaseNumber == e) match {
@@ -244,15 +216,11 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   entryNumber = false
                 )
               case None =>
-                parseResponse(
-                  "tpi02/response-200-no-claims-found-scty.json",
-                  Ok,
-                  Some("tpi02/tpi02-response-schema.json")
-                )
+                NO_CLAIMS_FOUND_SCTY
             }
           case _ if Claim.exists(cdfPayCaseNumber) => Claim.find(cdfPayCaseNumber)
           case _ =>
-            parseResponse("tpi02/response-200-no-claims-found.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+            NO_CLAIMS_FOUND
         }
       }
     }

@@ -75,6 +75,10 @@ object ClaimUtils  extends SchemaValidation{
   val SCTY_RESOLVED_WITHDRAWN: String = "Resolved-Withdrawn"
 
 
+  val NO_CLAIMS_FOUND_SCTY: Result = parseResponse("tpi02/response-200-no-claims-found-scty.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+
+  val NO_CLAIMS_FOUND_NDRC: Result = parseResponse("tpi02/response-200-no-claims-found-ndrc.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+
   val NO_CLAIMS_FOUND: Result = parseResponse("tpi02/response-200-no-claims-found.json", Ok, Some("tpi02/tpi02-response-schema.json"))
 
   private def parseResponse(filename: String, status: Status, schema: Option[String] = None): Result = {
