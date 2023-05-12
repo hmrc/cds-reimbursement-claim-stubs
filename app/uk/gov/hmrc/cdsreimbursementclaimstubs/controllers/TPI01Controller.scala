@@ -21,6 +21,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.SchemaValidation
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi01.{PostClearanceCasesResponse, Response, ResponseCommon, TPI01Generation}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Customer
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
@@ -35,6 +36,7 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
     Action(parse.json) { implicit request =>
       validateRequest("tpi01/tpi01-request-schema.json") {
         val eori = (request.body \ "getPostClearanceCasesRequest" \ "requestDetail" \ "EORI").as[String]
+
         eori match {
           case "GB744638982000" =>
             val detail         = tpi01Claims2(20)
@@ -115,6 +117,8 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
               PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatusSCTY(caseSubStatusIndex.toInt, isXiEori = true)))
             )
             Ok(Json.toJson(response))
+          case _ if Customer.exists(eori) =>
+            Customer.find(eori)
           case _ =>
             parseResponse("tpi01/response-200-no-claims-found.json", Ok, Some("tpi01/tpi01-response-schema.json"))
         }
