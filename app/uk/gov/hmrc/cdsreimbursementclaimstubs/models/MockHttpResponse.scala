@@ -582,6 +582,12 @@ object MockHttpResponse {
         DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
       ),
       MockHttpResponse(
+        _ === MRN("10DDDDDDDDDDDDDDD1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD1","GB000000000000001","GB000000000000001")))
+      ),
+      MockHttpResponse(
         _ === MRN("10ABCDEFGHIJKLMNO0"),
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
