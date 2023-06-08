@@ -41,19 +41,19 @@ final case class Acc14Response(value: JsValue) {
 
 object Acc14Response {
 
-  def transformMrn(mrn: String) =
+  def transformMrn(mrn: String): Reads[JsObject] =
     (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarationId").json
       .update(
         __.read[JsString].map(_ => JsString(mrn))
       )
 
-  val transformToDeclarantXiEori =
+  val transformToDeclarantXiEori: Reads[JsObject] =
     (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "declarantEORI").json
       .update(
         __.read[JsString].map(eori => JsString(eori.value.replace("GB", "XI")))
       )
 
-  val transformToConsigneeXiEori =
+  val transformToConsigneeXiEori: Reads[JsObject] =
     (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "consigneeEORI").json
       .update(
         __.read[JsString].map(eori => JsString(eori.value.replace("GB", "XI")))

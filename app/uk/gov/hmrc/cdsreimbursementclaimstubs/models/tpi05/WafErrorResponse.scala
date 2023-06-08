@@ -20,7 +20,7 @@ final case class WafErrorResponse(value: String) extends AnyVal
 
 object WafErrorResponse {
 
-  val FORBIDDEN = WafErrorResponse(
+  val FORBIDDEN: WafErrorResponse = WafErrorResponse(
     """
       |<html>
       |    <head>

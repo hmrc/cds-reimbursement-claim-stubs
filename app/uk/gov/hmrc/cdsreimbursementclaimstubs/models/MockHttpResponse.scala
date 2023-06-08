@@ -17,9 +17,9 @@
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models
 
 import cats.syntax.eq._
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14ErrorResponse.Acc14ErrorResponseType
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14Response.Acc14ResponseType
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.DeclarationResponse
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.responses.ErrorResponse
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids.{EORI, MRN}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.Tpi05ErrorResponse.Tpi05ErrorResponseType
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.Tpi05Response.Tpi05ResponseType
@@ -697,25 +697,25 @@ object MockHttpResponse {
         _ === MRN("41ABCDEFGHIJKLMNO1"),
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Left(Right(Acc14ErrorResponseType.BAD_REQUEST_MISSING_DECLARATION)))
+        DeclarationResponse(Left(Right(ErrorResponse.MAKE_BAD_REQUEST_MISSING_DECLARATION_RESPONSE)))
       ),
       MockHttpResponse(
         _ === MRN("41ABCDEFGHIJKLMNO2"),
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Left(Right(Acc14ErrorResponseType.NO_SECURITY_DEPOSITS)))
+        DeclarationResponse(Left(Right(ErrorResponse.MAKE_NO_SECURITY_DEPOSIT_RESPONSE)))
       ),
       MockHttpResponse(
         _ === MRN("40ABCDEFGHIJKLMNO3"),
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Left(Right(Acc14ErrorResponseType.HTTP_METHOD_NOT_ALLOWED)))
+        DeclarationResponse(Left(Right(ErrorResponse.MAKE_HTTP_METHOD_NOT_ALLOWED_RESPONSE)))
       ),
       MockHttpResponse(
         _ === MRN("50ABCDEFGHIJKLMNO1"),
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Left(Right(Acc14ErrorResponseType.TIME_OUT)))
+        DeclarationResponse(Left(Right(ErrorResponse.MAKE_TIME_OUT_RESPONSE)))
       )
     )
 
@@ -1110,12 +1110,12 @@ object MockHttpResponse {
           )
         )
       case (MRN("41ABCDEFGHIJKLMNO2"), _) =>
-        Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.NO_SECURITY_DEPOSITS))))
+        Some(DeclarationResponse(Left(Right(ErrorResponse.MAKE_NO_SECURITY_DEPOSIT_RESPONSE))))
       case (MRN("41ABCDEFGHIJKLMNO1"), _) =>
-        Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.BAD_REQUEST_MISSING_DECLARATION))))
-      case (MRN("50ABCDEFGHIJKLMNO1"), _) => Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.TIME_OUT))))
+        Some(DeclarationResponse(Left(Right(ErrorResponse.MAKE_BAD_REQUEST_MISSING_DECLARATION_RESPONSE))))
+      case (MRN("50ABCDEFGHIJKLMNO1"), _) => Some(DeclarationResponse(Left(Right(ErrorResponse.MAKE_TIME_OUT_RESPONSE))))
       case (MRN("40ABCDEFGHIJKLMNO3"), _) =>
-        Some(DeclarationResponse(Left(Right(Acc14ErrorResponseType.HTTP_METHOD_NOT_ALLOWED))))
+        Some(DeclarationResponse(Left(Right(ErrorResponse.MAKE_HTTP_METHOD_NOT_ALLOWED_RESPONSE))))
       case (MRN("60ABCDEFGHIJKLMNO1"), _) =>
         Some(
           DeclarationResponse(
