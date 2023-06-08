@@ -24,7 +24,7 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.WafErrorResponse
 
 object DeclarationHttpResponse {
   def getResponse(mrn: MRN, reasonForSecurity: String = "IPR"): Option[DeclarationResponse] = {
-    val response: DeclarationResponse = mrn.value.substring(3, 4) match {
+    val response: DeclarationResponse = mrn.value.substring(3, 5) match {
       case "MR" => DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
       case "PR" => DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE(mrn.value)))
       case "FR" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE(mrn.value, "GB000000000000001", "GB000000000000001")))
