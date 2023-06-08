@@ -16,10 +16,10 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14
 
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14ErrorResponse.Acc14ErrorResponseType
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14Response.Acc14ResponseType
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.responses.ErrorResponse
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.WafErrorResponse
 
 final case class DeclarationResponse(
-  response: Either[Either[WafErrorResponse, Acc14ErrorResponseType], Acc14ResponseType]
+  response: Either[Either[WafErrorResponse, ErrorResponse], Acc14ResponseType]
 )
