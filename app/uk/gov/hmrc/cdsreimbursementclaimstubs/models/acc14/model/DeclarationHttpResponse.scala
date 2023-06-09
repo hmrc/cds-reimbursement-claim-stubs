@@ -26,31 +26,30 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.WafErrorResponse
 
 object DeclarationHttpResponse {
   def getResponse(mrn: MRN, reasonForSecurity: String = "IPR"): Option[DeclarationResponse] = {
-    val importerEori: String = s"""GB0000000000000${mrn.value.substring(16, 18)}"""
-    val exporterEori: String = s"""GB1000000000000${mrn.value.substring(16, 18)}"""
+    val declarantEori: String = s"""GB0000000000000${mrn.value.substring(16, 18)}"""
 
     val reasonForSecuritySelected = ReasonForSecurity.values.find(reason => reason === mrn.value.substring(5, 8)).getOrElse(reasonForSecurity)
 
     val response: DeclarationResponse = mrn.value.substring(3, 5) match {
       case "MR" => DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
-      case "PR" => DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE(mrn.value, importerEori)))
-      case "FR" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE(mrn.value, importerEori, exporterEori)))
-      case "FS" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(mrn.value, importerEori, exporterEori)))
-      case "O1" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(mrn.value, importerEori, exporterEori)))
-      case "O2" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(mrn.value, importerEori, exporterEori)))
-      case "O3" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_3(mrn.value, importerEori, exporterEori)))
-      case "OV" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_VAT(mrn.value, importerEori, exporterEori)))
-      case "FV" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_VAT(mrn.value, importerEori, exporterEori)))
-      case "AT" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(mrn.value, importerEori, exporterEori)))
+      case "PR" => DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE(mrn.value, declarantEori)))
+      case "FR" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE(mrn.value, declarantEori, declarantEori)))
+      case "FS" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(mrn.value, declarantEori, declarantEori)))
+      case "O1" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(mrn.value, declarantEori, declarantEori)))
+      case "O2" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(mrn.value, declarantEori, declarantEori)))
+      case "O3" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_3(mrn.value, declarantEori, declarantEori)))
+      case "OV" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_VAT(mrn.value, declarantEori, declarantEori)))
+      case "FV" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_VAT(mrn.value, declarantEori, declarantEori)))
+      case "AT" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES(mrn.value, declarantEori, declarantEori)))
       case "ME" => DeclarationResponse(Right(Acc14ResponseType.OK_WITH_MISMATCH_ON_EORI(mrn.value)))
-      case "NI" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_NORTHERN_IRELAND(mrn.value, importerEori, exporterEori)))
-      case "ND" => DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS(mrn.value, importerEori, exporterEori)))
-      case "NC" => DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_CONSIGNEE(mrn.value, importerEori)))
-      case "NB" => DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_BANK_DETAILS(mrn.value, reasonForSecuritySelected, importerEori, exporterEori)))
-      case "SR" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecuritySelected, importerEori, exporterEori)))
-      case "CS" => DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(mrn.value, reasonForSecuritySelected, importerEori, exporterEori)))
-      case "NS" => DeclarationResponse(Right(Acc14ResponseType.OK_NO_CONSIGNEE_RESPONSE_SECURITIES(mrn.value, reasonForSecuritySelected, importerEori)))
-      case "AS" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(mrn.value, reasonForSecuritySelected, importerEori, exporterEori)))
+      case "NI" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_NORTHERN_IRELAND(mrn.value, declarantEori, declarantEori)))
+      case "ND" => DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS(mrn.value, declarantEori, declarantEori)))
+      case "NC" => DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_CONSIGNEE(mrn.value, declarantEori)))
+      case "NB" => DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_BANK_DETAILS(mrn.value, reasonForSecuritySelected, declarantEori, declarantEori)))
+      case "SR" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, reasonForSecuritySelected, declarantEori, declarantEori)))
+      case "CS" => DeclarationResponse(Right(Acc14ResponseType.OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(mrn.value, reasonForSecuritySelected, declarantEori, declarantEori)))
+      case "NS" => DeclarationResponse(Right(Acc14ResponseType.OK_NO_CONSIGNEE_RESPONSE_SECURITIES(mrn.value, reasonForSecuritySelected, declarantEori)))
+      case "AS" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_ADDITIONAL_TAX_CODES_SECURITIES(mrn.value, reasonForSecuritySelected, declarantEori, declarantEori)))
       case "WF" => DeclarationResponse(Left(Left(WafErrorResponse.FORBIDDEN)))
       case "EB" => DeclarationResponse(Left(Right(ErrorResponse.MAKE_BAD_REQUEST_MISSING_DECLARATION_RESPONSE)))
       case "ES" => DeclarationResponse(Left(Right(ErrorResponse.MAKE_NO_SECURITY_DEPOSIT_RESPONSE)))
