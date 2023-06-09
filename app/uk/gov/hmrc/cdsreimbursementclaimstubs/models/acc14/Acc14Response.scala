@@ -62,7 +62,7 @@ object Acc14Response {
   sealed trait Acc14ResponseType extends Product with Serializable
   object Acc14ResponseType {
     case object OK_MINIMUM_RESPONSE extends Acc14ResponseType
-    case class OK_PARTIAL_RESPONSE(declarationId: String) extends Acc14ResponseType
+    case class OK_PARTIAL_RESPONSE(declarationId: String, declarantEORI: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String)
         extends Acc14ResponseType
     case class OK_FULL_RESPONSE_SUBSIDY(
@@ -123,7 +123,7 @@ object Acc14Response {
   def returnAcc14Response(acc14ResponseType: Acc14ResponseType): Acc14Response =
     acc14ResponseType match {
       case Acc14ResponseType.OK_MINIMUM_RESPONSE => getMinimumAcc14Response
-      case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId) => getPartialAcc14Response(declarationId)
+      case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId, declarantEORI) => getPartialAcc14Response(declarationId, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14Response(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(declarationId, importerEORI, declarantEORI, paymentMethods) =>
@@ -200,7 +200,7 @@ object Acc14Response {
     )
   )
 
-  def getPartialAcc14Response(declarationId: String) = Acc14Response(
+  def getPartialAcc14Response(declarationId: String, declarantEORI: String) = Acc14Response(
     Json.parse(
       s"""
          |{
@@ -218,7 +218,7 @@ object Acc14Response {
          |            "procedureCode": "71",
          |            "btaSource": "DMS",
          |            "declarantDetails": {
-         |                "declarantEORI": "GB3745678934000",
+         |                "declarantEORI": "$declarantEORI",
          |                "legalName": "Fred Bloggs and Co Ltd",
          |                "establishmentAddress": {
          |                    "addressLine1": "10 Rillington Place",

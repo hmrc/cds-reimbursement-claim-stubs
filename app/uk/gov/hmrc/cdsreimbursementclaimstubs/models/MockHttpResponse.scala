@@ -536,25 +536,25 @@ object MockHttpResponse {
         _ === MRN("10BBBBBBBBBBBBBBB1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("10BBBBBBBBBBBBBBB1")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("10BBBBBBBBBBBBBBB1", "GB000000000000091")))
       ),
       MockHttpResponse(
         _ === MRN("20BBBBBBBBBBBBBBB1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("20BBBBBBBBBBBBBBB1")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("20BBBBBBBBBBBBBBB1", "GB000000000000091")))
       ),
       MockHttpResponse(
         _ === MRN("10BBBBBBBBBBBBBBB2"),
         _ === EORI("GB000000000000002"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("10BBBBBBBBBBBBBBB2")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("10BBBBBBBBBBBBBBB2", "GB000000000000091")))
       ),
       MockHttpResponse(
         _ === MRN("20BBBBBBBBBBBBBBB2"),
         _ === EORI("GB000000000000002"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("20BBBBBBBBBBBBBBB2")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("20BBBBBBBBBBBBBBB2", "GB000000000000091")))
       ),
       //TPI05 OK_RESPONSE, ACC14 OK_MINIMUM_RESPONSE
       MockHttpResponse(
@@ -652,7 +652,7 @@ object MockHttpResponse {
         _ === MRN("10ABCDEFGHIJKLMNO1"),
         _ === EORI("AA12345678901234Y"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("10ABCDEFGHIJKLMNO1")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("10ABCDEFGHIJKLMNO1", "GB000000000000091")))
       ),
       MockHttpResponse(
         _ === MRN("20ABCDEFGHIJKLMNO1"),
@@ -722,7 +722,7 @@ object MockHttpResponse {
         _ === MRN("30ABCDEFGHIJKLMNO1"),
         _ === EORI("FB12345678901234U"),
         SubmitClaimResponse(Left(Right(Tpi05ErrorResponseType.HTTP_METHOD_NOT_ALLOWED))),
-        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("30ABCDEFGHIJKLMNO1")))
+        DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE("30ABCDEFGHIJKLMNO1", "GB000000000000091")))
       ),
       MockHttpResponse(
         _ === MRN("30ABCDEFGHIJKLMNO1"),
