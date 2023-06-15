@@ -26,15 +26,23 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.WafErrorResponse
 
 object DeclarationHttpResponse {
   def getResponse(mrn: MRN, reasonForSecurity: String = "IPR"): Option[DeclarationResponse] = {
+    // The last two characters determine the two ending characters of the Eori, it must match the below Eori
     val declarantEori: String = s"""GB0000000000000${mrn.value.substring(16, 18)}"""
 
+    // 6th, 7th and 8th characters are reserved for the reason of security
     // It seems that the default is not "IPR" but rather what the user picks in the journey, maybe some other logic is affecting this.
     val reasonForSecuritySelected = ReasonForSecurity.values.find(reason => reason === mrn.value.substring(5, 8)).getOrElse(reasonForSecurity)
 
+    // 9th character determines the payment method 1 == 001, 2 == 002......
+    // TODO: We also discussed that letters such as S would be 001 + 006 and other letters can be used to make combinations of payment methods
+    val paymentMethod = ReimbursementMethod.values.find(method => method.code.substring(2, 3) === mrn.value.substring(8, 9)).map(method => method.code).getOrElse("001")
+    println(paymentMethod)
+
+    // The 4th, 5th characters are reserved for choosing the type of response sent back
     val response: DeclarationResponse = mrn.value.substring(3, 5) match {
       case "MR" => DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
       case "PR" => DeclarationResponse(Right(Acc14ResponseType.OK_PARTIAL_RESPONSE(mrn.value, declarantEori, reasonForSecuritySelected)))
-      case "FR" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE(mrn.value, declarantEori, declarantEori)))
+      case "FR" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE(mrn.value, declarantEori, declarantEori, paymentMethod)))
       case "FS" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(mrn.value, declarantEori, declarantEori)))
       case "O1" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(mrn.value, declarantEori, declarantEori)))
       case "O2" => DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(mrn.value, declarantEori, declarantEori)))
