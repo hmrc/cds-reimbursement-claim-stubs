@@ -2380,7 +2380,7 @@ object Acc14Response {
          |			"acceptanceDate": "2021-02-12",
          |			"procedureCode": "2",
          |			"declarantDetails": {
-         |				"declarantEORI": "GB03I52858027018",
+         |				"declarantEORI": "GB03152858027018",
          |				"legalName": "Starbucks LTD",
          |				"establishmentAddress": {
          |					"addressLine1": "16 Buckingham Road",
@@ -2397,7 +2397,7 @@ object Acc14Response {
          |				}
          |			},
          |			"consigneeDetails": {
-         |				"consigneeEORI": "GB03I52858027018",
+         |				"consigneeEORI": "GB03152858027018",
          |				"legalName": "Expertise LTD",
          |				"establishmentAddress": {
          |					"addressLine1": "1 Cross Road",
