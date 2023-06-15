@@ -63,7 +63,7 @@ object Acc14Response {
   object Acc14ResponseType {
     case object OK_MINIMUM_RESPONSE extends Acc14ResponseType
     case class OK_PARTIAL_RESPONSE(declarationId: String, declarantEORI: String, reasonForSecurity: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String)
+    case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String, paymentMethod: String = "001")
         extends Acc14ResponseType
     case class OK_FULL_RESPONSE_SUBSIDY(declarationId: String, importerEORI: String, declarantEORI: String)
       extends Acc14ResponseType
@@ -120,8 +120,8 @@ object Acc14Response {
     acc14ResponseType match {
       case Acc14ResponseType.OK_MINIMUM_RESPONSE => getMinimumAcc14Response
       case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId, declarantEORI, reasonForSecurity) => getPartialAcc14Response(declarationId, declarantEORI, reasonForSecurity)
-      case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) =>
-        getFullAcc14Response(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI, paymentMethod) =>
+        getFullAcc14Response(declarationId, importerEORI, declarantEORI, paymentMethod)
       case Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14ResponseWithSubsidyPayment(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId, importerEORI, declarantEORI) =>
