@@ -72,8 +72,18 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                   declarationResponse.response match {
                     case Left(value) =>
                       value match {
-                        case Left(wafErrorResponse) => Forbidden(Json.toJson(wafErrorResponse.value))
-                        case Right(errorResponse: ErrorResponse) => Status(errorResponse.status)(Json.toJson(errorResponse.declarationErrorResponse))
+                        case Left(wafErrorResponse) =>
+                          logger
+                            .info(
+                              s"acc-14 profile returned for ${request.requestedDeclarationId} and $reasonForSecurity is: $wafErrorResponse"
+                            )
+                          Forbidden(Json.toJson(wafErrorResponse.value))
+                        case Right(errorResponse: ErrorResponse) =>
+                          logger
+                            .info(
+                              s"acc-14 profile returned for ${request.requestedDeclarationId} and $reasonForSecurity is: $errorResponse"
+                            )
+                          Status(errorResponse.status)(Json.toJson(errorResponse.declarationErrorResponse))
                       }
                     case Right(acc14Response) =>
                       val response = Acc14Response
@@ -101,8 +111,17 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                   httpResponse.response match {
                     case Left(value) =>
                       value match {
-                        case Left(wafErrorResponse) => Forbidden(Json.toJson(wafErrorResponse.value))
+                        case Left(wafErrorResponse) =>
+                          logger
+                            .info(
+                              s"acc-14 profile returned for ${request.requestedDeclarationId} is: $wafErrorResponse"
+                            )
+                          Forbidden(Json.toJson(wafErrorResponse.value))
                         case Right(errorResponse: ErrorResponse) =>
+                          logger
+                            .info(
+                              s"acc-14 profile returned for ${request.requestedDeclarationId} is: $errorResponse"
+                            )
                           Status(errorResponse.status)(Json.toJson(errorResponse.declarationErrorResponse))
                       }
                     case Right(acc14Response) =>
@@ -111,7 +130,7 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                         .withMrn(request.requestedDeclarationId)
                         .withDeclarantXiEori(request.shouldReturnDeclarantXiEori)
                         .withConsigneeXiEori(request.shouldReturnConsigneeXiEori)
-                      logger.info(s"acc-14 profile returned is: $response")
+                      logger.info(s"acc-14 profile returned for ${request.requestedDeclarationId} is: $response")
                       Ok(response.value)
                   }
                 case None =>

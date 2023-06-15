@@ -28,6 +28,7 @@ object DeclarationHttpResponse {
   def getResponse(mrn: MRN, reasonForSecurity: String = "IPR"): Option[DeclarationResponse] = {
     val declarantEori: String = s"""GB0000000000000${mrn.value.substring(16, 18)}"""
 
+    // It seems that the default is not "IPR" but rather what the user picks in the journey, maybe some other logic is affecting this.
     val reasonForSecuritySelected = ReasonForSecurity.values.find(reason => reason === mrn.value.substring(5, 8)).getOrElse(reasonForSecurity)
 
     val response: DeclarationResponse = mrn.value.substring(3, 5) match {
