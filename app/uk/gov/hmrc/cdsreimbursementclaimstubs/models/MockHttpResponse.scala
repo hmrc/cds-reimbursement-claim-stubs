@@ -585,7 +585,60 @@ object MockHttpResponse {
         _ === MRN("10DDDDDDDDDDDDDDD1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(Right(Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD1","GB000000000000001","GB000000000000001")))
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD1", "GB000000000000001", "GB000000000000001", Seq("006"))
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10DDDDDDDDDDDDDDD2"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_SUBSIDY(
+                "10DDDDDDDDDDDDDDD2",
+                "GB000000000000001",
+                "GB000000000000001",
+                Seq("006", "001")
+              )
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10DDDDDDDDDDDDDDD3"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_SUBSIDY(
+                "10DDDDDDDDDDDDDDD3",
+                "GB000000000000001",
+                "GB000000000000001",
+                Seq("006", "003")
+              )
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10DDDDDDDDDDDDDDD4"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_SUBSIDY(
+                "10DDDDDDDDDDDDDDD4",
+                "GB000000000000001",
+                "GB000000000000001",
+                Seq("006", "001", "002", "003")
+              )
+          )
+        )
       ),
       MockHttpResponse(
         _ === MRN("10ABCDEFGHIJKLMNO0"),
