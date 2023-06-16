@@ -181,7 +181,11 @@ class DeclarationControllerSpec extends AnyWordSpec with Matchers with TypeCheck
     "10XICAAAAAAAAAAAA9",
     "10XICAAAAAAAAAAAB9",
     "10XICAAAAAAAAAAAC9",
-    "10XICAAAAAAAAAAAD9"
+    "10XICAAAAAAAAAAAD9",
+    "10DDDDDDDDDDDDDDD1",
+    "10DDDDDDDDDDDDDDD2",
+    "10DDDDDDDDDDDDDDD3",
+    "10DDDDDDDDDDDDDDD4"
   )
 
   val ndrcFailingMRNs = Seq(
