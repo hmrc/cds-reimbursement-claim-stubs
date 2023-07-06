@@ -641,6 +641,61 @@ object MockHttpResponse {
         )
       ),
       MockHttpResponse(
+        _ === MRN("10DDDDDDDDDDDDDDD5"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD5", "GB000000000000001", "GB000000000000001", Seq("006"))
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10DDDDDDDDDDDDDDD6"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD6", "GB000000000000001", "GB000000000000001", Seq("006"))
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10DDDDDDDDDDDDDDD7"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD7", "GB000000000000001", "GB000000000000001", Seq("006"))
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10DDDDDDDDDDDDDDD8"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD8", "GB000000000000001", "GB000000000000001", Seq("006"))
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10DDDDDDDDDDDDDDD9"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD9", "GB000000000000001", "GB000000000000001", Seq("006"))
+          )
+        )
+      ),
+      MockHttpResponse(
         _ === MRN("10ABCDEFGHIJKLMNO0"),
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
