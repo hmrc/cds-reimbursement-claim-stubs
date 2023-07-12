@@ -26,7 +26,9 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.WafErrorResponse
 
 object DeclarationHttpResponse {
   def getResponse(mrn: MRN, reasonForSecurity: String = "IPR"): Option[DeclarationResponse] = {
-    val declarantEori: String = s"""GB0000000000000${mrn.value.substring(16, 18)}"""
+    val lastTwoDigitsOfMrn: Int = ${mrn.value.substring(16, 18)}.toInt
+    val GBorXI: String = if (lastTwoDigitsOfMrn < 50) "GB" else "XI"
+    val declarantEori: String = s"""${GBorXI}0000000000000${lastTwoDigitsOfMrn}"""
 
     // It seems that the default is not "IPR" but rather what the user picks in the journey, maybe some other logic is affecting this.
     val reasonForSecuritySelected =
