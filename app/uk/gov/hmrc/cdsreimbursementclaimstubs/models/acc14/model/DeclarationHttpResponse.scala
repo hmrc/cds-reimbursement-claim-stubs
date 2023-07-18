@@ -24,9 +24,12 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.responses.ErrorRespon
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids.MRN
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.WafErrorResponse
 
+import scala.util.Try
+
 object DeclarationHttpResponse {
   def getResponse(mrn: MRN, reasonForSecurity: String = "IPR"): Option[DeclarationResponse] = {
-    val lastTwoDigitsOfMrn: Int = ${mrn.value.substring(16, 18)}.toInt
+    val lastTwoDigitsOfMrn: Int = Try(mrn.value.substring(16, 18).toInt).getOrElse(1)
+
     val GBorXI: String = if (lastTwoDigitsOfMrn < 50) "GB" else "XI"
     val declarantEori: String = s"""${GBorXI}0000000000000${lastTwoDigitsOfMrn}"""
 
