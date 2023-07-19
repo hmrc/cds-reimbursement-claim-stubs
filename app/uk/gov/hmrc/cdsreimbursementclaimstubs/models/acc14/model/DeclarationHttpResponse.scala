@@ -28,10 +28,8 @@ import scala.util.Try
 
 object DeclarationHttpResponse {
   def getResponse(mrn: MRN, reasonForSecurity: String = "IPR"): Option[DeclarationResponse] = {
-    val lastTwoDigitsOfMrn: Int = Try(mrn.value.substring(16, 18).toInt).getOrElse(1)
-
-    val GBorXI: String = if (lastTwoDigitsOfMrn < 50) "GB" else "XI"
-    val declarantEori: String = s"""${GBorXI}0000000000000${lastTwoDigitsOfMrn}"""
+    val GBorXI: String = Try(mrn.value.substring(16, 18).toInt).fold(_ => "GB", number => if(number < 50) "GB" else "XI")
+    val declarantEori: String = s"""${GBorXI}0000000000000${mrn.value.substring(16, 18)}"""
 
     // It seems that the default is not "IPR" but rather what the user picks in the journey, maybe some other logic is affecting this.
     val reasonForSecuritySelected =
