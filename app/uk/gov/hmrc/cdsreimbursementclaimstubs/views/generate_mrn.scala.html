@@ -1,0 +1,121 @@
+@*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import play.api.i18n.Messages
+@import play.api.mvc.Call
+@import play.api.data.Form
+@import play.twirl.api.Html
+@import play.api.mvc.Request
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcLayout
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcHeader
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSelect
+@import uk.gov.hmrc.govukfrontend.views.html.components.GovukHint
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.select.Select
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.html.components.FullWidthPageLayout
+@import uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.routes
+
+@this(head: Head, hmrcLayout: HmrcLayout, fullWidthPageLayout: FullWidthPageLayout, hmrcHeader: HmrcHeader, govukSelect: GovukSelect, govukHint: GovukHint)
+
+@(responseTypeSelect: Select, eoriSelect: Select, rfsSelect: Select)(implicit request: Request[_], messages: Messages)
+@hmrcLayout(pageTitle = Some("Generate MRN"), additionalHeadBlock = Some(head())) {
+
+
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Generate MRN</h1>
+  <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Response Type</h2>
+  @govukHint(Hint(content = Text("Select the type of response your expect back - Character 4th and 5th")))
+  @govukSelect(responseTypeSelect)
+
+  <h2 class="govuk-heading-l govuk-!-margin-bottom-2">EORI</h2>
+  @govukHint(Hint(content = Text("The last two characters of the MRN determine the EORI produced, if it is 50 or above then it is XI Eori - Character 17th and 18th")))
+  <div style="display: flex; align-items: baseline;">
+   @govukSelect(eoriSelect)
+   <p class="govuk-body" id="eori-show">GB00000000000000</p>
+  </div>
+
+  <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Reason For Security</h2>
+  @govukHint(Hint(content = Text("If the reason for security can be inserted then we add it to the response - Character 6th, 7th and 8th")))
+  @govukSelect(rfsSelect)
+
+  <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Output MRN</h2>
+  @govukHint(Hint(content = Text("MRN that you will need to use to get the expected output")))
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-6" id="mrn-output">00AMRACSAAAAAAAA00</h1>
+
+  <button class="govuk-button" onclick="handleSubmit('@routes.DeclarationController.getDeclaration')">Get Response</button>
+
+<pre>
+   <code class="language-json" id="code-area">
+   {
+     message: "This will change once you click submit..."
+   }
+   </code>
+  </pre>
+
+<style>
+ .select-margin {
+  margin-right: 5px;
+ }
+</style>
+<script>
+ var mrn = ""
+ handleChange()
+
+ function handleChange() {
+  const eoriValue = document.getElementById("eori-picker").value
+  document.getElementById("eori-show").innerHTML = `${parseInt(eoriValue) < 50 ? "GB" : "XI"}000000000000${eoriValue}`
+
+  const responseType = document.getElementById("response-type-selector").value
+
+  const reasonForSecurity = document.getElementById("rfs-selector").value
+
+  const mrnOutput = `00A${responseType}${reasonForSecurity}AAAAAAAA${eoriValue}`
+  document.getElementById("mrn-output").innerHTML = mrnOutput
+  mrn = mrnOutput
+ }
+
+ function handleSubmit(url) {
+   const body = {
+    "overpaymentDeclarationDisplayRequest": {
+        "requestCommon": {
+            "originatingSystem": "MDTP",
+            "receiptDate": "2023-04-21T07:35:39Z",
+            "acknowledgementReference": "9474bdf1df434462b1cd911ddf64a3d5"
+        },
+        "requestDetail": {
+            "declarationId": `${mrn}`
+        }
+    }
+   };
+
+   const data = {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+    "Content-type": "application/json; charset=UTF-8"
+    }
+   }
+
+   fetch(url, data)
+    .then(res => res.json())
+    .then(output => {
+      document.getElementById("code-area").innerHTML = JSON.stringify(output, null, 4)
+    })
+ }
+
+</script>
+
+}

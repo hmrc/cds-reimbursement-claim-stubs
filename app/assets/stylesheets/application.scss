@@ -1,0 +1,92 @@
+$govuk-assets-path: "/assets/lib/govuk-frontend/govuk/assets/";
+$hmrc-assets-path: "/assets/lib/hmrc-frontend/hmrc/";
+
+@import "lib/govuk-frontend/govuk/all";
+@import "lib/hmrc-frontend/hmrc/all";
+@import "language-selection";
+
+@media print {
+    .govuk-panel--confirmation {
+        color: black;
+        background: transparent;
+        h1 {
+            font-weight: bold;
+        }
+    }
+
+    .govuk-phase-banner, .lang, .govuk-footer{
+        display: none;
+    }
+}
+
+
+// Custom CDS styles
+
+@media only screen and (min-width: 1024px) {
+
+    .govuk-summary-list__key {
+        width:40%;
+    }
+
+    .cds-multi-action .govuk-summary-list__key {
+        width:20%;
+    }
+
+}
+
+.cds-no-border {
+    border:none;
+}
+
+.cds-wrap-content {
+
+    @media only screen and (max-width: 600px) {
+        word-wrap:break-word;
+        overflow-wrap:break-word;
+        -webkit-hyphens:auto;
+        -ms-hyphens:auto;
+        -moz-hyphens:auto;
+        hyphens:auto;
+    }
+
+    &--forced {
+        word-break:break-word;
+    }
+
+}
+
+.cds-combined-checkbox-groups > .govuk-form-group {
+    margin-bottom:0;
+    padding-bottom:30px;
+
+    &:last-of-type {
+        margin-bottom:30px;
+        padding-bottom:0;
+    }
+}
+
+
+// Fix for automated A11y test contrast issue
+
+.govuk-details {
+    background-color:#fff;
+    
+    .govuk-details__summary-text {
+        background-color:inherit;
+
+        &:focus * {
+            background-color: inherit;
+        }
+    }
+}
+
+
+// Fix for non-JS back link
+
+.govuk-back-link {
+    display:none;
+}
+
+.js-enabled .govuk-back-link {
+    display:inline-block;
+}

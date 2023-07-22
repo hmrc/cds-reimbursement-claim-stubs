@@ -16,7 +16,7 @@ lazy val microservice = Project(appName, file("."))
     addCompilerPlugin(scalafixSemanticdb),
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test
   )
-  .settings(routesImport := Seq.empty)
+  .settings(routesImport := Seq("_root_.controllers.Assets.Asset"))
   .settings(TwirlKeys.templateImports := Seq.empty)
   .settings(
     scalacOptions ++= Seq(
@@ -25,7 +25,8 @@ lazy val microservice = Project(appName, file("."))
     ),
     Test / scalacOptions --= Seq("-Ywarn-value-discard")
   )
-  .settings(scalaVersion := "2.12.15")
+  .settings(Assets / pipelineStages := Seq(uglify))
+  .settings(scalaVersion := "2.13.10")
   .settings(publishingSettings: _*)
   .settings(Compile / resourceDirectory := baseDirectory.value / "/conf")
   .configs(IntegrationTest)
