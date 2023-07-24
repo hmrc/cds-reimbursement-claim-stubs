@@ -50,7 +50,29 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
         status(result) should ===(OK)
       }
       "return accountNumberIsWellFormatted, sortCodeIsPresentOnEISCD, accountExists" in {
-        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(Yes, Yes, Some(Yes), Some("M Test")))
+        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(Yes, Yes, Some(Yes), None, Some(Yes)))
+      }
+    }
+
+    "processing a good bars personal assess request with partial name match" should {
+      val jsonAccount: JsValue = Json.toJson(
+        BarsPersonalAssessRequest(
+          BarsAccount("123456", "11001011"),
+          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+        )
+      )
+      val request              = FakeRequest("POST", "/verify/personal")
+        .withHeaders(("Content-Type", "application/json"))
+        .withBody(jsonAccount)
+      val result               = controller.verifyPersonal.apply(request)
+
+      "return 200 (OK)" in {
+        status(result) should ===(OK)
+      }
+      "return accountNumberIsWellFormatted, sortCodeIsPresentOnEISCD, accountExists" in {
+        contentAsJson(result).as[BARSResponse2] should ===(
+          BARSResponse2(Yes, Yes, Some(Yes), Some("M Test"), Some(Partial))
+        )
       }
     }
 
@@ -66,7 +88,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
         status(result) should ===(OK)
       }
       "return accountNumberIsWellFormatted, sortCodeIsPresentOnEISCD, accountExists" in {
-        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(Yes, Yes, Some(Yes)))
+        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(Yes, Yes, Some(Yes), None, Some(Yes)))
       }
     }
 
@@ -200,7 +222,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
         status(result) should ===(OK)
       }
       "return accountNumberIsWellFormatted = no, sortCodeIsPresentOnEISCD = yes, accountExists = no" in {
-        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(No, Yes, Some(No), Some("M Test")))
+        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(No, Yes, Some(No), None, None))
       }
     }
   }
