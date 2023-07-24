@@ -28,3 +28,13 @@ object BARSResponse {
 
   implicit val personalCompleteResponseFormat: OFormat[BARSResponse] = Json.format[BARSResponse]
 }
+
+final case class BARSResponse2(
+  accountNumberIsWellFormatted: ReputationResponse,
+  sortCodeIsPresentOnEISCD: ReputationResponse,
+  accountExists: Option[ReputationResponse] = None
+)
+
+object BARSResponse2 {
+  implicit val barsResponseFormat: OFormat[BARSResponse2] = Json.format[BARSResponse2]
+}

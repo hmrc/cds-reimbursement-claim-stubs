@@ -23,7 +23,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents, Result}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.request.{BarsBusinessAssessRequest, BarsPersonalAssessRequest}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response.ReputationResponse._
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response.{BARSResponse, ReputationErrorResponse}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.response.{BARSResponse, BARSResponse2, ReputationErrorResponse}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -68,6 +68,40 @@ class BankAccountReputationController @Inject() (cc: ControllerComponents) exten
     } yield Ok(Json.toJson(parseValidAccountNumber(assessRequest.account.accountNumber)))).merge
   }
 
+  val verifyPersonal: Action[JsValue] = Action(parse.json) { implicit request =>
+    logger.debug(s"processing personal request $request ${request.headers} ${request.body}")
+    (for {
+      assessRequest <-
+        Try(request.body.as[BarsPersonalAssessRequest]).toEither.leftMap(error => BadRequest(error.getMessage))
+      _             <- Either.cond(
+                         isAccountNumberValid(assessRequest.account.accountNumber),
+                         (),
+                         invalidAccountNumber(assessRequest.account.sortCode)
+                       )
+      _             <-
+        Either
+          .cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode))
+      _             <- specialAccountBehaviour(assessRequest.account.accountNumber)
+    } yield Ok(Json.toJson(parseValidAccountNumber2(assessRequest.account.accountNumber)))).merge
+  }
+
+  val verifyBusiness: Action[JsValue] = Action(parse.json) { implicit request =>
+    logger.debug(s"processing business request $request  ${request.headers} ${request.body}")
+    (for {
+      assessRequest <-
+        Try(request.body.as[BarsBusinessAssessRequest]).toEither.leftMap(error => BadRequest(error.getMessage))
+      _             <- Either.cond(
+                         isAccountNumberValid(assessRequest.account.accountNumber),
+                         (),
+                         invalidAccountNumber(assessRequest.account.sortCode)
+                       )
+      _             <-
+        Either
+          .cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode))
+      _             <- specialAccountBehaviour(assessRequest.account.accountNumber)
+    } yield Ok(Json.toJson(parseValidAccountNumber2(assessRequest.account.accountNumber)))).merge
+  }
+
   def isSortCodeValid(sortCode: String): Boolean =
     sortCode.length == 6 && sortCode.matches(digitsOnly)
 
@@ -110,5 +144,29 @@ class BankAccountReputationController @Inject() (cc: ControllerComponents) exten
       case "11004009" => BARSResponse(No, Yes, None)
 
       case _ => BARSResponse(Yes, Yes, Some(Yes))
+    }
+
+  def parseValidAccountNumber2(accountNumber: String): BARSResponse2 =
+    accountNumber match {
+      case "11001001" => BARSResponse2(Yes, Yes, Some(Yes))
+      case "11001002" => BARSResponse2(Yes, Yes, Some(Indeterminate))
+      case "11001003" => BARSResponse2(Yes, Yes, Some(Error))
+      case "11001004" => BARSResponse2(Yes, Yes, Some(No))
+
+      case "11002001" => BARSResponse2(Indeterminate, Yes, Some(Yes))
+      case "11002002" => BARSResponse2(Indeterminate, Yes, Some(Indeterminate))
+      case "11002003" => BARSResponse2(Indeterminate, Yes, Some(Error))
+      case "11002004" => BARSResponse2(Indeterminate, Yes, Some(No))
+
+      case "11003001" => BARSResponse2(Error, Yes, Some(Yes))
+      case "11003002" => BARSResponse2(Error, Yes, Some(Indeterminate))
+      case "11003003" => BARSResponse2(Error, Yes, Some(Error))
+      case "11003004" => BARSResponse2(Error, Yes, Some(No))
+
+      case "11004004" => BARSResponse2(No, Yes, Some(No))
+
+      case "11004009" => BARSResponse2(No, Yes, None)
+
+      case _ => BARSResponse2(Yes, Yes, Some(Yes))
     }
 }

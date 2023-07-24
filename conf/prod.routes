@@ -12,6 +12,9 @@ POST       /filetransfer/init/v1                                      uk.gov.hmr
 POST       /personal/v3/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.personalReputation
 POST       /business/v2/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.businessReputation
 
+POST       /verify/personal                                           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.verifyPersonal
+POST       /verify/business                                           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.verifyBusiness
+
 # TPI04
 POST       /tpi/getexistingclaim/v1                                   uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DuplicateDeclarationController.getDuplicateDeclarations
 

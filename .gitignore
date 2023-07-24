@@ -35,3 +35,4 @@ build
 #general
 *.class
 /RUNNING_PID
+sbt-launch.jar
