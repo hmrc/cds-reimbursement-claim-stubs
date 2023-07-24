@@ -50,7 +50,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
         status(result) should ===(OK)
       }
       "return accountNumberIsWellFormatted, sortCodeIsPresentOnEISCD, accountExists" in {
-        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(Yes, Yes, Some(Yes)))
+        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(Yes, Yes, Some(Yes), Some("M Test")))
       }
     }
 
@@ -200,7 +200,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
         status(result) should ===(OK)
       }
       "return accountNumberIsWellFormatted = no, sortCodeIsPresentOnEISCD = yes, accountExists = no" in {
-        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(No, Yes, Some(No)))
+        contentAsJson(result).as[BARSResponse2] should ===(BARSResponse2(No, Yes, Some(No), Some("M Test")))
       }
     }
   }

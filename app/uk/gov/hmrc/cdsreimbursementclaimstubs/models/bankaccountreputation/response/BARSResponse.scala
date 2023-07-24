@@ -32,7 +32,8 @@ object BARSResponse {
 final case class BARSResponse2(
   accountNumberIsWellFormatted: ReputationResponse,
   sortCodeIsPresentOnEISCD: ReputationResponse,
-  accountExists: Option[ReputationResponse] = None
+  accountExists: Option[ReputationResponse] = None,
+  accountName: Option[String] = None
 )
 
 object BARSResponse2 {

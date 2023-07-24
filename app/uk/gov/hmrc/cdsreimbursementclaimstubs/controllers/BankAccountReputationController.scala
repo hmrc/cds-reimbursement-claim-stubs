@@ -82,7 +82,9 @@ class BankAccountReputationController @Inject() (cc: ControllerComponents) exten
         Either
           .cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode))
       _             <- specialAccountBehaviour(assessRequest.account.accountNumber)
-    } yield Ok(Json.toJson(parseValidAccountNumber2(assessRequest.account.accountNumber)))).merge
+    } yield Ok(
+      Json.toJson(parseValidAccountNumber2(assessRequest.account.accountNumber, assessRequest.subject.getAccountName))
+    )).merge
   }
 
   val verifyBusiness: Action[JsValue] = Action(parse.json) { implicit request =>
@@ -99,7 +101,11 @@ class BankAccountReputationController @Inject() (cc: ControllerComponents) exten
         Either
           .cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode))
       _             <- specialAccountBehaviour(assessRequest.account.accountNumber)
-    } yield Ok(Json.toJson(parseValidAccountNumber2(assessRequest.account.accountNumber)))).merge
+    } yield Ok(
+      Json.toJson(
+        parseValidAccountNumber2(assessRequest.account.accountNumber, assessRequest.business.map(_.companyName))
+      )
+    )).merge
   }
 
   def isSortCodeValid(sortCode: String): Boolean =
@@ -146,27 +152,27 @@ class BankAccountReputationController @Inject() (cc: ControllerComponents) exten
       case _ => BARSResponse(Yes, Yes, Some(Yes))
     }
 
-  def parseValidAccountNumber2(accountNumber: String): BARSResponse2 =
+  def parseValidAccountNumber2(accountNumber: String, accountName: Option[String]): BARSResponse2 =
     accountNumber match {
-      case "11001001" => BARSResponse2(Yes, Yes, Some(Yes))
-      case "11001002" => BARSResponse2(Yes, Yes, Some(Indeterminate))
-      case "11001003" => BARSResponse2(Yes, Yes, Some(Error))
-      case "11001004" => BARSResponse2(Yes, Yes, Some(No))
+      case "11001001" => BARSResponse2(Yes, Yes, Some(Yes), accountName)
+      case "11001002" => BARSResponse2(Yes, Yes, Some(Indeterminate), accountName)
+      case "11001003" => BARSResponse2(Yes, Yes, Some(Error), accountName)
+      case "11001004" => BARSResponse2(Yes, Yes, Some(No), accountName)
 
-      case "11002001" => BARSResponse2(Indeterminate, Yes, Some(Yes))
-      case "11002002" => BARSResponse2(Indeterminate, Yes, Some(Indeterminate))
-      case "11002003" => BARSResponse2(Indeterminate, Yes, Some(Error))
-      case "11002004" => BARSResponse2(Indeterminate, Yes, Some(No))
+      case "11002001" => BARSResponse2(Indeterminate, Yes, Some(Yes), accountName)
+      case "11002002" => BARSResponse2(Indeterminate, Yes, Some(Indeterminate), accountName)
+      case "11002003" => BARSResponse2(Indeterminate, Yes, Some(Error), accountName)
+      case "11002004" => BARSResponse2(Indeterminate, Yes, Some(No), accountName)
 
-      case "11003001" => BARSResponse2(Error, Yes, Some(Yes))
-      case "11003002" => BARSResponse2(Error, Yes, Some(Indeterminate))
-      case "11003003" => BARSResponse2(Error, Yes, Some(Error))
-      case "11003004" => BARSResponse2(Error, Yes, Some(No))
+      case "11003001" => BARSResponse2(Error, Yes, Some(Yes), accountName)
+      case "11003002" => BARSResponse2(Error, Yes, Some(Indeterminate), accountName)
+      case "11003003" => BARSResponse2(Error, Yes, Some(Error), accountName)
+      case "11003004" => BARSResponse2(Error, Yes, Some(No), accountName)
 
-      case "11004004" => BARSResponse2(No, Yes, Some(No))
+      case "11004004" => BARSResponse2(No, Yes, Some(No), accountName)
 
-      case "11004009" => BARSResponse2(No, Yes, None)
+      case "11004009" => BARSResponse2(No, Yes, None, accountName)
 
-      case _ => BARSResponse2(Yes, Yes, Some(Yes))
+      case _ => BARSResponse2(Yes, Yes, Some(Yes), accountName)
     }
 }
