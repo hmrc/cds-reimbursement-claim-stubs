@@ -19,7 +19,7 @@
 @import play.api.data.Form
 @import play.twirl.api.Html
 @import play.api.mvc.Request
-@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcLayout
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcStandardPage
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcHeader
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukSelect
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukHint
@@ -28,42 +28,50 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.FullWidthPageLayout
 @import uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.routes
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.HmrcStandardPageParams
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.TemplateOverrides
 
-@this(head: Head, hmrcLayout: HmrcLayout, fullWidthPageLayout: FullWidthPageLayout, hmrcHeader: HmrcHeader, govukSelect: GovukSelect, govukHint: GovukHint)
+@this(head: Head, hmrcStandardPage: HmrcStandardPage, fullWidthPageLayout: FullWidthPageLayout, oneThirdOneThirdMainContent: OneThirdOneThirdMainContent, hmrcHeader: HmrcHeader, govukSelect: GovukSelect, govukHint: GovukHint)
 
 @(responseTypeSelect: Select, eoriSelect: Select, rfsSelect: Select)(implicit request: Request[_], messages: Messages)
-@hmrcLayout(pageTitle = Some("Generate MRN"), additionalHeadBlock = Some(head())) {
 
-
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Generate MRN</h1>
-  <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Response Type</h2>
-  @govukHint(Hint(content = Text("Select the type of response your expect back - Character 4th and 5th")))
-  @govukSelect(responseTypeSelect)
-
-  <h2 class="govuk-heading-l govuk-!-margin-bottom-2">EORI</h2>
-  @govukHint(Hint(content = Text("The last two characters of the MRN determine the EORI produced, if it is 50 or above then it is XI Eori - Character 17th and 18th")))
-  <div style="display: flex; align-items: baseline;">
-   @govukSelect(eoriSelect)
-   <p class="govuk-body" id="eori-show">GB00000000000000</p>
-  </div>
-
-  <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Reason For Security</h2>
-  @govukHint(Hint(content = Text("If the reason for security can be inserted then we add it to the response - Character 6th, 7th and 8th")))
-  @govukSelect(rfsSelect)
-
-  <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Output MRN</h2>
-  @govukHint(Hint(content = Text("MRN that you will need to use to get the expected output")))
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-6" id="mrn-output">00AMRACSAAAAAAAA00</h1>
-
-  <button class="govuk-button" onclick="handleSubmit('@routes.DeclarationController.getDeclaration')">Get Response</button>
-
+@sidebar = {
 <pre>
-   <code class="language-json" id="code-area">
-   {
-     message: "This will change once you click submit..."
-   }
-   </code>
-  </pre>
+    <code style="width: fit-content;" class="language-json" id="code-area">
+           {
+             message: "Waiting for response..."
+           }
+    </code>
+</pre>
+}
+
+@hmrcStandardPage(HmrcStandardPageParams(
+    pageTitle = Some("Generate MRN"),
+    templateOverrides = TemplateOverrides(
+        additionalHeadBlock = Some(head()),
+        pageLayout = Some(fullWidthPageLayout(_)),
+        mainContentLayout = Some(oneThirdOneThirdMainContent(sidebarContent = sidebar))
+    ))) {
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Generate MRN</h1>
+<h2 class="govuk-heading-l govuk-!-margin-bottom-2">Response Type</h2>
+@govukHint(Hint(content = Text("Select the type of response your expect back - Character 4th and 5th")))
+@govukSelect(responseTypeSelect)
+
+<h2 class="govuk-heading-l govuk-!-margin-bottom-2">EORI</h2>
+@govukHint(Hint(content = Text("The last two characters of the MRN determine the EORI produced, if it is 50 or above then it is XI Eori - Character 17th and 18th")))
+<h3 class="govuk-heading-s" id="eori-show">GB00000000000000</h3>
+@govukSelect(eoriSelect)
+
+
+<h2 class="govuk-heading-l govuk-!-margin-bottom-2">Reason For Security</h2>
+@govukHint(Hint(content = Text("If the reason for security can be inserted then we add it to the response - Character 6th, 7th and 8th")))
+@govukSelect(rfsSelect)
+
+<h2 class="govuk-heading-l govuk-!-margin-bottom-2">Output MRN</h2>
+@govukHint(Hint(content = Text("MRN that you will need to use to get the expected output")))
+<h1 class="govuk-heading-l govuk-!-margin-bottom-2" id="mrn-output">00AMRACSAAAAAAAA00</h1>
+
 
 <style>
  .select-margin {
@@ -71,7 +79,7 @@
  }
 </style>
 <script>
- var mrn = ""
+ const url = "@routes.DeclarationController.getDeclaration";
  handleChange()
 
  function handleChange() {
@@ -84,10 +92,10 @@
 
   const mrnOutput = `00A${responseType}${reasonForSecurity}AAAAAAAA${eoriValue}`
   document.getElementById("mrn-output").innerHTML = mrnOutput
-  mrn = mrnOutput
+  handleSubmit(url, mrnOutput)
  }
 
- function handleSubmit(url) {
+ function handleSubmit(url, mrn) {
    const body = {
     "overpaymentDeclarationDisplayRequest": {
         "requestCommon": {

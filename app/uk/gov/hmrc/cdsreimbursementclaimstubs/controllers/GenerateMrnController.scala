@@ -59,7 +59,7 @@ class GenerateMrnController @Inject() (
           value = Some("%02d".format(num)),
           text = s"${"%02d".format(num)} - ${if (num < 50) "GB" else "XI"}"
         )
-      ),
+      ).toSeq,
       attributes = Map("onchange" -> "handleChange()"),
       formGroupClasses = "select-margin"
     )
