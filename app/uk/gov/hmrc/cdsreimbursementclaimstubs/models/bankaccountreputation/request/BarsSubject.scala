@@ -25,7 +25,15 @@ final case class BarsSubject(
   lastName: Option[String], // Must be between 1 and 35 characters long
   dob: Option[String], // date of birth: ISO-8601 YYYY-MM-DD
   address: BarsAddress
-)
+) {
+  def getAccountName: Option[String] = {
+    val accountName = Seq(title, name, firstName, lastName)
+      .filter(_.isDefined)
+      .map(_.get)
+      .mkString(" ")
+    if (accountName.isBlank()) None else Some(accountName)
+  }
+}
 
 object BarsSubject {
   implicit val format: OFormat[BarsSubject] = Json.format[BarsSubject]
