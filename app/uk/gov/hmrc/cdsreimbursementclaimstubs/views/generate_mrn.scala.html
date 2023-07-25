@@ -122,6 +122,11 @@
     .then(output => {
       document.getElementById("code-area").innerHTML = JSON.stringify(output, null, 4)
     })
+    .catch(err => {
+      document.getElementById("code-area").innerHTML = `           {
+             message: "Failed to get response..."
+           }`
+    })
  }
 
 </script>
