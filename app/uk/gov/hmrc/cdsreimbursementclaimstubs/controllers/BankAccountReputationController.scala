@@ -155,15 +155,15 @@ class BankAccountReputationController @Inject() (cc: ControllerComponents) exten
   def parseValidAccountNumber2(accountNumber: String, accountName: Option[String]): BARSResponse2 =
     accountNumber match {
       case "11001001" => BARSResponse2(Yes, Yes, Some(Yes), None, Some(Yes))
-      case "11001011" => BARSResponse2(Yes, Yes, Some(Yes), accountName, Some(Partial))
-      case "11001002" => BARSResponse2(Yes, Yes, Some(Indeterminate), None, Some(Indeterminate))
+      case "11001011" => BARSResponse2(Indeterminate, Yes, Some(Yes), accountName.map(_.toUpperCase), Some(Partial))
+      case "11001002" => BARSResponse2(Indeterminate, Yes, Some(Indeterminate), None, Some(Indeterminate))
       case "11001003" => BARSResponse2(Yes, Yes, Some(Error), None, None)
       case "11001004" => BARSResponse2(Yes, Yes, Some(No), None, Some(No))
 
-      case "11002001" => BARSResponse2(Indeterminate, Yes, Some(Yes), None, Some(Indeterminate))
-      case "11002002" => BARSResponse2(Indeterminate, Yes, Some(Indeterminate), None, Some(Indeterminate))
-      case "11002003" => BARSResponse2(Indeterminate, Yes, Some(Error), None, None)
-      case "11002004" => BARSResponse2(Indeterminate, Yes, Some(No), None, Some(No))
+      case "11002001" => BARSResponse2(Indeterminate, No, Some(Yes), None, Some(Indeterminate))
+      case "11002002" => BARSResponse2(Indeterminate, No, Some(Indeterminate), None, Some(Indeterminate))
+      case "11002003" => BARSResponse2(Indeterminate, No, Some(Error), None, None)
+      case "11002004" => BARSResponse2(Indeterminate, No, Some(No), None, Some(No))
 
       case "11003001" => BARSResponse2(Error, Yes, Some(Yes), None)
       case "11003002" => BARSResponse2(Error, Yes, Some(Indeterminate), None)

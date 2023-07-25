@@ -38,7 +38,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
       val jsonAccount: JsValue = Json.toJson(
         BarsPersonalAssessRequest(
           BarsAccount("123456", "12345678"),
-          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+          BarsSubject(None, Some("M Test"), None, None, None, Some(BarsAddress(List.empty[String], None, None)))
         )
       )
       val request              = FakeRequest("POST", "/verify/personal")
@@ -58,7 +58,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
       val jsonAccount: JsValue = Json.toJson(
         BarsPersonalAssessRequest(
           BarsAccount("123456", "11001011"),
-          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+          BarsSubject(None, Some("M Test"), None, None, None, Some(BarsAddress(List.empty[String], None, None)))
         )
       )
       val request              = FakeRequest("POST", "/verify/personal")
@@ -71,7 +71,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
       }
       "return accountNumberIsWellFormatted, sortCodeIsPresentOnEISCD, accountExists" in {
         contentAsJson(result).as[BARSResponse2] should ===(
-          BARSResponse2(Yes, Yes, Some(Yes), Some("M Test"), Some(Partial))
+          BARSResponse2(Indeterminate, Yes, Some(Yes), Some("M TEST"), Some(Partial))
         )
       }
     }
@@ -130,7 +130,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
       val jsonAccount: JsValue = Json.toJson(
         BarsPersonalAssessRequest(
           BarsAccount("123456", "90909091"),
-          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+          BarsSubject(None, Some("M Test"), None, None, None, Some(BarsAddress(List.empty[String], None, None)))
         )
       )
       val request              = FakeRequest("POST", "/verify/personal")
@@ -170,7 +170,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
       val jsonAccount: JsValue = Json.toJson(
         BarsPersonalAssessRequest(
           BarsAccount("123456", "90909090"),
-          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+          BarsSubject(None, Some("M Test"), None, None, None, Some(BarsAddress(List.empty[String], None, None)))
         )
       )
       val request              = FakeRequest("POST", "/verify/personal")
@@ -210,7 +210,7 @@ class BankAccountReputationController2Spec extends AnyWordSpec with Matchers wit
       val jsonAccount: JsValue = Json.toJson(
         BarsPersonalAssessRequest(
           BarsAccount("123456", "11004004"),
-          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+          BarsSubject(None, Some("M Test"), None, None, None, Some(BarsAddress(List.empty[String], None, None)))
         )
       )
       val request              = FakeRequest("POST", "/verify/personal")

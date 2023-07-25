@@ -38,7 +38,7 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       val jsonAccount: JsValue = Json.toJson(
         BarsPersonalAssessRequest(
           BarsAccount("123456", "12345678"),
-          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+          BarsSubject(None, Some("M Test"), None, None, None, Some(BarsAddress(List.empty[String], None, None)))
         )
       )
       val request              = FakeRequest("POST", "/personal/v3/assess")
@@ -108,7 +108,7 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       val jsonAccount: JsValue = Json.toJson(
         BarsPersonalAssessRequest(
           BarsAccount("123456", "90909091"),
-          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+          BarsSubject(None, Some("M Test"), None, None, None, Some(BarsAddress(List.empty[String], None, None)))
         )
       )
       val request              = FakeRequest("POST", "/personal/v3/assess")
@@ -148,7 +148,7 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       val jsonAccount: JsValue = Json.toJson(
         BarsPersonalAssessRequest(
           BarsAccount("123456", "90909090"),
-          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+          BarsSubject(None, Some("M Test"), None, None, None, Some(BarsAddress(List.empty[String], None, None)))
         )
       )
       val request              = FakeRequest("POST", "/personal/v3/assess")
@@ -188,7 +188,7 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       val jsonAccount: JsValue = Json.toJson(
         BarsPersonalAssessRequest(
           BarsAccount("123456", "11004004"),
-          BarsSubject(None, Some("M Test"), None, None, None, BarsAddress(List.empty[String], None, None))
+          BarsSubject(None, Some("M Test"), None, None, None, Some(BarsAddress(List.empty[String], None, None)))
         )
       )
       val request              = FakeRequest("POST", "/personal/v3/assess")
