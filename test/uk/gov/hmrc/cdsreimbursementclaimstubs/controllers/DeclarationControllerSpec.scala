@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 
-import akka.actor.ActorSystem
 import org.scalactic.TypeCheckedTripleEquals
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

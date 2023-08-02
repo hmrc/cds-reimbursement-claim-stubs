@@ -19,7 +19,7 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05
 import play.api.http.Status
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.{GenUtils, TimeUtils}
-
+import play.twirl.api.HtmlFormat.Appendable
 final case class Tpi05ErrorResponse(value: JsValue, httpStatus: Int)
 
 object Tpi05ErrorResponse {
