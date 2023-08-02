@@ -47,38 +47,64 @@ class GenerateMrnController @Inject() (
           text = s"${shortForm} - ${className.getSimpleName.replace("$", "")}"
         )
       }.toSeq,
-      attributes = Map("onchange" -> "handleChange()")
+      attributes = Map("onchange" -> "handleMrnChange()")
     )
 
-    val numbers: Seq[Int] = 0 to 99;
-    val eoriSelector: Select = Select(
-      id = "eori-picker",
-      name = "EORI Picker",
-      items = numbers.map(num =>
+    val mrnNumbers: Seq[Int] = 0 to 99;
+    val gbNumbers: Seq[Int] = 0 to 49;
+    val xiNumbers: Seq[Int] = 50 to 99;
+
+    val mrnSelector: Select = Select(
+      id = "mrn-picker",
+      name = "MRN Picker",
+      items = mrnNumbers.map(num =>
         SelectItem(
           value = Some("%02d".format(num)),
-          text = s"${"%02d".format(num)} - ${if (num < 50) "GB" else "XI"}"
+          text = "%02d".format(num)
         )
-      ).toSeq,
-      attributes = Map("onchange" -> "handleChange()"),
+      ),
+      attributes = Map("onchange" -> "handleMrnChange()"),
+      formGroupClasses = "select-margin"
+    )
+
+    val gbSelector: Select = Select(
+      id = "gb-picker",
+      name = "GB Picker",
+      items = gbNumbers.map(num =>
+        SelectItem(
+          value = Some("%02d".format(num)),
+          text = s"${"%02d".format(num)} - GB"
+        )
+      ),
+      attributes = Map("onchange" -> "handleGbPicked()"),
+      formGroupClasses = "select-margin"
+    )
+
+    val xiSelector: Select = Select(
+      id = "xi-picker",
+      name = "XI Picker",
+      items = xiNumbers.map(num =>
+        SelectItem(
+          value = Some("%02d".format(num)),
+          text = s"${"%02d".format(num)} - XI"
+        )
+      ),
+      attributes = Map("onchange" -> "handleXiPicked()"),
       formGroupClasses = "select-margin"
     )
 
     val rfsSelect: Select = Select(
       id = "rfs-selector",
       name = "Reason For Security Selector",
-      items = ReasonForSecurity.mapping.map { case (name: String, rfs: ReasonForSecurity) =>
+      items = ReasonForSecurity.mapping.map { case (_, rfs: ReasonForSecurity) =>
         SelectItem(
           value = Some(rfs.acc14Code),
           text = s"${rfs.dec64DisplayString} - ${rfs.acc14Code}"
         )
       }.toSeq,
-      attributes = Map("onchange" -> "handleChange()")
+      attributes = Map("onchange" -> "handleMrnChange()")
     )
 
-
-
-
-    Ok(generateMrn(responseTypeSelect, eoriSelector, rfsSelect))
+    Ok(generateMrn(responseTypeSelect, mrnSelector, gbSelector, xiSelector, rfsSelect))
   }
 }

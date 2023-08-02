@@ -33,7 +33,7 @@
 
 @this(head: Head, hmrcStandardPage: HmrcStandardPage, fullWidthPageLayout: FullWidthPageLayout, oneThirdOneThirdMainContent: OneThirdOneThirdMainContent, hmrcHeader: HmrcHeader, govukSelect: GovukSelect, govukHint: GovukHint)
 
-@(responseTypeSelect: Select, eoriSelect: Select, rfsSelect: Select)(implicit request: Request[_], messages: Messages)
+@(responseTypeSelect: Select, mrnSelect: Select, gbSelect: Select, xiSelect: Select, rfsSelect: Select)(implicit request: Request[_], messages: Messages)
 
 @sidebar = {
 <pre>
@@ -54,25 +54,57 @@
     ))) {
 
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Generate MRN</h1>
+
+<h2 class="govuk-heading-l govuk-!-margin-bottom-2">MRN Number</h2>
+@govukHint(Hint(content = Text("Select if this is the first mrn, second mrn, or so - Character 1st and 2nd")))
+@govukSelect(mrnSelect)
+
 <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Response Type</h2>
 @govukHint(Hint(content = Text("Select the type of response your expect back - Character 4th and 5th")))
 @govukSelect(responseTypeSelect)
 
 <h2 class="govuk-heading-l govuk-!-margin-bottom-2">EORI</h2>
 @govukHint(Hint(content = Text("The last two characters of the MRN determine the EORI produced, if it is 50 or above then it is XI Eori - Character 17th and 18th")))
-<h3 class="govuk-heading-s" id="eori-show">GB00000000000000</h3>
-@govukSelect(eoriSelect)
+<div style="display: flex;" class="govuk-radios" data-module="govuk-radios">
+    <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="gb-type" name="gb-or-xi" type="radio" value="gb" onclick="handleGbPicked()">
+        <label class="govuk-label govuk-radios__label" for="gb-type">
+            GB
+        </label>
+    </div>
+    <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="xi-type" name="gb-or-xi" type="radio" value="xi" onclick="handleXiPicked()">
+        <label class="govuk-label govuk-radios__label" for="xi-type">
+            XI
+        </label>
+    </div>
+</div>
+<div style="display:flex; align-items: center;">
+    <h3 class="govuk-heading-s govuk-!-margin-right-2" id="eori-show">GB00000000000000</h3>
+    <button class="govuk-button" onclick="copyEORI()">Copy</button>
+</div>
+@govukSelect(xiSelect)
+@govukSelect(gbSelect)
 
-
+<div class="govuk-checkboxes__item">
+    <input class="govuk-checkboxes__input" id="security" name="security" type="checkbox" value="security" onclick="handleSecurityCheckbox()">
+    <label class="govuk-label govuk-checkboxes__label" for="security">
+        Need reason for security
+    </label>
+</div>
+<div style="display: none;" id="reason-for-security-area">
 <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Reason For Security</h2>
-@govukHint(Hint(content = Text("If the reason for security can be inserted then we add it to the response - Character 6th, 7th and 8th")))
+@govukHint(Hint(content = Text("If the reason for security can be inserted then we add it to the response or else it is ignored - Character 6th, 7th and 8th")))
 @govukSelect(rfsSelect)
+</div>
+
 
 <h2 class="govuk-heading-l govuk-!-margin-bottom-2">Output MRN</h2>
 @govukHint(Hint(content = Text("MRN that you will need to use to get the expected output")))
-<h1 class="govuk-heading-l govuk-!-margin-bottom-2" id="mrn-output">00AMRACSAAAAAAAA00</h1>
-
-
+<div style="display:flex;">
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-margin-right-2" id="mrn-output">00AMRACSAAAAAAAA00</h1>
+    <button class="govuk-button" onclick="copyMRN()">Copy</button>
+</div>
 <style>
  .select-margin {
   margin-right: 5px;
@@ -80,19 +112,71 @@
 </style>
 <script>
  const url = "@routes.DeclarationController.getDeclaration";
- handleChange()
 
- function handleChange() {
-  const eoriValue = document.getElementById("eori-picker").value
-  document.getElementById("eori-show").innerHTML = `${parseInt(eoriValue) < 50 ? "GB" : "XI"}000000000000${eoriValue}`
+ const handleGbPicked = () => {
+    document.getElementById("gb-picker").style.display = "block";
+    document.getElementById("xi-picker").style.display = "none";
+    handleEoriChange();
+ }
 
-  const responseType = document.getElementById("response-type-selector").value
+ const handleXiPicked = () => {
+    document.getElementById("gb-picker").style.display = "none";
+    document.getElementById("xi-picker").style.display = "block";
+    handleEoriChange();
+ }
 
-  const reasonForSecurity = document.getElementById("rfs-selector").value
+ const handleEoriChange = () => {
+    const eoriEnding = getEoriEnding();
+    document.getElementById("eori-show").innerHTML = `${parseInt(eoriEnding) < 50 ? "GB" : "XI"}000000000000${eoriEnding}`
+    handleMrnChange()
+ }
 
-  const mrnOutput = `00A${responseType}${reasonForSecurity}AAAAAAAA${eoriValue}`
-  document.getElementById("mrn-output").innerHTML = mrnOutput
-  handleSubmit(url, mrnOutput)
+ const handleSecurityCheckbox = () => {
+    const sec = document.getElementById("security")
+      if(sec.checked) {
+          document.getElementById("reason-for-security-area").style.display = "block"
+      } else {
+          document.getElementById("reason-for-security-area").style.display = "none"
+      }
+    handleMrnChange()
+ }
+
+ const getMrnNumber = () => document.getElementById("mrn-picker").value
+
+ const getResponseType = () => document.getElementById("response-type-selector").value
+
+ const getReasonForSecurity = () => document.getElementById("security").checked ? document.getElementById("rfs-selector").value : "AAA"
+
+ const getEoriEnding = () => {
+    var eoriEnding  = "";
+      if(document.getElementById("gb-type").checked){
+        const gbValue = document.getElementById("gb-picker").value
+        eoriEnding = document.getElementById("gb-picker").value
+        document.getElementById("eori-show").innerHTML = `GB000000000000${gbValue}`
+      }
+
+     if(document.getElementById("xi-type").checked){
+      const xiValue = document.getElementById("xi-picker").value
+      eoriEnding = document.getElementById("xi-picker").value
+      document.getElementById("eori-show").innerHTML = `XI000000000000${xiValue}`
+     }
+     return eoriEnding;
+ }
+
+ const getMrnOutput = () => `${getMrnNumber()}A${getResponseType()}${getReasonForSecurity()}AAAAAAAA${getEoriEnding()}`
+
+ const handleMrnChange = () => {
+    const mrn = getMrnOutput()
+    document.getElementById("mrn-output").innerHTML = mrn
+    handleSubmit(url, mrn)
+ }
+
+ function copyMRN() {
+    navigator.clipboard.writeText(document.getElementById("mrn-output").innerHTML);
+ }
+
+ function copyEORI() {
+    navigator.clipboard.writeText(document.getElementById("eori-show").innerHTML);
  }
 
  function handleSubmit(url, mrn) {
@@ -128,6 +212,10 @@
            }`
     })
  }
+ document.getElementById("gb-type").checked = true;
+ document.getElementById("xi-picker").style.display = "none";
+ handleMrnChange()
+
 
 </script>
 
