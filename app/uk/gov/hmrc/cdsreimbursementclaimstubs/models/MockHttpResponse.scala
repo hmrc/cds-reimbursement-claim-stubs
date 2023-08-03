@@ -695,6 +695,21 @@ object MockHttpResponse {
           )
         )
       ),
+      createMockHttpResponseWithPaymentMethods("001"),
+      createMockHttpResponseWithPaymentMethods("002"),
+      createMockHttpResponseWithPaymentMethods("003"),
+      createMockHttpResponseWithPaymentMethods("006"),
+      createMockHttpResponseWithPaymentMethods("001", "002"),
+      createMockHttpResponseWithPaymentMethods("001", "003"),
+      createMockHttpResponseWithPaymentMethods("001", "006"),
+      createMockHttpResponseWithPaymentMethods("002", "003"),
+      createMockHttpResponseWithPaymentMethods("002", "006"),
+      createMockHttpResponseWithPaymentMethods("003", "006"),
+      createMockHttpResponseWithPaymentMethods("001", "002", "003"),
+      createMockHttpResponseWithPaymentMethods("001", "002", "006"),
+      createMockHttpResponseWithPaymentMethods("001", "003", "006"),
+      createMockHttpResponseWithPaymentMethods("002", "003", "006"),
+      createMockHttpResponseWithPaymentMethods("001", "002", "003", "006"),
       MockHttpResponse(
         _ === MRN("10ABCDEFGHIJKLMNO0"),
         _ === EORI("AA12345678901234Z"),
@@ -826,6 +841,25 @@ object MockHttpResponse {
         DeclarationResponse(Left(Right(Acc14ErrorResponseType.TIME_OUT)))
       )
     )
+
+  def createMockHttpResponseWithPaymentMethods(
+                                                first: String = "AAA",
+                                                second: String = "AAA",
+                                                third: String = "AAA",
+                                                fourth: String= "AAA"): MockHttpResponse = {
+    val mrn = s"00AA${first}${second}${third}${fourth}A0"
+    MockHttpResponse(
+      _ === MRN(mrn),
+      _ === EORI("GB000000000000001"),
+      SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+      DeclarationResponse(
+        Right(
+          Acc14ResponseType
+            .OK_FULL_RESPONSE_SUBSIDY(mrn, "GB000000000000001", "GB000000000000001", Seq(first, second, third, fourth).filter(_ != "AAA"))
+        )
+      )
+    )
+  }
 
   // If any extra securities use cases are identified all you need to do is add extra case
   // statements to match the new criteria.
