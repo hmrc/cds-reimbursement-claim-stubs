@@ -859,14 +859,15 @@ object MockHttpResponse {
                                                 prependMrn: String = "00",
                                                 eoriEnding: String = "01"): MockHttpResponse = {
     val mrn = s"${prependMrn}AA${first}${second}${third}${fourth}${eoriEnding}"
+    val eori = s"GB0000000000000${eoriEnding}"
     MockHttpResponse(
       _ === MRN(mrn),
-      _ === EORI(s"GB0000000000000${eoriEnding}"),
+      _ === EORI(eori),
       SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
       DeclarationResponse(
         Right(
           Acc14ResponseType
-            .OK_FULL_RESPONSE_SUBSIDY(mrn, "GB000000000000001", "GB000000000000001", Seq(first, second, third, fourth).filter(_ != "AAA"))
+            .OK_FULL_RESPONSE_SUBSIDY(mrn, eori, eori, Seq(first, second, third, fourth).filter(_ != "AAA"))
         )
       )
     )
