@@ -710,6 +710,21 @@ object MockHttpResponse {
       createMockHttpResponseWithPaymentMethods("001", "003", "006"),
       createMockHttpResponseWithPaymentMethods("002", "003", "006"),
       createMockHttpResponseWithPaymentMethods("001", "002", "003", "006"),
+      createMockHttpResponseWithPaymentMethods("001", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("002", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("003", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("006", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("001", "002", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("001", "003", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("001", "006", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("002", "003", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("002", "006", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("003", "006", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("001", "002", "003", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("001", "002", "006", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("001", "003", "006", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("002", "003", "006", prepend = "01"),
+      createMockHttpResponseWithPaymentMethods("001", "002", "003", "006", prepend = "01"),
       MockHttpResponse(
         _ === MRN("10ABCDEFGHIJKLMNO0"),
         _ === EORI("AA12345678901234Z"),
@@ -842,12 +857,12 @@ object MockHttpResponse {
       )
     )
 
-  def createMockHttpResponseWithPaymentMethods(
-                                                first: String = "AAA",
+  def createMockHttpResponseWithPaymentMethods( first: String = "AAA",
                                                 second: String = "AAA",
                                                 third: String = "AAA",
-                                                fourth: String= "AAA"): MockHttpResponse = {
-    val mrn = s"00AA${first}${second}${third}${fourth}A0"
+                                                fourth: String= "AAA",
+                                                prepend: String = "00"): MockHttpResponse = {
+    val mrn = s"${prepend}AA${first}${second}${third}${fourth}A0"
     MockHttpResponse(
       _ === MRN(mrn),
       _ === EORI("GB000000000000001"),
