@@ -829,10 +829,17 @@ object MockHttpResponse {
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Left(Right(Acc14ErrorResponseType.TIME_OUT)))
       )
-    ) ++ createEveryCombinationOfPaymentMethods("00", "01") ++
-      createEveryCombinationOfPaymentMethods("01", "01") ++
-      createEveryCombinationOfPaymentMethods("00", "02") ++
-      createEveryCombinationOfPaymentMethods("01", "02")
+    ) ++ createPaymentMethodsForEoriEnding("01") ++
+      createPaymentMethodsForEoriEnding("02")
+
+  def createPaymentMethodsForEoriEnding(eoriEnding: String): List[MockHttpResponse] = {
+    createEveryCombinationOfPaymentMethods("00", eoriEnding) ++
+      createEveryCombinationOfPaymentMethods("01", eoriEnding) ++
+      createEveryCombinationOfPaymentMethods("02", eoriEnding) ++
+      createEveryCombinationOfPaymentMethods("03", eoriEnding) ++
+      createEveryCombinationOfPaymentMethods("04", eoriEnding) ++
+      createEveryCombinationOfPaymentMethods("05", eoriEnding)
+  }
 
   def createEveryCombinationOfPaymentMethods(prependMrn: String, eoriEnding: String): List[MockHttpResponse] = {
     List(createMockHttpResponseWithPaymentMethods("001", prependMrn = prependMrn, eoriEnding = eoriEnding),
