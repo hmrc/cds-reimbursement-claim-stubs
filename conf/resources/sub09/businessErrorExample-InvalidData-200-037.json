@@ -1,0 +1,15 @@
+{
+  "subscriptionDisplayResponse": {
+    "responseCommon": {
+      "status": "OK",
+      "statusText": "037 - Mandatory parameters missing or invalid",
+      "processingDate": "2016-08-17T19:33:47Z",
+      "returnParameters": [
+        {
+          "paramName": "POSITION",
+          "paramValue": "FAIL"
+        }
+      ]
+    }
+  }
+}

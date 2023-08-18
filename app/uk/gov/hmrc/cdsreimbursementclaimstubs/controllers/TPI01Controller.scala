@@ -38,7 +38,7 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
         val eori = (request.body \ "getPostClearanceCasesRequest" \ "requestDetail" \ "EORI").as[String]
 
         eori match {
-          case "GB744638982000" =>
+          case x if x == "GB744638982000" || (x.startsWith("GB") && x.endsWith("4638982000")) =>
             val detail         = tpi01Claims2(20)
             val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
             val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
@@ -98,9 +98,12 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
             Ok(Json.toJson(response))
           case e if e.startsWith("XI0000000000") =>
             val caseSubStatusIndex = e.replace("XI0000000000", "")
-            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
-            val response = Response(
-              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatusNDRC(caseSubStatusIndex.toInt, isXiEori = true)))
+            val responseCommon     = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response           = Response(
+              PostClearanceCasesResponse(
+                responseCommon,
+                Some(tpi01SetCaseSubStatusNDRC(caseSubStatusIndex.toInt, isXiEori = true))
+              )
             )
             Ok(Json.toJson(response))
           case e if e.startsWith("GB1000000000") =>
@@ -112,9 +115,12 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
             Ok(Json.toJson(response))
           case e if e.startsWith("XI1000000000") =>
             val caseSubStatusIndex = e.replace("XI1000000000", "")
-            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
-            val response = Response(
-              PostClearanceCasesResponse(responseCommon, Some(tpi01SetCaseSubStatusSCTY(caseSubStatusIndex.toInt, isXiEori = true)))
+            val responseCommon     = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response           = Response(
+              PostClearanceCasesResponse(
+                responseCommon,
+                Some(tpi01SetCaseSubStatusSCTY(caseSubStatusIndex.toInt, isXiEori = true))
+              )
             )
             Ok(Json.toJson(response))
           case _ if Customer.exists(eori) =>
