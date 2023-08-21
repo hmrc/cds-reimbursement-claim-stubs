@@ -36,7 +36,67 @@ class SUB09Controller @Inject() (cc: ControllerComponents)
 
   final def getSubscription(EORI: String, regime: String, acknowledgementReference: String): Action[AnyContent] =
     Action { _ =>
-      if (EORI.matches(eoriRegex) && regime == "CDS" && acknowledgementReference.length() == 32)
+      if (EORI == "GB0144638982000")
+        parseResponse(
+          "sub09/businessErrorExample-InvalidData-200-001.json",
+          Ok,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI == "GB0244638982000")
+        parseResponse(
+          "sub09/businessErrorExample-InvalidData-200-002.json",
+          Ok,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI == "GB0344638982000")
+        parseResponse(
+          "sub09/businessErrorExample-InvalidData-200-003.json",
+          Ok,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI == "GB0444638982000")
+        parseResponse(
+          "sub09/businessErrorExample-InvalidData-200-004.json",
+          Ok,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI == "GB0544638982000")
+        parseResponse(
+          "sub09/businessErrorExample-InvalidData-200-005.json",
+          Ok,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI == "GB3744638982000")
+        parseResponse(
+          "sub09/businessErrorExample-InvalidData-200-037.json",
+          Ok,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI == "GB4044638982000")
+        parseResponse(
+          "sub09/businessErrorExample-InvalidData-400.json",
+          BadRequest,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI == "GB4144638982000")
+        parseResponse(
+          "sub09/businessErrorExample-SubscriptionDisplay-ResponseNotReturnedFromBackend.json",
+          NotFound,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI == "GB4244638982000")
+        parseResponse(
+          "sub09/companyInformationErrorResponse.json",
+          BadRequest,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI == "GB5044638982000")
+        parseResponse(
+          "sub09/systemErrorExample-Timeout.json",
+          InternalServerError,
+          Some("sub09/sub09-response-schema.json")
+        )
+      else if (EORI.matches(eoriRegex) && regime == "CDS" && acknowledgementReference.length() == 32)
         validateResponse(
           "sub09/sub09-response-schema.json",
           if (shouldHaveXiEori(EORI))
@@ -48,4 +108,14 @@ class SUB09Controller @Inject() (cc: ControllerComponents)
         Results.BadRequest
 
     }
+
+  private def parseResponse(filename: String, status: Status, schema: Option[String] = None): Result = {
+    val response = jsonDataFromFile(filename)
+    status match {
+      case Ok =>
+        validateResponse(schema.get, response)
+        status(response)
+      case _ => status(response)
+    }
+  }
 }

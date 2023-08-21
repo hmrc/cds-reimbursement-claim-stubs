@@ -50,6 +50,66 @@ class SUB09ControllerSpec extends AnyWordSpec with Matchers with SchemaValidatio
       "sub09/companyInformationNoXiEori.json",
       OK
     )
+
+    testGetSubscription("return 200 - business error 001")(
+      "GB0144638982000",
+      "sub09/businessErrorExample-InvalidData-200-001.json",
+      OK
+    )
+
+    testGetSubscription("return 200 - business error 002")(
+      "GB0244638982000",
+      "sub09/businessErrorExample-InvalidData-200-002.json",
+      OK
+    )
+
+    testGetSubscription("return 200 - business error 003")(
+      "GB0344638982000",
+      "sub09/businessErrorExample-InvalidData-200-003.json",
+      OK
+    )
+
+    testGetSubscription("return 200 - business error 004")(
+      "GB0444638982000",
+      "sub09/businessErrorExample-InvalidData-200-004.json",
+      OK
+    )
+
+    testGetSubscription("return 200 - business error 005")(
+      "GB0544638982000",
+      "sub09/businessErrorExample-InvalidData-200-005.json",
+      OK
+    )
+
+    testGetSubscription("return 200 - business error 037")(
+      "GB3744638982000",
+      "sub09/businessErrorExample-InvalidData-200-037.json",
+      OK
+    )
+
+    testGetSubscription("return 400 - business error")(
+      "GB4044638982000",
+      "sub09/businessErrorExample-InvalidData-400.json",
+      BAD_REQUEST
+    )
+
+    testGetSubscription("return 400 - business error ResponseNotReturnedFromBackend")(
+      "GB4144638982000",
+      "sub09/businessErrorExample-SubscriptionDisplay-ResponseNotReturnedFromBackend.json",
+      NOT_FOUND
+    )
+
+    testGetSubscription("return 400 - companyInformationErrorResponse")(
+      "GB4244638982000",
+      "sub09/companyInformationErrorResponse.json",
+      BAD_REQUEST
+    )
+
+    testGetSubscription("return 500 - companyInformationErrorResponse")(
+      "GB5044638982000",
+      "sub09/systemErrorExample-Timeout.json",
+      INTERNAL_SERVER_ERROR
+    )
   }
 
   def app: Application = GuiceApplicationBuilder().configure("metrics.enabled" -> false).build()

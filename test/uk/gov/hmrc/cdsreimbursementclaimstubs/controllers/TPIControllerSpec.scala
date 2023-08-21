@@ -44,6 +44,23 @@ class TPIControllerSpec extends AnyWordSpec with Matchers with SchemaValidation 
       "tpi01/response-200-no-claims-found.json",
       OK
     )
+
+    Set(
+      "GB0144638982000",
+      "GB0244638982000",
+      "GB0344638982000",
+      "GB0444638982000",
+      "GB0544638982000",
+      "GB3744638982000",
+      "GB4044638982000",
+      "GB4144638982000",
+      "GB5044638982000"
+    ).foreach { eori =>
+      testGetValidReimbursementClaims(s"return 200 - success response NDRC for $eori")(
+        eori
+      )
+    }
+
     testGetReimbursementClaims("return 200 - success response NDRC")(
       "GB744638982006",
       "tpi01/response-200-NDRC.json",

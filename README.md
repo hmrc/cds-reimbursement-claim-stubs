@@ -16,65 +16,65 @@
 
 # TPI05 API Simulated Responses
 
-| EORI               | Http Response Code   | Status                                                 | 
-|--------------------|----------------------|--------------------------------------------------------|
-| AB12345678901234Z  | 200                  | 200 OK                                                 |
-| AC12345678901234Z  | 200                  | 200 OK Returned but error returned from TPI05          |
-| BB12345678901234Y  | 400                  | Bad request: missing mandatory fields in request       |
-| CB12345678901234X  | 400                  | Bad request: payload does not validate against schema  |
-| DB12345678901234W  | 401                  | Bad request: bearer token missing in HTTP header       |
-| EB12345678901234V  | 403                  | WAF error                                              |
-| FB12345678901234U  | 405                  | HTTP method not allowed                                |
-| GB12345678901234T  | 500                  | Time outs, server is down, eis system errors etc       |
-| 10AAAAAAAAAAAAAAA3 | 200                  | 200 OK                                                 |
+| EORI               | Http Response Code | Status                                                |
+|--------------------|--------------------|-------------------------------------------------------|
+| AB12345678901234Z  | 200                | 200 OK                                                |
+| AC12345678901234Z  | 200                | 200 OK Returned but error returned from TPI05         |
+| BB12345678901234Y  | 400                | Bad request: missing mandatory fields in request      |
+| CB12345678901234X  | 400                | Bad request: payload does not validate against schema |
+| DB12345678901234W  | 401                | Bad request: bearer token missing in HTTP header      |
+| EB12345678901234V  | 403                | WAF error                                             |
+| FB12345678901234U  | 405                | HTTP method not allowed                               |
+| GB12345678901234T  | 500                | Time outs, server is down, eis system errors etc      |
+| 10AAAAAAAAAAAAAAA3 | 200                | 200 OK                                                |
 
 # ACC14 API Simulated Responses
 
-| MRN                | Http Response Code  | Status                                                  |
-|--------------------|---------------------|---------------------------------------------------------|
-| 21ABCDEFGHIJKLMNO0 | 200                 | Success - minimum response (no declaration information) |
-| 22ABCDEFGHIJKLMNO1 | 200                 | Success - full response                                 |
-| 41ABCDEFGHIJKLMNO1 | 400                 | Bad request - missing declaration                       |
-| 41ABCDEFGHIJKLMNO2 | 400                 | Bad request - no security deposit                       |
-| 40ABCDEFGHIJKLMNO3 | 405                 | Request made with incorrect HTTP method                 |
-| 50ABCDEFGHIJKLMNO1 | 500                 | Time outs, server is down, eis system errors etc        |
-| 10AAAAAAAAAAAAAAA3 | 200                 | Success - full response with Northern Ireland tax codes |
-| 10AAAAAAAAAAAAAAA6 | 200                 | Success - no contact details, importer GB000000000000006, declarant GB000000000000006 |
-| 10AAAAAAAAAAAAAAA9 | 200                 | Success - no contact details, importer GB000000000000091, declarant GB000000000000092 |
-| 20AAAAAAAAAAAAAAA9 | 200                 | Success - no contact details, importer GB000000000000091, declarant GB000000000000093 |
-| 30AAAAAAAAAAAAAAA9 | 200                 | Success - no contact details, importer GB000000000000094, declarant GB000000000000092 |
-| 40AAAAAAAAAAAAAAA9 | 200                 | Success - full details, importer GB000000000000094, declarant GB000000000000092 |
-| 10AAAAAAAAAAAAAAB9 | 200                 | Success - no consignee/importer, declarant GB000000000000091 |
-| 10AAAAAAAAAAAAAAC9 | 200                 | Success - no consignee/importer, declarant GB000000000000091 |
-| 10AAAAAAAAAAAAAAD9 | 200                 | Success - no consignee/importer, declarant GB000000000000091 |
+| MRN                | Http Response Code | Status                                                                                |
+|--------------------|--------------------|---------------------------------------------------------------------------------------|
+| 21ABCDEFGHIJKLMNO0 | 200                | Success - minimum response (no declaration information)                               |
+| 22ABCDEFGHIJKLMNO1 | 200                | Success - full response                                                               |
+| 41ABCDEFGHIJKLMNO1 | 400                | Bad request - missing declaration                                                     |
+| 41ABCDEFGHIJKLMNO2 | 400                | Bad request - no security deposit                                                     |
+| 40ABCDEFGHIJKLMNO3 | 405                | Request made with incorrect HTTP method                                               |
+| 50ABCDEFGHIJKLMNO1 | 500                | Time outs, server is down, eis system errors etc                                      |
+| 10AAAAAAAAAAAAAAA3 | 200                | Success - full response with Northern Ireland tax codes                               |
+| 10AAAAAAAAAAAAAAA6 | 200                | Success - no contact details, importer GB000000000000006, declarant GB000000000000006 |
+| 10AAAAAAAAAAAAAAA9 | 200                | Success - no contact details, importer GB000000000000091, declarant GB000000000000092 |
+| 20AAAAAAAAAAAAAAA9 | 200                | Success - no contact details, importer GB000000000000091, declarant GB000000000000093 |
+| 30AAAAAAAAAAAAAAA9 | 200                | Success - no contact details, importer GB000000000000094, declarant GB000000000000092 |
+| 40AAAAAAAAAAAAAAA9 | 200                | Success - full details, importer GB000000000000094, declarant GB000000000000092       |
+| 10AAAAAAAAAAAAAAB9 | 200                | Success - no consignee/importer, declarant GB000000000000091                          |
+| 10AAAAAAAAAAAAAAC9 | 200                | Success - no consignee/importer, declarant GB000000000000091                          |
+| 10AAAAAAAAAAAAAAD9 | 200                | Success - no consignee/importer, declarant GB000000000000091                          |
 
 
 # Bank Account Reputation Responses
 Any sort code which is not 6 digits long will be rejected with http 400 (BadRequest)
 Any account number which is not 8 digits long will be rejected with http 400 (BadRequest)
 
-In the following examples the sort code does not matter (as long as it's 6 digits)
+In the following examples, the sort code does not matter (as long as it's 6 digits)
 
 About the fields below and their possible values [click here](https://github.com/hmrc/bank-account-reputation/blob/master/docs/assess/v3/assess.md#accountnumberwithsortcodeisvalid)
 
-| Account Number  | accountNumberWithSortCodeIsValid | accountExists       |
-|-----------------|----------------------------------|---------------------|
-| 11001001        | Yes                              | Some(Yes)           |
-| 11001002        | Yes                              | Some(Indeterminate) |
-| 11001003        | Yes                              | Some(Error)         |
-| 11001004        | Yes                              | Some(No)            |
-| 11002001        | Indeterminate                    | Some(Yes)           |
-| 11002002        | Indeterminate                    | Some(Indeterminate) |
-| 11002003        | Indeterminate                    | Some(Error)         |
-| 11002004        | Indeterminate                    | Some(No)            |
-| 11003001        | Error                            | Some(Yes)           |
-| 11003002        | Error                            | Some(Indeterminate) |
-| 11003003        | Error                            | Some(Error)         |
-| 11003004        | Error                            | Some(No)            |
-| 11004004        | No                               | Some(No)            |
-| 11004009        | No                               | None                |
-| 11004009        | No                               | None                |
-| Anything Else   | Yes                              | Some(Yes)           |
+| Account Number | accountNumberWithSortCodeIsValid | accountExists       |
+|----------------|----------------------------------|---------------------|
+| 11001001       | Yes                              | Some(Yes)           |
+| 11001002       | Yes                              | Some(Indeterminate) |
+| 11001003       | Yes                              | Some(Error)         |
+| 11001004       | Yes                              | Some(No)            |
+| 11002001       | Indeterminate                    | Some(Yes)           |
+| 11002002       | Indeterminate                    | Some(Indeterminate) |
+| 11002003       | Indeterminate                    | Some(Error)         |
+| 11002004       | Indeterminate                    | Some(No)            |
+| 11003001       | Error                            | Some(Yes)           |
+| 11003002       | Error                            | Some(Indeterminate) |
+| 11003003       | Error                            | Some(Error)         |
+| 11003004       | Error                            | Some(No)            |
+| 11004004       | No                               | Some(No)            |
+| 11004009       | No                               | None                |
+| 11004009       | No                               | None                |
+| Anything Else  | Yes                              | Some(Yes)           |
 
 # BARS Simulated Responses
 
@@ -88,42 +88,42 @@ About the fields below and their possible values [click here](https://github.com
 
 `GET /customs-data-store/eori/:eori/verified-email`
 
-| EORI number      | Http Response Code | Returned information | 
-|------------------|--------------------|----------------------|
-| GB999999999999999| 404 | - |
-| NOEMAIL| 404 | - |
-| EORINOTIMESTAMP| 404 | - | 
-| ETMP503ERROR| 503 | ```{"error": 503,"errorMessage":"Service Unavailable"}``` | 
-| GB123456789012| 200 | ```{"address":"someemail@mail.com","timestamp":"2007-03-20T01:02:03.000Z","undeliverable":{"event":{"code":12,"detected":"2021-05-14T10:59:45.811+01:00","emailAddress":"email@email.com","enrolment":"HMRC-CUS-ORG~EORINumber~testEori","event":"someEvent","id":"example-id","reason":"Inbox full"},"eventId":"example-id","groupId":"example-group-id","subject":"subject-example","timestamp":"2021-05-14T10:59:45.811+01:00"}}``` | 
-| any other EORI | 200 | ```{"address": "someemail@mail.com","timestamp": "2007-03-20T01:02:03.000Z"}```|  
+| EORI number       | Http Response Code | Returned information                                                                                                                                                                                                                                                                                                                                                                                                                   |
+|-------------------|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GB999999999999999 | 404                | -                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| NOEMAIL           | 404                | -                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| EORINOTIMESTAMP   | 404                | -                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ETMP503ERROR      | 503                | ```{"error": 503,"errorMessage":"Service Unavailable"}```                                                                                                                                                                                                                                                                                                                                                                              |
+| GB123456789012    | 200                | ```{"address":"someemail@mail.com","timestamp":"2007-03-20T01:02:03.000Z","undeliverable":{"event":{"code":12,"detected":"2021-05-14T10:59:45.811+01:00","emailAddress":"email@email.com","enrolment":"HMRC-CUS-ORG~EORINumber~testEori","event":"someEvent","id":"example-id","reason":"Inbox full"},"eventId":"example-id","groupId":"example-group-id","subject":"subject-example","timestamp":"2021-05-14T10:59:45.811+01:00"}}``` |
+| any other EORI    | 200                | ```{"address": "someemail@mail.com","timestamp": "2007-03-20T01:02:03.000Z"}```                                                                                                                                                                                                                                                                                                                                                        |
 
 # Customs Data Store Company Information
 
 `GET /customs-data-store/eori/:eori/company-information`
 
-| EORI number      | Http Response Code | Returned information | 
-|------------------|--------------------|----------------------|
-| GB999999999999990| 404 | - |
-| ETMP503ERROR| 503 | ```{"error": 503,"errorMessage":"Service Unavailable"}``` | 
-| NOEMAIL| 200 | ```{"name": "NOEMAIL","consent": "0","address": {"city": "Shipley","countryCode": "GB","postalCode": "BD18 3ER","streetAndNumber": "My Company"}}``` |
-| GB333186811543| 200 | ```{"name": "ABC Ltd","consent": "0","address": {"city": "London","countryCode": "GB","postalCode": "SW11 5RZ","streetAndNumber": "86 Mysore Road"}}``` | 
-| any other EORI | 200 | ```{"name": "Tony Stark","consent": "1","address": {"city": "London","countryCode": "GB","postalCode": "SW11 5RZ","streetAndNumber": "86 Mysore Road"}}```|  
+| EORI number       | Http Response Code | Returned information                                                                                                                                       |
+|-------------------|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GB999999999999990 | 404                | -                                                                                                                                                          |
+| ETMP503ERROR      | 503                | ```{"error": 503,"errorMessage":"Service Unavailable"}```                                                                                                  |
+| NOEMAIL           | 200                | ```{"name": "NOEMAIL","consent": "0","address": {"city": "Shipley","countryCode": "GB","postalCode": "BD18 3ER","streetAndNumber": "My Company"}}```       |
+| GB333186811543    | 200                | ```{"name": "ABC Ltd","consent": "0","address": {"city": "London","countryCode": "GB","postalCode": "SW11 5RZ","streetAndNumber": "86 Mysore Road"}}```    |
+| any other EORI    | 200                | ```{"name": "Tony Stark","consent": "1","address": {"city": "London","countryCode": "GB","postalCode": "SW11 5RZ","streetAndNumber": "86 Mysore Road"}}``` |
 
 # View and Upload
 
 ## TPI01: Get Reimbursement Claims
-| EORI number      | Http Response Code | Returned information                                                                                                |
-|------------------|--------------------|---------------------------------------------------------------------------------------------------------------------|
-| GB744638982000   | 200                | Success response including multiple reimbursement claims with all possible case statuses                                                           |
-| GB744638982001   | 200                | Success response including multiple reimbursement claims                                                            |
-| GB744638982002   | 200                | Success response including no reimbursement claims                                                                  |
-| GB744638982008   | 200                | Success response including one of each TPI01 Case Status (odd case numbers are multiple cases, even are single)     |
-| GB744638982009   | 200                | Success response including duplicate case numbers                                                                   |
-| GB744638982010   | 200                | Success response including one case without declarationId, one with decarlationId as entry number and one valid MRN |
+| EORI number    | Http Response Code | Returned information                                                                                                |
+|----------------|--------------------|---------------------------------------------------------------------------------------------------------------------|
+| GB744638982000 | 200                | Success response including multiple reimbursement claims with all possible case statuses                            |
+| GB744638982001 | 200                | Success response including multiple reimbursement claims                                                            |
+| GB744638982002 | 200                | Success response including no reimbursement claims                                                                  |
+| GB744638982008 | 200                | Success response including one of each TPI01 Case Status (odd case numbers are multiple cases, even are single)     |
+| GB744638982009 | 200                | Success response including duplicate case numbers                                                                   |
+| GB744638982010 | 200                | Success response including one case without declarationId, one with decarlationId as entry number and one valid MRN |
 | TPI01EORIERROR | 200                | Error response invalid EORI                                                                                         |
-| TPI01MISSING    | 400                | Error response BadRequest for fields missing                                                                        |
-| TPI01PATTERN    | 400                | Error response BadRequest for pattern error                                                                         |
-| TPI01500        | 500                | Error response InternalServerError for system timeout                                                               |
+| TPI01MISSING   | 400                | Error response BadRequest for fields missing                                                                        |
+| TPI01PATTERN   | 400                | Error response BadRequest for pattern error                                                                         |
+| TPI01500       | 500                | Error response InternalServerError for system timeout                                                               |
 
 ### For testing a specific case status use the following
 
@@ -179,6 +179,20 @@ Odd ending case numbers are multiple cases, even are individual
 | GB100000000018 | Resolved-Manual BTA/Refund        | Closed / Part approved      |
 | GB100000000019 | Open-Extension Granted            | In Progress                 |
 | GB100000000020 | Resolved-Withdrawn                | Closed / Withdrawn          |
+
+## SUOB09: Get Subscription information
+| EORI number     | Http Response Code | Returned information                               |
+|-----------------|--------------------|----------------------------------------------------|
+| GB0144638982000 | 200                | 001 REGIME missing or invalid                      |
+| GB0244638982000 | 200                | 002 SAP_NUMBER missing or invalid                  |
+| GB0344638982000 | 200                | 003 Request could not be processed                 |
+| GB0444638982000 | 200                | 004 Duplicate submission acknowledgement reference |
+| GB0544638982000 | 200                | 005 No form bundle found                           |
+| GB3744638982000 | 200                | 037 Mandatory parameters missing or invalid        |
+| GB4044638982000 | 400                | 005 No form bundle found                           |
+| GB4144638982000 | 402                | ID exists but no detail returned                   |
+| GB4244638982000 | 402                | 002 SAP_NUMBER missing or invalid                  |
+| GB5044638982000 | 500                | Send timeout                                       |
 
 ### License
 
