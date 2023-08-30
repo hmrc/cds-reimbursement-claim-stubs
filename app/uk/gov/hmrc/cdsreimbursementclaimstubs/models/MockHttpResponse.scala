@@ -17,8 +17,6 @@
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models
 
 import cats.syntax.eq._
-import shapeless.syntax.std.tuple.unitTupleOps
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.MockHttpResponse.createEveryCombinationOfPaymentMethods
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14ErrorResponse.Acc14ErrorResponseType
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14Response.Acc14ResponseType
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.DeclarationResponse
@@ -26,8 +24,6 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids.{EORI, MRN}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.Tpi05ErrorResponse.Tpi05ErrorResponseType
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.Tpi05Response.Tpi05ResponseType
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.{SubmitClaimResponse, WafErrorResponse}
-
-import scala.collection.immutable.Nil.:::
 
 final case class MockHttpResponse(
   mrnPredicate: MRN => Boolean,
@@ -38,8 +34,30 @@ final case class MockHttpResponse(
 
 object MockHttpResponse {
 
-  def getSubmitClaimHttpResponse(eori: EORI): Option[MockHttpResponse] = httpResponses.find(_.eoriPredicate(eori))
-  def getDeclarationHttpResponse(mrn: MRN): Option[MockHttpResponse]   = httpResponses.find(_.mrnPredicate(mrn))
+  def getSubmitClaimHttpResponse(eori: EORI): Option[MockHttpResponse] =
+    httpResponses
+      .find(_.eoriPredicate(eori))
+      .orElse(httpResponses.headOption)
+
+  def getDeclarationHttpResponse(mrn: MRN): Option[MockHttpResponse] =
+    httpResponses
+      .find(_.mrnPredicate(mrn))
+      .orElse(
+        getSecuritiesDeclaration(mrn, "ACS") match {
+          case Some(_) => None
+          case None =>
+            Some(
+              MockHttpResponse(
+                _ === mrn,
+                _ === EORI("GB000000000000001"),
+                SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+                DeclarationResponse(
+                  Right(Acc14ResponseType.OK_FULL_RESPONSE(mrn.value, "GB000000000000001", "GB000000000000001"))
+                )
+              )
+            )
+        }
+      )
 
   private val httpResponses: List[MockHttpResponse] =
     List(
@@ -832,17 +850,17 @@ object MockHttpResponse {
     ) ++ createPaymentMethodsForEoriEnding("01") ++
       createPaymentMethodsForEoriEnding("02")
 
-  def createPaymentMethodsForEoriEnding(eoriEnding: String): List[MockHttpResponse] = {
+  def createPaymentMethodsForEoriEnding(eoriEnding: String): List[MockHttpResponse] =
     createEveryCombinationOfPaymentMethods("00", eoriEnding) ++
       createEveryCombinationOfPaymentMethods("01", eoriEnding) ++
       createEveryCombinationOfPaymentMethods("02", eoriEnding) ++
       createEveryCombinationOfPaymentMethods("03", eoriEnding) ++
       createEveryCombinationOfPaymentMethods("04", eoriEnding) ++
       createEveryCombinationOfPaymentMethods("05", eoriEnding)
-  }
 
-  def createEveryCombinationOfPaymentMethods(prependMrn: String, eoriEnding: String): List[MockHttpResponse] = {
-    List(createMockHttpResponseWithPaymentMethods("001", prependMrn = prependMrn, eoriEnding = eoriEnding),
+  def createEveryCombinationOfPaymentMethods(prependMrn: String, eoriEnding: String): List[MockHttpResponse] =
+    List(
+      createMockHttpResponseWithPaymentMethods("001", prependMrn = prependMrn, eoriEnding = eoriEnding),
       createMockHttpResponseWithPaymentMethods("002", prependMrn = prependMrn, eoriEnding = eoriEnding),
       createMockHttpResponseWithPaymentMethods("003", prependMrn = prependMrn, eoriEnding = eoriEnding),
       createMockHttpResponseWithPaymentMethods("006", prependMrn = prependMrn, eoriEnding = eoriEnding),
@@ -856,17 +874,26 @@ object MockHttpResponse {
       createMockHttpResponseWithPaymentMethods("001", "002", "006", prependMrn = prependMrn, eoriEnding = eoriEnding),
       createMockHttpResponseWithPaymentMethods("001", "003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding),
       createMockHttpResponseWithPaymentMethods("002", "003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("001", "002", "003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding))
-  }
+      createMockHttpResponseWithPaymentMethods(
+        "001",
+        "002",
+        "003",
+        "006",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding
+      )
+    )
 
-  def createMockHttpResponseWithPaymentMethods( first: String = "AAA",
-                                                second: String = "AAA",
-                                                third: String = "AAA",
-                                                fourth: String= "AAA",
-                                                prependMrn: String = "00",
-                                                eoriEnding: String = "01"): MockHttpResponse = {
-    val mrn = s"${prependMrn}AA${first}${second}${third}${fourth}${eoriEnding}"
-    val eori = s"GB0000000000000${eoriEnding}"
+  def createMockHttpResponseWithPaymentMethods(
+    first: String = "AAA",
+    second: String = "AAA",
+    third: String = "AAA",
+    fourth: String = "AAA",
+    prependMrn: String = "00",
+    eoriEnding: String = "01"
+  ): MockHttpResponse = {
+    val mrn  = s"${prependMrn}AA$first$second$third$fourth$eoriEnding"
+    val eori = s"GB0000000000000$eoriEnding"
     MockHttpResponse(
       _ === MRN(mrn),
       _ === EORI(eori),
