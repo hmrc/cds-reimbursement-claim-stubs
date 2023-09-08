@@ -487,6 +487,72 @@ object MockHttpResponse {
         )
       ),
       MockHttpResponse(
+        _ === MRN("55AAAAAAAAAAAAAAA0"),
+        _ === EORI("GB000000000000050"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_NO_CONTACT_DETAILS("55AAAAAAAAAAAAAAA0", "GB000000000000050", "GB000000000000001")
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("55AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000051"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_NO_CONTACT_DETAILS("55AAAAAAAAAAAAAAA1", "GB000000000000051", "GB000000000000001")
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("55AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000052"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_NO_CONTACT_DETAILS("55AAAAAAAAAAAAAAA2", "GB000000000000052", "GB000000000000001")
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("55AAAAAAAAAAAAAAA3"),
+        _ === EORI("GB000000000000053"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_NO_CONTACT_DETAILS("55AAAAAAAAAAAAAAA3", "GB000000000000001", "GB000000000000053")
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("55AAAAAAAAAAAAAAA4"),
+        _ === EORI("GB000000000000054"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_NO_CONTACT_DETAILS("55AAAAAAAAAAAAAAA4", "GB000000000000001", "GB000000000000054")
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("55AAAAAAAAAAAAAAA5"),
+        _ === EORI("GB000000000000055"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_NO_CONTACT_DETAILS("55AAAAAAAAAAAAAAA5", "GB000000000000001", "GB000000000000055")
+          )
+        )
+      ),
+      MockHttpResponse(
         _ === MRN("20AAAAAAAAAAAAAAA9"),
         _ === EORI("GB000000000000090"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
@@ -1459,6 +1525,90 @@ object MockHttpResponse {
                   reasonForSecurity,
                   "GB000000000000091",
                   "GB000000000000092"
+                )
+            )
+          )
+        )
+      case (MRN("55AAAAAAAAAAAAAAA0"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000050",
+                  "GB000000000000001"
+                )
+            )
+          )
+        )
+      case (MRN("55AAAAAAAAAAAAAAA1"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000051",
+                  "GB000000000000001"
+                )
+            )
+          )
+        )
+      case (MRN("55AAAAAAAAAAAAAAA2"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000052",
+                  "GB000000000000001"
+                )
+            )
+          )
+        )
+      case (MRN("55AAAAAAAAAAAAAAA3"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000001",
+                  "GB000000000000053"
+                )
+            )
+          )
+        )
+      case (MRN("55AAAAAAAAAAAAAAA4"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000001",
+                  "GB000000000000054"
+                )
+            )
+          )
+        )
+      case (MRN("55AAAAAAAAAAAAAAA5"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000001",
+                  "GB000000000000055"
                 )
             )
           )
