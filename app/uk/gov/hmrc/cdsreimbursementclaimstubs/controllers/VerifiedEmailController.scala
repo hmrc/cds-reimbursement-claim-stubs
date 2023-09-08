@@ -58,6 +58,12 @@ class VerifiedEmailController @Inject() (cc: ControllerComponents) extends Backe
         case "NOEMAIL" | "EORINOTIMESTAMP" | "GB999999999999999" => NotFound
         case "ETMP503ERROR" => ServiceUnavailable(serviceUnavailableResponse)
         case "GB123456789012" => Ok(Json.toJson(undeliverableResponse))
+        case "GB000000000000050" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+        case "GB000000000000051" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+        case "GB000000000000052" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+        case "GB000000000000053" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+        case "GB000000000000054" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+        case "GB000000000000055" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
         case "GB333186811543" | _ => Ok(Json.toJson(successfullResponse))
       }
     }
