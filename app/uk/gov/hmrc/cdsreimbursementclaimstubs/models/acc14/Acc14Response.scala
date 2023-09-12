@@ -69,7 +69,9 @@ object Acc14Response {
       declarationId: String,
       importerEORI: String,
       declarantEORI: String,
-      paymentMethods: Seq[String]
+      paymentMethods: Seq[String],
+      withConsigneeContactDetails: Boolean = true,
+      withDeclarantContactDetails: Boolean = true
     ) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId: String, importerEORI: String, declarantEORI: String)
         extends Acc14ResponseType
@@ -126,8 +128,8 @@ object Acc14Response {
       case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId) => getPartialAcc14Response(declarationId)
       case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14Response(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(declarationId, importerEORI, declarantEORI, paymentMethods) =>
-        getFullAcc14ResponseWithSubsidyPayment(declarationId, importerEORI, declarantEORI, paymentMethods)
+      case Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(declarationId, importerEORI, declarantEORI, paymentMethods, withConsigneeContactDetails, withDeclarantContactDetails) =>
+        getFullAcc14ResponseWithSubsidyPayment(declarationId, importerEORI, declarantEORI, paymentMethods, withConsigneeContactDetails, withDeclarantContactDetails)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14ResponseOtherDuties1(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId, importerEORI, declarantEORI) =>
@@ -1360,7 +1362,9 @@ object Acc14Response {
     declarationId: String,
     importerEORI: String,
     declarantEORI: String,
-    paymentMethods: Seq[String] = Seq("001")
+    paymentMethods: Seq[String] = Seq("001"),
+    withConsigneeContactDetails: Boolean = true,
+    withDeclarantContactDetails: Boolean = true
   ) = {
     var index = 0
     def nextPaymentMethod: String = {
@@ -1369,6 +1373,25 @@ object Acc14Response {
       index = index + 1
       paymentMethod
     }
+    val consigneeContactDetails: String = s""",
+                                             |				"contactDetails": {
+                                             |					"contactName": "Online Sales LTD",
+                                             |					"addressLine1": "11 Mount Road",
+                                             |					"addressLine3": "London",
+                                             |					"postalCode": "E10 7PP",
+                                             |					"countryCode": "GB",
+                                             |         "telephone": "+4420723934397",
+                                             |         "emailAddress" : "automation@gmail.com"
+                                             |				}""".stripMargin
+
+    val declarantContactDetails: String = s""",
+                                             |				"contactDetails": {
+                                             |					"contactName": "Info Tech LTD",
+                                             |					"addressLine1": "45 Church Road",
+                                             |					"addressLine3": "Leeds",
+                                             |					"postalCode": "LS1 2HA",
+                                             |					"countryCode": "GB"
+                                             |				}""".stripMargin
     Acc14Response(
       Json.parse(
         s"""
@@ -1389,13 +1412,6 @@ object Acc14Response {
          |					"addressLine1": "12 Skybricks Road",
          |					"addressLine3": "Coventry",
          |					"postalCode": "CV3 6EA",
-         |					"countryCode": "GB"
-         |				},
-         |				"contactDetails": {
-         |					"contactName": "Info Tech LTD",
-         |					"addressLine1": "45 Church Road",
-         |					"addressLine3": "Leeds",
-         |					"postalCode": "LS1 2HA",
          |					"countryCode": "GB"
          |				}
          |			},
@@ -1446,16 +1462,7 @@ object Acc14Response {
          |					"addressLine3": "Newcastle",
          |					"postalCode": "NE12 5BT",
          |					"countryCode": "GB"
-         |				},
-         |				"contactDetails": {
-         |					"contactName": "Online Sales LTD",
-         |					"addressLine1": "11 Mount Road",
-         |					"addressLine3": "London",
-         |					"postalCode": "E10 7PP",
-         |					"countryCode": "GB",
-         |         "telephone": "+4420723934397",
-         |         "emailAddress" : "automation@gmail.com"
-         |				}
+         |				}${consigneeContactDetails}
          |			},
          |			"bankDetails": {
          |				"consigneeBankDetails": {
@@ -1511,9 +1518,11 @@ object Acc14Response {
     declarationId: String,
     importerEORI: String,
     declarantEORI: String,
-    paymentMethods: Seq[String]
+    paymentMethods: Seq[String],
+    withConsigneeContactDetails: Boolean = true,
+    withDeclarantContactDetails: Boolean = true
   ) =
-    getFullAcc14Response(declarationId, importerEORI, declarantEORI, paymentMethods)
+    getFullAcc14Response(declarationId, importerEORI, declarantEORI, paymentMethods, withConsigneeContactDetails, withDeclarantContactDetails)
 
   def getFullAcc14WithoutConsignee(declarationId: String, declarantEORI: String) = Acc14Response(
     Json.parse(
