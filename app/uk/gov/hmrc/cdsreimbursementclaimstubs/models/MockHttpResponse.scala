@@ -956,9 +956,13 @@ object MockHttpResponse {
     third: String = "AAA",
     fourth: String = "AAA",
     prependMrn: String = "00",
-    eoriEnding: String = "01"
+    eoriEnding: String = "01",
+    withConsigneeContactDetails: Boolean = true,
+    withDeclarantContactDetails: Boolean = true
   ): MockHttpResponse = {
-    val mrn  = s"${prependMrn}AA$first$second$third$fourth$eoriEnding"
+    val consigneeLetter: String = if(withConsigneeContactDetails) "A" else "0"
+    val declarantLetter: String = if(withDeclarantContactDetails) "A" else "0"
+    val mrn  = s"${prependMrn}${consigneeLetter}${declarantLetter}$first$second$third$fourth$eoriEnding"
     val eori = s"GB0000000000000$eoriEnding"
     MockHttpResponse(
       _ === MRN(mrn),
@@ -967,7 +971,7 @@ object MockHttpResponse {
       DeclarationResponse(
         Right(
           Acc14ResponseType
-            .OK_FULL_RESPONSE_SUBSIDY(mrn, eori, eori, Seq(first, second, third, fourth).filter(_ != "AAA"))
+            .OK_FULL_RESPONSE_SUBSIDY(mrn, eori, eori, Seq(first, second, third, fourth).filter(_ != "AAA"), withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails)
         )
       )
     )
