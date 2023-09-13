@@ -952,7 +952,9 @@ object MockHttpResponse {
         "003",
         "006",
         prependMrn = prependMrn,
-        eoriEnding = eoriEnding
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
       )
     )
 
