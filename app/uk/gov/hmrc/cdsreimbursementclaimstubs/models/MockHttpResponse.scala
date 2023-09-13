@@ -917,29 +917,35 @@ object MockHttpResponse {
       createPaymentMethodsForEoriEnding("02")
 
   def createPaymentMethodsForEoriEnding(eoriEnding: String): List[MockHttpResponse] =
-    createEveryCombinationOfPaymentMethods("00", eoriEnding) ++
-      createEveryCombinationOfPaymentMethods("01", eoriEnding) ++
-      createEveryCombinationOfPaymentMethods("02", eoriEnding) ++
-      createEveryCombinationOfPaymentMethods("03", eoriEnding) ++
-      createEveryCombinationOfPaymentMethods("04", eoriEnding) ++
-      createEveryCombinationOfPaymentMethods("05", eoriEnding)
+    createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact("00", eoriEnding) ++
+      createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact("01", eoriEnding) ++
+      createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact("02", eoriEnding) ++
+      createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact("03", eoriEnding) ++
+      createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact("04", eoriEnding) ++
+      createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact("05", eoriEnding)
 
-  def createEveryCombinationOfPaymentMethods(prependMrn: String, eoriEnding: String): List[MockHttpResponse] =
+  def createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact(prependMrn: String, eoriEnding: String): List[MockHttpResponse] =
+    createEveryCombinationOfPaymentMethods(prependMrn, eoriEnding, withConsigneeContactDetails = false, withDeclarantContactDetails = false) ++
+      createEveryCombinationOfPaymentMethods(prependMrn, eoriEnding, withConsigneeContactDetails = true, withDeclarantContactDetails = false) ++
+      createEveryCombinationOfPaymentMethods(prependMrn, eoriEnding, withConsigneeContactDetails = false, withDeclarantContactDetails = true) ++
+      createEveryCombinationOfPaymentMethods(prependMrn, eoriEnding, withConsigneeContactDetails = true, withDeclarantContactDetails = true)
+
+  def createEveryCombinationOfPaymentMethods(prependMrn: String, eoriEnding: String, withConsigneeContactDetails: Boolean, withDeclarantContactDetails: Boolean): List[MockHttpResponse] =
     List(
-      createMockHttpResponseWithPaymentMethods("001", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("002", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("003", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("006", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("001", "002", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("001", "003", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("001", "006", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("002", "003", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("002", "006", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("001", "002", "003", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("001", "002", "006", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("001", "003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding),
-      createMockHttpResponseWithPaymentMethods("002", "003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding),
+      createMockHttpResponseWithPaymentMethods("001", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("002", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("003", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("001", "002", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("001", "003", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("001", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("002", "003", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("002", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("001", "002", "003", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("001", "002", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("001", "003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods("002", "003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
       createMockHttpResponseWithPaymentMethods(
         "001",
         "002",
