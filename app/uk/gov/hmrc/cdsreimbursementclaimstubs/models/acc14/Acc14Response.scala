@@ -1413,7 +1413,7 @@ object Acc14Response {
          |					"addressLine3": "Coventry",
          |					"postalCode": "CV3 6EA",
          |					"countryCode": "GB"
-         |				}
+         |				}${if(withDeclarantContactDetails) declarantContactDetails else ""}
          |			},
          |          "accountDetails":
          |          [
@@ -1462,7 +1462,7 @@ object Acc14Response {
          |					"addressLine3": "Newcastle",
          |					"postalCode": "NE12 5BT",
          |					"countryCode": "GB"
-         |				}${consigneeContactDetails}
+         |				}${if(withConsigneeContactDetails) consigneeContactDetails else ""}
          |			},
          |			"bankDetails": {
          |				"consigneeBankDetails": {
