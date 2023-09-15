@@ -968,8 +968,8 @@ object MockHttpResponse {
     withConsigneeContactDetails: Boolean = true,
     withDeclarantContactDetails: Boolean = true
   ): MockHttpResponse = {
-    val consigneeLetter: String = if(withConsigneeContactDetails) "A" else "0"
-    val declarantLetter: String = if(withDeclarantContactDetails) "A" else "0"
+    val consigneeLetter: String = if(withConsigneeContactDetails) "A" else "B"
+    val declarantLetter: String = if(withDeclarantContactDetails) "A" else "B"
     val mrn  = s"${prependMrn}${consigneeLetter}${declarantLetter}$first$second$third$fourth$eoriEnding"
     val eori = s"GB0000000000000$eoriEnding"
     MockHttpResponse(
