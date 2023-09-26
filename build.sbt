@@ -3,6 +3,7 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName = "cds-reimbursement-claim-stubs"
 
+ThisBuild / libraryDependencySchemes += "org.typelevel"    %% "cats-core"        % "always"
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
 
 addCommandAlias("fmt", "all scalafmtSbt scalafmt test:scalafmt")
