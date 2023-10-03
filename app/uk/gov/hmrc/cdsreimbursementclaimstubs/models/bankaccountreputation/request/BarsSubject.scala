@@ -31,7 +31,7 @@ final case class BarsSubject(
       .filter(_.isDefined)
       .map(_.get)
       .mkString(" ")
-    if (accountName.isBlank()) None else Some(accountName)
+    if (accountName.isEmpty) None else Some(accountName)
   }
 }
 
