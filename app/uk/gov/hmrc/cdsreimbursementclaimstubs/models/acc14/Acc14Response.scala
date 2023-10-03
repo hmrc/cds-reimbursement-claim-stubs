@@ -99,6 +99,14 @@ object Acc14Response {
       includeConsigneeBankDetails: Boolean,
       includeDeclarantBankDetails: Boolean
     ) extends Acc14ResponseType
+    case class OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+      declarationId: String,
+      importerEORI: String,
+      declarantEORI: String,
+      includeConsigneeBankDetails: Boolean,
+      includeDeclarantBankDetails: Boolean,
+      paymentMethods: Seq[String],
+    ) extends Acc14ResponseType
     case class OK_RESPONSE_NO_BANK_DETAILS(
       declarationId: String,
       reasonForSecurity: String,
@@ -161,6 +169,9 @@ object Acc14Response {
       case Acc14ResponseType
       .OK_RESPONSE_SPECIFIC_BANK_DETAILS(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails) =>
         getFullAcc14WithSpecificBankDetails(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails)
+      case Acc14ResponseType
+      .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods) =>
+        getFullAcc14WithSpecificBankDetailsSubsidy(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods)
       case Acc14ResponseType
             .OK_RESPONSE_NO_BANK_DETAILS(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
         getFullAcc14WithoutBankDetails(declarationId, reasonForSecurity, importerEORI, declarantEORI)
@@ -464,6 +475,171 @@ object Acc14Response {
          |}
          |""".stripMargin)
   )
+
+  def getFullAcc14WithSpecificBankDetailsSubsidy(
+                                           declarationId: String,
+                                           importerEORI: String,
+                                           declarantEORI: String,
+                                           includeConsigneeBankDetails: Boolean = false,
+                                           includeDeclarantBankDetails: Boolean = false,
+                                           paymentMethods: Seq[String]
+                                         ) = {
+    var index = 0
+
+    def nextPaymentMethod: String = {
+      if (index >= paymentMethods.size) index = 0
+      val paymentMethod = paymentMethods(index)
+      index = index + 1
+      paymentMethod
+    }
+
+    Acc14Response(
+      Json.parse(
+        s"""
+           |{
+           |    "overpaymentDeclarationDisplayResponse":
+           |    {
+           |        "responseCommon":
+           |        {
+           |            "status": "OK",
+           |            "processingDate": "2001-12-17T09:30:47Z"
+           |        },
+           |        "responseDetail":
+           |        {
+           |            "declarationId": "$declarationId",
+           |            "acceptanceDate": "2019-08-13",
+           |            "declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
+           |            "btaDueDate": "2019-09-13",
+           |            "procedureCode": "71",
+           |            "btaSource": "DMS",
+           |            "declarantDetails":
+           |            {
+           |                "declarantEORI": "$declarantEORI",
+           |                "legalName": "Fred Bloggs and Co Ltd",
+           |                "establishmentAddress":
+           |                {
+           |                    "addressLine1": "10 Rillington Place",
+           |                    "addressLine2": "London",
+           |                    "addressLine3": "Pimlico",
+           |                    "postalCode": "W11 1RH",
+           |                    "countryCode": "GB"
+           |                },
+           |                "contactDetails":
+           |                {
+           |                    "contactName": "Angela Smith",
+           |                    "addressLine1": "J P Jones Insolvency Ltd",
+           |                    "addressLine2": "14 Briar Lane",
+           |                    "addressLine3": "Pimlico",
+           |                    "postalCode": "W11 1QT",
+           |                    "countryCode": "GB",
+           |                    "telephone": "0270 112 3476",
+           |                    "emailAddress": "fred@bloggs.com"
+           |                }
+           |            },
+           |            "consigneeDetails":
+           |            {
+           |                "consigneeEORI": "$importerEORI",
+           |                "legalName": "Swift Goods Ltd",
+           |                "establishmentAddress":
+           |                {
+           |                    "addressLine1": "14 Briar Lane",
+           |                    "addressLine2": "London",
+           |                    "addressLine3": "Pimlico",
+           |                    "countryCode": "GB"
+           |                },
+           |                "contactDetails":
+           |                {
+           |                    "contactName": "Frank Sidebotham",
+           |                    "addressLine1": "J P Jones Insolvency Ltd",
+           |                    "addressLine2": "14 Briar Lane",
+           |                    "addressLine3": "Pimlico",
+           |                    "postalCode": "W11 1QT",
+           |                    "countryCode": "GB",
+           |                    "telephone": "0207 678 3243",
+           |                    "emailAddress": "enquiries@swftgoods.com"
+           |                }
+           |            },
+           |            "accountDetails":
+           |            [
+           |                {
+           |                    "accountType": "001",
+           |                    "accountNumber": "8901112",
+           |                    "eori": "GB000000000000001",
+           |                    "legalName": "Fred Bloggs and Co Ltd",
+           |                    "contactDetails":
+           |                    {
+           |                        "contactName": "Angela Smith",
+           |                        "addressLine1": "J P Jones Insolvency Ltd",
+           |                        "addressLine2": "14 Briar Lane",
+           |                        "addressLine3": "Holborn",
+           |                        "addressLine4": "London",
+           |                        "countryCode": "GB",
+           |                        "telephone": "0270 112 3476",
+           |                        "emailAddress": "fred@bloggs.com"
+           |                    }
+           |                },
+           |                {
+           |                    "accountType": "002",
+           |                    "accountNumber": "8901113",
+           |                    "eori": "GB000000000000001",
+           |                    "legalName": "Fred Bloggs and Co Ltd",
+           |                    "contactDetails":
+           |                    {
+           |                        "contactName": "Angela Smith",
+           |                        "addressLine1": "J P Jones Insolvency Ltd",
+           |                        "addressLine2": "14 Briar Lane",
+           |                        "addressLine3": "London",
+           |                        "countryCode": "GB",
+           |                        "telephone": "0270 112 3476",
+           |                        "emailAddress": "fred@bloggs.com"
+           |                    }
+           |                }
+           |            ],
+           |            ${
+          (includeDeclarantBankDetails, includeConsigneeBankDetails) match {
+            case (false, false) => ""
+            case (true, false) => s""" "bankDetails":  ${declarantBankDetails},"""
+            case (false, true) => s""" "bankDetails":  ${consigneeBankDetails},"""
+            case (true, true) => s""" "bankDetails":  ${consigneeAndDeclarantBankDetails},"""
+          }
+        }
+           |			"ndrcDetails": [
+           |				{
+           |					"taxType": "A80",
+           |					"amount": "218.00",
+           |					"paymentMethod": "$nextPaymentMethod",
+           |					"paymentReference": "GB201430007000",
+           |          "cmaEligible": "0"
+           |				},
+           |				{
+           |					"taxType": "A95",
+           |					"amount": "211.00",
+           |					"paymentMethod": "$nextPaymentMethod",
+           |					"paymentReference": "GB201430007000",
+           |           "cmaEligible": "0"
+           |				},
+           |				{
+           |					"taxType": "A90",
+           |					"amount": "228.00",
+           |					"paymentMethod": "$nextPaymentMethod",
+           |					"paymentReference": "GB201430007000",
+           |          "cmaEligible": "0"
+           |				},
+           |				{
+           |					"taxType": "A85",
+           |					"amount": "171.00",
+           |					"paymentMethod": "$nextPaymentMethod",
+           |					"paymentReference": "GB201430007000",
+           |          "cmaEligible": "0"
+           |				}
+           |			]
+           |        }
+           |    }
+           |}
+           |""".stripMargin)
+    )
+  }
+
   def getFullAcc14WithoutBankDetails(
     declarationId: String,
     reasonForSecurity: String,
