@@ -623,14 +623,14 @@ object MockHttpResponse {
     )
   ),
   MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAA9"),
+    _ === MRN("60AAAAAAAAAAAAAAA9"),
     _ === EORI("GB000000000000001"),
     SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
     DeclarationResponse(
       Right(
         Acc14ResponseType
           .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAA9",
+            "60AAAAAAAAAAAAAAA9",
             "GB000000000000002",
             "GB000000000000001",
             false,
@@ -639,6 +639,177 @@ object MockHttpResponse {
       )
     )
   ),
+      MockHttpResponse(
+        _ === MRN("60DDDDDDDDDDDDDDD1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+                "60DDDDDDDDDDDDDDD1",
+                "GB000000000000001",
+                "GB000000000000001",
+                false,
+                false,
+                Seq("006")
+              )
+          )
+        )
+      )
+      ,
+      MockHttpResponse(
+        _ === MRN("60DDDDDDDDDDDDDDD2"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+                "60DDDDDDDDDDDDDDD2",
+                "GB000000000000001",
+                "GB000000000000001",
+                true,
+                false,
+                Seq("006")
+              )
+          )
+        )
+      )
+      ,
+      MockHttpResponse(
+        _ === MRN("60DDDDDDDDDDDDDDD3"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+                "60DDDDDDDDDDDDDDD3",
+                "GB000000000000001",
+                "GB000000000000001",
+                false,
+                true,
+                Seq("006")
+              )
+          )
+        )
+      )
+      ,
+      MockHttpResponse(
+        _ === MRN("60DDDDDDDDDDDDDDD4"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+                "60DDDDDDDDDDDDDDD4",
+                "GB000000000000001",
+                "GB000000000000002",
+                false,
+                false,
+                Seq("006")
+              )
+          )
+        )
+      )
+      ,
+      MockHttpResponse(
+        _ === MRN("60DDDDDDDDDDDDDDD5"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+                "60DDDDDDDDDDDDDDD5",
+                "GB000000000000001",
+                "GB000000000000002",
+                true,
+                false,
+                Seq("006")
+              )
+          )
+        )
+      )
+      ,
+      MockHttpResponse(
+        _ === MRN("60DDDDDDDDDDDDDDD6"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+                "60DDDDDDDDDDDDDDD6",
+                "GB000000000000001",
+                "GB000000000000002",
+                false,
+                true,
+                Seq("006")
+              )
+          )
+        )
+      )
+      ,
+      MockHttpResponse(
+        _ === MRN("60DDDDDDDDDDDDDDD7"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+                "60DDDDDDDDDDDDDDD7",
+                "GB000000000000001",
+                "GB000000000000001",
+                false,
+                false,
+                Seq("006")
+              )
+          )
+        )
+      )
+      ,
+      MockHttpResponse(
+        _ === MRN("60DDDDDDDDDDDDDDD8"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+                "60DDDDDDDDDDDDDDD8",
+                "GB000000000000002",
+                "GB000000000000001",
+                true,
+                false,
+                Seq("006")
+              )
+          )
+        )
+      )
+      ,
+      MockHttpResponse(
+        _ === MRN("60DDDDDDDDDDDDDDD9"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+                "60DDDDDDDDDDDDDDD9",
+                "GB000000000000002",
+                "GB000000000000001",
+                false,
+                true,
+                Seq("006")
+              )
+          )
+        )
+      )
+      ,
       MockHttpResponse(
         _ === MRN("55AAAAAAAAAAAAAAA0"),
         _ === EORI("GB000000000000050"),
