@@ -597,7 +597,7 @@ object MockHttpResponse {
         Acc14ResponseType
           .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
             "60AAAAAAAAAAAAAAA7",
-            "GB000000000000001",
+            "GB000000000000002",
             "GB000000000000001",
             false,
             false
@@ -762,7 +762,7 @@ object MockHttpResponse {
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
                 "60DDDDDDDDDDDDDDD7",
-                "GB000000000000001",
+                "GB000000000000002",
                 "GB000000000000001",
                 false,
                 false,
@@ -2041,7 +2041,7 @@ object MockHttpResponse {
                 .OK_RESPONSE_NO_BANK_DETAILS(
                   mrn.value,
                   reasonForSecurity,
-                  "GB000000000000001",
+                  "GB000000000000002",
                   "GB000000000000001"
                 )
             )
