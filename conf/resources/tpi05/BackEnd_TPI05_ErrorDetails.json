@@ -1,0 +1,37 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"ErrorDetails": {
+			"type": "object",
+			"properties": {
+				"CorrelationId": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 36
+				},
+				"ProcessingDateTime": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 30,
+					"pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+				},
+				"ErrorMessage": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 512
+				}
+			},
+			"required": [
+				"CorrelationId",
+				"ProcessingDateTime",
+				"ErrorMessage"
+			],
+			"additionalProperties": false
+		}
+	},
+	"required": [
+		"ErrorDetails"
+	],
+	"additionalProperties": false
+}

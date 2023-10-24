@@ -16,81 +16,63 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 
-import com.eclipsesource.schema.drafts.Version4
-import com.eclipsesource.schema.drafts.Version4._
-import com.eclipsesource.schema.{SchemaType, SchemaValidator}
+import com.eclipsesource.schema.SchemaType
 import com.google.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents}
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.MockHttpResponse
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids.EORI
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.{Tpi05ErrorResponse, Tpi05Response}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.{MockHttpResponse, SchemaValidation}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import scala.io.Source
-
 @Singleton()
-class ClaimController @Inject() (cc: ControllerComponents) extends BackendController(cc) with Logging {
+class ClaimController @Inject() (cc: ControllerComponents)
+    extends BackendController(cc)
+    with SchemaValidation
+    with Logging {
 
-  lazy val schemaToBeValidated: SchemaType = Json
-    .fromJson[SchemaType](
-      Json.parse(
-        Source
-          .fromInputStream(
-            this.getClass.getResourceAsStream("/resources/TPI05-v1-0-8-submit-claim-schema.json")
-          )
-          .mkString
-      )
-    )
-    .get
+  lazy val actualSchema: SchemaType = readSchema("tpi05/TPI05-v1-0-8-submit-claim-schema.json")
+  lazy val nextSchema: SchemaType   = readSchema("tpi05/TPI05-v1-0-10-submit-claim-schema.json")
 
-  def submitClaim: Action[JsValue] = Action(parse.json) { implicit request =>
-    val validator = SchemaValidator(Some(Version4))
-
+  val submitClaim: Action[JsValue] = Action(parse.json) { implicit request =>
     val payload = request.body
 
     logger.info(Json.prettyPrint(payload))
 
-    validator
-      .validate(schemaToBeValidated, payload)
-      .fold(
-        e => {
-          logger.warn(s"Could not validate nor parse request body: $e")
-          InternalServerError
-        },
-        json =>
-          (json \ "postNewClaimsRequest" \ "requestDetail" \ "claimantEORI")
-            .asOpt[String] match {
-            case None =>
-              logger.warn("could not find claimant eori")
-              BadRequest
-            case Some(str) =>
-              MockHttpResponse.getSubmitClaimHttpResponse(EORI(str)) match {
-                case Some(httpResponse) =>
-                  logger.info(httpResponse.toString)
-                  httpResponse.submitClaimResponse.response match {
-                    case Left(value) =>
-                      value match {
-                        case Left(wAFErrorResponse) => Forbidden(Json.toJson(wAFErrorResponse.value))
-                        case Right(tpi05ErrorResponse) =>
-                          val error = Tpi05ErrorResponse.returnTpi05ErrorHttpResponse(tpi05ErrorResponse)
-                          (error.httpStatus, error.value) match {
-                            case (BAD_REQUEST, responseBody) => BadRequest(Json.toJson(responseBody))
-                            case (UNAUTHORIZED, responseBody) => Unauthorized(Json.toJson(responseBody))
-                            case (METHOD_NOT_ALLOWED, responseBody) => MethodNotAllowed(Json.toJson(responseBody))
-                            case (INTERNAL_SERVER_ERROR, responseBody) => InternalServerError(Json.toJson(responseBody))
-                            case _ => InternalServerError
-                          }
+    validateRequest(actualSchema, nextSchema) {
+      (payload \ "postNewClaimsRequest" \ "requestDetail" \ "claimantEORI")
+        .asOpt[String] match {
+        case None =>
+          logger.warn("could not find claimant eori")
+          BadRequest
+        case Some(str) =>
+          MockHttpResponse.getSubmitClaimHttpResponse(EORI(str)) match {
+            case Some(httpResponse) =>
+              logger.info(httpResponse.toString)
+              httpResponse.submitClaimResponse.response match {
+                case Left(value) =>
+                  value match {
+                    case Left(wAFErrorResponse) => Forbidden(Json.toJson(wAFErrorResponse.value))
+                    case Right(tpi05ErrorResponse) =>
+                      val error = Tpi05ErrorResponse.returnTpi05ErrorHttpResponse(tpi05ErrorResponse)
+                      (error.httpStatus, error.value) match {
+                        case (BAD_REQUEST, responseBody) => BadRequest(Json.toJson(responseBody))
+                        case (UNAUTHORIZED, responseBody) => Unauthorized(Json.toJson(responseBody))
+                        case (METHOD_NOT_ALLOWED, responseBody) => MethodNotAllowed(Json.toJson(responseBody))
+                        case (INTERNAL_SERVER_ERROR, responseBody) => InternalServerError(Json.toJson(responseBody))
+                        case _ => InternalServerError
                       }
-                    case Right(tpi05Response) =>
-                      Ok(Json.toJson(Tpi05Response.returnTpi05HttpResponse(tpi05Response).value))
                   }
-                case None =>
-                  logger.warn(s"could not find profile with claimant eori: $str")
-                  BadRequest
+                case Right(tpi05Response) =>
+                  Ok(Json.toJson(Tpi05Response.returnTpi05HttpResponse(tpi05Response).value))
               }
+            case None =>
+              logger.warn(s"could not find profile with claimant eori: $str")
+              BadRequest
           }
-      )
+      }
+    }
   }
+
 }

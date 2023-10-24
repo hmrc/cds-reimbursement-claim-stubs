@@ -1,0 +1,288 @@
+{
+	"PostNewClaimsRequest": {
+		"RequestCommon": {
+			"OriginatingSystem": "MDTP",
+			"ReceiptDate": "2020-01-01T00:00:00Z",
+			"AcknowledgementReference": "123456999770"
+		},
+		"RequestDetail": {
+			"CDFPayService": "NDRC",
+			"DateReceived": "20200101",
+			"ClaimType": "C285",
+			"CaseType": "Individual",
+			"CustomDeclarationType": "MRN",
+			"DeclarationMode": "Parent Declaration",
+			"ClaimDate": "20200101",
+			"ClaimAmountTotal": "5000.00",
+			"DisposalMethod": "Export",
+			"BasisOfClaim": "Retrospective Customs Duty Waiver",
+			"Claimant": "Importer",
+			"PayeeIndicator": "Importer",
+			"NewEORI": "AA0",
+			"NewDAN": "1234",
+			"AuthorityTypeProvided": "SpecAuth",
+			"ClaimantEORI": "GB345",
+			"ClaimantEmailAddress": "a@a.com",
+			"ClaimantName": "PART 575456994000 LTD",
+			"GoodsDetails": {
+				"PlaceOfImport": "place of import custom",
+				"IsPrivateImporter": "Yes",
+				"GroundsForRepaymentApplication": "Overpayment",
+				"DescOfGoods": "desc of goods custom"
+			},
+			"EORIDetails": {
+				"AgentEORIDetails": {
+					"EORINumber": "GB345",
+					"CDSFullName": "PART 575456994000 LTD",
+					"LegalEntityType": "0001",
+					"EORIStartDate": "20201209",
+					"EORIEndDate": "20201222",
+					"CDSEstablishmentAddress": {
+						"ContactPerson": "a",
+						"AddressLine1": "a",
+						"AddressLine2": "a",
+						"AddressLine3": "a",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"Telephone": "1234567891",
+						"EmailAddress": "imra@gmail.com"
+					},
+					"ContactInformation": {
+						"ContactPerson": "PART 575456994000 LTD",
+						"AddressLine1": "a",
+						"AddressLine2": "a",
+						"AddressLine3": "a",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"TelephoneNumber": "7218787272",
+						"FaxNumber": "a",
+						"EmailAddress": "GB123@gmail.com"
+					},
+					"VATDetails": [
+						{
+							"VATID": "2588681",
+							"CountryCode": "GB"
+						},
+						{
+							"VATID": "2588682",
+							"CountryCode": "GB"
+						},
+						{
+							"VATID": "2588683",
+							"CountryCode": "GB"
+						}
+					]
+				},
+				"ImporterEORIDetails": {
+					"EORINumber": "GB123",
+					"CDSFullName": "PART 575456994000 LTD",
+					"LegalEntityType": "0001",
+					"EORIStartDate": "20201209",
+					"EORIEndDate": "20201222",
+					"CDSEstablishmentAddress": {
+						"ContactPerson": "a",
+						"AddressLine1": "a",
+						"AddressLine2": "a",
+						"AddressLine3": "a",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"Telephone": "1234567891",
+						"EmailAddress": "GB123@gmail.com"
+					},
+					"ContactInformation": {
+						"ContactPerson": "PART 575456994000 LTD",
+						"AddressLine1": "a",
+						"AddressLine2": "a",
+						"AddressLine3": "a",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"TelephoneNumber": "7218787272",
+						"FaxNumber": "a",
+						"EmailAddress": "GB123@gmail.com"
+					},
+					"VATDetails": [
+						{
+							"VATID": "2588684",
+							"CountryCode": "AD"
+						},
+						{
+							"VATID": "2588685",
+							"CountryCode": "AD"
+						},
+						{
+							"VATID": "2588686",
+							"CountryCode": "AD"
+						}
+					]
+				}
+			},
+			"MRNDetails": [
+				{
+					"MRNNumber": "21LLLLLLLLLLLLLL29",
+					"AcceptanceDate": "20210101",
+					"DeclarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
+					"MainDeclarationReference": "true",
+					"ProcedureCode": "71",
+					"DeclarantDetails": {
+						"EORI": "GB786958767675555",
+						"LegalName": "Primitive Transport Co Ltd",
+						"EstablishmentAddress": {
+							"ContactPerson": "a",
+							"AddressLine1": "9 Strickland Drive",
+							"AddressLine2": "Bare",
+							"AddressLine3": "Morecambe",
+							"Street": "a",
+							"City": "a",
+							"CountryCode": "GB",
+							"PostalCode": "LA4 6JU",
+							"Telephone": "1234567891",
+							"EmailAddress": "test@gmail.com"
+						},
+						"ContactDetails": {
+							"ContactPerson": "Angela Jones",
+							"AddressLine1": "Jones Shipping Ltd",
+							"AddressLine2": "Warehouse 22",
+							"AddressLine3": "Aberdeen Docks",
+							"Street": "a",
+							"City": "a",
+							"CountryCode": "GB",
+							"PostalCode": "ABC 2DF",
+							"TelephoneNumber": "017127012476",
+							"FaxNumber": "a",
+							"EmailAddress": "angelajbjones@bloggs.com"
+						}
+					},
+					"AccountDetails": [
+						{
+							"AccountType": "001",
+							"AccountNumber": "a",
+							"EORI": "AA0",
+							"LegalName": "a",
+							"ContactDetails": {
+								"ContactPerson": "a",
+								"AddressLine1": "a",
+								"AddressLine2": "a",
+								"AddressLine3": "a",
+								"Street": "a",
+								"City": "a",
+								"CountryCode": "AD",
+								"PostalCode": "a",
+								"TelephoneNumber": "a",
+								"FaxNumber": "a",
+								"EmailAddress": "a"
+							}
+						},
+						{
+							"AccountType": "001",
+							"AccountNumber": "a",
+							"EORI": "AA0",
+							"LegalName": "a",
+							"ContactDetails": {
+								"ContactPerson": "a",
+								"AddressLine1": "a",
+								"AddressLine2": "a",
+								"AddressLine3": "a",
+								"Street": "a",
+								"City": "a",
+								"CountryCode": "AD",
+								"PostalCode": "a",
+								"TelephoneNumber": "a",
+								"FaxNumber": "a",
+								"EmailAddress": "a"
+							}
+						},
+						{
+							"AccountType": "001",
+							"AccountNumber": "a",
+							"EORI": "AA0",
+							"LegalName": "a",
+							"ContactDetails": {
+								"ContactPerson": "a",
+								"AddressLine1": "a",
+								"AddressLine2": "a",
+								"AddressLine3": "a",
+								"Street": "a",
+								"City": "a",
+								"CountryCode": "AD",
+								"PostalCode": "a",
+								"TelephoneNumber": "a",
+								"FaxNumber": "a",
+								"EmailAddress": "a"
+							}
+						}
+					],
+					"ConsigneeDetails": {
+						"EORI": "GB786958767678888",
+						"LegalName": "Unique Trading Ltd",
+						"EstablishmentAddress": {
+							"ContactPerson": "a",
+							"AddressLine1": "10 Stuart Ave",
+							"AddressLine2": "Bare",
+							"AddressLine3": "Morecambe",
+							"Street": "a",
+							"City": "a",
+							"CountryCode": "GB",
+							"PostalCode": "LA4 1RH",
+							"Telephone": "a",
+							"EmailAddress": "a"
+						},
+						"ContactDetails": {
+							"ContactPerson": "Rachel Smith",
+							"AddressLine1": "Smith Transportation Ltd",
+							"AddressLine2": "Smithfield",
+							"AddressLine3": "London",
+							"Street": "a",
+							"City": "a",
+							"CountryCode": "AD",
+							"PostalCode": "E17 2DF",
+							"TelephoneNumber": "012701123476",
+							"FaxNumber": "a",
+							"EmailAddress": "rachelsmith@smithtransportation.com"
+						}
+					},
+					"BankDetails": {
+						"ConsigneeBankDetails": {
+							"AccountHolderName": "imran",
+							"SortCode": "124345",
+							"AccountNumber": "123213"
+						},
+						"DeclarantBankDetails": {
+							"AccountHolderName": "sushl",
+							"SortCode": "123123",
+							"AccountNumber": "123123"
+						}
+					},
+					"NDRCDetails": [
+						{
+							"PaymentMethod": "001",
+							"PaymentReference": "a",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Payable Order",
+							"TaxType": "A50",
+							"Amount": "200",
+							"ClaimAmount": "60"
+						},
+						{
+							"PaymentMethod": "001",
+							"PaymentReference": "a",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Payable Order",
+							"TaxType": "B05",
+							"Amount": "1200",
+							"ClaimAmount": "90"
+						}
+					]
+				}
+			]
+			
+		}
+	}
+}

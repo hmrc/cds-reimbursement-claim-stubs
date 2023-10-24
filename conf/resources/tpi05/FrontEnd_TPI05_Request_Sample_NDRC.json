@@ -1,0 +1,568 @@
+{
+	"postNewClaimsRequest": {
+		"requestCommon": {
+			"originatingSystem": "String",
+			"receiptDate": "0000-00-00T00:00:00Z",
+			"acknowledgementReference": "String"
+		},
+		"requestDetail": {
+			"CDFPayService": "NDRC",
+			"dateReceived": "00000000",
+			"claimType": "C285",
+			"caseType": "Individual",
+			"customDeclarationType": "MRN",
+			"declarationMode": "Parent Declaration",
+			"claimDate": "00000000",
+			"claimAmountTotal": "0.0",
+			"disposalMethod": "Export",
+			"basisOfClaim": "Evidence That Goods Have Not Entered The EU",
+			"claimant": "Importer",
+			"payeeIndicator": "Importer",
+			"newEORI": "AA0",
+			"newDAN": "String",
+			"authorityTypeProvided": "SpecAuth",
+			"claimantEORI": "AA0",
+			"claimantEmailAddress": "abc@def.com",
+			"claimantName": "PART 123994000 LTD",
+			"goodsDetails": {
+				"placeOfImport": "String",
+				"isPrivateImporter": "Yes",
+				"groundsForRepaymentApplication": "Mail order goods - duties not due",
+				"descOfGoods": "String",
+				"anySpecialCircumstances": "String",
+				"dateOfInspection": "00000000",
+				"atTheImporterOrDeclarantAddress": "Importer",
+				"inspectionAddress": {
+					"contactPerson": "String",
+					"addressLine1": "String",
+					"addressLine2": "String",
+					"addressLine3": "String",
+					"street": "String",
+					"city": "String",
+					"countryCode": "AD",
+					"postalCode": "String",
+					"telephoneNumber": "String",
+					"faxNumber": "String",
+					"emailAddress": "String"
+				}
+			},
+			"EORIDetails": {
+				"agentEORIDetails": {
+					"EORINumber": "AA0",
+					"CDSFullName": "ABCDEFG",
+					"legalEntityType": "String",
+					"EORIStartDate": "00000000",
+					"EORIEndDate": "00000000",
+					"CDSEstablishmentAddress": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"emailAddress": "String"
+					},
+					"contactInformation": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"faxNumber": "String",
+						"emailAddress": "String"
+					},
+					"VATDetails": [
+						{
+							"VATID": "String",
+							"countryCode": "AD"
+						}
+					]
+				},
+				"importerEORIDetails": {
+					"EORINumber": "AA0",
+					"CDSFullName": "hijklmop",
+					"legalEntityType": "String",
+					"EORIStartDate": "00000000",
+					"EORIEndDate": "00000000",
+					"CDSEstablishmentAddress": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"emailAddress": "String"
+					},
+					"contactInformation": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"faxNumber": "String",
+						"emailAddress": "String"
+					},
+					"VATDetails": [
+						{
+							"VATID": "String",
+							"countryCode": "AD"
+						}
+					]
+				}
+			},
+			"MRNDetails": [
+				{
+					"MRNNumber": "String",
+					"acceptanceDate": "00000000",
+					"declarantReferenceNumber": "String",
+					"mainDeclarationReference": true,
+					"procedureCode": "St",
+					"declarantDetails": {
+						"EORI": "AA0",
+						"legalName": "String",
+						"establishmentAddress": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"emailAddress": "String"
+						},
+						"contactDetails": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"faxNumber": "String",
+							"emailAddress": "String"
+						}
+					},
+					"accountDetails": [
+						{
+							"accountType": "String",
+							"accountNumber": "String",
+							"EORI": "AA0",
+							"legalName": "String",
+							"contactDetails": {
+								"contactPerson": "String",
+								"addressLine1": "String",
+								"addressLine2": "String",
+								"addressLine3": "String",
+								"street": "String",
+								"city": "String",
+								"countryCode": "AD",
+								"postalCode": "String",
+								"telephoneNumber": "String",
+								"faxNumber": "String",
+								"emailAddress": "String"
+							}
+						}
+					],
+					"consigneeDetails": {
+						"EORI": "AA0",
+						"legalName": "String",
+						"establishmentAddress": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"emailAddress": "String"
+						},
+						"contactDetails": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"faxNumber": "String",
+							"emailAddress": "String"
+						}
+					},
+					"bankDetails": {
+						"consigneeBankDetails": {
+							"accountHolderName": "String",
+							"sortCode": "String",
+							"accountNumber": "String"
+						},
+						"declarantBankDetails": {
+							"accountHolderName": "String",
+							"sortCode": "String",
+							"accountNumber": "String"
+						}
+					},
+					"NDRCDetails": [
+						{
+							"paymentMethod": "001",
+							"reimbursementMethod": "Deferment",
+							"paymentReference": "String",
+							"CMAEligible": "0",
+							"taxType": "A00",
+							"amount": "0.0",
+							"claimAmount": "0.0"
+						}
+					]
+				}
+			],
+			"duplicateMRNDetails": {
+				"MRNNumber": "String",
+				"acceptanceDate": "00000000",
+				"declarantReferenceNumber": "String",
+				"mainDeclarationReference": true,
+				"procedureCode": "St",
+				"declarantDetails": {
+					"EORI": "AA0",
+					"legalName": "String",
+					"establishmentAddress": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"emailAddress": "String"
+					},
+					"contactDetails": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"faxNumber": "String",
+						"emailAddress": "String"
+					}
+				},
+				"accountDetails": [
+					{
+						"accountType": "String",
+						"accountNumber": "String",
+						"EORI": "AA0",
+						"legalName": "String",
+						"contactDetails": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"faxNumber": "String",
+							"emailAddress": "String"
+						}
+					}
+				],
+				"consigneeDetails": {
+					"EORI": "AA0",
+					"legalName": "String",
+					"establishmentAddress": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"emailAddress": "String"
+					},
+					"contactDetails": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"faxNumber": "String",
+						"emailAddress": "String"
+					}
+				},
+				"bankDetails": {
+					"consigneeBankDetails": {
+						"accountHolderName": "String",
+						"sortCode": "String",
+						"accountNumber": "String"
+					},
+					"declarantBankDetails": {
+						"accountHolderName": "String",
+						"sortCode": "String",
+						"accountNumber": "String"
+					}
+				},
+				"NDRCDetails": [
+					{
+						"paymentMethod": "001",
+						"reimbursementMethod": "Deferment",
+						"paymentReference": "String",
+						"CMAEligible": "0",
+						"taxType": "A00",
+						"amount": "0.0",
+						"claimAmount": "0.0"
+					}
+				]
+			},
+			"entryDetails": [
+				{
+					"entryNumber": "String",
+					"entryDate": "00000000",
+					"declarantReferenceNumber": "String",
+					"mainDeclarationReference": true,
+					"declarantDetails": {
+						"EORI": "AA0",
+						"legalName": "String",
+						"establishmentAddress": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"emailAddress": "String"
+						},
+						"contactDetails": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"faxNumber": "String",
+							"emailAddress": "String"
+						}
+					},
+					"accountDetails": [
+						{
+							"accountType": "String",
+							"accountNumber": "String",
+							"EORI": "AA0",
+							"legalName": "String",
+							"contactDetails": {
+								"contactPerson": "String",
+								"addressLine1": "String",
+								"addressLine2": "String",
+								"addressLine3": "String",
+								"street": "String",
+								"city": "String",
+								"countryCode": "AD",
+								"postalCode": "String",
+								"telephoneNumber": "String",
+								"faxNumber": "String",
+								"emailAddress": "String"
+							}
+						}
+					],
+					"consigneeDetails": {
+						"EORI": "AA0",
+						"legalName": "String",
+						"establishmentAddress": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"emailAddress": "String"
+						},
+						"contactDetails": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"faxNumber": "String",
+							"emailAddress": "String"
+						}
+					},
+					"bankDetails": {
+						"consigneeBankDetails": {
+							"accountHolderName": "String",
+							"sortCode": "String",
+							"accountNumber": "String"
+						},
+						"declarantBankDetails": {
+							"accountHolderName": "String",
+							"sortCode": "String",
+							"accountNumber": "String"
+						}
+					},
+					"NDRCDetails": [
+						{
+							"paymentMethod": "001",
+							"reimbursementMethod": "Deferment",
+							"paymentReference": "String",
+							"CMAEligible": "0",
+							"taxType": "481",
+							"amount": "0.0",
+							"claimAmount": "0.0"
+						}
+					]
+				}
+			],
+			"duplicateEntryDetails": {
+				"entryNumber": "String",
+				"entryDate": "00000000",
+				"declarantReferenceNumber": "String",
+				"mainDeclarationReference": true,
+				"declarantDetails": {
+					"EORI": "AA0",
+					"legalName": "String",
+					"establishmentAddress": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"emailAddress": "String"
+					},
+					"contactDetails": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"faxNumber": "String",
+						"emailAddress": "String"
+					}
+				},
+				"accountDetails": [
+					{
+						"accountType": "String",
+						"accountNumber": "String",
+						"EORI": "AA0",
+						"legalName": "String",
+						"contactDetails": {
+							"contactPerson": "String",
+							"addressLine1": "String",
+							"addressLine2": "String",
+							"addressLine3": "String",
+							"street": "String",
+							"city": "String",
+							"countryCode": "AD",
+							"postalCode": "String",
+							"telephoneNumber": "String",
+							"faxNumber": "String",
+							"emailAddress": "String"
+						}
+					}
+				],
+				"consigneeDetails": {
+					"EORI": "AA0",
+					"legalName": "String",
+					"establishmentAddress": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"emailAddress": "String"
+					},
+					"contactDetails": {
+						"contactPerson": "String",
+						"addressLine1": "String",
+						"addressLine2": "String",
+						"addressLine3": "String",
+						"street": "String",
+						"city": "String",
+						"countryCode": "AD",
+						"postalCode": "String",
+						"telephoneNumber": "String",
+						"faxNumber": "String",
+						"emailAddress": "String"
+					}
+				},
+				"bankDetails": {
+					"consigneeBankDetails": {
+						"accountHolderName": "String",
+						"sortCode": "String",
+						"accountNumber": "String"
+					},
+					"declarantBankDetails": {
+						"accountHolderName": "String",
+						"sortCode": "String",
+						"accountNumber": "String"
+					}
+				},
+				"NDRCDetails": [
+					{
+						"paymentMethod": "001",
+						"reimbursementMethod": "Deferment",
+						"paymentReference": "String",
+						"CMAEligible": "0",
+						"taxType": "A00",
+						"amount": "0.0",
+						"claimAmount": "0.0"
+					}
+				]
+			},
+			"importType": "GB to NI"
+		}
+	}
+}

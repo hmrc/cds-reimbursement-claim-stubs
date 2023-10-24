@@ -1,0 +1,271 @@
+{
+	"PostNewClaimsRequest": {
+		"RequestCommon": {
+			"OriginatingSystem": "MDTP",
+			"ReceiptDate": "2021-03-01T00:00:00Z",
+			"AcknowledgementReference": "KLM0701210914"
+		},
+		"RequestDetail": {
+			"CDFPayService": "NDRC",
+			"DateReceived": "20210301",
+			"ClaimType": "C&E1179",
+			"CaseType": "Individual",
+			"CustomDeclarationType": "MRN",
+			"DeclarationMode": "Parent Declaration",
+			"ClaimDate": "20210301",
+			"ClaimAmountTotal": "5000.00",
+			"DisposalMethod": "Export",
+			"BasisOfClaim": "Defective",
+			"Claimant": "Importer",
+			"PayeeIndicator": "Importer",			
+			"ClaimantEORI": "GB345",
+			"ClaimantEmailAddress": "a@a.com",
+			"ClaimantName": "PART 575456994000 LTD",
+			"GoodsDetails": {
+				"PlaceOfImport": "place of import custom",
+				"IsPrivateImporter": "Yes",
+				"GroundsForRepaymentApplication": "Overpayment",
+				"DescOfGoods": "Rejected goods details",
+				"AnySpecialCircumstances":"Sample test",
+				"DateOfInspection":"20210301",
+				"AtTheImporterOrDeclarantAddress":"Importer",
+				"InspectionAddress":{
+						"ContactPerson": "PART 575456994000 LTD",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"TelephoneNumber": "7218787272",
+						"FaxNumber": "a",
+						"EmailAddress": "klm7119@gmail.com"
+					}
+			},
+			"EORIDetails": 
+              {
+				"AgentEORIDetails": {
+					"EORINumber": "GB345",
+					"CDSFullName": "PART 575456994000 LTD",
+					"LegalEntityType": "0001",
+					"EORIStartDate": "20201209",
+					"EORIEndDate": "20201222",
+					"CDSEstablishmentAddress": {	
+						"ContactPerson": "PART 575456994000 LTD",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"Telephone": "987654321",
+						"EmailAddress": "klm7119@gmail.com"
+					},
+					"ContactInformation": {
+						"ContactPerson": "PART 575456994000 LTD",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"TelephoneNumber": "987654321",
+						"FaxNumber": "1234567890",
+						"EmailAddress": "klm092116@gmail.com"
+					},
+					"VATDetails": [
+						{
+							"VATID": "2588681",
+							"CountryCode": "GB"
+						},
+						{
+							"VATID": "2588682",
+							"CountryCode": "GB"
+						},
+						{
+							"VATID": "2588683",
+							"CountryCode": "GB"
+						}
+					]
+				},
+				"ImporterEORIDetails": {
+					"EORINumber": "GB123",
+					"CDSFullName": "PART 575456994000 LTD",
+					"LegalEntityType": "0001",
+					"EORIStartDate": "20201209",
+					"EORIEndDate": "20201222",
+					"CDSEstablishmentAddress": {	
+						"ContactPerson": "PART 575456994000 LTD",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN18 5RP",
+						"Telephone": "987654325",
+						"EmailAddress": "test3gmail.com"
+					},
+					"ContactInformation": {
+						"ContactPerson": "PART 575456994000 LTD",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"TelephoneNumber": "987654341",
+						"FaxNumber": "1234567890",
+						"EmailAddress": "klm092116@gmail.com"
+					},
+					"VATDetails": [
+						{
+							"VATID": "2588684",
+							"CountryCode": "AD"
+						},
+						{
+							"VATID": "2588685",
+							"CountryCode": "AD"
+						},
+						{
+							"VATID": "2588686",
+							"CountryCode": "AD"
+						}
+					]
+				}
+			},
+			"MRNDetails": [
+				{
+					"MRNNumber": "21LLLLLLLLLLLLLL29",
+					"AcceptanceDate": "20210101",
+					"DeclarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
+					"MainDeclarationReference": "true",
+					"ProcedureCode": "71",
+					"DeclarantDetails": {
+						"EORI": "GB786958767675555",
+						"LegalName": "Primitive Transport Co Ltd",
+						"EstablishmentAddress": {
+							"AddressLine1": "10 Stuart Ave",
+							"AddressLine2": "Bare",
+							"AddressLine3": "Morecambe",
+							"CountryCode": "GB",
+							"PostalCode": "LA4 1RH"
+						},
+						"ContactDetails": {
+							"ContactPerson": "Rachel Smith",
+							"AddressLine1": "Smith Transportation Ltd",
+							"AddressLine2": "Smithfield",
+							"AddressLine3": "London",
+							"CountryCode": "AD",
+							"PostalCode": "E17 2DF",
+							"TelephoneNumber": "012701123476",
+							"EmailAddress": "klm@gmail.com"
+						}
+					},
+					"AccountDetails": [
+						{
+							"AccountType": "001",
+							"AccountNumber": "a",
+							"EORI": "AA0",
+							"LegalName": "a",
+							"ContactDetails": {
+								"ContactPerson": "a",
+								"AddressLine1": "a",
+								"AddressLine2": "a",
+								"AddressLine3": "a",
+								"CountryCode": "AD",
+								"PostalCode": "a",
+								"TelephoneNumber": "9977765544444",
+								"EmailAddress": "klm@gmail.com"
+							}
+						},
+						{
+							"AccountType": "001",
+							"AccountNumber": "a",
+							"EORI": "AA0",
+							"LegalName": "a",
+							"ContactDetails": {
+								"ContactPerson": "a",
+								"AddressLine1": "a",
+								"AddressLine2": "a",
+								"AddressLine3": "a",
+								"CountryCode": "AD",
+								"PostalCode": "a",
+								"TelephoneNumber": "9876543211",
+								"EmailAddress": "klm@gmail.com"
+							}
+						},
+						{
+							"AccountType": "001",
+							"AccountNumber": "a",
+							"EORI": "AA0",
+							"LegalName": "a",
+							"ContactDetails": {
+								"ContactPerson": "a",
+								"AddressLine1": "a",
+								"AddressLine2": "a",
+								"AddressLine3": "a",
+								"CountryCode": "AD",
+								"PostalCode": "a",
+								"TelephoneNumber": "9876543212",
+								"EmailAddress": "klm@gmail.com"
+							}
+						}
+					],
+					"ConsigneeDetails": {
+						"EORI": "GB786958767678888",
+						"LegalName": "Unique Trading Ltd",
+						"EstablishmentAddress": {
+							"AddressLine1": "10 Stuart Ave",
+							"AddressLine2": "Bare",
+							"AddressLine3": "Morecambe",
+							"CountryCode": "GB",
+							"PostalCode": "LA4 1RH"
+						},
+						"ContactDetails": {
+							"ContactPerson": "Rachel Smith",
+							"AddressLine1": "Smith Transportation Ltd",
+							"AddressLine2": "Smithfield",
+							"AddressLine3": "London",
+							"CountryCode": "AD",
+							"PostalCode": "E17 2DF",
+							"TelephoneNumber": "012701123476",
+							"EmailAddress": "klm@gmail.com"
+						}
+					},
+					"BankDetails": {
+						"ConsigneeBankDetails": {
+							"AccountHolderName": "imran",
+							"SortCode": "124345",
+							"AccountNumber": "123213"
+						},
+						"DeclarantBankDetails": {
+							"AccountHolderName": "sushl",
+							"SortCode": "123123",
+							"AccountNumber": "123123"
+						}
+					},
+					"NDRCDetails": [
+						{
+							"PaymentMethod": "001",
+							"PaymentReference": "a",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Bank Transfer",
+							"TaxType": "A00",
+							"Amount": "200",
+							"ClaimAmount": "60"
+						},
+						{
+							"PaymentMethod": "001",
+							"PaymentReference": "a",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Bank Transfer",
+							"TaxType": "A00",
+							"Amount": "1200",
+							"ClaimAmount": "90"
+						},
+						{
+							"PaymentMethod": "001",
+							"PaymentReference": "a",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Bank Transfer",
+							"TaxType": "A00",
+							"Amount": "9888",
+							"ClaimAmount": "220"
+						}
+					]
+				}
+				
+			]		
+		}
+	}
+}

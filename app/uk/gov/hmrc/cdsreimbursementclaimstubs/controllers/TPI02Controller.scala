@@ -35,9 +35,11 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
     with TPI01Generation
     with TPI02Generation {
 
+  lazy val tpi02RequestSchema = readSchema("tpi02/tpi02-request-schema.json")
+
   final val getSpecificClaim: Action[JsValue] =
     Action(parse.json) { implicit request =>
-      validateRequest("tpi02/tpi02-request-schema.json") {
+      validateRequest(tpi02RequestSchema) {
         val cdfPayCaseNumber =
           (request.body \ "getSpecificCaseRequest" \ "requestDetail" \ "CDFPayCaseNumber").as[String]
         cdfPayCaseNumber match {
@@ -168,8 +170,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
               case None =>
                 NO_CLAIMS_FOUND_SCTY
             }
-          case e if e.startsWith("SCTY-15")  || e.startsWith("SCTY-105") =>
-            val extractedIndex =  e.takeRight(2).toInt
+          case e if e.startsWith("SCTY-15") || e.startsWith("SCTY-105") =>
+            val extractedIndex = e.takeRight(2).toInt
             tpi01SetCaseSubStatusSCTY(extractedIndex.toInt, isXiEori = true).CDFPayCase.SCTYCases
               .find(_.CDFPayCaseNumber == e) match {
               case Some(value) =>

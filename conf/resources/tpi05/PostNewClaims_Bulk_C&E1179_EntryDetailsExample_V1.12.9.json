@@ -1,0 +1,375 @@
+{
+	"PostNewClaimsRequest": {
+		"RequestCommon": {
+			"OriginatingSystem": "MDTP",
+			"ReceiptDate": "2021-01-01T00:00:00Z",
+			"AcknowledgementReference": "TTT-21097996"
+		},
+		"RequestDetail": {
+			"CDFPayService": "NDRC",
+			"DateReceived": "20210301",
+			"ClaimType": "C&E1179",
+			"CaseType": "Bulk",
+			"CustomDeclarationType": "Entry",
+			"DeclarationMode": "Parent Declaration",
+			"ClaimDate": "20210301",
+			"ClaimAmountTotal": "5000.00",
+			"DisposalMethod": "Export",
+			"BasisOfClaim": "Defective",
+			"Claimant": "Importer",
+			"PayeeIndicator": "Importer",
+			"ClaimantEORI": "GB345",
+			"ClaimantEmailAddress": "klm0701@gmail.com",
+			"ClaimantName": "PART 575456994000 LTD",
+			"GoodsDetails": {
+				"PlaceOfImport": "place of import custom",
+				"IsPrivateImporter": "Yes",
+				"GroundsForRepaymentApplication": "Overpayment",
+				"DescOfGoods": "Rejected goods details",
+				"AnySpecialCircumstances": "Sample test",
+				"DateOfInspection": "20210301",
+				"AtTheImporterOrDeclarantAddress": "Importer",
+				"InspectionAddress": {
+					"ContactPerson": "PART 575456994000 LTD",
+					"Street": "TURY HOUSE, WILTSHIRE",
+					"City": "MALMESBURY",
+					"CountryCode": "GB",
+					"PostalCode": "SN17 5RP",
+					"TelephoneNumber": "7218787272",
+					"FaxNumber": "a",
+					"EmailAddress": "klm7119@gmail.com"
+				}
+			},
+			"EORIDetails": {
+				"AgentEORIDetails": {
+					"EORINumber": "GB123",
+					"CDSFullName": "PART 575456994000 LTD",
+					"LegalEntityType": "0001",
+					"EORIStartDate": "20201209",
+					"EORIEndDate": "20201222",
+					"CDSEstablishmentAddress": {
+						"ContactPerson": "PART 575456994000 LTD",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN18 5RP",
+						"Telephone": "987654325",
+						"EmailAddress": "test3gmail.com"
+					},
+					"ContactInformation": {
+						"ContactPerson": "PART 575456994000 LTD",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"TelephoneNumber": "987654341",
+						"FaxNumber": "1234567890",
+						"EmailAddress": "klm092116@gmail.com"
+					},
+					"VATDetails": [
+						{
+							"VATID": "12345",
+							"CountryCode": "GB"
+						},
+						{
+							"VATID": "345678",
+							"CountryCode": "IN"
+						},
+						{
+							"VATID": "234567",
+							"CountryCode": "CA"
+						}
+					]
+				},
+				"ImporterEORIDetails": {
+					"EORINumber": "GB456",
+					"CDSFullName": "PART 07010921000 LTD",
+					"LegalEntityType": "0001",
+					"EORIStartDate": "20201209",
+					"EORIEndDate": "20201222",
+					"CDSEstablishmentAddress": {
+						"ContactPerson": "PART 575456994000 LTD",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN18 5RP",
+						"Telephone": "987654325",
+						"EmailAddress": "test3gmail.com"
+					},
+					"ContactInformation": {
+						"ContactPerson": "PART 575456994000 LTD",
+						"Street": "TURY HOUSE, WILTSHIRE",
+						"City": "MALMESBURY",
+						"CountryCode": "GB",
+						"PostalCode": "SN17 5RP",
+						"TelephoneNumber": "987654341",
+						"FaxNumber": "1234567890",
+						"EmailAddress": "klm092116@gmail.com"
+					},
+					"VATDetails": [
+						{
+							"VATID": "12222",
+							"CountryCode": "GB"
+						},
+						{
+							"VATID": "13333",
+							"CountryCode": "IN"
+						},
+						{
+							"VATID": "14444",
+							"CountryCode": "CA"
+						}
+					]
+				}
+			},
+			"EntryDetails": [
+				{
+					"EntryNumber": "142109701M07012019",
+					"EntryDate": "20210101",
+					"DeclarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
+					"MainDeclarationReference": "true",
+					"DeclarantDetails": {
+						"EORI": "GB123",
+						"LegalName": "Glass House Co Ltd",
+						"EstablishmentAddress": {
+							"AddressLine1": "5 Sland Road",
+							"AddressLine2": "Nowhere",
+							"AddressLine3": "Leeds",
+							"CountryCode": "GB",
+							"PostalCode": "YU4 13KL"
+						},
+						"ContactDetails": {
+							"ContactPerson": "Siri Smith",
+							"AddressLine1": "5 Sland Road",
+							"AddressLine2": "Nowhere",
+							"AddressLine3": "Leeds",
+							"CountryCode": "GB",
+							"PostalCode": "YU4 13KL",
+							"TelephoneNumber": "987654322",
+							"FaxNumber": "23456789",
+							"EmailAddress": "klm0701@gmail.com"
+						}
+					},
+					"AccountDetails": [
+						{
+							"AccountType": "001",
+							"AccountNumber": "12345678912345",
+							"EORI": "GB2345",
+							"LegalName": "Test",
+							"ContactDetails": {
+								"ContactPerson": "Siri Smith",
+								"AddressLine1": "5 Sland Road",
+								"AddressLine2": "Nowhere",
+								"AddressLine3": "Leeds",
+								"CountryCode": "GB",
+								"TelephoneNumber": "987654321",
+								"EmailAddress": "klm0701@gmail.com"
+							}
+						},
+						{
+							"AccountType": "002",
+							"AccountNumber": "12345679",
+							"EORI": "GB2345",
+							"LegalName": "Test",
+							"ContactDetails": {
+								"ContactPerson": "Siri Smith",
+								"AddressLine1": "5 Sland Road",
+								"AddressLine2": "Nowhere",
+								"AddressLine3": "Leeds",
+								"CountryCode": "GB",
+								"TelephoneNumber": "987654321",
+								"EmailAddress": "klm0701@gmail.com"
+							}
+						}
+					],
+					"ConsigneeDetails": {
+						"EORI": "GB123",
+						"LegalName": "a",
+						"EstablishmentAddress": {
+							"AddressLine1": "5 Sland Road",
+							"AddressLine2": "Nowhere",
+							"AddressLine3": "Leeds",
+							"CountryCode": "GB",
+							"PostalCode": "YU4 13KL"
+						},
+						"ContactDetails": {
+							"ContactPerson": "Siri Smith",
+							"AddressLine1": "5 Sland Road",
+							"AddressLine2": "Nowhere",
+							"AddressLine3": "Leeds",
+							"CountryCode": "GB",
+							"PostalCode": "YU4 13KL",
+							"TelephoneNumber": "987654322",
+							"FaxNumber": "23456789",
+							"EmailAddress": "klm0701@gmail.com"
+						}
+					},
+					"BankDetails": {
+						"ConsigneeBankDetails": {
+							"AccountHolderName": "test",
+							"SortCode": "123456",
+							"AccountNumber": "12345678"
+						},
+						"DeclarantBankDetails": {
+							"AccountHolderName": "test2",
+							"SortCode": "123457",
+							"AccountNumber": "12345679"
+						}
+					},
+					"NDRCDetails": [
+						{
+							"PaymentMethod": "001",
+							"PaymentReference": "123456",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Bank Transfer",
+							"TaxType": "A30",
+							"Amount": "500",
+							"ClaimAmount": "100"
+						},
+						{
+							"PaymentMethod": "002",
+							"PaymentReference": "123456",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Bank Transfer",
+							"TaxType": "A50",
+							"Amount": "1500",
+							"ClaimAmount": "1000"
+						},
+						{
+							"PaymentMethod": "003",
+							"PaymentReference": "123456",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Bank Transfer",
+							"TaxType": "A35",
+							"Amount": "2500",
+							"ClaimAmount": "1500"
+						}
+					]
+				},
+				{
+					"EntryNumber": "142109701L07012019",
+					"EntryDate": "20210101",
+					"DeclarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
+					"MainDeclarationReference": "false",
+					"DeclarantDetails": {
+						"EORI": "GB123",
+						"LegalName": "Glass House Co Ltd",
+						"EstablishmentAddress": {
+							"AddressLine1": "5 Sland Road",
+							"AddressLine2": "Nowhere",
+							"AddressLine3": "Leeds",
+							"CountryCode": "GB",
+							"PostalCode": "YU4 13KL"
+						},
+						"ContactDetails": {
+							"ContactPerson": "Siri Smith",
+							"AddressLine1": "5 Sland Road",
+							"AddressLine2": "Nowhere",
+							"AddressLine3": "Leeds",
+							"CountryCode": "GB",
+							"PostalCode": "YU4 13KL",
+							"TelephoneNumber": "987654322",
+							"FaxNumber": "23456789",
+							"EmailAddress": "klm0701@gmail.com"
+						}
+					},
+					"AccountDetails": [
+						{
+							"AccountType": "001",
+							"AccountNumber": "12345678912345",
+							"EORI": "GB2345",
+							"LegalName": "Test",
+							"ContactDetails": {
+								"ContactPerson": "Siri Smith",
+								"AddressLine1": "5 Sland Road",
+								"AddressLine2": "Nowhere",
+								"AddressLine3": "Leeds",
+								"CountryCode": "GB",
+								"TelephoneNumber": "987654321",
+								"EmailAddress": "klm0701@gmail.com"
+							}
+						},
+						{
+							"AccountType": "002",
+							"AccountNumber": "12345679",
+							"EORI": "GB2345",
+							"LegalName": "Test",
+							"ContactDetails": {
+								"ContactPerson": "Siri Smith",
+								"AddressLine1": "5 Sland Road",
+								"AddressLine2": "Nowhere",
+								"AddressLine3": "Leeds",
+								"CountryCode": "GB",
+								"TelephoneNumber": "987654321",
+								"EmailAddress": "klm0701@gmail.com"
+							}
+						}
+					],
+					"ConsigneeDetails": {
+						"EORI": "GB123",
+						"LegalName": "a",
+						"EstablishmentAddress": {
+							"AddressLine1": "5 Sland Road",
+							"AddressLine2": "Nowhere",
+							"AddressLine3": "Leeds",
+							"CountryCode": "GB",
+							"PostalCode": "YU4 13KL"
+						},
+						"ContactDetails": {
+							"ContactPerson": "Siri Smith",
+							"AddressLine1": "5 Sland Road",
+							"AddressLine2": "Nowhere",
+							"AddressLine3": "Leeds",
+							"CountryCode": "GB",
+							"PostalCode": "YU4 13KL",
+							"TelephoneNumber": "987654322",
+							"FaxNumber": "23456789",
+							"EmailAddress": "klm0701@gmail.com"
+						}
+					},
+					"BankDetails": {
+						"ConsigneeBankDetails": {
+							"AccountHolderName": "test",
+							"SortCode": "123456",
+							"AccountNumber": "12345678"
+						},
+						"DeclarantBankDetails": {
+							"AccountHolderName": "test2",
+							"SortCode": "123457",
+							"AccountNumber": "12345679"
+						}
+					},
+					"NDRCDetails": [
+						{
+							"PaymentMethod": "001",
+							"PaymentReference": "123456",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Bank Transfer",
+							"TaxType": "A30",
+							"Amount": "500",
+							"ClaimAmount": "100"
+						},
+						{
+							"PaymentMethod": "002",
+							"PaymentReference": "123456",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Bank Transfer",
+							"TaxType": "A50",
+							"Amount": "1500",
+							"ClaimAmount": "1000"
+						},
+						{
+							"PaymentMethod": "003",
+							"PaymentReference": "123456",
+							"CMAEligible": "0",
+							"ReimbursementMethod": "Bank Transfer",
+							"TaxType": "A35",
+							"Amount": "2500",
+							"ClaimAmount": "1500"
+						}
+					]
+				}
+			]
+		}
+	}
+}

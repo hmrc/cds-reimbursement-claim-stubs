@@ -45,7 +45,7 @@ object Tpi05Response {
         |            "processingDate": "${TimeUtils.iso8061DateTimeNow}",
         |            "CDFPayService": "NDRC",
         |            "CDFPayCaseNumber": "${GenUtils.caseNumber}",
-        |            "correlationId": "${GenUtils.correlationId}"
+        |            "correlationID": "${GenUtils.correlationId}"
         |        }
         |    }
         |}
