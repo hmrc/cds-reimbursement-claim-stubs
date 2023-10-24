@@ -1,0 +1,189 @@
+{
+	"postNewClaimsRequest": {
+		"requestCommon": {
+			"originatingSystem": "MDTP",
+			"receiptDate": "2021-03-01T00:00:00Z",
+			"acknowledgementReference": "KLM0701210914"
+		},
+		"requestDetail": {
+			"CDFPayService": "SCTY",
+			"reimbursementParty": "Declarant",
+			"useExistingPaymentMethod": false,
+			"reimbursementMethod": "Payable Order",
+			"claimantEORI": "GB345",
+			"claimantEmailAddress": "a@a.com",
+			"claimantName": "PART 575456994000 LTD",
+			"methodOfDisposals":[
+			{
+			"disposalMethod": "Export: Multiple Shipments",
+			"exportMRNs":[
+					{
+					 "MRNNumber": "21LLLLLLLLLLLLLL29"
+					},
+					{
+					 "MRNNumber": "21LLLLLLLLLLLLLL29"
+					}
+			]
+			},
+			{
+			"disposalMethod": "Other Temporary Admission"
+			}
+			],
+			"security": {
+				"dateClaimReceived": "20210601",
+				"reasonForSecurity": "MDP",
+				"declarationID": "KL0701190921141611",
+				"procedureCode": "71",
+				"acceptanceDate": "20210401",
+				"declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
+				"BTASource": "DMS",
+				"BTADueDate": "20210501",
+				"declarantDetails": {
+					"EORI": "GB786958767675555",
+					"legalName": "Primitive Transport Co Ltd",
+					"establishmentAddress": {
+						"addressLine1": "10 Stuart Ave",
+						"addressLine2": "Bare",
+						"addressLine3": "Morecambe",
+						"countryCode": "GB",
+						"postalCode": "LA4 1RH"
+					},
+					"contactDetails": {
+						"contactPerson": "Rachel Smith",
+						"addressLine1": "Smith Transportation Ltd",
+						"addressLine2": "Smithfield",
+						"addressLine3": "London",
+						"countryCode": "AD",
+						"postalCode": "E17 2DF",
+						"telephoneNumber": "012701123476",
+						"emailAddress": "klm@gmail.com"
+					}
+				},
+				"consigneeDetails": {
+					"EORI": "GB786958767678888",
+					"legalName": "Unique Trading Ltd",
+					"establishmentAddress": {
+						"addressLine1": "10 Stuart Ave",
+						"addressLine2": "Bare",
+						"addressLine3": "Morecambe",
+						"countryCode": "GB",
+						"postalCode": "LA4 1RH"
+					},
+					"contactDetails": {
+						"contactPerson": "Rachel Smith",
+						"addressLine1": "Smith Transportation Ltd",
+						"addressLine2": "Smithfield",
+						"addressLine3": "London",
+						"countryCode": "AD",
+						"postalCode": "E17 2DF",
+						"telephoneNumber": "012701123476",
+						"emailAddress": "klm@gmail.com"
+					}
+				},
+				"accountDetails": [
+					{
+						"accountType": "001",
+						"accountNumber": "a",
+						"EORI": "AA0",
+						"legalName": "a",
+						"contactDetails": {
+							"contactPerson": "a",
+							"addressLine1": "a",
+							"addressLine2": "a",
+							"addressLine3": "a",
+							"countryCode": "AD",
+							"postalCode": "a",
+							"telephoneNumber": "9977765544444",
+							"emailAddress": "klm@gmail.com"
+						}
+					},
+					{
+						"accountType": "001",
+						"accountNumber": "a",
+						"EORI": "AA0",
+						"legalName": "a",
+						"contactDetails": {
+							"contactPerson": "a",
+							"addressLine1": "a",
+							"addressLine2": "a",
+							"addressLine3": "a",
+							"countryCode": "AD",
+							"postalCode": "a",
+							"telephoneNumber": "9876543211",
+							"emailAddress": "klm@gmail.com"
+						}
+					}
+				],
+				"bankDetails": {
+					"consigneeBankDetails": {
+						"accountHolderName": "Consigneeholder",
+						"sortCode": "124345",
+						"accountNumber": "123213"
+					},
+					"declarantBankDetails": {
+						"accountHolderName": "Importerholder",
+						"sortCode": "123123",
+						"accountNumber": "123123"
+					}
+				},
+				"securityDetails": [
+					{
+						"securityDepositID": "123456789",
+						"totalAmount": "1000.00",
+						"amountPaid": "1000.00",
+						"paymentMethod": "003",
+						"paymentReference": "070119219",
+						"taxDetails": [
+							{
+								"taxType": "A00",
+								"amount": "100",
+								"claimAmount":"-0"
+							},
+							{
+								"taxType": "A20",
+								"amount": "200",
+								"claimAmount":"100"
+							},
+							{
+								"taxType": "B00",
+								"amount": "200.09",
+								"claimAmount":"100"
+							}
+						]
+					},
+					{
+						"securityDepositID": "987654321",
+						"totalAmount": "1000.00",
+						"amountPaid": "1000.00",
+						"paymentMethod": "004",
+						"paymentReference": "070119219",
+						"taxDetails": [
+							{
+								"taxType": "A50",
+								"amount": "100"
+							},
+							{
+								"taxType": "A70",
+								"amount": "200"
+							},
+							{
+								"taxType": "B05",
+								"amount": "200"
+							}
+						]
+					}
+				]
+			},
+				"claimantAddress": {
+				            "contactPerson": "PART 575456994000 LTD",
+							"addressLine1": "Smith Transportation Ltd",
+							"addressLine2": "Smithfield",
+							"addressLine3": "London",
+							"countryCode": "AD",
+							"postalCode": "E17 2DF",
+							"telephoneNumber": "012701123476",
+							"emailAddress": "klm@gmail.com"
+						}
+		}
+	}
+}

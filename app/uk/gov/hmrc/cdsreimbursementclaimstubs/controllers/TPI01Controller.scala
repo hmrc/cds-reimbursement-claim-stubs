@@ -32,9 +32,11 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
     with SchemaValidation
     with TPI01Generation {
 
+  lazy val tpi01RequestSchema = readSchema("tpi01/tpi01-request-schema.json")
+
   final val getReimbursementClaims: Action[JsValue] =
     Action(parse.json) { implicit request =>
-      validateRequest("tpi01/tpi01-request-schema.json") {
+      validateRequest(tpi01RequestSchema) {
         val eori = (request.body \ "getPostClearanceCasesRequest" \ "requestDetail" \ "EORI").as[String]
 
         eori match {

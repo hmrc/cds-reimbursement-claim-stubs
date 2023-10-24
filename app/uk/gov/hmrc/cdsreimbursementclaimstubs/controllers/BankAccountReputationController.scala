@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 
-import cats._
 import cats.implicits._
 import com.google.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue, Json}

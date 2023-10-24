@@ -25,37 +25,75 @@ import play.api.{Logger, LoggerLike}
 
 import scala.concurrent.Future
 import scala.io.Source
+import com.eclipsesource.schema.drafts.Version4
+import play.api.libs.json.Format
+import play.api.libs.json.JsResult
+import scala.io.AnsiColor
+import play.api.libs.json.JsPath
+import play.api.libs.json.JsonValidationError
 
 trait SchemaValidation {
 
-  val validator: SchemaValidator = SchemaValidator()
-  val log: LoggerLike            = Logger(this.getClass)
+  val log: LoggerLike = Logger(this.getClass)
+
+  def validateOneOf[A: Format](schema: SchemaType, otherSchemas: SchemaType*)(input: A): JsResult[A] =
+    SchemaValidation.validator
+      .validate(schema, input) match {
+      case error: JsError =>
+        if (otherSchemas.length > 0) validateOneOf(otherSchemas.head, otherSchemas.tail: _*)(input)
+        else error
+      case success => success
+    }
 
   def fValidateRequest(filename: String)(f: => Future[Result])(implicit request: Request[JsValue]): Future[Result] = {
-    val result = validator.validate(getSchema(filename), request.body)
+    val result = SchemaValidation.validator.validate(readSchema(filename), request.body)
     result match {
       case JsSuccess(_, _) => f
-      case JsError(errors) => log.error(errors.mkString(" ")); Future.successful(BadRequest)
+      case JsError(errors) =>
+        logError(errors)
+        Future.successful(BadRequest)
     }
   }
 
-  def validateRequest(filename: String)(f: => Result)(implicit request: Request[JsValue]): Result = {
-    val result = validator.validate(getSchema(filename), request.body)
+  def validateRequest(filename: String)(f: => Result)(implicit request: Request[JsValue]): Result =
+    validateRequest(readSchema(filename))(f)
+
+  def validateRequest(schema: SchemaType)(f: => Result)(implicit request: Request[JsValue]): Result = {
+    val result = SchemaValidation.validator.validate(schema, request.body)
     result match {
       case JsSuccess(_, _) => f
-      case JsError(errors) => log.error(errors.mkString(" ")); BadRequest
+      case JsError(errors) =>
+        logError(errors)
+        BadRequest
     }
   }
 
-  def validateResponse(filename: String, response: JsValue): Result = {
-    val result = validator.validate(getSchema(filename), response)
+  def validateRequest(schema: SchemaType, otherSchemas: SchemaType*)(
+    f: => Result
+  )(implicit request: Request[JsValue]): Result = {
+    val result = validateOneOf(schema, otherSchemas: _*)(request.body)
+    result match {
+      case JsSuccess(_, _) => f
+      case JsError(errors) =>
+        logError(errors)
+        BadRequest
+    }
+  }
+
+  def validateResponse(filename: String, response: JsValue): Result =
+    validateResponse(readSchema(filename), response)
+
+  def validateResponse(schema: SchemaType, response: JsValue): Result = {
+    val result = SchemaValidation.validator.validate(schema, response)
     result match {
       case JsSuccess(_, _) => Ok(response)
-      case JsError(errors) => log.error(errors.mkString(" ")); InternalServerError
+      case JsError(errors) =>
+        logError(errors)
+        InternalServerError
     }
   }
 
-  private def getSchema(filename: String): SchemaType =
+  def readSchema(filename: String): SchemaType =
     Json.fromJson[SchemaType](jsonDataFromFile(filename)).get
 
   def responseWithEori(filename: String, myEori: String = "GB12345678901234"): JsValue =
@@ -63,8 +101,22 @@ trait SchemaValidation {
 
   def jsonDataFromFile(filename: String, transform: String => String = identity): JsValue = {
     val in     = getClass.getResourceAsStream(s"/resources/$filename")
-    val raw    = Source.fromInputStream(in).getLines.mkString
+    val raw    = Source.fromInputStream(in).getLines().mkString
     val cooked = transform(raw)
     Json.parse(cooked)
   }
+
+  def logError(errors: scala.collection.Seq[(JsPath, scala.collection.Seq[JsonValidationError])]) =
+    log.error(
+      errors
+        .map { case (path, validatioErrors) =>
+          s"at path${AnsiColor.YELLOW}$path${AnsiColor.RESET}:${validatioErrors.map(e => s"${e.message}").mkString(AnsiColor.RED, "\n", AnsiColor.RESET)}"
+        }
+        .mkString(s"${AnsiColor.BLUE}\n", "\n", AnsiColor.RESET)
+    )
+}
+
+object SchemaValidation {
+
+  val validator: SchemaValidator = SchemaValidator(Some(Version4))
 }
