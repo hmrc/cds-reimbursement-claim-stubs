@@ -1,0 +1,3 @@
+mrn.help=Please enter the MRN
+mrn.error.required=MRN required
+mrn.invalid.number=Invalid MRN format

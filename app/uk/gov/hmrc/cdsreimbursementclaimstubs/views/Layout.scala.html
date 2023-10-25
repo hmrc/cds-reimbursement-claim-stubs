@@ -31,9 +31,9 @@
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.HmrcStandardPageParams
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.TemplateOverrides
 
-@this(head: Head, hmrcStandardPage: HmrcStandardPage, fullWidthPageLayout: FullWidthPageLayout, oneThirdOneThirdMainContent: OneThirdOneThirdMainContent, hmrcHeader: HmrcHeader, govukSelect: GovukSelect, govukHint: GovukHint)
+@this(head: Head, hmrcStandardPage: HmrcStandardPage, fullWidthPageLayout: FullWidthPageLayout, oneThirdOneThirdMainContent: OneThirdOneThirdMainContent, twoThirdOneThirdMainContent: TwoThirdOneThirdMainContent, hmrcHeader: HmrcHeader, govukSelect: GovukSelect, govukHint: GovukHint)
 
-@(pageTitle: String, sidebar: Html = Html(""))(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+@(pageTitle: String, sidebar: Html = Html(""), isTwoThird: Boolean = false)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
 
 
 @hmrcStandardPage(HmrcStandardPageParams(
@@ -41,7 +41,7 @@ pageTitle = Some(pageTitle),
 templateOverrides = TemplateOverrides(
 additionalHeadBlock = Some(head()),
 pageLayout = Some(fullWidthPageLayout(_)),
-mainContentLayout = Some(oneThirdOneThirdMainContent(sidebarContent = sidebar))
+mainContentLayout = Some(if(isTwoThird) twoThirdOneThirdMainContent(sidebarContent = sidebar) else oneThirdOneThirdMainContent(sidebarContent = sidebar))
 ))) {
  @contentBlock
 

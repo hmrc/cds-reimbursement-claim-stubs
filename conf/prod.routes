@@ -6,6 +6,10 @@ GET        /assets/*file                                              @controlle
 # Sample Page
 GET        /samplepage                                                uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.SamplePageController.show()
 
+# ACC14 Finder (Internal for Team)
+GET        /acc14finder                                               uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.Acc14FinderPageController.show()
+POST       /acc14finder                                               uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.Acc14FinderPageController.submit()
+
 # TPI05
 POST       /tpi/postoverpaymentclaim/v1                               uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.ClaimController.submitClaim
 

@@ -59,6 +59,8 @@ object MockHttpResponse {
         }
       )
 
+  def findMRN(mrn: String): Option[MockHttpResponse] = httpResponses.find(_.mrnPredicate(MRN(mrn)))
+
   private val httpResponses: List[MockHttpResponse] =
     List(
       //TPI05 OK_RESPONSE, ACC14 OK_FULL_RESPONSE (standard scenario)
