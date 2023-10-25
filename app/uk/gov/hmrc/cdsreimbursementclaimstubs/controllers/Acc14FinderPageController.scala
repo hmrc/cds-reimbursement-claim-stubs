@@ -51,14 +51,14 @@ class Acc14FinderPageController @Inject()(
 
 
   def show(): Action[AnyContent] = Action { implicit request =>
-    Ok(acc14Finder(movementReferenceNumberForm, routes.Acc14FinderPageController.submit()))
+    Ok(acc14Finder(movementReferenceNumberForm, routes.Acc14FinderPageController.submit(), routes.Acc14FinderPageController.show()))
   }
 
   def submit(): Action[AnyContent] = Action.async { implicit request => {
     movementReferenceNumberForm.bindFromRequest()
       .fold(
         formWithErrors => {
-          Future.successful(BadRequest(acc14Finder(formWithErrors, routes.Acc14FinderPageController.submit())))
+          Future.successful(BadRequest(acc14Finder(formWithErrors, routes.Acc14FinderPageController.submit(), routes.Acc14FinderPageController.show())))
         }, mrn => {
           val declarationRequest = DeclarationRequest(
             OverpaymentDeclarationDisplayRequest(
@@ -77,6 +77,7 @@ class Acc14FinderPageController @Inject()(
               Ok(acc14Finder(
                 movementReferenceNumberForm.withDefault(Some(mrn)),
                 routes.Acc14FinderPageController.submit(),
+                routes.Acc14FinderPageController.show(),
                 result = Some(Json.prettyPrint(item.json)),
                 responseType = responseType
               ))

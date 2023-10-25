@@ -41,13 +41,11 @@
     errorSummary: uk.gov.hmrc.cdsreimbursementclaimstubs.views.html.components.error_summary
 )
 
-@(form: Form[MRN], postAction: Call, result: Option[String] = None, responseType: Option[String] = None)(implicit request: Request[_], messages: Messages)
+@(form: Form[MRN], postAction: Call, clearAction: Call, result: Option[String] = None, responseType: Option[String] = None)(implicit request: Request[_], messages: Messages)
 
 @key = @{"mrn"}
 
-@prestring = @{"""{
-message: "..."
-}"""}
+@prestring = @{"..."}
 
 @sidebar = {
 <pre>
@@ -78,6 +76,10 @@ message: "..."
           )
         @submitButton("Submit")
       }
+      @formWithCSRF(clearAction, 'novalidate -> "novalidate") {
+        @submitButton("Clear")
+      }
+
       @{if(responseType.nonEmpty)
           <label class="govuk-label">
               Response Type: {responseType.get}
