@@ -85,5 +85,5 @@ class Acc14FinderPageController @Inject()(
         })
   }}
 
-  private def getName(obj: Object): String = obj.getClass.getSimpleName.replace("$", "")
+  private def getName[T >: Object](obj: T): String = obj.getClass.getSimpleName.replace("$", "")
 }
