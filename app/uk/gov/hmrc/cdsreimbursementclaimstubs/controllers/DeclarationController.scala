@@ -17,15 +17,15 @@
 package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 
 import cats.syntax.EitherSyntax
-import cats.syntax.eq._
 import com.eclipsesource.schema.drafts.Version4
 import com.eclipsesource.schema.drafts.Version4._
 import com.eclipsesource.schema.{SchemaType, SchemaValidator}
 import com.google.inject.{Inject, Singleton}
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, ControllerComponents, Request}
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.MockHttpResponse
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.{Acc14ErrorResponse, Acc14Request, Acc14Response}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.model.DeclarationHttpResponse
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.responses.ErrorResponse
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.{Acc14Request, Acc14Response}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids.MRN
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -67,21 +67,23 @@ class DeclarationController @Inject() (cc: ControllerComponents)
               logger.warn("could not find declaration id in the request")
               BadRequest
             case Some(request @ Acc14Request(_, Some(reasonForSecurity))) =>
-              MockHttpResponse.getSecuritiesDeclaration(MRN(request.declarationId), reasonForSecurity) match {
+              DeclarationHttpResponse.getResponse(MRN(request.declarationId), reasonForSecurity) match {
                 case Some(declarationResponse) =>
                   declarationResponse.response match {
                     case Left(value) =>
                       value match {
-                        case Left(wafErrorResponse) => Forbidden(Json.toJson(wafErrorResponse.value))
-                        case Right(acc14ErrorResponse) =>
-                          Acc14ErrorResponse.returnAcc14ErrorResponse(acc14ErrorResponse) match {
-                            case error if error.httpStatus === BAD_REQUEST =>
-                              BadRequest(error.value)
-                            case error if error.httpStatus === INTERNAL_SERVER_ERROR =>
-                              InternalServerError(error.value)
-                            case error if error.httpStatus === METHOD_NOT_ALLOWED =>
-                              MethodNotAllowed(error.value)
-                          }
+                        case Left(wafErrorResponse) =>
+                          logger
+                            .info(
+                              s"acc-14 profile returned for ${request.requestedDeclarationId} and $reasonForSecurity is: $wafErrorResponse"
+                            )
+                          Forbidden(Json.toJson(wafErrorResponse.value))
+                        case Right(errorResponse: ErrorResponse) =>
+                          logger
+                            .info(
+                              s"acc-14 profile returned for ${request.requestedDeclarationId} and $reasonForSecurity is: $errorResponse"
+                            )
+                          Status(errorResponse.status)(Json.toJson(errorResponse.declarationErrorResponse))
                       }
                     case Right(acc14Response) =>
                       val response = Acc14Response
@@ -103,22 +105,24 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                   BadRequest
               }
             case Some(request) =>
-              MockHttpResponse.getDeclarationHttpResponse(MRN(request.declarationId)) match {
+              DeclarationHttpResponse.getResponse(MRN(request.declarationId)) match {
                 case Some(httpResponse) =>
                   logger.info(s"declaration id received: ${request.requestedDeclarationId}")
-                  httpResponse.declarationResponse.response match {
+                  httpResponse.response match {
                     case Left(value) =>
                       value match {
-                        case Left(wafErrorResponse) => Forbidden(Json.toJson(wafErrorResponse.value))
-                        case Right(acc14ErrorResponse) =>
-                          val error = Acc14ErrorResponse.returnAcc14ErrorResponse(acc14ErrorResponse)
-                          (error.httpStatus, error.value) match {
-                            case (BAD_REQUEST, responseBody) => BadRequest(Json.toJson(responseBody))
-                            case (UNAUTHORIZED, responseBody) => Unauthorized(Json.toJson(responseBody))
-                            case (METHOD_NOT_ALLOWED, responseBody) => MethodNotAllowed(Json.toJson(responseBody))
-                            case (INTERNAL_SERVER_ERROR, responseBody) => InternalServerError(Json.toJson(responseBody))
-                            case (status, responseBody) => Status(status)(Json.toJson(responseBody))
-                          }
+                        case Left(wafErrorResponse) =>
+                          logger
+                            .info(
+                              s"acc-14 profile returned for ${request.requestedDeclarationId} is: $wafErrorResponse"
+                            )
+                          Forbidden(Json.toJson(wafErrorResponse.value))
+                        case Right(errorResponse: ErrorResponse) =>
+                          logger
+                            .info(
+                              s"acc-14 profile returned for ${request.requestedDeclarationId} is: $errorResponse"
+                            )
+                          Status(errorResponse.status)(Json.toJson(errorResponse.declarationErrorResponse))
                       }
                     case Right(acc14Response) =>
                       val response = Acc14Response
@@ -126,7 +130,7 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                         .withMrn(request.requestedDeclarationId)
                         .withDeclarantXiEori(request.shouldReturnDeclarantXiEori)
                         .withConsigneeXiEori(request.shouldReturnConsigneeXiEori)
-                      logger.info(s"acc-14 profile returned is: $response")
+                      logger.info(s"acc-14 profile returned for ${request.requestedDeclarationId} is: $response")
                       Ok(response.value)
                   }
                 case None =>

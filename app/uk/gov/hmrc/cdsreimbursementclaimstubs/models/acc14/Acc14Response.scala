@@ -41,19 +41,19 @@ final case class Acc14Response(value: JsValue) {
 
 object Acc14Response {
 
-  def transformMrn(mrn: String) =
+  def transformMrn(mrn: String): Reads[JsObject] =
     (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarationId").json
       .update(
         __.read[JsString].map(_ => JsString(mrn))
       )
 
-  val transformToDeclarantXiEori =
+  val transformToDeclarantXiEori: Reads[JsObject] =
     (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "declarantEORI").json
       .update(
         __.read[JsString].map(eori => JsString(eori.value.replace("GB", "XI")))
       )
 
-  val transformToConsigneeXiEori =
+  val transformToConsigneeXiEori: Reads[JsObject] =
     (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "consigneeEORI").json
       .update(
         __.read[JsString].map(eori => JsString(eori.value.replace("GB", "XI")))
@@ -62,7 +62,7 @@ object Acc14Response {
   sealed trait Acc14ResponseType extends Product with Serializable
   object Acc14ResponseType {
     case object OK_MINIMUM_RESPONSE extends Acc14ResponseType
-    case class OK_PARTIAL_RESPONSE(declarationId: String) extends Acc14ResponseType
+    case class OK_PARTIAL_RESPONSE(declarationId: String, declarantEORI: String, reasonForSecurity: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String)
         extends Acc14ResponseType
     case class OK_FULL_RESPONSE_SUBSIDY(
@@ -141,7 +141,7 @@ object Acc14Response {
   def returnAcc14Response(acc14ResponseType: Acc14ResponseType): Acc14Response =
     acc14ResponseType match {
       case Acc14ResponseType.OK_MINIMUM_RESPONSE => getMinimumAcc14Response
-      case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId) => getPartialAcc14Response(declarationId)
+      case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId, declarantEORI, reasonForSecurity) => getPartialAcc14Response(declarationId, declarantEORI, reasonForSecurity)
       case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14Response(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(declarationId, importerEORI, declarantEORI, paymentMethods, withConsigneeContactDetails, withDeclarantContactDetails) =>
@@ -224,7 +224,7 @@ object Acc14Response {
     )
   )
 
-  def getPartialAcc14Response(declarationId: String) = Acc14Response(
+  def getPartialAcc14Response(declarationId: String, declarantEORI: String, reasonForSecurity: String) = Acc14Response(
     Json.parse(
       s"""
          |{
@@ -242,7 +242,7 @@ object Acc14Response {
          |            "procedureCode": "71",
          |            "btaSource": "DMS",
          |            "declarantDetails": {
-         |                "declarantEORI": "GB3745678934000",
+         |                "declarantEORI": "$declarantEORI",
          |                "legalName": "Fred Bloggs and Co Ltd",
          |                "establishmentAddress": {
          |                    "addressLine1": "10 Rillington Place",
@@ -2763,7 +2763,7 @@ object Acc14Response {
          |			"acceptanceDate": "2021-02-12",
          |			"procedureCode": "2",
          |			"declarantDetails": {
-         |				"declarantEORI": "GB03I52858027018",
+         |				"declarantEORI": "GB03152858027018",
          |				"legalName": "Starbucks LTD",
          |				"establishmentAddress": {
          |					"addressLine1": "16 Buckingham Road",
@@ -2780,7 +2780,7 @@ object Acc14Response {
          |				}
          |			},
          |			"consigneeDetails": {
-         |				"consigneeEORI": "GB03I52858027018",
+         |				"consigneeEORI": "GB03152858027018",
          |				"legalName": "Expertise LTD",
          |				"establishmentAddress": {
          |					"addressLine1": "1 Cross Road",
