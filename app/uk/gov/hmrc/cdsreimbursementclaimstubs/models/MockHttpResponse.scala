@@ -1238,7 +1238,15 @@ object MockHttpResponse {
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Left(Right(Acc14ErrorResponseType.TIME_OUT)))
-      )
+      ),
+      MockHttpResponse(
+        _ === MRN("70AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(Acc14ResponseType.OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES("70AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001"))
+        )
+      ),
     ) ++ createPaymentMethodsForEoriEnding("01") ++
       createPaymentMethodsForEoriEnding("02")
 
