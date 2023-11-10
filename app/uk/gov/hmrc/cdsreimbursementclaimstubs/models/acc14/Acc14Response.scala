@@ -16,7 +16,9 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14
 
+import play.api.i18n.Lang.logger
 import play.api.libs.json._
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14Response.{transformToDuplicateAddressLines}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.TimeUtils
 
 final case class Acc14Response(value: JsValue) {
@@ -33,6 +35,13 @@ final case class Acc14Response(value: JsValue) {
     if (enabled)
       Acc14Response(value.transform(Acc14Response.transformToConsigneeXiEori).getOrElse(value))
     else this
+
+  def withDuplicatedAddressLines(): Acc14Response =
+    value.transform(transformToDuplicateAddressLines).asEither
+    match {
+      case Left(errors) => throw new Exception(errors.flatMap(_._2).head.message)
+      case Right(value) =>  Acc14Response(value)
+    }
 
   override def toString(): String =
     Json.prettyPrint(value)
@@ -59,11 +68,35 @@ object Acc14Response {
         __.read[JsString].map(eori => JsString(eori.value.replace("GB", "XI")))
       )
 
+  val transformToDuplicateAddressLines = {
+    val appendMadHill = __.read[JsString].map(line1 => JsString(s"${line1.value}, Mad Hill"))
+    val addMadHill =(__ \ "addressLine2").json.put(JsString("Mad Hill"))
+
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "contactDetails" \ "addressLine1").json
+      .update(appendMadHill) andThen
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "establishmentAddress" \ "addressLine1").json
+      .update(appendMadHill) andThen
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "contactDetails" \ "addressLine1").json
+      .update(appendMadHill) andThen
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "establishmentAddress" \ "addressLine1").json
+      .update(appendMadHill) andThen
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "contactDetails" ).json
+      .update(addMadHill) andThen
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "establishmentAddress").json
+      .update(addMadHill) andThen
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "contactDetails").json
+      .update(addMadHill) andThen
+    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "establishmentAddress").json
+      .update(addMadHill)
+  }
+
   sealed trait Acc14ResponseType extends Product with Serializable
   object Acc14ResponseType {
     case object OK_MINIMUM_RESPONSE extends Acc14ResponseType
     case class OK_PARTIAL_RESPONSE(declarationId: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String)
+        extends Acc14ResponseType
+    case class  OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES(declarationId: String, importerEORI: String, declarantEORI: String)
         extends Acc14ResponseType
     case class OK_FULL_RESPONSE_SUBSIDY(
       declarationId: String,
@@ -207,6 +240,12 @@ object Acc14Response {
           importerEORI,
           declarantEORI
         )
+
+      case Acc14ResponseType.OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES(
+        declarationId,
+        importerEORI,
+        declarantEORI
+      ) =>  getFullAcc14ResponseWithDuplicatedAddressLines(declarationId, importerEORI, declarantEORI)
     }
 
   def getMinimumAcc14Response = Acc14Response(
@@ -1732,6 +1771,8 @@ object Acc14Response {
     )
   )
 
+
+
   def getFullAcc14Response(
     declarationId: String,
     importerEORI: String,
@@ -1887,6 +1928,14 @@ object Acc14Response {
       )
     )
   }
+
+  def getFullAcc14ResponseWithDuplicatedAddressLines(
+                            declarationId: String,
+                            importerEORI: String,
+                            declarantEORI: String,
+                          ) =
+    this.getFullAcc14Response(declarationId, importerEORI, declarantEORI)
+      .withDuplicatedAddressLines()
 
   def getFullAcc14ResponseWithSubsidyPayment(
     declarationId: String,
