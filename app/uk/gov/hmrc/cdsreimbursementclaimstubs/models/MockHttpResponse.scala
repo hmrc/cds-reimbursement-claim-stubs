@@ -1964,11 +1964,13 @@ object MockHttpResponse {
           DeclarationResponse(
             Right(
               Acc14ResponseType
-                .OK_RESPONSE_NO_BANK_DETAILS(
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
                   mrn.value,
                   reasonForSecurity,
                   "GB000000000000001",
-                  "GB000000000000001"
+                  "GB000000000000001",
+                  false,
+                  false
                 )
             )
           )
@@ -1978,11 +1980,13 @@ object MockHttpResponse {
           DeclarationResponse(
             Right(
               Acc14ResponseType
-                .OK_RESPONSE_NO_BANK_DETAILS(
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
                   mrn.value,
                   reasonForSecurity,
                   "GB000000000000001",
-                  "GB000000000000001"
+                  "GB000000000000001",
+                  true,
+                  false
                 )
             )
           )
@@ -1992,11 +1996,13 @@ object MockHttpResponse {
           DeclarationResponse(
             Right(
               Acc14ResponseType
-                .OK_RESPONSE_NO_BANK_DETAILS(
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
                   mrn.value,
                   reasonForSecurity,
                   "GB000000000000001",
-                  "GB000000000000001"
+                  "GB000000000000001",
+                  false,
+                  true
                 )
             )
           )
@@ -2006,11 +2012,13 @@ object MockHttpResponse {
           DeclarationResponse(
             Right(
               Acc14ResponseType
-                .OK_RESPONSE_NO_BANK_DETAILS(
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
                   mrn.value,
                   reasonForSecurity,
                   "GB000000000000001",
-                  "GB000000000000002"
+                  "GB000000000000002",
+                  false,
+                  false
                 )
             )
           )
@@ -2020,11 +2028,13 @@ object MockHttpResponse {
           DeclarationResponse(
             Right(
               Acc14ResponseType
-                .OK_RESPONSE_NO_BANK_DETAILS(
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
                   mrn.value,
                   reasonForSecurity,
                   "GB000000000000001",
-                  "GB000000000000002"
+                  "GB000000000000002",
+                  true,
+                  false
                 )
             )
           )
@@ -2034,11 +2044,13 @@ object MockHttpResponse {
           DeclarationResponse(
             Right(
               Acc14ResponseType
-                .OK_RESPONSE_NO_BANK_DETAILS(
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
                   mrn.value,
                   reasonForSecurity,
                   "GB000000000000001",
-                  "GB000000000000002"
+                  "GB000000000000002",
+                  false,
+                  true
                 )
             )
           )
@@ -2048,11 +2060,13 @@ object MockHttpResponse {
           DeclarationResponse(
             Right(
               Acc14ResponseType
-                .OK_RESPONSE_NO_BANK_DETAILS(
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
                   mrn.value,
                   reasonForSecurity,
                   "GB000000000000002",
-                  "GB000000000000001"
+                  "GB000000000000001",
+                  false,
+                  false
                 )
             )
           )
@@ -2062,25 +2076,29 @@ object MockHttpResponse {
           DeclarationResponse(
             Right(
               Acc14ResponseType
-                .OK_RESPONSE_NO_BANK_DETAILS(
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
                   mrn.value,
                   reasonForSecurity,
                   "GB000000000000002",
-                  "GB000000000000001"
+                  "GB000000000000001",
+                  true,
+                  false
                 )
             )
           )
         )
-      case (MRN("60AAAAAAAAAAAAAA9"), _) =>
+      case (MRN("60AAAAAAAAAAAAAAA9"), _) =>
         Some(
           DeclarationResponse(
             Right(
               Acc14ResponseType
-                .OK_RESPONSE_NO_BANK_DETAILS(
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
                   mrn.value,
                   reasonForSecurity,
                   "GB000000000000002",
-                  "GB000000000000001"
+                  "GB000000000000001",
+                  false,
+                  true
                 )
             )
           )
