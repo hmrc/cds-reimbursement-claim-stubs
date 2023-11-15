@@ -2098,6 +2098,22 @@ object MockHttpResponse {
                   "GB000000000000002",
                   "GB000000000000001",
                   false,
+                  false,
+                )
+            )
+          )
+        )
+      case (MRN("60AAAAAAAAAAAAAA10"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000001",
+                  "GB000000000000002",
+                  false,
                   true
                 )
             )

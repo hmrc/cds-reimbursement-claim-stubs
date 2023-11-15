@@ -149,6 +149,15 @@ object Acc14Response {
                                                   includeConsigneeBankDetails: Boolean,
                                                   includeDeclarantBankDetails: Boolean
                                                 ) extends Acc14ResponseType
+
+    case class OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
+                                                             declarationId: String,
+                                                             reasonForSecurity: String,
+                                                             importerEORI: String,
+                                                             declarantEORI: String,
+                                                             includeConsigneeBankDetails: Boolean,
+                                                             includeDeclarantBankDetails: Boolean
+                                                           ) extends Acc14ResponseType
     case class OK_RESPONSE_NO_BANK_DETAILS(
       declarationId: String,
       reasonForSecurity: String,
@@ -213,9 +222,13 @@ object Acc14Response {
         getFullAcc14WithSpecificBankDetails(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails)
       case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(declarationId, importerEORI, declarantEORI, reasonForSecurity, includeConsigneeBankDetails, includeDeclarantBankDetails) =>
         getFullAcc14WithSpecificBankDetailsSecurities(declarationId, importerEORI, declarantEORI, reasonForSecurity, includeConsigneeBankDetails, includeDeclarantBankDetails)
+      case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods) =>
+        getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods)
       case Acc14ResponseType
       .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods) =>
         getFullAcc14WithSpecificBankDetailsSubsidy(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods)
+      case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods) =>
+        getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods)
       case Acc14ResponseType
             .OK_RESPONSE_NO_BANK_DETAILS(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
         getFullAcc14WithoutBankDetails(declarationId, reasonForSecurity, importerEORI, declarantEORI)
@@ -743,6 +756,222 @@ object Acc14Response {
          |""".stripMargin)
   )
 
+  def getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(
+                                                     declarationId: String,
+                                                     reasonForSecurity: String,
+                                                     importerEORI: String,
+                                                     declarantEORI: String,
+                                                     includeConsigneeBankDetails: Boolean = false,
+                                                     includeDeclarantBankDetails: Boolean = false
+                                                   ) = Acc14Response(
+    Json.parse(
+      s"""
+         |{
+         |    "overpaymentDeclarationDisplayResponse":
+         |    {
+         |        "responseCommon":
+         |        {
+         |            "status": "OK",
+         |            "processingDate": "2001-12-17T09:30:47Z"
+         |        },
+         |        "responseDetail":
+         |        {
+         |            "declarationId": "$declarationId",
+         |            "acceptanceDate": "2019-08-13",
+         |            "declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
+         |            "securityReason": "$reasonForSecurity",
+         |            "btaDueDate": "2019-09-13",
+         |            "procedureCode": "71",
+         |            "btaSource": "DMS",
+         |            "declarantDetails":
+         |            {
+         |                "declarantEORI": "$declarantEORI",
+         |                "legalName": "Fred Bloggs and Co Ltd",
+         |                "establishmentAddress":
+         |                {
+         |                    "addressLine1": "10 Rillington Place",
+         |                    "addressLine2": "London",
+         |                    "addressLine3": "Pimlico",
+         |                    "postalCode": "W11 1RH",
+         |                    "countryCode": "GB"
+         |                },
+         |                "contactDetails":
+         |                {
+         |                    "contactName": "Angela Smith",
+         |                    "addressLine1": "J P Jones Insolvency Ltd",
+         |                    "addressLine2": "14 Briar Lane",
+         |                    "addressLine3": "Pimlico",
+         |                    "postalCode": "W11 1QT",
+         |                    "countryCode": "GB",
+         |                    "telephone": "0270 112 3476",
+         |                    "emailAddress": "fred@bloggs.com"
+         |                }
+         |            },
+         |            "consigneeDetails":
+         |            {
+         |                "consigneeEORI": "$importerEORI",
+         |                "legalName": "Swift Goods Ltd",
+         |                "establishmentAddress":
+         |                {
+         |                    "addressLine1": "14 Briar Lane",
+         |                    "addressLine2": "London",
+         |                    "addressLine3": "Pimlico",
+         |                    "countryCode": "GB"
+         |                },
+         |                "contactDetails":
+         |                {
+         |                    "contactName": "Frank Sidebotham",
+         |                    "addressLine1": "J P Jones Insolvency Ltd",
+         |                    "addressLine2": "14 Briar Lane",
+         |                    "addressLine3": "Pimlico",
+         |                    "postalCode": "W11 1QT",
+         |                    "countryCode": "GB",
+         |                    "telephone": "0207 678 3243",
+         |                    "emailAddress": "enquiries@swftgoods.com"
+         |                }
+         |            },
+         |            "accountDetails":
+         |            [
+         |                {
+         |                    "accountType": "001",
+         |                    "accountNumber": "8901112",
+         |                    "eori": "GB000000000000001",
+         |                    "legalName": "Fred Bloggs and Co Ltd",
+         |                    "contactDetails":
+         |                    {
+         |                        "contactName": "Angela Smith",
+         |                        "addressLine1": "J P Jones Insolvency Ltd",
+         |                        "addressLine2": "14 Briar Lane",
+         |                        "addressLine3": "Holborn",
+         |                        "addressLine4": "London",
+         |                        "countryCode": "GB",
+         |                        "telephone": "0270 112 3476",
+         |                        "emailAddress": "fred@bloggs.com"
+         |                    }
+         |                },
+         |                {
+         |                    "accountType": "002",
+         |                    "accountNumber": "8901113",
+         |                    "eori": "GB000000000000001",
+         |                    "legalName": "Fred Bloggs and Co Ltd",
+         |                    "contactDetails":
+         |                    {
+         |                        "contactName": "Angela Smith",
+         |                        "addressLine1": "J P Jones Insolvency Ltd",
+         |                        "addressLine2": "14 Briar Lane",
+         |                        "addressLine3": "London",
+         |                        "countryCode": "GB",
+         |                        "telephone": "0270 112 3476",
+         |                        "emailAddress": "fred@bloggs.com"
+         |                    }
+         |                }
+         |            ],
+         |            ${
+        (includeDeclarantBankDetails, includeConsigneeBankDetails) match {
+          case (false, false) => ""
+          case (true, false) => s""" "bankDetails":  ${declarantBankDetails},"""
+          case (false, true) => s""" "bankDetails":  ${consigneeBankDetails},"""
+          case (true, true) => s""" "bankDetails":  ${consigneeAndDeclarantBankDetails},"""
+        }
+      }
+         |            "securityDetails":
+         |            [
+         |                {
+         |                    "securityDepositId": "ABC0123456",
+         |                    "totalAmount": "14585.52",
+         |                    "amountPaid": "14585.52",
+         |                    "paymentMethod": "004",
+         |                    "paymentReference": "SGL SECURITY 001",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A00",
+         |                            "amount": "6000.00"
+         |                        },
+         |                        {
+         |                            "taxType": "B00",
+         |                            "amount": "8085.52"
+         |                        }
+         |                    ]
+         |                },
+         |                {
+         |                    "securityDepositId": "DEF6543213",
+         |                    "totalAmount": "500.00",
+         |                    "amountPaid": "300.00",
+         |                    "paymentMethod": "004",
+         |                    "paymentReference": "SGL SECURITY 002",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A00",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "B00",
+         |                            "amount": "200.00"
+         |                        }
+         |                    ]
+         |                },
+         |                {
+         |                    "securityDepositId": "DEF6543212",
+         |                    "totalAmount": "500.00",
+         |                    "amountPaid": "300.00",
+         |                    "paymentMethod": "004",
+         |                    "paymentReference": "SGL SECURITY 003",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A00",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "B00",
+         |                            "amount": "200.00"
+         |                        }
+         |                    ]
+         |                },
+         |                {
+         |                    "securityDepositId": "DEF6543210",
+         |                    "totalAmount": "500.00",
+         |                    "amountPaid": "300.00",
+         |                    "paymentMethod": "004",
+         |                    "paymentReference": "SGL SECURITY 004",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A00",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "B00",
+         |                            "amount": "200.00"
+         |                        }
+         |                    ]
+         |                },
+         |                {
+         |                    "securityDepositId": "DEF6543211",
+         |                    "totalAmount": "500.00",
+         |                    "amountPaid": "300.00",
+         |                    "paymentMethod": "004",
+         |                    "paymentReference": "SGL SECURITY 005",
+         |                    "taxDetails":
+         |                    [
+         |                        {
+         |                            "taxType": "A00",
+         |                            "amount": "100.00"
+         |                        },
+         |                        {
+         |                            "taxType": "B00",
+         |                            "amount": "200.00"
+         |                        }
+         |                    ]
+         |                }
+         |            ]
+         |        }
+         |    }
+         |}
+         |""".stripMargin)
+  )
 
   def getFullAcc14WithSpecificBankDetailsSubsidy(
                                            declarationId: String,
