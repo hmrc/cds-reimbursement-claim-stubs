@@ -114,6 +114,15 @@
               ],
               "additionalProperties": false
             },
+            "establishmentInTheCustomsTerritoryOfTheUnion": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1,
+              "enum": [
+                "0",
+                "1"
+              ]
+            },
             "typeOfLegalEntity": {
               "type": "string",
               "minLength": 1,
@@ -172,6 +181,25 @@
               },
               "additionalProperties": false
             },
+            "VATIDs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "countryCode": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 2
+                  },
+                  "VATID": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
             "thirdCountryUniqueIdentificationNumber": {
               "type": "array",
               "items": {
@@ -219,45 +247,47 @@
               "properties": {
                 "XI_EORINo": {
                   "type": "string",
-                  "minLength": 3,
-                  "maxLength": 17,
-                  "pattern": "^[A-Z]{2}[0-9A-Z]+$"
+                  "minLength": 1,
+                  "maxLength": 17
                 },
                 "PBEAddress": {
                   "type": "object",
                   "properties": {
-                    "streetNumber1": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 35,
-                      "description": "Address Line 1"
-                    },
-                    "streetNumber2": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 35,
-                      "description": "Address Line 2"
-                    },
-                    "city": {
+                    "pbeAddressLine1": {
                       "type": "string",
                       "minLength": 1,
                       "maxLength": 35
                     },
-                    "postalCode": {
+                    "pbeAddressLine2": {
                       "type": "string",
                       "minLength": 1,
-                      "maxLength": 9,
-                      "description": "Mandatory if countryCode is 'GB'"
+                      "maxLength": 35
                     },
-                    "countryCode": {
+                    "pbeAddressLine3": {
                       "type": "string",
-                      "minLength": 2,
-                      "maxLength": 2
+                      "minLength": 1,
+                      "maxLength": 35
+                    },
+                    "pbeAddressLine4": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 35
+                    },
+                    "pbePostCode": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 9
                     }
                   },
                   "required": [
-                    "streetNumber1"
-                  ]
+                    "pbeAddressLine1"
+                  ],
+                  "additionalProperties": false
+                },
+                "establishmentInTheCustomsTerritoryOfTheUnion": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1
                 },
                 "XI_VATNumber": {
                   "type": "string",
@@ -277,7 +307,8 @@
                       "minLength": 1,
                       "maxLength": 15
                     }
-                  }
+                  },
+                  "additionalProperties": false
                 },
                 "XI_ConsentToDisclose": {
                   "type": "string",
@@ -292,7 +323,8 @@
               },
               "required": [
                 "XI_EORINo"
-              ]
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -304,8 +336,7 @@
         }
       },
       "required": [
-        "responseCommon",
-        "responseDetail"
+        "responseCommon"
       ],
       "additionalProperties": false
     }
