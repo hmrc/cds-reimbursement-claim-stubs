@@ -4,7 +4,6 @@
 .vscode/
 
 bin/
-project/
 target/
 build/
 
@@ -36,3 +35,4 @@ build
 *.class
 /RUNNING_PID
 sbt-launch.jar
+metals.sbt
