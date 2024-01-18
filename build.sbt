@@ -3,7 +3,9 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName = "cds-reimbursement-claim-stubs"
 
-ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
+ThisBuild / scalaVersion := "2.13.12"
+ThisBuild / scalafixDependencies += "com.github.liancheng"       %% "organize-imports" % "0.6.0"
+ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml"        % VersionScheme.Always
 
 addCommandAlias("fmt", "all scalafmtSbt scalafmt test:scalafmt")
 addCommandAlias("check", "all scalafmtSbtCheck scalafmtCheck test:scalafmtCheck")
@@ -26,7 +28,6 @@ lazy val microservice = Project(appName, file("."))
     Test / scalacOptions --= Seq("-Ywarn-value-discard")
   )
   .settings(Assets / pipelineStages := Seq(uglify))
-  .settings(scalaVersion := "2.13.10")
   .settings(Compile / resourceDirectory := baseDirectory.value / "/conf")
   .settings(PlayKeys.playDefaultPort := 7502)
   .settings(resolvers ++= Seq(Resolver.jcenterRepo))

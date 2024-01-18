@@ -41,4 +41,3 @@ GET        /customs-data-store/eori/:eori/verified-email              uk.gov.hmr
 GET        /customs-data-store/eori/:eori/company-information         uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.CompanyInformationController.getCompanyInformation(eori: String)
 
 ->         /                                                          health.Routes
-GET        /admin/metrics                                             com.kenshoo.play.metrics.MetricsController.metrics
