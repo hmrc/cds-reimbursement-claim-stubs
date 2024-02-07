@@ -4,10 +4,10 @@ object AppDependencies {
   val compile = Seq(
     "uk.gov.hmrc"            %% "bootstrap-frontend-play-30" % "8.4.0",
     "uk.gov.hmrc"            %% "bootstrap-backend-play-30"  % "8.4.0",
-    "uk.gov.hmrc"            %% "play-frontend-hmrc-play-30" % "8.3.0",
+    "uk.gov.hmrc"            %% "play-frontend-hmrc-play-30" % "8.4.0",
     "uk.gov.hmrc"            %% "stub-data-generator"        % "1.1.0",
     "com.eclipsesource"      %% "play-json-schema-validator" % "0.9.5",
-    "org.julienrf"           %% "play-json-derived-codecs"   % "7.0.0",
+    "org.julienrf"           %% "play-json-derived-codecs"   % "10.1.0",
     "org.typelevel"          %% "cats-core"                  % "2.10.0",
     "org.scala-lang.modules" %% "scala-xml"                  % "2.2.0"
   )
