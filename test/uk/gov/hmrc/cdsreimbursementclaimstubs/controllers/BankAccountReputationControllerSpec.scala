@@ -29,7 +29,7 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.bankaccountreputation.respo
 
 class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with TypeCheckedTripleEquals {
 
-  implicit val actorSystem = ActorSystem()
+  implicit val actorSystem: ActorSystem = ActorSystem()
 
   "A BankAccountReputationController" when {
     val controller = new BankAccountReputationController(Helpers.stubControllerComponents())
@@ -83,7 +83,7 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       "return a json error response for personal request parse failure" in {
         contentAsString(
           result
-        ) shouldBe "JsResultException(errors:List((,List(JsonValidationError(List(error.expected.jsobject),ArraySeq())))))"
+        ) shouldBe "JsResultException(errors:List((,List(JsonValidationError(List(error.expected.jsobject),List())))))"
       }
     }
 
@@ -99,7 +99,7 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       }
       "return a json error response for business request parse failure" in {
         contentAsString(result) should ===(
-          "JsResultException(errors:List((,List(JsonValidationError(List(error.expected.jsobject),ArraySeq())))))"
+          "JsResultException(errors:List((,List(JsonValidationError(List(error.expected.jsobject),List())))))"
         )
       }
     }

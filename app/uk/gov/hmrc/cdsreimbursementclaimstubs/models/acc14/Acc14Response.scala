@@ -16,9 +16,8 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14
 
-import play.api.i18n.Lang.logger
 import play.api.libs.json._
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14Response.{getFullAcc14WithSpecificBankDetailsSubsidy, transformToDuplicateAddressLines}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14Response.transformToDuplicateAddressLines
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.TimeUtils
 
 final case class Acc14Response(value: JsValue) {
@@ -37,10 +36,9 @@ final case class Acc14Response(value: JsValue) {
     else this
 
   def withDuplicatedAddressLines(): Acc14Response =
-    value.transform(transformToDuplicateAddressLines).asEither
-    match {
+    value.transform(transformToDuplicateAddressLines).asEither match {
       case Left(errors) => throw new Exception(errors.flatMap(_._2).head.message)
-      case Right(value) =>  Acc14Response(value)
+      case Right(value) => Acc14Response(value)
     }
 
   override def toString(): String =
@@ -70,24 +68,24 @@ object Acc14Response {
 
   val transformToDuplicateAddressLines = {
     val appendMadHill = __.read[JsString].map(line1 => JsString(s"${line1.value}, Mad Hill"))
-    val addMadHill =(__ \ "addressLine2").json.put(JsString("Mad Hill"))
+    val addMadHill    = (__ \ "addressLine2").json.put(JsString("Mad Hill"))
 
     (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "contactDetails" \ "addressLine1").json
       .update(appendMadHill) andThen
-    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "establishmentAddress" \ "addressLine1").json
-      .update(appendMadHill) andThen
-    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "contactDetails" \ "addressLine1").json
-      .update(appendMadHill) andThen
-    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "establishmentAddress" \ "addressLine1").json
-      .update(appendMadHill) andThen
-    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "contactDetails" ).json
-      .update(addMadHill) andThen
-    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "establishmentAddress").json
-      .update(addMadHill) andThen
-    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "contactDetails").json
-      .update(addMadHill) andThen
-    (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "establishmentAddress").json
-      .update(addMadHill)
+      (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "establishmentAddress" \ "addressLine1").json
+        .update(appendMadHill) andThen
+      (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "contactDetails" \ "addressLine1").json
+        .update(appendMadHill) andThen
+      (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "establishmentAddress" \ "addressLine1").json
+        .update(appendMadHill) andThen
+      (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "contactDetails").json
+        .update(addMadHill) andThen
+      (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "consigneeDetails" \ "establishmentAddress").json
+        .update(addMadHill) andThen
+      (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "contactDetails").json
+        .update(addMadHill) andThen
+      (__ \ "overpaymentDeclarationDisplayResponse" \ "responseDetail" \ "declarantDetails" \ "establishmentAddress").json
+        .update(addMadHill)
   }
 
   sealed trait Acc14ResponseType extends Product with Serializable
@@ -96,8 +94,11 @@ object Acc14Response {
     case class OK_PARTIAL_RESPONSE(declarationId: String) extends Acc14ResponseType
     case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String)
         extends Acc14ResponseType
-    case class  OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES(declarationId: String, importerEORI: String, declarantEORI: String)
-        extends Acc14ResponseType
+    case class OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES(
+      declarationId: String,
+      importerEORI: String,
+      declarantEORI: String
+    ) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_SUBSIDY(
       declarationId: String,
       importerEORI: String,
@@ -138,31 +139,31 @@ object Acc14Response {
       declarantEORI: String,
       includeConsigneeBankDetails: Boolean,
       includeDeclarantBankDetails: Boolean,
-      paymentMethods: Seq[String],
+      paymentMethods: Seq[String]
     ) extends Acc14ResponseType
 
     case class OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                                                  declarationId: String,
-                                                  reasonForSecurity: String,
-                                                  importerEORI: String,
-                                                  declarantEORI: String,
-                                                  includeConsigneeBankDetails: Boolean,
-                                                  includeDeclarantBankDetails: Boolean
-                                                ) extends Acc14ResponseType
-
-    case class OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
-                                                             declarationId: String,
-                                                             reasonForSecurity: String,
-                                                             importerEORI: String,
-                                                             declarantEORI: String,
-                                                             includeConsigneeBankDetails: Boolean,
-                                                             includeDeclarantBankDetails: Boolean
-                                                           ) extends Acc14ResponseType
-    case class OK_RESPONSE_NO_BANK_DETAILS(
       declarationId: String,
       reasonForSecurity: String,
       importerEORI: String,
       declarantEORI: String,
+      includeConsigneeBankDetails: Boolean,
+      includeDeclarantBankDetails: Boolean
+    ) extends Acc14ResponseType
+
+    case class OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
+      declarationId: String,
+      reasonForSecurity: String,
+      importerEORI: String,
+      declarantEORI: String,
+      includeConsigneeBankDetails: Boolean,
+      includeDeclarantBankDetails: Boolean
+    ) extends Acc14ResponseType
+    case class OK_RESPONSE_NO_BANK_DETAILS(
+      declarationId: String,
+      reasonForSecurity: String,
+      importerEORI: String,
+      declarantEORI: String
     ) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_SECURITIES(
       declarationId: String,
@@ -195,8 +196,22 @@ object Acc14Response {
       case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId) => getPartialAcc14Response(declarationId)
       case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14Response(declarationId, importerEORI, declarantEORI)
-      case Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(declarationId, importerEORI, declarantEORI, paymentMethods, withConsigneeContactDetails, withDeclarantContactDetails) =>
-        getFullAcc14ResponseWithSubsidyPayment(declarationId, importerEORI, declarantEORI, paymentMethods, withConsigneeContactDetails, withDeclarantContactDetails)
+      case Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(
+            declarationId,
+            importerEORI,
+            declarantEORI,
+            paymentMethods,
+            withConsigneeContactDetails,
+            withDeclarantContactDetails
+          ) =>
+        getFullAcc14ResponseWithSubsidyPayment(
+          declarationId,
+          importerEORI,
+          declarantEORI,
+          paymentMethods,
+          withConsigneeContactDetails,
+          withDeclarantContactDetails
+        )
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_1(declarationId, importerEORI, declarantEORI) =>
         getFullAcc14ResponseOtherDuties1(declarationId, importerEORI, declarantEORI)
       case Acc14ResponseType.OK_FULL_RESPONSE_OTHER_DUTIES_2(declarationId, importerEORI, declarantEORI) =>
@@ -218,17 +233,85 @@ object Acc14Response {
         getFullAcc14WithoutConsignee(declarationId, declarantEORI)
 
       case Acc14ResponseType
-      .OK_RESPONSE_SPECIFIC_BANK_DETAILS(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails) =>
-        getFullAcc14WithSpecificBankDetails(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails)
-      case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(declarationId, importerEORI, declarantEORI, reasonForSecurity, includeConsigneeBankDetails, includeDeclarantBankDetails) =>
-        getFullAcc14WithSpecificBankDetailsSecurities(declarationId, importerEORI, declarantEORI, reasonForSecurity, includeConsigneeBankDetails, includeDeclarantBankDetails)
-      case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods) =>
-        getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods)
+            .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+              declarationId,
+              importerEORI,
+              declarantEORI,
+              includeConsigneeBankDetails,
+              includeDeclarantBankDetails
+            ) =>
+        getFullAcc14WithSpecificBankDetails(
+          declarationId,
+          importerEORI,
+          declarantEORI,
+          includeConsigneeBankDetails,
+          includeDeclarantBankDetails
+        )
+      case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
+            declarationId,
+            importerEORI,
+            declarantEORI,
+            reasonForSecurity,
+            includeConsigneeBankDetails,
+            includeDeclarantBankDetails
+          ) =>
+        getFullAcc14WithSpecificBankDetailsSecurities(
+          declarationId,
+          importerEORI,
+          declarantEORI,
+          reasonForSecurity,
+          includeConsigneeBankDetails,
+          includeDeclarantBankDetails
+        )
+      case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
+            declarationId,
+            importerEORI,
+            declarantEORI,
+            includeConsigneeBankDetails,
+            includeDeclarantBankDetails,
+            paymentMethods
+          ) =>
+        getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(
+          declarationId,
+          importerEORI,
+          declarantEORI,
+          includeConsigneeBankDetails,
+          includeDeclarantBankDetails,
+          paymentMethods
+        )
       case Acc14ResponseType
-      .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods) =>
-        getFullAcc14WithSpecificBankDetailsSubsidy(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods)
-      case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods) =>
-        getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(declarationId, importerEORI, declarantEORI, includeConsigneeBankDetails, includeDeclarantBankDetails, paymentMethods)
+            .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
+              declarationId,
+              importerEORI,
+              declarantEORI,
+              includeConsigneeBankDetails,
+              includeDeclarantBankDetails,
+              paymentMethods
+            ) =>
+        getFullAcc14WithSpecificBankDetailsSubsidy(
+          declarationId,
+          importerEORI,
+          declarantEORI,
+          includeConsigneeBankDetails,
+          includeDeclarantBankDetails,
+          paymentMethods
+        )
+      case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
+            declarationId,
+            importerEORI,
+            declarantEORI,
+            includeConsigneeBankDetails,
+            includeDeclarantBankDetails,
+            paymentMethods
+          ) =>
+        getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(
+          declarationId,
+          importerEORI,
+          declarantEORI,
+          includeConsigneeBankDetails,
+          includeDeclarantBankDetails,
+          paymentMethods
+        )
       case Acc14ResponseType
             .OK_RESPONSE_NO_BANK_DETAILS(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
         getFullAcc14WithoutBankDetails(declarationId, reasonForSecurity, importerEORI, declarantEORI)
@@ -266,10 +349,11 @@ object Acc14Response {
         )
 
       case Acc14ResponseType.OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES(
-        declarationId,
-        importerEORI,
-        declarantEORI
-      ) =>  getFullAcc14ResponseWithDuplicatedAddressLines(declarationId, importerEORI, declarantEORI)
+            declarationId,
+            importerEORI,
+            declarantEORI
+          ) =>
+        getFullAcc14ResponseWithDuplicatedAddressLines(declarationId, importerEORI, declarantEORI)
     }
 
   def getMinimumAcc14Response = Acc14Response(
@@ -352,7 +436,7 @@ object Acc14Response {
   )
 
   val consigneeBankDetails =
-  """             |              {
+    """             |              {
                   |                "consigneeBankDetails":
                   |                {
                   |                  "accountHolderName": "Consignee Goods Ltd",
@@ -388,14 +472,13 @@ object Acc14Response {
       |              }""".stripMargin
 
   def getFullAcc14WithSpecificBankDetails(
-                                      declarationId: String,
-                                      importerEORI: String,
-                                      declarantEORI: String,
-                                      includeConsigneeBankDetails: Boolean = false,
-                                      includeDeclarantBankDetails: Boolean = false
-                                    ) = Acc14Response(
-    Json.parse(
-      s"""
+    declarationId: String,
+    importerEORI: String,
+    declarantEORI: String,
+    includeConsigneeBankDetails: Boolean = false,
+    includeDeclarantBankDetails: Boolean = false
+  ) = Acc14Response(
+    Json.parse(s"""
          |{
          |    "overpaymentDeclarationDisplayResponse":
          |    {
@@ -495,14 +578,12 @@ object Acc14Response {
          |                    }
          |                }
          |            ],
-         |            ${
-        (includeDeclarantBankDetails, includeConsigneeBankDetails) match {
-          case (false, false) => ""
-          case (true, false) => s""" "bankDetails":  ${declarantBankDetails},"""
-          case (false, true) => s""" "bankDetails":  ${consigneeBankDetails},"""
-          case (true, true) => s""" "bankDetails":  ${consigneeAndDeclarantBankDetails},"""
-        }
-      }
+         |            ${(includeDeclarantBankDetails, includeConsigneeBankDetails) match {
+      case (false, false) => ""
+      case (true, false) => s""" "bankDetails":  $declarantBankDetails,"""
+      case (false, true) => s""" "bankDetails":  $consigneeBankDetails,"""
+      case (true, true) => s""" "bankDetails":  $consigneeAndDeclarantBankDetails,"""
+    }}
          |            "ndrcDetails": [
          |			      	{
          |			      		"taxType": "A80",
@@ -540,15 +621,14 @@ object Acc14Response {
   )
 
   def getFullAcc14WithSpecificBankDetailsSecurities(
-                                           declarationId: String,
-                                           reasonForSecurity: String,
-                                           importerEORI: String,
-                                           declarantEORI: String,
-                                           includeConsigneeBankDetails: Boolean = false,
-                                           includeDeclarantBankDetails: Boolean = false
-                                         ) = Acc14Response(
-    Json.parse(
-      s"""
+    declarationId: String,
+    reasonForSecurity: String,
+    importerEORI: String,
+    declarantEORI: String,
+    includeConsigneeBankDetails: Boolean = false,
+    includeDeclarantBankDetails: Boolean = false
+  ) = Acc14Response(
+    Json.parse(s"""
          |{
          |    "overpaymentDeclarationDisplayResponse":
          |    {
@@ -649,14 +729,12 @@ object Acc14Response {
          |                    }
          |                }
          |            ],
-         |            ${
-        (includeDeclarantBankDetails, includeConsigneeBankDetails) match {
-          case (false, false) => ""
-          case (true, false) => s""" "bankDetails":  ${declarantBankDetails},"""
-          case (false, true) => s""" "bankDetails":  ${consigneeBankDetails},"""
-          case (true, true) => s""" "bankDetails":  ${consigneeAndDeclarantBankDetails},"""
-        }
-      }
+         |            ${(includeDeclarantBankDetails, includeConsigneeBankDetails) match {
+      case (false, false) => ""
+      case (true, false) => s""" "bankDetails":  $declarantBankDetails,"""
+      case (false, true) => s""" "bankDetails":  $consigneeBankDetails,"""
+      case (true, true) => s""" "bankDetails":  $consigneeAndDeclarantBankDetails,"""
+    }}
          |            "securityDetails":
          |            [
          |                {
@@ -757,15 +835,14 @@ object Acc14Response {
   )
 
   def getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(
-                                                     declarationId: String,
-                                                     reasonForSecurity: String,
-                                                     importerEORI: String,
-                                                     declarantEORI: String,
-                                                     includeConsigneeBankDetails: Boolean = false,
-                                                     includeDeclarantBankDetails: Boolean = false
-                                                   ) = Acc14Response(
-    Json.parse(
-      s"""
+    declarationId: String,
+    reasonForSecurity: String,
+    importerEORI: String,
+    declarantEORI: String,
+    includeConsigneeBankDetails: Boolean = false,
+    includeDeclarantBankDetails: Boolean = false
+  ) = Acc14Response(
+    Json.parse(s"""
          |{
          |    "overpaymentDeclarationDisplayResponse":
          |    {
@@ -866,14 +943,12 @@ object Acc14Response {
          |                    }
          |                }
          |            ],
-         |            ${
-        (includeDeclarantBankDetails, includeConsigneeBankDetails) match {
-          case (false, false) => ""
-          case (true, false) => s""" "bankDetails":  ${declarantBankDetails},"""
-          case (false, true) => s""" "bankDetails":  ${consigneeBankDetails},"""
-          case (true, true) => s""" "bankDetails":  ${consigneeAndDeclarantBankDetails},"""
-        }
-      }
+         |            ${(includeDeclarantBankDetails, includeConsigneeBankDetails) match {
+      case (false, false) => ""
+      case (true, false) => s""" "bankDetails":  $declarantBankDetails,"""
+      case (false, true) => s""" "bankDetails":  $consigneeBankDetails,"""
+      case (true, true) => s""" "bankDetails":  $consigneeAndDeclarantBankDetails,"""
+    }}
          |            "securityDetails":
          |            [
          |                {
@@ -974,13 +1049,13 @@ object Acc14Response {
   )
 
   def getFullAcc14WithSpecificBankDetailsSubsidy(
-                                           declarationId: String,
-                                           importerEORI: String,
-                                           declarantEORI: String,
-                                           includeConsigneeBankDetails: Boolean = false,
-                                           includeDeclarantBankDetails: Boolean = false,
-                                           paymentMethods: Seq[String]
-                                         ) = {
+    declarationId: String,
+    importerEORI: String,
+    declarantEORI: String,
+    includeConsigneeBankDetails: Boolean = false,
+    includeDeclarantBankDetails: Boolean = false,
+    paymentMethods: Seq[String]
+  ) = {
     var index = 0
 
     def nextPaymentMethod: String = {
@@ -991,8 +1066,7 @@ object Acc14Response {
     }
 
     Acc14Response(
-      Json.parse(
-        s"""
+      Json.parse(s"""
            |{
            |    "overpaymentDeclarationDisplayResponse":
            |    {
@@ -1092,14 +1166,12 @@ object Acc14Response {
            |                    }
            |                }
            |            ],
-           |            ${
-          (includeDeclarantBankDetails, includeConsigneeBankDetails) match {
-            case (false, false) => ""
-            case (true, false) => s""" "bankDetails":  ${declarantBankDetails},"""
-            case (false, true) => s""" "bankDetails":  ${consigneeBankDetails},"""
-            case (true, true) => s""" "bankDetails":  ${consigneeAndDeclarantBankDetails},"""
-          }
-        }
+           |            ${(includeDeclarantBankDetails, includeConsigneeBankDetails) match {
+        case (false, false) => ""
+        case (true, false) => s""" "bankDetails":  $declarantBankDetails,"""
+        case (false, true) => s""" "bankDetails":  $consigneeBankDetails,"""
+        case (true, true) => s""" "bankDetails":  $consigneeAndDeclarantBankDetails,"""
+      }}
            |			"ndrcDetails": [
            |				{
            |					"taxType": "A80",
@@ -1141,8 +1213,8 @@ object Acc14Response {
     declarationId: String,
     reasonForSecurity: String,
     importerEORI: String,
-    declarantEORI: String,
-) = Acc14Response(
+    declarantEORI: String
+  ) = Acc14Response(
     Json.parse(s"""
          |{
          |    "overpaymentDeclarationDisplayResponse":
@@ -2229,8 +2301,6 @@ object Acc14Response {
     )
   )
 
-
-
   def getFullAcc14Response(
     declarationId: String,
     importerEORI: String,
@@ -2239,7 +2309,7 @@ object Acc14Response {
     withConsigneeContactDetails: Boolean = true,
     withDeclarantContactDetails: Boolean = true
   ) = {
-    var index = 0
+    var index                           = 0
     def nextPaymentMethod: String = {
       if (index >= paymentMethods.size) index = 0
       val paymentMethod = paymentMethods(index)
@@ -2286,7 +2356,7 @@ object Acc14Response {
          |					"addressLine3": "Coventry",
          |					"postalCode": "CV3 6EA",
          |					"countryCode": "GB"
-         |				}${if(withDeclarantContactDetails) declarantContactDetails else ""}
+         |				}${if (withDeclarantContactDetails) declarantContactDetails else ""}
          |			},
          |          "accountDetails":
          |          [
@@ -2335,7 +2405,7 @@ object Acc14Response {
          |					"addressLine3": "Newcastle",
          |					"postalCode": "NE12 5BT",
          |					"countryCode": "GB"
-         |				}${if(withConsigneeContactDetails) consigneeContactDetails else ""}
+         |				}${if (withConsigneeContactDetails) consigneeContactDetails else ""}
          |			},
          |			"bankDetails": {
          |				"consigneeBankDetails": {
@@ -2388,11 +2458,12 @@ object Acc14Response {
   }
 
   def getFullAcc14ResponseWithDuplicatedAddressLines(
-                            declarationId: String,
-                            importerEORI: String,
-                            declarantEORI: String,
-                          ) =
-    this.getFullAcc14Response(declarationId, importerEORI, declarantEORI)
+    declarationId: String,
+    importerEORI: String,
+    declarantEORI: String
+  ) =
+    this
+      .getFullAcc14Response(declarationId, importerEORI, declarantEORI)
       .withDuplicatedAddressLines()
 
   def getFullAcc14ResponseWithSubsidyPayment(
@@ -2403,7 +2474,14 @@ object Acc14Response {
     withConsigneeContactDetails: Boolean = true,
     withDeclarantContactDetails: Boolean = true
   ) =
-    getFullAcc14Response(declarationId, importerEORI, declarantEORI, paymentMethods, withConsigneeContactDetails, withDeclarantContactDetails)
+    getFullAcc14Response(
+      declarationId,
+      importerEORI,
+      declarantEORI,
+      paymentMethods,
+      withConsigneeContactDetails,
+      withDeclarantContactDetails
+    )
 
   def getFullAcc14WithoutConsignee(declarationId: String, declarantEORI: String) = Acc14Response(
     Json.parse(
