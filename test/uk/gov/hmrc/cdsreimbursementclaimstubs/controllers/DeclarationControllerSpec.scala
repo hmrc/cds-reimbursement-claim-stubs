@@ -26,7 +26,7 @@ import play.api.test._
 
 class DeclarationControllerSpec extends AnyWordSpec with Matchers with TypeCheckedTripleEquals {
 
-  implicit val actorSystem = ActorSystem()
+  implicit val actorSystem: ActorSystem = ActorSystem()
 
   val ndrcSuccessfulMRNs = Seq(
     "01AAAAAAAAAAAAAAA1",

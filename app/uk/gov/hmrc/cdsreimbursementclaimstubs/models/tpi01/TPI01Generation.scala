@@ -25,15 +25,13 @@ import java.time.format.DateTimeFormatter
 trait TPI01Generation extends SchemaValidation {
 
   def tpi01ClaimsWithEori(customer: Customer): ResponseDetail = {
-    val eori: String = customer.eori
-    val sctyClaims: Seq[SCTYClaim] = customer
-      .claims
+    val eori: String                          = customer.eori
+    val sctyClaims: Seq[SCTYClaim]            = customer.claims
       .filter(_.isInstanceOf[SCTYClaim])
       .map(_.asInstanceOf[SCTYClaim])
     val sctyCaseDetails: Seq[SCTYCaseDetails] = sctyClaims.map(claim => createSCTYCase(claim, eori))
 
-    val ndrcClaims: Seq[NDRCClaim] = customer
-      .claims
+    val ndrcClaims: Seq[NDRCClaim]            = customer.claims
       .filter(_.isInstanceOf[NDRCClaim])
       .map(_.asInstanceOf[NDRCClaim])
     val ndrcCaseDetails: Seq[NDRCCaseDetails] = ndrcClaims.map(claim => createNDRCCase(claim, eori))
@@ -56,7 +54,7 @@ trait TPI01Generation extends SchemaValidation {
   private def createNDRCCase(claim: NDRCClaim, eori: String): NDRCCaseDetails = {
     val caseNumber: Int = claim.caseNumber.toInt;
     NDRCCaseDetails(
-      CDFPayCaseNumber = s"NDRC-${(caseNumber + claim.service.toString)}",
+      CDFPayCaseNumber = s"NDRC-${(caseNumber.toString + claim.service.toString)}",
       declarationID = Some("MRN23014"),
       claimStartDate = "20200501",
       closedDate =
@@ -77,9 +75,9 @@ trait TPI01Generation extends SchemaValidation {
 
   private def createSCTYCase(claim: SCTYClaim, eori: String): SCTYCaseDetails = {
     val caseNumber: Int = claim.caseNumber.toInt;
-    val odd = caseNumber % 2 == 1
+    val odd             = caseNumber % 2 == 1
     SCTYCaseDetails(
-      CDFPayCaseNumber = s"SCTY-${(caseNumber + claim.service.toString)}",
+      CDFPayCaseNumber = s"SCTY-${(caseNumber.toString + claim.service.toString)}",
       declarationID = Some("12AA3456789ABCDEF2"),
       claimStartDate =
         if (odd) None else Some(LocalDate.now().minusDays(caseNumber).format(DateTimeFormatter.ofPattern("yyyyMMdd"))),
@@ -237,12 +235,14 @@ trait TPI01Generation extends SchemaValidation {
 
     val caseNumber    = s"100$caseSubStatusIndex".toInt
     val caseSubStatus = caseSubStatusNDRC(caseSubStatusIndex)
-    val ndrcCases     = Seq(createNDRCCase(
-      caseNumber,
-      caseSubStatus,
-      if (isXiEori) 500 else 0,
-      if (isXiEori) "XI" else "GB"
-    ))
+    val ndrcCases     = Seq(
+      createNDRCCase(
+        caseNumber,
+        caseSubStatus,
+        if (isXiEori) 500 else 0,
+        if (isXiEori) "XI" else "GB"
+      )
+    )
 
     val sctyCases = Seq()
 
@@ -266,12 +266,14 @@ trait TPI01Generation extends SchemaValidation {
 
     val caseSubStatus = caseSubStatusSCTY(caseSubStatusIndex)
     val caseNumber    = s"100$caseSubStatusIndex".toInt
-    val sctyCases     = Seq(createSCTYCase(
-      caseNumber,
-      caseSubStatus,
-      if (isXiEori) 500 else 0,
-      if (isXiEori) "XI" else "GB"
-    ))
+    val sctyCases     = Seq(
+      createSCTYCase(
+        caseNumber,
+        caseSubStatus,
+        if (isXiEori) 500 else 0,
+        if (isXiEori) "XI" else "GB"
+      )
+    )
 
     val responseDetail = ResponseDetail(
       NDRCCasesFound = true,
@@ -338,7 +340,6 @@ trait TPI01Generation extends SchemaValidation {
       case 19 => OpenExtensionGranted
       case 20 => ResolvedWithdrawnSCTY
     }
-
 
   private def createNDRCCase(
     caseNumber: Int,
