@@ -32,6 +32,11 @@
 
 | MRN                | Http Response Code | Status                                                                                |
 |--------------------|--------------------|---------------------------------------------------------------------------------------|
+| 10AAAAAAAAAAAAAA00 | 200                | Success - full response with only A00 Customs Duty code                               |
+| 10AAAAAAAAAAAAAB00 | 200                | Success - full response with only B00 Value Added Tax code                            |
+| 10AAAAAAAAAAAAA413 | 200                | Success - full response with 413 Wine (still), code                                   |
+| 10AAAAAAAAAAAAA481 | 200                | Success - full response with 481 Cider and Perry, code                                |
+| 10AAAAAAAAAAAAAAA1 | 200                | Success - full response with A95, A90, A80, A85 tax codes                             |
 | 21ABCDEFGHIJKLMNO0 | 200                | Success - minimum response (no declaration information)                               |
 | 22ABCDEFGHIJKLMNO1 | 200                | Success - full response                                                               |
 | 41ABCDEFGHIJKLMNO1 | 400                | Bad request - missing declaration                                                     |

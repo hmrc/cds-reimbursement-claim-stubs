@@ -92,8 +92,17 @@ object Acc14Response {
   object Acc14ResponseType {
     case object OK_MINIMUM_RESPONSE extends Acc14ResponseType
     case class OK_PARTIAL_RESPONSE(declarationId: String) extends Acc14ResponseType
-    case class OK_FULL_RESPONSE(declarationId: String, importerEORI: String, declarantEORI: String)
-        extends Acc14ResponseType
+    case class OK_FULL_RESPONSE(
+      declarationId: String,
+      importerEORI: String,
+      declarantEORI: String,
+      duties: Seq[(String, String, String, Int)] = Seq(
+        ("A80", "218.00", "GB201430007000", 0),
+        ("A95", "211.00", "GB201430007000", 1),
+        ("A90", "228.00", "GB201430007000", 1),
+        ("A85", "171.00", "GB201430007000", 1)
+      )
+    ) extends Acc14ResponseType
     case class OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES(
       declarationId: String,
       importerEORI: String,
@@ -194,8 +203,8 @@ object Acc14Response {
     acc14ResponseType match {
       case Acc14ResponseType.OK_MINIMUM_RESPONSE => getMinimumAcc14Response
       case Acc14ResponseType.OK_PARTIAL_RESPONSE(declarationId) => getPartialAcc14Response(declarationId)
-      case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI) =>
-        getFullAcc14Response(declarationId, importerEORI, declarantEORI)
+      case Acc14ResponseType.OK_FULL_RESPONSE(declarationId, importerEORI, declarantEORI, duties) =>
+        getFullAcc14Response(declarationId, importerEORI, declarantEORI, duties = duties)
       case Acc14ResponseType.OK_FULL_RESPONSE_SUBSIDY(
             declarationId,
             importerEORI,
@@ -289,22 +298,6 @@ object Acc14Response {
               paymentMethods
             ) =>
         getFullAcc14WithSpecificBankDetailsSubsidy(
-          declarationId,
-          importerEORI,
-          declarantEORI,
-          includeConsigneeBankDetails,
-          includeDeclarantBankDetails,
-          paymentMethods
-        )
-      case Acc14ResponseType.OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
-            declarationId,
-            importerEORI,
-            declarantEORI,
-            includeConsigneeBankDetails,
-            includeDeclarantBankDetails,
-            paymentMethods
-          ) =>
-        getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(
           declarationId,
           importerEORI,
           declarantEORI,
@@ -2307,7 +2300,13 @@ object Acc14Response {
     declarantEORI: String,
     paymentMethods: Seq[String] = Seq("001"),
     withConsigneeContactDetails: Boolean = true,
-    withDeclarantContactDetails: Boolean = true
+    withDeclarantContactDetails: Boolean = true,
+    duties: Seq[(String, String, String, Int)] = Seq(
+      ("A80", "218.00", "GB201430007000", 0),
+      ("A95", "211.00", "GB201430007000", 1),
+      ("A90", "228.00", "GB201430007000", 1),
+      ("A85", "171.00", "GB201430007000", 1)
+    )
   ) = {
     var index                           = 0
     def nextPaymentMethod: String = {
@@ -2420,34 +2419,17 @@ object Acc14Response {
          |				}
          |			},
          |			"ndrcDetails": [
-         |				{
-         |					"taxType": "A80",
-         |					"amount": "218.00",
-         |					"paymentMethod": "$nextPaymentMethod",
-         |					"paymentReference": "GB201430007000",
-         |          "cmaEligible": "0"
-         |				},
-         |				{
-         |					"taxType": "A95",
-         |					"amount": "211.00",
-         |					"paymentMethod": "$nextPaymentMethod",
-         |					"paymentReference": "GB201430007000",
-         |           "cmaEligible": "1"
-         |				},
-         |				{
-         |					"taxType": "A90",
-         |					"amount": "228.00",
-         |					"paymentMethod": "$nextPaymentMethod",
-         |					"paymentReference": "GB201430007000",
-         |          "cmaEligible": "1"
-         |				},
-         |				{
-         |					"taxType": "A85",
-         |					"amount": "171.00",
-         |					"paymentMethod": "$nextPaymentMethod",
-         |					"paymentReference": "GB201430007000",
-         |          "cmaEligible": "1"
-         |				}
+         |${duties
+          .map { case (taxType, amount, paymentReference, cmaEligible) =>
+            s"""|				{
+                |					"taxType": "$taxType",
+                |					"amount": "$amount",
+                |					"paymentMethod": "$nextPaymentMethod",
+                |					"paymentReference": "$paymentReference",
+                |         "cmaEligible": "$cmaEligible"
+                |				}""".stripMargin
+          }
+          .mkString(",\n				")}
          |			]
          |		}
          |	}

@@ -137,6 +137,66 @@ object MockHttpResponse {
         )
       ),
       MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAA00"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType.OK_FULL_RESPONSE(
+              "10AAAAAAAAAAAAAAA1",
+              "GB000000000000001",
+              "GB000000000000001",
+              duties = Seq(("A00", "12345.67", "GB000000000000", 0))
+            )
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAAB00"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType.OK_FULL_RESPONSE(
+              "10AAAAAAAAAAAAAAA1",
+              "GB000000000000001",
+              "GB000000000000001",
+              duties = Seq(("B00", "12345.67", "GB000000000000", 1))
+            )
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAA413"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType.OK_FULL_RESPONSE(
+              "10AAAAAAAAAAAAAAA1",
+              "GB000000000000001",
+              "GB000000000000001",
+              duties = Seq(("413", "12345.67", "GB000000000000", 1))
+            )
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("10AAAAAAAAAAAAA481"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType.OK_FULL_RESPONSE(
+              "10AAAAAAAAAAAAAAA1",
+              "GB000000000000001",
+              "GB000000000000001",
+              duties = Seq(("481", "12345.67", "GB000000000000", 1))
+            )
+          )
+        )
+      ),
+      MockHttpResponse(
         _ === MRN("10AAAAAAAAAAAAAAA1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
@@ -488,159 +548,159 @@ object MockHttpResponse {
           )
         )
       ),
-  MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAAA1"),
-    _ === EORI("GB000000000000001"),
-    SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-    DeclarationResponse(
-      Right(
-        Acc14ResponseType
-          .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAAA1",
-            "GB000000000000001",
-            "GB000000000000001",
-            false,
-            false
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAAA1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+                "60AAAAAAAAAAAAAAA1",
+                "GB000000000000001",
+                "GB000000000000001",
+                false,
+                false
+              )
           )
-      )
-    )
-  ),
-  MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAAA2"),
-    _ === EORI("GB000000000000001"),
-    SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-    DeclarationResponse(
-      Right(
-        Acc14ResponseType
-          .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAAA2",
-            "GB000000000000001",
-            "GB000000000000001",
-            true,
-            false
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAAA2"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+                "60AAAAAAAAAAAAAAA2",
+                "GB000000000000001",
+                "GB000000000000001",
+                true,
+                false
+              )
           )
-      )
-    )
-  ),
-  MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAAA3"),
-    _ === EORI("GB000000000000001"),
-    SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-    DeclarationResponse(
-      Right(
-        Acc14ResponseType
-          .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAAA3",
-            "GB000000000000001",
-            "GB000000000000001",
-            false,
-            true
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAAA3"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+                "60AAAAAAAAAAAAAAA3",
+                "GB000000000000001",
+                "GB000000000000001",
+                false,
+                true
+              )
           )
-      )
-    )
-  ),
-  MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAAA4"),
-    _ === EORI("GB000000000000001"),
-    SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-    DeclarationResponse(
-      Right(
-        Acc14ResponseType
-          .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAAA4",
-            "GB000000000000001",
-            "GB000000000000002",
-            false,
-            false
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAAA4"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+                "60AAAAAAAAAAAAAAA4",
+                "GB000000000000001",
+                "GB000000000000002",
+                false,
+                false
+              )
           )
-      )
-    )
-  ),
-  MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAAA5"),
-    _ === EORI("GB000000000000001"),
-    SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-    DeclarationResponse(
-      Right(
-        Acc14ResponseType
-          .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAAA5",
-            "GB000000000000001",
-            "GB000000000000002",
-            true,
-            false
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAAA5"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+                "60AAAAAAAAAAAAAAA5",
+                "GB000000000000001",
+                "GB000000000000002",
+                true,
+                false
+              )
           )
-      )
-    )
-  ),
-  MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAAA6"),
-    _ === EORI("GB000000000000001"),
-    SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-    DeclarationResponse(
-      Right(
-        Acc14ResponseType
-          .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAAA6",
-            "GB000000000000001",
-            "GB000000000000002",
-            false,
-            true
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAAA6"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+                "60AAAAAAAAAAAAAAA6",
+                "GB000000000000001",
+                "GB000000000000002",
+                false,
+                true
+              )
           )
-      )
-    )
-  ),
-  MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAAA7"),
-    _ === EORI("GB000000000000001"),
-    SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-    DeclarationResponse(
-      Right(
-        Acc14ResponseType
-          .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAAA7",
-            "GB000000000000002",
-            "GB000000000000001",
-            false,
-            false
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAAA7"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+                "60AAAAAAAAAAAAAAA7",
+                "GB000000000000002",
+                "GB000000000000001",
+                false,
+                false
+              )
           )
-      )
-    )
-  ),
-  MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAAA8"),
-    _ === EORI("GB000000000000001"),
-    SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-    DeclarationResponse(
-      Right(
-        Acc14ResponseType
-          .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAAA8",
-            "GB000000000000002",
-            "GB000000000000001",
-            true,
-            false
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAAA8"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+                "60AAAAAAAAAAAAAAA8",
+                "GB000000000000002",
+                "GB000000000000001",
+                true,
+                false
+              )
           )
-      )
-    )
-  ),
-  MockHttpResponse(
-    _ === MRN("60AAAAAAAAAAAAAAA9"),
-    _ === EORI("GB000000000000001"),
-    SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-    DeclarationResponse(
-      Right(
-        Acc14ResponseType
-          .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-            "60AAAAAAAAAAAAAAA9",
-            "GB000000000000002",
-            "GB000000000000001",
-            false,
-            true
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAAA9"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
+                "60AAAAAAAAAAAAAAA9",
+                "GB000000000000002",
+                "GB000000000000001",
+                false,
+                true
+              )
           )
-      )
-    )
-  ),
+        )
+      ),
       MockHttpResponse(
         _ === MRN("60DDDDDDDDDDDDDDD1"),
         _ === EORI("GB000000000000001"),
@@ -658,8 +718,7 @@ object MockHttpResponse {
               )
           )
         )
-      )
-      ,
+      ),
       MockHttpResponse(
         _ === MRN("60DDDDDDDDDDDDDDD2"),
         _ === EORI("GB000000000000001"),
@@ -677,8 +736,7 @@ object MockHttpResponse {
               )
           )
         )
-      )
-      ,
+      ),
       MockHttpResponse(
         _ === MRN("60DDDDDDDDDDDDDDD3"),
         _ === EORI("GB000000000000001"),
@@ -696,8 +754,7 @@ object MockHttpResponse {
               )
           )
         )
-      )
-      ,
+      ),
       MockHttpResponse(
         _ === MRN("60DDDDDDDDDDDDDDD4"),
         _ === EORI("GB000000000000001"),
@@ -715,8 +772,7 @@ object MockHttpResponse {
               )
           )
         )
-      )
-      ,
+      ),
       MockHttpResponse(
         _ === MRN("60DDDDDDDDDDDDDDD5"),
         _ === EORI("GB000000000000001"),
@@ -734,8 +790,7 @@ object MockHttpResponse {
               )
           )
         )
-      )
-      ,
+      ),
       MockHttpResponse(
         _ === MRN("60DDDDDDDDDDDDDDD6"),
         _ === EORI("GB000000000000001"),
@@ -753,8 +808,7 @@ object MockHttpResponse {
               )
           )
         )
-      )
-      ,
+      ),
       MockHttpResponse(
         _ === MRN("60DDDDDDDDDDDDDDD7"),
         _ === EORI("GB000000000000001"),
@@ -772,8 +826,7 @@ object MockHttpResponse {
               )
           )
         )
-      )
-      ,
+      ),
       MockHttpResponse(
         _ === MRN("60DDDDDDDDDDDDDDD8"),
         _ === EORI("GB000000000000001"),
@@ -791,8 +844,7 @@ object MockHttpResponse {
               )
           )
         )
-      )
-      ,
+      ),
       MockHttpResponse(
         _ === MRN("60DDDDDDDDDDDDDDD9"),
         _ === EORI("GB000000000000001"),
@@ -810,8 +862,7 @@ object MockHttpResponse {
               )
           )
         )
-      )
-      ,
+      ),
       MockHttpResponse(
         _ === MRN("55AAAAAAAAAAAAAAA0"),
         _ === EORI("GB000000000000050"),
@@ -1244,9 +1295,12 @@ object MockHttpResponse {
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(
-          Right(Acc14ResponseType.OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES("70AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001"))
+          Right(
+            Acc14ResponseType
+              .OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES("70AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")
+          )
         )
-      ),
+      )
     ) ++ createPaymentMethodsForEoriEnding("01") ++
       createPaymentMethodsForEoriEnding("02")
 
@@ -1258,28 +1312,154 @@ object MockHttpResponse {
       createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact("04", eoriEnding) ++
       createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact("05", eoriEnding)
 
-  def createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact(prependMrn: String, eoriEnding: String): List[MockHttpResponse] =
-    createEveryCombinationOfPaymentMethods(prependMrn, eoriEnding, withConsigneeContactDetails = false, withDeclarantContactDetails = false) ++
-      createEveryCombinationOfPaymentMethods(prependMrn, eoriEnding, withConsigneeContactDetails = true, withDeclarantContactDetails = false) ++
-      createEveryCombinationOfPaymentMethods(prependMrn, eoriEnding, withConsigneeContactDetails = false, withDeclarantContactDetails = true) ++
-      createEveryCombinationOfPaymentMethods(prependMrn, eoriEnding, withConsigneeContactDetails = true, withDeclarantContactDetails = true)
+  def createEveryCombinationOfPaymentMethodsWithAndWithoutConsigneeAndDeclarantContact(
+    prependMrn: String,
+    eoriEnding: String
+  ): List[MockHttpResponse] =
+    createEveryCombinationOfPaymentMethods(
+      prependMrn,
+      eoriEnding,
+      withConsigneeContactDetails = false,
+      withDeclarantContactDetails = false
+    ) ++
+      createEveryCombinationOfPaymentMethods(
+        prependMrn,
+        eoriEnding,
+        withConsigneeContactDetails = true,
+        withDeclarantContactDetails = false
+      ) ++
+      createEveryCombinationOfPaymentMethods(
+        prependMrn,
+        eoriEnding,
+        withConsigneeContactDetails = false,
+        withDeclarantContactDetails = true
+      ) ++
+      createEveryCombinationOfPaymentMethods(
+        prependMrn,
+        eoriEnding,
+        withConsigneeContactDetails = true,
+        withDeclarantContactDetails = true
+      )
 
-  def createEveryCombinationOfPaymentMethods(prependMrn: String, eoriEnding: String, withConsigneeContactDetails: Boolean, withDeclarantContactDetails: Boolean): List[MockHttpResponse] =
+  def createEveryCombinationOfPaymentMethods(
+    prependMrn: String,
+    eoriEnding: String,
+    withConsigneeContactDetails: Boolean,
+    withDeclarantContactDetails: Boolean
+  ): List[MockHttpResponse] =
     List(
-      createMockHttpResponseWithPaymentMethods("001", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("002", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("003", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("001", "002", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("001", "003", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("001", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("002", "003", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("002", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("001", "002", "003", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("001", "002", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("001", "003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
-      createMockHttpResponseWithPaymentMethods("002", "003", "006", prependMrn = prependMrn, eoriEnding = eoriEnding, withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails),
+      createMockHttpResponseWithPaymentMethods(
+        "001",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "002",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "003",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "006",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "001",
+        "002",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "001",
+        "003",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "001",
+        "006",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "002",
+        "003",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "002",
+        "006",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "003",
+        "006",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "001",
+        "002",
+        "003",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "001",
+        "002",
+        "006",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "001",
+        "003",
+        "006",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
+      createMockHttpResponseWithPaymentMethods(
+        "002",
+        "003",
+        "006",
+        prependMrn = prependMrn,
+        eoriEnding = eoriEnding,
+        withConsigneeContactDetails = withConsigneeContactDetails,
+        withDeclarantContactDetails = withDeclarantContactDetails
+      ),
       createMockHttpResponseWithPaymentMethods(
         "001",
         "002",
@@ -1302,10 +1482,10 @@ object MockHttpResponse {
     withConsigneeContactDetails: Boolean = true,
     withDeclarantContactDetails: Boolean = true
   ): MockHttpResponse = {
-    val consigneeLetter: String = if(withConsigneeContactDetails) "A" else "B"
-    val declarantLetter: String = if(withDeclarantContactDetails) "A" else "B"
-    val mrn  = s"${prependMrn}${consigneeLetter}${declarantLetter}$first$second$third$fourth$eoriEnding"
-    val eori = s"GB0000000000000$eoriEnding"
+    val consigneeLetter: String = if (withConsigneeContactDetails) "A" else "B"
+    val declarantLetter: String = if (withDeclarantContactDetails) "A" else "B"
+    val mrn                     = s"$prependMrn$consigneeLetter$declarantLetter$first$second$third$fourth$eoriEnding"
+    val eori                    = s"GB0000000000000$eoriEnding"
     MockHttpResponse(
       _ === MRN(mrn),
       _ === EORI(eori),
@@ -1313,7 +1493,14 @@ object MockHttpResponse {
       DeclarationResponse(
         Right(
           Acc14ResponseType
-            .OK_FULL_RESPONSE_SUBSIDY(mrn, eori, eori, Seq(first, second, third, fourth).filter(_ != "AAA"), withConsigneeContactDetails = withConsigneeContactDetails, withDeclarantContactDetails = withDeclarantContactDetails)
+            .OK_FULL_RESPONSE_SUBSIDY(
+              mrn,
+              eori,
+              eori,
+              Seq(first, second, third, fourth).filter(_ != "AAA"),
+              withConsigneeContactDetails = withConsigneeContactDetails,
+              withDeclarantContactDetails = withDeclarantContactDetails
+            )
         )
       )
     )
@@ -2098,7 +2285,7 @@ object MockHttpResponse {
                   "GB000000000000002",
                   "GB000000000000001",
                   false,
-                  false,
+                  false
                 )
             )
           )
