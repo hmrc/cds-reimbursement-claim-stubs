@@ -643,7 +643,7 @@ object MockHttpResponse {
             Acc14ResponseType.OK_FULL_RESPONSE(
               "60AAAAAAAAAAAAAAA5",
               "GB000000000000001",
-              "GB000000000000001",
+              "GB000000000000002",
               duties = Seq(("A00", "12345.67", "GB000000000000", 0))
             )
           )
