@@ -36,3 +36,4 @@ build
 /RUNNING_PID
 sbt-launch.jar
 metals.sbt
+.java-version

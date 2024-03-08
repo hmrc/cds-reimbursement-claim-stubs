@@ -633,22 +633,6 @@ object MockHttpResponse {
           )
         )
       ),
-
-      MockHttpResponse(
-        _ === MRN("60AAAAAAAAAAAAAAA5"),
-        _ === EORI("GB000000000000001"),
-        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-        DeclarationResponse(
-          Right(
-            Acc14ResponseType.OK_FULL_RESPONSE(
-              "60AAAAAAAAAAAAAAA5",
-              "GB000000000000001",
-              "GB000000000000002",
-              duties = Seq(("A00", "12345.67", "GB000000000000", 0))
-            )
-          )
-        )
-      ),
       MockHttpResponse(
         _ === MRN("60AAAAAAAAAAAAAAA6"),
         _ === EORI("GB000000000000001"),
@@ -714,6 +698,21 @@ object MockHttpResponse {
                 false,
                 true
               )
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("60AAAAAAAAAAAAAA10"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType.OK_FULL_RESPONSE(
+              "60AAAAAAAAAAAAAA10",
+              "GB000000000000001",
+              "GB000000000000002",
+              duties = Seq(("A00", "12345.67", "GB000000000000", 0))
+            )
           )
         )
       ),
