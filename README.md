@@ -52,6 +52,10 @@
 | 10AAAAAAAAAAAAAAB9 | 200                | Success - no consignee/importer, declarant GB000000000000091                          |
 | 10AAAAAAAAAAAAAAC9 | 200                | Success - no consignee/importer, declarant GB000000000000091                          |
 | 10AAAAAAAAAAAAAAD9 | 200                | Success - no consignee/importer, declarant GB000000000000091                          |
+| 10AAAAAAAAAAAAA301 | 200                | Success - Unsupported tax code 301                                                    |
+| 10AAAAAAAAAAAAA311 | 200                | Success - Unsupported tax code 311                                                    |
+| 10AAAAAAAAAA301311 | 200                | Success - Unsupported tax codes 301 and 311                                           |
+| 10AAAAAAAAAAA00311 | 200                | Success - Unsupported tax code 301 together with supported A00                       |
 
 
 # Bank Account Reputation Responses
