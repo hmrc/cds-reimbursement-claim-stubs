@@ -2475,8 +2475,6 @@ object MockHttpResponse {
           )
         )
 
-      case _ => {
-        None
-      }
+      case _ => None
     }
 }
