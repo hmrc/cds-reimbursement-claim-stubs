@@ -2476,7 +2476,6 @@ object MockHttpResponse {
         )
 
       case _ => {
-        println("Hit me")
         None
       }
     }
