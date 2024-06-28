@@ -42,22 +42,7 @@ object MockHttpResponse {
   def getDeclarationHttpResponse(mrn: MRN): Option[MockHttpResponse] =
     httpResponses
       .find(_.mrnPredicate(mrn))
-      .orElse(
-        getSecuritiesDeclaration(mrn, "ACS") match {
-          case Some(_) => None
-          case None =>
-            Some(
-              MockHttpResponse(
-                _ === mrn,
-                _ === EORI("GB000000000000001"),
-                SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
-                DeclarationResponse(
-                  Right(Acc14ResponseType.OK_FULL_RESPONSE(mrn.value, "GB000000000000001", "GB000000000000001"))
-                )
-              )
-            )
-        }
-      )
+      .orElse(None)
 
   def findMRN(mrn: String): Option[MockHttpResponse] = httpResponses.find(_.mrnPredicate(MRN(mrn)))
 

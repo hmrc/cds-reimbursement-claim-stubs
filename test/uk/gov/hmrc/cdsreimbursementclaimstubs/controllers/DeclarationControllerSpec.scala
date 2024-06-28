@@ -32,7 +32,6 @@ class DeclarationControllerSpec extends AnyWordSpec with Matchers with TypeCheck
     "10AAAAAAAAAAAAAA00",
     "10AAAAAAAAAAAAAB00",
     "10AAAAAAAAAAAAA413",
-    "10AAAAAAAAAAAAA418",
     "01AAAAAAAAAAAAAAA1",
     "01AAAAAAAAAAAAAAA2",
     "02AAAAAAAAAAAAAAA1",
