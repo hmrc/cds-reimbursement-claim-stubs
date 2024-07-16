@@ -42,10 +42,10 @@ object ReasonForSecurity {
       "ACS" // placeholder for future RfS code additions
     )
 
-  def ofIndex(index: Int): String =
-    values(Math.abs(index) % values.size)
+  def ofIndex(index: Long): String =
+    values((Math.abs(index) % values.size).toInt)
 
-  def of(value: String): String   =
+  def of(value: String): String    =
     ofIndex(value.filter(Character.isDigit).toInt)
 
 }

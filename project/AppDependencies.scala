@@ -2,8 +2,8 @@ import sbt._
 
 object AppDependencies {
   val compile = Seq(
-    "uk.gov.hmrc"            %% "bootstrap-frontend-play-30" % "8.4.0",
-    "uk.gov.hmrc"            %% "bootstrap-backend-play-30"  % "8.4.0",
+    "uk.gov.hmrc"            %% "bootstrap-frontend-play-30" % "8.6.0",
+    "uk.gov.hmrc"            %% "bootstrap-backend-play-30"  % "8.6.0",
     "uk.gov.hmrc"            %% "play-frontend-hmrc-play-30" % "8.5.0",
     "uk.gov.hmrc"            %% "stub-data-generator"        % "1.1.0",
     "com.github.arturopala"  %% "play-json-schema-validator" % "1.0.0",

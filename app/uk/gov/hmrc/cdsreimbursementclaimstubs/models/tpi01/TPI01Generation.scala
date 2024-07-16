@@ -52,7 +52,7 @@ trait TPI01Generation extends SchemaValidation {
   }
 
   private def createNDRCCase(claim: NDRCClaim, eori: String): NDRCCaseDetails = {
-    val caseNumber: Int = claim.caseNumber.toInt;
+    val caseNumber: Long = claim.caseNumber.toLong;
     NDRCCaseDetails(
       CDFPayCaseNumber = s"NDRC-${(caseNumber.toString + claim.service.toString)}",
       declarationID = Some("MRN23014"),
@@ -74,8 +74,8 @@ trait TPI01Generation extends SchemaValidation {
   }
 
   private def createSCTYCase(claim: SCTYClaim, eori: String): SCTYCaseDetails = {
-    val caseNumber: Int = claim.caseNumber.toInt;
-    val odd             = caseNumber % 2 == 1
+    val caseNumber: Long = claim.caseNumber.toLong;
+    val odd              = caseNumber % 2 == 1
     SCTYCaseDetails(
       CDFPayCaseNumber = s"SCTY-${(caseNumber.toString + claim.service.toString)}",
       declarationID = Some("12AA3456789ABCDEF2"),
@@ -123,6 +123,26 @@ trait TPI01Generation extends SchemaValidation {
         sctyCases.size.toString,
         ndrcCases,
         sctyCases
+      )
+    )
+
+    responseDetail
+  }
+
+  def tpi01NDRCClaimsByNumberAndStatus(claimNumbers: (Long, CaseSubStatusNDRC)*): ResponseDetail = {
+
+    val ndrcCases = claimNumbers.map { case (index, subStatus) =>
+      createNDRCCase(index, subStatus)
+    }
+
+    val responseDetail = ResponseDetail(
+      NDRCCasesFound = true,
+      SCTYCasesFound = false,
+      CDFPayCase = CDFPayCase(
+        ndrcCases.size.toString,
+        "0",
+        ndrcCases,
+        Seq.empty
       )
     )
 
@@ -342,7 +362,7 @@ trait TPI01Generation extends SchemaValidation {
     }
 
   private def createNDRCCase(
-    caseNumber: Int,
+    caseNumber: Long,
     subStatus: CaseSubStatusNDRC,
     caseNumberPrefix: Int = 0,
     eoriPrefix: String = "GB"

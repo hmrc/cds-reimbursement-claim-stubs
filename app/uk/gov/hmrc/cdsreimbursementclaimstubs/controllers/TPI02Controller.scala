@@ -47,6 +47,10 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
           case "4374422406" => parseResponse("tpi02/response-400-mandatory-missing-field.json", BadRequest)
           case "4374422405" => parseResponse("tpi02/response-400-pattern-error.json", BadRequest)
           case "4374422404" => parseResponse("tpi02/response-500-system-timeout.json", InternalServerError)
+          case "NDRC-4374422407" => NO_CLAIMS_FOUND
+          case "NDRC-4374422406" => parseResponse("tpi02/response-400-mandatory-missing-field.json", BadRequest)
+          case "NDRC-4374422405" => parseResponse("tpi02/response-400-pattern-error.json", BadRequest)
+          case "NDRC-4374422404" => parseResponse("tpi02/response-500-system-timeout.json", InternalServerError)
           case "SCTY-2109" =>
             parseResponse("tpi02/response-200-SCTY-2109.json", Ok, Some("tpi02/tpi02-response-schema.json"))
           case "SCTY-2110" =>
