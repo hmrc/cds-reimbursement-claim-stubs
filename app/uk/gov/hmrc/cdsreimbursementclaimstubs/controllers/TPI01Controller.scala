@@ -20,7 +20,7 @@ import play.api.libs.json.JsValue.jsValueToJsLookup
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.SchemaValidation
-import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi01.{PostClearanceCasesResponse, Response, ResponseCommon, TPI01Generation}
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi01.{PostClearanceCasesResponse, Response, ResponseCommon, TPI01Generation, _}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Customer
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
@@ -89,6 +89,17 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
           case "TPI01MISSING" => parseResponse("tpi01/response-400-mandatory-missing-field.json", BadRequest)
           case "TPI01PATTERN" => parseResponse("tpi01/response-400-pattern-error.json", BadRequest)
           case "TPI01500" => parseResponse("tpi01/response-500-system-timeout.json", InternalServerError)
+          case "TPI02500" =>
+            val detail         =
+              tpi01NDRCClaimsByNumberAndStatus(
+                (4374422404L, PendingQueried),
+                (4374422405L, PendingApprovalNDRC),
+                (4374422406L, OpenNDRC),
+                (4374422407L, PendingDecisionLetter)
+              )
+            val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
+            val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
+            validateResponse("tpi01/tpi01-response-schema.json", Json.toJson(response))
           case "TPI01EORIERROR" =>
             parseResponse("tpi01/response-200-invalid-eori.json", Ok, Some("tpi01/tpi01-response-schema.json"))
           case e if e.startsWith("GB0000000000") =>
