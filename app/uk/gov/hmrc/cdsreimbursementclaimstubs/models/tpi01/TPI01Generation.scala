@@ -129,10 +129,10 @@ trait TPI01Generation extends SchemaValidation {
     responseDetail
   }
 
-  def tpi01NDRCClaimsByNumberAndStatus(claimNumbers: (Long, CaseSubStatusNDRC)*): ResponseDetail = {
+  def tpi01NDRCClaimsByNumberAndStatus(eori: String, claimNumbers: (String, CaseSubStatusNDRC)*): ResponseDetail = {
 
-    val ndrcCases = claimNumbers.map { case (index, subStatus) =>
-      createNDRCCase(index, subStatus)
+    val ndrcCases = claimNumbers.map { case (claimNumber, subStatus) =>
+      createNDRCCase(eori, claimNumber, subStatus)
     }
 
     val responseDetail = ResponseDetail(
@@ -387,6 +387,30 @@ trait TPI01Generation extends SchemaValidation {
       basisOfClaim = Some("Duplicate Entry")
     )
   }
+
+  private def createNDRCCase(
+    eori: String,
+    caseNumber: String,
+    subStatus: CaseSubStatusNDRC
+  ): NDRCCaseDetails =
+    NDRCCaseDetails(
+      CDFPayCaseNumber = caseNumber,
+      declarationID = Some("MRN23014"),
+      claimStartDate = "20200501",
+      closedDate =
+        if (subStatus.caseStatus == Closed && subStatus != RejectedFailedValidation)
+          Some("20210501")
+        else None,
+      caseStatus = subStatus.toString,
+      declarantEORI = eori,
+      importerEORI = eori,
+      claimantEORI = Some(eori),
+      totalCustomsClaimAmount = Some("9000.00"),
+      totalVATClaimAmount = Some("9000.00"),
+      totalExciseClaimAmount = Some("9000.00"),
+      declarantReferenceNumber = Some("KWMREF1"),
+      basisOfClaim = Some("Duplicate Entry")
+    )
 
   private def createSCTYCase(
     caseNumber: Int,
