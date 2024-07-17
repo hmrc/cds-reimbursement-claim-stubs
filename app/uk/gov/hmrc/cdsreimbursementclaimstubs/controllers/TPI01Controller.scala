@@ -92,10 +92,16 @@ class TPI01Controller @Inject() (cc: ControllerComponents)
           case "TPI02500" =>
             val detail         =
               tpi01NDRCClaimsByNumberAndStatus(
-                (4374422404L, PendingQueried),
-                (4374422405L, PendingApprovalNDRC),
-                (4374422406L, OpenNDRC),
-                (4374422407L, PendingDecisionLetter)
+                "TPI02500",
+                ("NDRC-4374422404", PendingQueried),
+                ("NDRC-4374422404", OpenNDRC),
+                ("NDRC-4374422404", Approved),
+                ("NDRC-4374422404", ResolvedRejected),
+                ("NDRC-4374422405", PendingApprovalNDRC),
+                ("NDRC-4374422406", OpenNDRC),
+                ("NDRC-4374422407", PendingDecisionLetter),
+                ("NDRC-4374422407", OpenNDRC),
+                ("NDRC-4374422407", ResolvedRejected)
               )
             val responseCommon = ResponseCommon("OK", "2017-03-21T09:30:47Z")
             val response       = Response(PostClearanceCasesResponse(responseCommon, Some(detail)))
