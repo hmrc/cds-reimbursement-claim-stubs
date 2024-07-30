@@ -35,7 +35,12 @@ final case class BARSResponse2(
   accountExists: Option[ReputationResponse] = None,
   accountName: Option[String] = None,
   nameMatches: Option[ReputationResponse] = None
-)
+) {
+  def isSuccess: Boolean =
+    accountNumberIsWellFormatted == ReputationResponse.Yes &&
+      accountExists.contains(ReputationResponse.Yes) &&
+      nameMatches.contains(ReputationResponse.Yes)
+}
 
 object BARSResponse2 {
   implicit val barsResponseFormat: OFormat[BARSResponse2] = Json.format[BARSResponse2]

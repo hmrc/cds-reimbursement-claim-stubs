@@ -100,11 +100,12 @@ class BankAccountReputationController @Inject() (cc: ControllerComponents) exten
         Either
           .cond(isSortCodeValid(assessRequest.account.sortCode), (), invalidSortCode(assessRequest.account.sortCode))
       _             <- specialAccountBehaviour(assessRequest.account.accountNumber)
-    } yield Ok(
-      Json.toJson(
+    } yield {
+      val response =
         parseValidAccountNumber2(assessRequest.account.accountNumber, assessRequest.business.map(_.companyName))
-      )
-    )).merge
+      if (response.isSuccess) Ok(Json.toJson(response))
+      else BadRequest(Json.toJson(response))
+    }).merge
   }
 
   def isSortCodeValid(sortCode: String): Boolean =
