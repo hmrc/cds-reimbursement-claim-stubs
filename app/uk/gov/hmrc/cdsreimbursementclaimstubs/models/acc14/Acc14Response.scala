@@ -1373,6 +1373,7 @@ object Acc14Response {
         |        {
         |            "declarationId": "$declarationId",
         |            "acceptanceDate": "2019-08-13",
+        |            "declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
         |            "securityReason": "$reasonForSecurity",
         |            "btaDueDate": "2019-09-13",
         |            "procedureCode": "71",
