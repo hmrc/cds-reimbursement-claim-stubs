@@ -32,8 +32,8 @@ class ClaimController @Inject() (cc: ControllerComponents)
     with SchemaValidation
     with Logging {
 
-  lazy val actualSchema: SchemaType = readSchema("tpi05/TPI05-v1-0-8-submit-claim-schema.json")
-  lazy val nextSchema: SchemaType   = readSchema("tpi05/TPI05-v1-0-10-submit-claim-schema.json")
+  lazy val actualSchema: SchemaType = readSchema("tpi05/TPI05-v1-0-10-submit-claim-schema.json")
+  lazy val nextSchema: SchemaType   = readSchema("tpi05/TPI05-v1-0-11-submit-claim-schema.json")
 
   val submitClaim: Action[JsValue] = Action(parse.json) { implicit request =>
     val payload = request.body
