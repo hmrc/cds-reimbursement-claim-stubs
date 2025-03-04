@@ -58,6 +58,22 @@ object MockHttpResponse {
         )
       ),
       MockHttpResponse(
+        _ === MRN("01AAAAAAAAAAAAAAA1"),
+        _ === EORI("HELLO"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAAAAAAA1", "HELLO", "LEEDS"))
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("01AAAAAAAAAAAAAAA1"),
+        _ === EORI("PL1"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAAAAAAA1", "PL1", "PL2"))
+        )
+      ),
+      MockHttpResponse(
         _ === MRN("02AAAAAAAAAAAAAAA1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
@@ -752,11 +768,11 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-                "60AAAAAAAAAAAAAAA1",
-                "GB000000000000001",
-                "GB000000000000001",
-                false,
-                false
+                declarationId = "60AAAAAAAAAAAAAAA1",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = false
               )
           )
         )
@@ -769,11 +785,11 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-                "60AAAAAAAAAAAAAAA2",
-                "GB000000000000001",
-                "GB000000000000001",
-                true,
-                false
+                declarationId = "60AAAAAAAAAAAAAAA2",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = true,
+                includeDeclarantBankDetails = false
               )
           )
         )
@@ -786,11 +802,11 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-                "60AAAAAAAAAAAAAAA3",
-                "GB000000000000001",
-                "GB000000000000001",
-                false,
-                true
+                declarationId = "60AAAAAAAAAAAAAAA3",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = true
               )
           )
         )
@@ -803,11 +819,11 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-                "60AAAAAAAAAAAAAAA4",
-                "GB000000000000001",
-                "GB000000000000002",
-                false,
-                false
+                declarationId = "60AAAAAAAAAAAAAAA4",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000002",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = false
               )
           )
         )
@@ -820,11 +836,11 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-                "60AAAAAAAAAAAAAAA5",
-                "GB000000000000001",
-                "GB000000000000002",
-                true,
-                false
+                declarationId = "60AAAAAAAAAAAAAAA5",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000002",
+                includeConsigneeBankDetails = true,
+                includeDeclarantBankDetails = false
               )
           )
         )
@@ -837,11 +853,11 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-                "60AAAAAAAAAAAAAAA6",
-                "GB000000000000001",
-                "GB000000000000002",
-                false,
-                true
+                declarationId = "60AAAAAAAAAAAAAAA6",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000002",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = true
               )
           )
         )
@@ -854,11 +870,11 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-                "60AAAAAAAAAAAAAAA7",
-                "GB000000000000002",
-                "GB000000000000001",
-                false,
-                false
+                declarationId = "60AAAAAAAAAAAAAAA7",
+                importerEORI = "GB000000000000002",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = false
               )
           )
         )
@@ -871,11 +887,11 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-                "60AAAAAAAAAAAAAAA8",
-                "GB000000000000002",
-                "GB000000000000001",
-                true,
-                false
+                declarationId = "60AAAAAAAAAAAAAAA8",
+                importerEORI = "GB000000000000002",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = true,
+                includeDeclarantBankDetails = false
               )
           )
         )
@@ -888,11 +904,11 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS(
-                "60AAAAAAAAAAAAAAA9",
-                "GB000000000000002",
-                "GB000000000000001",
-                false,
-                true
+                declarationId = "60AAAAAAAAAAAAAAA9",
+                importerEORI = "GB000000000000002",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = true
               )
           )
         )
@@ -920,12 +936,12 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
-                "60DDDDDDDDDDDDDDD1",
-                "GB000000000000001",
-                "GB000000000000001",
-                false,
-                false,
-                Seq("006")
+                declarationId = "60DDDDDDDDDDDDDDD1",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = false,
+                paymentMethods = Seq("006")
               )
           )
         )
@@ -938,12 +954,12 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
-                "60DDDDDDDDDDDDDDD2",
-                "GB000000000000001",
-                "GB000000000000001",
-                true,
-                false,
-                Seq("006")
+                declarationId = "60DDDDDDDDDDDDDDD2",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = true,
+                includeDeclarantBankDetails = false,
+                paymentMethods = Seq("006")
               )
           )
         )
@@ -956,12 +972,12 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
-                "60DDDDDDDDDDDDDDD3",
-                "GB000000000000001",
-                "GB000000000000001",
-                false,
-                true,
-                Seq("006")
+                declarationId = "60DDDDDDDDDDDDDDD3",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = true,
+                paymentMethods = Seq("006")
               )
           )
         )
@@ -974,12 +990,12 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
-                "60DDDDDDDDDDDDDDD4",
-                "GB000000000000001",
-                "GB000000000000002",
-                false,
-                false,
-                Seq("006")
+                declarationId = "60DDDDDDDDDDDDDDD4",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000002",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = false,
+                paymentMethods = Seq("006")
               )
           )
         )
@@ -992,12 +1008,12 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
-                "60DDDDDDDDDDDDDDD5",
-                "GB000000000000001",
-                "GB000000000000002",
-                true,
-                false,
-                Seq("006")
+                declarationId = "60DDDDDDDDDDDDDDD5",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000002",
+                includeConsigneeBankDetails = true,
+                includeDeclarantBankDetails = false,
+                paymentMethods = Seq("006")
               )
           )
         )
@@ -1010,12 +1026,12 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
-                "60DDDDDDDDDDDDDDD6",
-                "GB000000000000001",
-                "GB000000000000002",
-                false,
-                true,
-                Seq("006")
+                declarationId = "60DDDDDDDDDDDDDDD6",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000002",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = true,
+                paymentMethods = Seq("006")
               )
           )
         )
@@ -1028,12 +1044,12 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
-                "60DDDDDDDDDDDDDDD7",
-                "GB000000000000002",
-                "GB000000000000001",
-                false,
-                false,
-                Seq("006")
+                declarationId = "60DDDDDDDDDDDDDDD7",
+                importerEORI = "GB000000000000002",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = false,
+                paymentMethods = Seq("006")
               )
           )
         )
@@ -1046,12 +1062,12 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
-                "60DDDDDDDDDDDDDDD8",
-                "GB000000000000002",
-                "GB000000000000001",
-                true,
-                false,
-                Seq("006")
+                declarationId = "60DDDDDDDDDDDDDDD8",
+                importerEORI = "GB000000000000002",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = true,
+                includeDeclarantBankDetails = false,
+                paymentMethods = Seq("006")
               )
           )
         )
@@ -1064,12 +1080,12 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
-                "60DDDDDDDDDDDDDDD9",
-                "GB000000000000002",
-                "GB000000000000001",
-                false,
-                true,
-                Seq("006")
+                declarationId = "60DDDDDDDDDDDDDDD9",
+                importerEORI = "GB000000000000002",
+                declarantEORI = "GB000000000000001",
+                includeConsigneeBankDetails = false,
+                includeDeclarantBankDetails = true,
+                paymentMethods = Seq("006")
               )
           )
         )
@@ -1264,7 +1280,12 @@ object MockHttpResponse {
         DeclarationResponse(
           Right(
             Acc14ResponseType
-              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD1", "GB000000000000001", "GB000000000000001", Seq("006"))
+              .OK_FULL_RESPONSE_SUBSIDY(
+                declarationId = "10DDDDDDDDDDDDDDD1",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                paymentMethods = Seq("006")
+              )
           )
         )
       ),
@@ -1276,10 +1297,10 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_FULL_RESPONSE_SUBSIDY(
-                "10DDDDDDDDDDDDDDD2",
-                "GB000000000000001",
-                "GB000000000000001",
-                Seq("006", "001")
+                declarationId = "10DDDDDDDDDDDDDDD2",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                paymentMethods = Seq("006", "001")
               )
           )
         )
@@ -1292,10 +1313,10 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_FULL_RESPONSE_SUBSIDY(
-                "10DDDDDDDDDDDDDDD3",
-                "GB000000000000001",
-                "GB000000000000001",
-                Seq("006", "003")
+                declarationId = "10DDDDDDDDDDDDDDD3",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                paymentMethods = Seq("006", "003")
               )
           )
         )
@@ -1308,10 +1329,10 @@ object MockHttpResponse {
           Right(
             Acc14ResponseType
               .OK_FULL_RESPONSE_SUBSIDY(
-                "10DDDDDDDDDDDDDDD4",
-                "GB000000000000001",
-                "GB000000000000001",
-                Seq("006", "001", "002", "003")
+                declarationId = "10DDDDDDDDDDDDDDD4",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                paymentMethods = Seq("006", "001", "002", "003")
               )
           )
         )
@@ -1323,7 +1344,12 @@ object MockHttpResponse {
         DeclarationResponse(
           Right(
             Acc14ResponseType
-              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD5", "GB000000000000001", "GB000000000000001", Seq("006"))
+              .OK_FULL_RESPONSE_SUBSIDY(
+                declarationId = "10DDDDDDDDDDDDDDD5",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                paymentMethods = Seq("006")
+              )
           )
         )
       ),
@@ -1334,7 +1360,12 @@ object MockHttpResponse {
         DeclarationResponse(
           Right(
             Acc14ResponseType
-              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD6", "GB000000000000001", "GB000000000000001", Seq("006"))
+              .OK_FULL_RESPONSE_SUBSIDY(
+                declarationId = "10DDDDDDDDDDDDDDD6",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                paymentMethods = Seq("006")
+              )
           )
         )
       ),
@@ -1345,7 +1376,12 @@ object MockHttpResponse {
         DeclarationResponse(
           Right(
             Acc14ResponseType
-              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD7", "GB000000000000001", "GB000000000000001", Seq("006"))
+              .OK_FULL_RESPONSE_SUBSIDY(
+                declarationId = "10DDDDDDDDDDDDDDD7",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                paymentMethods = Seq("006")
+              )
           )
         )
       ),
@@ -1356,7 +1392,12 @@ object MockHttpResponse {
         DeclarationResponse(
           Right(
             Acc14ResponseType
-              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD8", "GB000000000000001", "GB000000000000001", Seq("006"))
+              .OK_FULL_RESPONSE_SUBSIDY(
+                declarationId = "10DDDDDDDDDDDDDDD8",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                paymentMethods = Seq("006")
+              )
           )
         )
       ),
@@ -1367,7 +1408,12 @@ object MockHttpResponse {
         DeclarationResponse(
           Right(
             Acc14ResponseType
-              .OK_FULL_RESPONSE_SUBSIDY("10DDDDDDDDDDDDDDD9", "GB000000000000001", "GB000000000000001", Seq("006"))
+              .OK_FULL_RESPONSE_SUBSIDY(
+                declarationId = "10DDDDDDDDDDDDDDD9",
+                importerEORI = "GB000000000000001",
+                declarantEORI = "GB000000000000001",
+                paymentMethods = Seq("006")
+              )
           )
         )
       ),
@@ -1376,7 +1422,13 @@ object MockHttpResponse {
         _ === EORI("AA12345678901234Z"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(
-          Right(Acc14ResponseType.OK_FULL_RESPONSE("10ABCDEFGHIJKLMNO0", "GB123456789012345", "GB123456789012345"))
+          Right(
+            Acc14ResponseType.OK_FULL_RESPONSE(
+              declarationId = "10ABCDEFGHIJKLMNO0",
+              importerEORI = "GB123456789012345",
+              declarantEORI = "GB123456789012345"
+            )
+          )
         )
       ),
       MockHttpResponse(
@@ -2363,12 +2415,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000001",
-                  "GB000000000000001",
-                  false,
-                  false
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000001",
+                  declarantEORI = "GB000000000000001",
+                  includeConsigneeBankDetails = false,
+                  includeDeclarantBankDetails = false
                 )
             )
           )
@@ -2379,12 +2431,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000001",
-                  "GB000000000000001",
-                  true,
-                  false
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000001",
+                  declarantEORI = "GB000000000000001",
+                  includeConsigneeBankDetails = true,
+                  includeDeclarantBankDetails = false
                 )
             )
           )
@@ -2395,12 +2447,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000001",
-                  "GB000000000000001",
-                  false,
-                  true
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000001",
+                  declarantEORI = "GB000000000000001",
+                  includeConsigneeBankDetails = false,
+                  includeDeclarantBankDetails = true
                 )
             )
           )
@@ -2411,12 +2463,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000001",
-                  "GB000000000000002",
-                  false,
-                  false
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000001",
+                  declarantEORI = "GB000000000000002",
+                  includeConsigneeBankDetails = false,
+                  includeDeclarantBankDetails = false
                 )
             )
           )
@@ -2427,12 +2479,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000001",
-                  "GB000000000000002",
-                  true,
-                  false
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000001",
+                  declarantEORI = "GB000000000000002",
+                  includeConsigneeBankDetails = true,
+                  includeDeclarantBankDetails = false
                 )
             )
           )
@@ -2443,12 +2495,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000001",
-                  "GB000000000000002",
-                  false,
-                  true
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000001",
+                  declarantEORI = "GB000000000000002",
+                  includeConsigneeBankDetails = false,
+                  includeDeclarantBankDetails = true
                 )
             )
           )
@@ -2459,12 +2511,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000002",
-                  "GB000000000000001",
-                  false,
-                  false
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000002",
+                  declarantEORI = "GB000000000000001",
+                  includeConsigneeBankDetails = false,
+                  includeDeclarantBankDetails = false
                 )
             )
           )
@@ -2475,12 +2527,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000002",
-                  "GB000000000000001",
-                  true,
-                  false
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000002",
+                  declarantEORI = "GB000000000000001",
+                  includeConsigneeBankDetails = true,
+                  includeDeclarantBankDetails = false
                 )
             )
           )
@@ -2491,12 +2543,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000002",
-                  "GB000000000000001",
-                  false,
-                  false
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000002",
+                  declarantEORI = "GB000000000000001",
+                  includeConsigneeBankDetails = false,
+                  includeDeclarantBankDetails = false
                 )
             )
           )
@@ -2507,12 +2559,12 @@ object MockHttpResponse {
             Right(
               Acc14ResponseType
                 .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
-                  mrn.value,
-                  reasonForSecurity,
-                  "GB000000000000001",
-                  "GB000000000000002",
-                  false,
-                  true
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000001",
+                  declarantEORI = "GB000000000000002",
+                  includeConsigneeBankDetails = false,
+                  includeDeclarantBankDetails = true
                 )
             )
           )
