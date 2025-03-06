@@ -31,8 +31,8 @@ class SUB09Controller @Inject() (cc: ControllerComponents)
 
   private val eoriRegex = "^[A-Z]{2}[0-9A-Z]+$"
 
-  private def shouldHaveXiEori(eoriGB: String): Boolean =
-    eoriGB.takeRight(2).toInt % 2 == 0
+  private def shouldHaveXiEori(eoriGB: String): Boolean                                                         =
+    scala.util.Try(eoriGB.takeRight(2).toInt % 2 == 0).getOrElse(false)
 
   final def getSubscription(EORI: String, regime: String, acknowledgementReference: String): Action[AnyContent] =
     Action { _ =>
