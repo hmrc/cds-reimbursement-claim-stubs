@@ -66,19 +66,19 @@ object MockHttpResponse {
         )
       ),
       MockHttpResponse(
-        _ === MRN("01AAAAAAAAAAAHELLO"),
+        _ === MRN("01AAAAAAAAAAHELLO1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(
-          Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAAAAAAA1", "HELLO", "LEEDS"))
+          Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAAHELLO1", "HELLO", "LEEDS"))
         )
       ),
       MockHttpResponse(
-        _ === MRN("01AAAAAAAAAAALEEDS"),
+        _ === MRN("01AAAAAAAAAALEEDS1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(
-          Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAAAAAAA1", "GB000000000000001", "LEEDS"))
+          Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAALEEDS1", "GB000000000000001", "LEEDS"))
         )
       ),
       MockHttpResponse(
