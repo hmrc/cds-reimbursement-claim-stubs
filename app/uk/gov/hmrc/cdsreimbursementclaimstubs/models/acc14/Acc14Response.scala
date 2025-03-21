@@ -19,6 +19,7 @@ package uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14
 import play.api.libs.json._
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.acc14.Acc14Response.transformToDuplicateAddressLines
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.TimeUtils
+import scala.util.Try
 
 final case class Acc14Response(value: JsValue) {
 
@@ -178,7 +179,8 @@ object Acc14Response {
       declarationId: String,
       reasonForSecurity: String,
       importerEORI: String,
-      declarantEORI: String
+      declarantEORI: String,
+      numberOfSecurities: Int = 5
     ) extends Acc14ResponseType
     case class OK_NO_CONSIGNEE_RESPONSE_SECURITIES(
       declarationId: String,
@@ -308,9 +310,23 @@ object Acc14Response {
       case Acc14ResponseType
             .OK_RESPONSE_NO_BANK_DETAILS(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
         getFullAcc14WithoutBankDetails(declarationId, reasonForSecurity, importerEORI, declarantEORI)
+
       case Acc14ResponseType
-            .OK_FULL_RESPONSE_SECURITIES(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
-        getFullAcc14ResponseWithReasonForSecurity(declarationId, reasonForSecurity, importerEORI, declarantEORI)
+            .OK_FULL_RESPONSE_SECURITIES(
+              declarationId,
+              reasonForSecurity,
+              importerEORI,
+              declarantEORI,
+              numberOfSecurities
+            ) =>
+        getFullAcc14ResponseWithReasonForSecurity(
+          declarationId,
+          reasonForSecurity,
+          importerEORI,
+          declarantEORI,
+          numberOfSecurities
+        )
+
       case Acc14ResponseType
             .OK_RESPONSE_NO_CONTACT_DETAILS_SECURITIES(declarationId, reasonForSecurity, importerEORI, declarantEORI) =>
         getAcc14ResponseNoContactDetailsWithReasonForSecurity(
@@ -1354,13 +1370,107 @@ object Acc14Response {
          |""".stripMargin)
   )
 
+  val securityDetailsChunks: Seq[String] = Seq(
+    """ |                {
+        |                    "securityDepositId": "ABC0123456",
+        |                    "totalAmount": "14585.52",
+        |                    "amountPaid": "14585.52",
+        |                    "paymentMethod": "001",
+        |                    "paymentReference": "SGL SECURITY 001",
+        |                    "taxDetails":
+        |                    [
+        |                        {
+        |                            "taxType": "A00",
+        |                            "amount": "6000.00"
+        |                        },
+        |                        {
+        |                            "taxType": "B00",
+        |                            "amount": "8085.52"
+        |                        }
+        |                    ]
+        |                }""".stripMargin,
+    """ |                {
+        |                    "securityDepositId": "DEF6543213",
+        |                    "totalAmount": "500.00",
+        |                    "amountPaid": "300.00",
+        |                    "paymentMethod": "002",
+        |                    "paymentReference": "SGL SECURITY 002",
+        |                    "taxDetails":
+        |                    [
+        |                        {
+        |                            "taxType": "A00",
+        |                            "amount": "100.00"
+        |                        },
+        |                        {
+        |                            "taxType": "B00",
+        |                            "amount": "200.00"
+        |                        }
+        |                    ]
+        |                }""".stripMargin,
+    """ |                {
+        |                    "securityDepositId": "DEF6543212",
+        |                    "totalAmount": "500.00",
+        |                    "amountPaid": "300.00",
+        |                    "paymentMethod": "003",
+        |                    "paymentReference": "SGL SECURITY 003",
+        |                    "taxDetails":
+        |                    [
+        |                        {
+        |                            "taxType": "A00",
+        |                            "amount": "100.00"
+        |                        },
+        |                        {
+        |                            "taxType": "B00",
+        |                            "amount": "200.00"
+        |                        }
+        |                    ]
+        |                }""".stripMargin,
+    """ |                {
+        |                    "securityDepositId": "DEF6543210",
+        |                    "totalAmount": "500.00",
+        |                    "amountPaid": "300.00",
+        |                    "paymentMethod": "004",
+        |                    "paymentReference": "SGL SECURITY 004",
+        |                    "taxDetails":
+        |                    [
+        |                        {
+        |                            "taxType": "A00",
+        |                            "amount": "100.00"
+        |                        },
+        |                        {
+        |                            "taxType": "B00",
+        |                            "amount": "200.00"
+        |                        }
+        |                    ]
+        |                }""".stripMargin,
+    """ |                {
+        |                    "securityDepositId": "DEF6543211",
+        |                    "totalAmount": "500.00",
+        |                    "amountPaid": "300.00",
+        |                    "paymentMethod": "005",
+        |                    "paymentReference": "SGL SECURITY 005",
+        |                    "taxDetails":
+        |                    [
+        |                        {
+        |                            "taxType": "A00",
+        |                            "amount": "100.00"
+        |                        },
+        |                        {
+        |                            "taxType": "B00",
+        |                            "amount": "200.00"
+        |                        }
+        |                    ]
+        |                }""".stripMargin
+  )
+
   def getFullAcc14ResponseWithReasonForSecurity(
     declarationId: String,
     reasonForSecurity: String,
     importerEORI: String,
-    declarantEORI: String
-  ) = Acc14Response(
-    Json.parse(s"""
+    declarantEORI: String,
+    numberOfSecurities: Int
+  ) = Acc14Response {
+    val json = s"""
         |{
         |    "overpaymentDeclarationDisplayResponse":
         |    {
@@ -1476,104 +1586,17 @@ object Acc14Response {
         |                    "accountNumber": "54789632"
         |                }
         |            },
-        |            "securityDetails":
-        |            [
-        |                {
-        |                    "securityDepositId": "ABC0123456",
-        |                    "totalAmount": "14585.52",
-        |                    "amountPaid": "14585.52",
-        |                    "paymentMethod": "001",
-        |                    "paymentReference": "SGL SECURITY 001",
-        |                    "taxDetails":
-        |                    [
-        |                        {
-        |                            "taxType": "A00",
-        |                            "amount": "6000.00"
-        |                        },
-        |                        {
-        |                            "taxType": "B00",
-        |                            "amount": "8085.52"
-        |                        }
-        |                    ]
-        |                },
-        |                {
-        |                    "securityDepositId": "DEF6543213",
-        |                    "totalAmount": "500.00",
-        |                    "amountPaid": "300.00",
-        |                    "paymentMethod": "002",
-        |                    "paymentReference": "SGL SECURITY 002",
-        |                    "taxDetails":
-        |                    [
-        |                        {
-        |                            "taxType": "A00",
-        |                            "amount": "100.00"
-        |                        },
-        |                        {
-        |                            "taxType": "B00",
-        |                            "amount": "200.00"
-        |                        }
-        |                    ]
-        |                },
-        |                {
-        |                    "securityDepositId": "DEF6543212",
-        |                    "totalAmount": "500.00",
-        |                    "amountPaid": "300.00",
-        |                    "paymentMethod": "003",
-        |                    "paymentReference": "SGL SECURITY 003",
-        |                    "taxDetails":
-        |                    [
-        |                        {
-        |                            "taxType": "A00",
-        |                            "amount": "100.00"
-        |                        },
-        |                        {
-        |                            "taxType": "B00",
-        |                            "amount": "200.00"
-        |                        }
-        |                    ]
-        |                },
-        |                {
-        |                    "securityDepositId": "DEF6543210",
-        |                    "totalAmount": "500.00",
-        |                    "amountPaid": "300.00",
-        |                    "paymentMethod": "004",
-        |                    "paymentReference": "SGL SECURITY 004",
-        |                    "taxDetails":
-        |                    [
-        |                        {
-        |                            "taxType": "A00",
-        |                            "amount": "100.00"
-        |                        },
-        |                        {
-        |                            "taxType": "B00",
-        |                            "amount": "200.00"
-        |                        }
-        |                    ]
-        |                },
-        |                {
-        |                    "securityDepositId": "DEF6543211",
-        |                    "totalAmount": "500.00",
-        |                    "amountPaid": "300.00",
-        |                    "paymentMethod": "005",
-        |                    "paymentReference": "SGL SECURITY 005",
-        |                    "taxDetails":
-        |                    [
-        |                        {
-        |                            "taxType": "A00",
-        |                            "amount": "100.00"
-        |                        },
-        |                        {
-        |                            "taxType": "B00",
-        |                            "amount": "200.00"
-        |                        }
-        |                    ]
-        |                }
+        |            "securityDetails": [
+        |${securityDetailsChunks.take(numberOfSecurities).mkString(",")}  
         |            ]
         |        }
         |    }
         |}
-        |""".stripMargin)
-  )
+        |""".stripMargin
+    Try(Json.parse(json)).getOrElse {
+      throw new Exception(s"Cannot parse securities ACC14 stub response for $declarationId")
+    }
+  }
 
   def getAcc14ResponseNoImporterDetailsWithReasonForSecurity(
     declarationId: String,

@@ -288,7 +288,11 @@ class DeclarationControllerSpec extends AnyWordSpec with Matchers with TypeCheck
     "30AAAAAAAAAAAAAAA9",
     "30ABCDEFGHIJKLMNO1",
     "40AAAAAAAAAAAAAAA9",
-    "60ABCDEFGHIJKLMNO1"
+    "60ABCDEFGHIJKLMNO1",
+    "01AAAAAAAAAAAAA111",
+    "01AAAAAAAAAAAAA222",
+    "01AAAAAAAAAAAAA333",
+    "01AAAAAAAAAAAAA444"
   )
 
   val securitiesFailingMRNs = Seq(
@@ -301,6 +305,7 @@ class DeclarationControllerSpec extends AnyWordSpec with Matchers with TypeCheck
   val controller = new DeclarationController(Helpers.stubControllerComponents())
 
   "A DeclarationController" should {
+
     ndrcSuccessfulMRNs.foreach { mrn =>
       s"return 200 with ACC14 NDRC declaration $mrn" in {
         val payload: JsValue =
