@@ -299,7 +299,10 @@ class DeclarationControllerSpec extends AnyWordSpec with Matchers with TypeCheck
     ("41ABCDEFGHIJKLMNO1", 400),
     ("41ABCDEFGHIJKLMNO2", 400),
     ("40ABCDEFGHIJKLMNO3", 405),
-    ("50ABCDEFGHIJKLMNO1", 500)
+    ("50ABCDEFGHIJKLMNO1", 500),
+    ("01AA99999999999999", 400),
+    ("01AA99999999999998", 400),
+    ("01AA99999999999997", 400)
   )
 
   val controller = new DeclarationController(Helpers.stubControllerComponents())

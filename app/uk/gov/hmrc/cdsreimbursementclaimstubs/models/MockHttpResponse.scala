@@ -58,19 +58,19 @@ object MockHttpResponse {
         )
       ),
       MockHttpResponse(
-        _ === MRN("999999999999999999"),
+        _ === MRN("01AA99999999999999"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Left(Right(Acc14ErrorResponseType.BAD_REQUEST_MISSING_DECLARATION)))
       ),
       MockHttpResponse(
-        _ === MRN("999999999999999998"),
+        _ === MRN("01AA99999999999998"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Left(Right(Acc14ErrorResponseType.BAD_REQUEST_MISSING_DECLARATION)))
       ),
       MockHttpResponse(
-        _ === MRN("999999999999999997"),
+        _ === MRN("01AA99999999999997"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(Left(Right(Acc14ErrorResponseType.BAD_REQUEST_MISSING_DECLARATION)))
