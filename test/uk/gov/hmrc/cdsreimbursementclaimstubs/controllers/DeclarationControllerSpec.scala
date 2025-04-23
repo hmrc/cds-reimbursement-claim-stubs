@@ -292,7 +292,11 @@ class DeclarationControllerSpec extends AnyWordSpec with Matchers with TypeCheck
     "01AAAAAAAAAAAAA111",
     "01AAAAAAAAAAAAA222",
     "01AAAAAAAAAAAAA333",
-    "01AAAAAAAAAAAAA444"
+    "01AAAAAAAAAAAAA444",
+    "01AAAAAAAAAAAAA110",
+    "01AAAAAAAAAAAAA220",
+    "01AAAAAAAAAAAAA330",
+    "01AAAAAAAAAAAAA440"
   )
 
   val securitiesFailingMRNs = Seq(
