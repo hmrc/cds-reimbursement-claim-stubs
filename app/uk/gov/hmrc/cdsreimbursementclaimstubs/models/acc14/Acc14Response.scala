@@ -180,7 +180,8 @@ object Acc14Response {
       reasonForSecurity: String,
       importerEORI: String,
       declarantEORI: String,
-      numberOfSecurities: Int = 5
+      numberOfSecurities: Int = 5,
+      numberOfSecuritiesDuties: Int = 2
     ) extends Acc14ResponseType
     case class OK_NO_CONSIGNEE_RESPONSE_SECURITIES(
       declarationId: String,
@@ -317,14 +318,16 @@ object Acc14Response {
               reasonForSecurity,
               importerEORI,
               declarantEORI,
-              numberOfSecurities
+              numberOfSecurities,
+              numberOfSecuritiesDuties
             ) =>
         getFullAcc14ResponseWithReasonForSecurity(
           declarationId,
           reasonForSecurity,
           importerEORI,
           declarantEORI,
-          numberOfSecurities
+          numberOfSecurities,
+          numberOfSecuritiesDuties
         )
 
       case Acc14ResponseType
@@ -1370,24 +1373,20 @@ object Acc14Response {
          |""".stripMargin)
   )
 
-  val securityDetailsChunks: Seq[String] = Seq(
-    """ |                {
+  val securityDetailsDutiesChunks: Seq[String] = Seq(
+    """{"taxType": "A00","amount": "6000.00"}""",
+    """{"taxType": "B00","amount": "8085.52"}"""
+  )
+
+  def securityDetailsChunks(dutiesChunks: Seq[String]): Seq[String] = Seq(
+    s""" |                {
         |                    "securityDepositId": "ABC0123456",
         |                    "totalAmount": "14585.52",
         |                    "amountPaid": "14585.52",
         |                    "paymentMethod": "001",
         |                    "paymentReference": "SGL SECURITY 001",
         |                    "taxDetails":
-        |                    [
-        |                        {
-        |                            "taxType": "A00",
-        |                            "amount": "6000.00"
-        |                        },
-        |                        {
-        |                            "taxType": "B00",
-        |                            "amount": "8085.52"
-        |                        }
-        |                    ]
+        |                    [${dutiesChunks.mkString(",")}]
         |                }""".stripMargin,
     """ |                {
         |                    "securityDepositId": "DEF6543213",
@@ -1468,7 +1467,8 @@ object Acc14Response {
     reasonForSecurity: String,
     importerEORI: String,
     declarantEORI: String,
-    numberOfSecurities: Int
+    numberOfSecurities: Int,
+    numberOfSecuritiesDuties: Int
   ) = Acc14Response {
     val json = s"""
         |{
@@ -1587,7 +1587,9 @@ object Acc14Response {
         |                }
         |            },
         |            "securityDetails": [
-        |${securityDetailsChunks.take(numberOfSecurities).mkString(",")}  
+        |${securityDetailsChunks(securityDetailsDutiesChunks.take(numberOfSecuritiesDuties))
+      .take(numberOfSecurities)
+      .mkString(",")}  
         |            ]
         |        }
         |    }

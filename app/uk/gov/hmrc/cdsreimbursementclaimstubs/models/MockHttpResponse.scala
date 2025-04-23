@@ -1826,7 +1826,24 @@ object MockHttpResponse {
                   reasonForSecurity,
                   "GB000000000000001",
                   "GB000000000000001",
-                  numberOfSecurities = 1
+                  numberOfSecurities = 1,
+                  numberOfSecuritiesDuties = 2
+                )
+            )
+          )
+        )
+      case (MRN("01AAAAAAAAAAAAA110"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_FULL_RESPONSE_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000001",
+                  "GB000000000000001",
+                  numberOfSecurities = 1,
+                  numberOfSecuritiesDuties = 1
                 )
             )
           )
@@ -1841,7 +1858,24 @@ object MockHttpResponse {
                   reasonForSecurity,
                   "GB000000000000001",
                   "GB000000000000001",
-                  numberOfSecurities = 2
+                  numberOfSecurities = 2,
+                  numberOfSecuritiesDuties = 2
+                )
+            )
+          )
+        )
+      case (MRN("01AAAAAAAAAAAAA220"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_FULL_RESPONSE_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000001",
+                  "GB000000000000001",
+                  numberOfSecurities = 2,
+                  numberOfSecuritiesDuties = 1
                 )
             )
           )
@@ -1856,7 +1890,24 @@ object MockHttpResponse {
                   reasonForSecurity,
                   "GB000000000000001",
                   "GB000000000000001",
-                  numberOfSecurities = 3
+                  numberOfSecurities = 3,
+                  numberOfSecuritiesDuties = 2
+                )
+            )
+          )
+        )
+      case (MRN("01AAAAAAAAAAAAA330"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_FULL_RESPONSE_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000001",
+                  "GB000000000000001",
+                  numberOfSecurities = 3,
+                  numberOfSecuritiesDuties = 1
                 )
             )
           )
@@ -1871,7 +1922,24 @@ object MockHttpResponse {
                   reasonForSecurity,
                   "GB000000000000001",
                   "GB000000000000001",
-                  numberOfSecurities = 4
+                  numberOfSecurities = 4,
+                  numberOfSecuritiesDuties = 2
+                )
+            )
+          )
+        )
+      case (MRN("01AAAAAAAAAAAAA440"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_FULL_RESPONSE_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "GB000000000000001",
+                  "GB000000000000001",
+                  numberOfSecurities = 4,
+                  numberOfSecuritiesDuties = 1
                 )
             )
           )
