@@ -167,7 +167,9 @@ object Acc14Response {
       importerEORI: String,
       declarantEORI: String,
       includeConsigneeBankDetails: Boolean,
-      includeDeclarantBankDetails: Boolean
+      includeDeclarantBankDetails: Boolean,
+      numberOfSecurities: Int = 5,
+      numberOfSecuritiesDuties: Int = 2
     ) extends Acc14ResponseType
     case class OK_RESPONSE_NO_BANK_DETAILS(
       declarationId: String,
@@ -281,7 +283,9 @@ object Acc14Response {
             declarantEORI,
             includeConsigneeBankDetails,
             includeDeclarantBankDetails,
-            paymentMethods
+            paymentMethods,
+            numberOfSecurities,
+            numberOfSecuritiesDuties
           ) =>
         getFullAcc14WithSpecificBankDetailsSecuritiesGuarantee(
           declarationId,
@@ -289,7 +293,9 @@ object Acc14Response {
           declarantEORI,
           includeConsigneeBankDetails,
           includeDeclarantBankDetails,
-          paymentMethods
+          paymentMethods,
+          numberOfSecurities,
+          numberOfSecuritiesDuties
         )
       case Acc14ResponseType
             .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SUBSIDY(
@@ -852,7 +858,9 @@ object Acc14Response {
     importerEORI: String,
     declarantEORI: String,
     includeConsigneeBankDetails: Boolean = false,
-    includeDeclarantBankDetails: Boolean = false
+    includeDeclarantBankDetails: Boolean = false,
+    numberOfSecurities: Int,
+    numberOfSecuritiesDuties: Int
   ) = Acc14Response(
     Json.parse(s"""
          |{
@@ -961,99 +969,14 @@ object Acc14Response {
       case (false, true) => s""" "bankDetails":  $consigneeBankDetails,"""
       case (true, true) => s""" "bankDetails":  $consigneeAndDeclarantBankDetails,"""
     }}
-         |            "securityDetails":
-         |            [
-         |                {
-         |                    "securityDepositId": "ABC0123456",
-         |                    "totalAmount": "14585.52",
-         |                    "amountPaid": "14585.52",
-         |                    "paymentMethod": "004",
-         |                    "paymentReference": "SGL SECURITY 001",
-         |                    "taxDetails":
-         |                    [
-         |                        {
-         |                            "taxType": "A00",
-         |                            "amount": "6000.00"
-         |                        },
-         |                        {
-         |                            "taxType": "B00",
-         |                            "amount": "8085.52"
-         |                        }
-         |                    ]
-         |                },
-         |                {
-         |                    "securityDepositId": "DEF6543213",
-         |                    "totalAmount": "500.00",
-         |                    "amountPaid": "300.00",
-         |                    "paymentMethod": "004",
-         |                    "paymentReference": "SGL SECURITY 002",
-         |                    "taxDetails":
-         |                    [
-         |                        {
-         |                            "taxType": "A00",
-         |                            "amount": "100.00"
-         |                        },
-         |                        {
-         |                            "taxType": "B00",
-         |                            "amount": "200.00"
-         |                        }
-         |                    ]
-         |                },
-         |                {
-         |                    "securityDepositId": "DEF6543212",
-         |                    "totalAmount": "500.00",
-         |                    "amountPaid": "300.00",
-         |                    "paymentMethod": "004",
-         |                    "paymentReference": "SGL SECURITY 003",
-         |                    "taxDetails":
-         |                    [
-         |                        {
-         |                            "taxType": "A00",
-         |                            "amount": "100.00"
-         |                        },
-         |                        {
-         |                            "taxType": "B00",
-         |                            "amount": "200.00"
-         |                        }
-         |                    ]
-         |                },
-         |                {
-         |                    "securityDepositId": "DEF6543210",
-         |                    "totalAmount": "500.00",
-         |                    "amountPaid": "300.00",
-         |                    "paymentMethod": "004",
-         |                    "paymentReference": "SGL SECURITY 004",
-         |                    "taxDetails":
-         |                    [
-         |                        {
-         |                            "taxType": "A00",
-         |                            "amount": "100.00"
-         |                        },
-         |                        {
-         |                            "taxType": "B00",
-         |                            "amount": "200.00"
-         |                        }
-         |                    ]
-         |                },
-         |                {
-         |                    "securityDepositId": "DEF6543211",
-         |                    "totalAmount": "500.00",
-         |                    "amountPaid": "300.00",
-         |                    "paymentMethod": "004",
-         |                    "paymentReference": "SGL SECURITY 005",
-         |                    "taxDetails":
-         |                    [
-         |                        {
-         |                            "taxType": "A00",
-         |                            "amount": "100.00"
-         |                        },
-         |                        {
-         |                            "taxType": "B00",
-         |                            "amount": "200.00"
-         |                        }
-         |                    ]
-         |                }
-         |            ]
+         |            "securityDetails": [
+         |${securityDetailsChunks(
+      securityDetailsDutiesChunks.take(numberOfSecuritiesDuties),
+      Seq("004", "004", "004", "004", "004")
+    )
+      .take(numberOfSecurities)
+      .mkString(",")}  
+         |            ]         
          |        }
          |    }
          |}
@@ -1378,21 +1301,26 @@ object Acc14Response {
     """{"taxType": "B00","amount": "8085.52"}"""
   )
 
-  def securityDetailsChunks(dutiesChunks: Seq[String]): Seq[String] = Seq(
+  implicit class SeqOps(val sequence: Seq[String]) extends AnyVal {
+    def getOrDefault(index: Int, default: String): String =
+      Try(sequence.apply(index)).getOrElse(default)
+  }
+
+  def securityDetailsChunks(dutiesChunks: Seq[String], methodOfPayments: Seq[String]): Seq[String] = Seq(
     s""" |                {
         |                    "securityDepositId": "ABC0123456",
         |                    "totalAmount": "14585.52",
         |                    "amountPaid": "14585.52",
-        |                    "paymentMethod": "001",
+        |                    "paymentMethod": "${methodOfPayments.getOrDefault(0, "001")}",
         |                    "paymentReference": "SGL SECURITY 001",
         |                    "taxDetails":
         |                    [${dutiesChunks.mkString(",")}]
         |                }""".stripMargin,
-    """ |                {
+    s""" |                {
         |                    "securityDepositId": "DEF6543213",
         |                    "totalAmount": "500.00",
         |                    "amountPaid": "300.00",
-        |                    "paymentMethod": "002",
+        |                    "paymentMethod": "${methodOfPayments.getOrDefault(1, "002")}",
         |                    "paymentReference": "SGL SECURITY 002",
         |                    "taxDetails":
         |                    [
@@ -1406,11 +1334,11 @@ object Acc14Response {
         |                        }
         |                    ]
         |                }""".stripMargin,
-    """ |                {
+    s""" |                {
         |                    "securityDepositId": "DEF6543212",
         |                    "totalAmount": "500.00",
         |                    "amountPaid": "300.00",
-        |                    "paymentMethod": "003",
+        |                    "paymentMethod": "${methodOfPayments.getOrDefault(2, "003")}",
         |                    "paymentReference": "SGL SECURITY 003",
         |                    "taxDetails":
         |                    [
@@ -1424,11 +1352,11 @@ object Acc14Response {
         |                        }
         |                    ]
         |                }""".stripMargin,
-    """ |                {
+    s""" |                {
         |                    "securityDepositId": "DEF6543210",
         |                    "totalAmount": "500.00",
         |                    "amountPaid": "300.00",
-        |                    "paymentMethod": "004",
+        |                    "paymentMethod": "${methodOfPayments.getOrDefault(4, "004")}",
         |                    "paymentReference": "SGL SECURITY 004",
         |                    "taxDetails":
         |                    [
@@ -1442,11 +1370,11 @@ object Acc14Response {
         |                        }
         |                    ]
         |                }""".stripMargin,
-    """ |                {
+    s""" |                {
         |                    "securityDepositId": "DEF6543211",
         |                    "totalAmount": "500.00",
         |                    "amountPaid": "300.00",
-        |                    "paymentMethod": "005",
+        |                    "paymentMethod": "${methodOfPayments.getOrDefault(5, "005")}",
         |                    "paymentReference": "SGL SECURITY 005",
         |                    "taxDetails":
         |                    [
@@ -1587,7 +1515,10 @@ object Acc14Response {
         |                }
         |            },
         |            "securityDetails": [
-        |${securityDetailsChunks(securityDetailsDutiesChunks.take(numberOfSecuritiesDuties))
+        |${securityDetailsChunks(
+      securityDetailsDutiesChunks.take(numberOfSecuritiesDuties),
+      Seq("001", "002", "003", "004", "005")
+    )
       .take(numberOfSecurities)
       .mkString(",")}  
         |            ]
