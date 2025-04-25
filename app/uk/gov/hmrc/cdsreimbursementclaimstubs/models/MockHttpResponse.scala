@@ -2726,7 +2726,45 @@ object MockHttpResponse {
                   importerEORI = "GB000000000000001",
                   declarantEORI = "GB000000000000002",
                   includeConsigneeBankDetails = false,
-                  includeDeclarantBankDetails = true
+                  includeDeclarantBankDetails = true,
+                  numberOfSecurities = 5,
+                  numberOfSecuritiesDuties = 2
+                )
+            )
+          )
+        )
+      case (MRN("60AAAAAAAAAAAAA111"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000001",
+                  declarantEORI = "GB000000000000002",
+                  includeConsigneeBankDetails = false,
+                  includeDeclarantBankDetails = true,
+                  numberOfSecurities = 1,
+                  numberOfSecuritiesDuties = 2
+                )
+            )
+          )
+        )
+      case (MRN("60AAAAAAAAAAAAA110"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_RESPONSE_SPECIFIC_BANK_DETAILS_SECURITIES_GUARANTEE(
+                  declarationId = mrn.value,
+                  reasonForSecurity = reasonForSecurity,
+                  importerEORI = "GB000000000000001",
+                  declarantEORI = "GB000000000000002",
+                  includeConsigneeBankDetails = false,
+                  includeDeclarantBankDetails = true,
+                  numberOfSecurities = 1,
+                  numberOfSecuritiesDuties = 1
                 )
             )
           )
