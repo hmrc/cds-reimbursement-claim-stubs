@@ -68,4 +68,9 @@ class VerifiedEmailController @Inject() (cc: ControllerComponents) extends Backe
       }
     }
 
+  final def getVerifiedEmailV2: Action[AnyContent] =
+    Action { _ =>
+      Ok(Json.toJson(successfullResponse))
+    }
+
 }
