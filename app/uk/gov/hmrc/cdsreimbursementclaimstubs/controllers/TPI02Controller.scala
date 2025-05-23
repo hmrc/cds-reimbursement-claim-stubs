@@ -191,6 +191,30 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
               case None =>
                 NO_CLAIMS_FOUND_SCTY
             }
+          case e if e.endsWith("9999") =>
+            val extractedIndex = e.dropWhile(c => !c.isDigit).toIntOption.getOrElse(0)
+            val claimType      = if (extractedIndex % 2 == 0) "C285" else "C&E1179"
+            val multiple       = extractedIndex % 2 == 1
+            if (e.startsWith("NDRC-"))
+              tpi02Claim(
+                claimType = claimType,
+                service = NDRC,
+                caseNumber = e,
+                caseStatus = "Closed",
+                closed = true,
+                multiple = multiple,
+                entryNumber = false
+              )
+            else
+              tpi02Claim(
+                claimType = "",
+                service = SCTY,
+                caseNumber = e,
+                caseStatus = "Closed",
+                closed = true,
+                multiple = false,
+                entryNumber = false
+              )
           case e if e.startsWith("NDRC") =>
             tpi01Claims(20).CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
               case Some(value) =>
