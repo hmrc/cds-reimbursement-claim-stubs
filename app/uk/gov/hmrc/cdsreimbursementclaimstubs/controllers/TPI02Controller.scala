@@ -68,7 +68,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = extractedIndex % 2 == 1,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_NDRC
@@ -83,7 +84,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = false,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_SCTY
@@ -101,7 +103,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_NDRC
@@ -116,7 +119,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = false,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_SCTY
@@ -134,7 +138,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = extractedIndex % 2 == 1,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_NDRC
@@ -152,7 +157,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = extractedIndex % 2 == 1,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_NDRC
@@ -169,7 +175,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = true,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_SCTY
@@ -186,12 +193,13 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = true,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_SCTY
             }
-          case e if e.endsWith("9999") =>
+          case e if e.endsWith("9999") || e.endsWith("9998") =>
             val extractedIndex = e.dropWhile(c => !c.isDigit).toIntOption.getOrElse(0)
             val claimType      = if (extractedIndex % 2 == 0) "C285" else "C&E1179"
             val multiple       = extractedIndex % 2 == 1
@@ -200,20 +208,22 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                 claimType = claimType,
                 service = NDRC,
                 caseNumber = e,
-                caseStatus = "Closed",
+                caseStatus = "Resolved-Approved",
                 closed = true,
                 multiple = multiple,
-                entryNumber = false
+                entryNumber = false,
+                claimantEori = "GB744638982000"
               )
             else
               tpi02Claim(
                 claimType = "",
                 service = SCTY,
                 caseNumber = e,
-                caseStatus = "Closed",
+                caseStatus = "Closed-C18 Raised",
                 closed = true,
                 multiple = false,
-                entryNumber = false
+                entryNumber = false,
+                claimantEori = "GB744638982000"
               )
           case e if e.startsWith("NDRC") =>
             tpi01Claims(20).CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
@@ -228,7 +238,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_NDRC
@@ -243,7 +254,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
                   value.caseStatus,
                   value.closedDate.isDefined,
                   multiple = false,
-                  entryNumber = false
+                  entryNumber = false,
+                  claimantEori = "GB98765432101"
                 )
               case None =>
                 NO_CLAIMS_FOUND_SCTY
