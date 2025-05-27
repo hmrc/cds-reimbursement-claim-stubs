@@ -31,7 +31,8 @@ trait TPI02Generation extends SchemaValidation {
     caseStatus: String,
     closed: Boolean,
     multiple: Boolean,
-    entryNumber: Boolean
+    entryNumber: Boolean,
+    claimantEori: String
   ): Result = {
     val response = TPI02Response(
       SpecificCaseResponse(
@@ -48,12 +49,13 @@ trait TPI02Generation extends SchemaValidation {
                   claimType,
                   closed,
                   entryNumber,
-                  multiple
+                  multiple,
+                  claimantEori
                 )
               )
             else None,
             if (service == SCTY)
-              Some(createSCTYCase(caseNumber, caseStatus, closed, entryNumber))
+              Some(createSCTYCase(caseNumber, caseStatus, closed, entryNumber, claimantEori))
             else
               None
           )
@@ -86,7 +88,8 @@ trait TPI02Generation extends SchemaValidation {
     caseNumber: String,
     caseStatus: String,
     closed: Boolean,
-    entryNumber: Boolean
+    entryNumber: Boolean,
+    claimantEori: String
   ): SCTYCase = {
     val odd = caseNumber.lastOption.exists(c => Character.isDigit(c) && c.toInt % 2 == 1)
     SCTYCase(
@@ -98,7 +101,7 @@ trait TPI02Generation extends SchemaValidation {
       goods = Some(Seq(Goods("12", Some("Digital media")), Goods("13", Some(" ")), Goods("14", Some("drum kit")))),
       declarantEORI = if (isXiClaim(caseNumber)) "XI12345678914" else "GB12345678912",
       importerEORI = if (isXiClaim(caseNumber)) Some("XI98765432102") else if (odd) None else Some("GB98765432101"),
-      claimantEORI = if (isXiClaim(caseNumber)) Some("XI98745632102") else Some("GB98745632101"),
+      claimantEORI = if (isXiClaim(caseNumber)) Some("XI98745632102") else Some(claimantEori),
       totalCustomsClaimAmount = Some("900000.00"),
       totalVATClaimAmount = Some("900000.00"),
       totalClaimAmount = Some("900000.00"),
@@ -117,7 +120,8 @@ trait TPI02Generation extends SchemaValidation {
     claimType: String,
     closed: Boolean,
     entryNumber: Boolean,
-    multiple: Boolean
+    multiple: Boolean,
+    claimantEori: String
   ): NDRCCase =
     NDRCCase(
       NDRCAmounts = NDRCAmounts(
@@ -132,30 +136,30 @@ trait TPI02Generation extends SchemaValidation {
         Some("900000.00")
       ),
       NDRCDetail = NDRCDetail(
-        caseNumber,
-        if (entryNumber) Some("123456789A12122022") else Some("MRN23014"),
-        claimType,
-        if (multiple) "Bulk" else "Individual",
-        caseStatus,
-        Some("A description of goods"),
-        None,
-        if (isXiClaim(caseNumber)) "XI12345678914" else "GB12345678912",
-        if (isXiClaim(caseNumber)) "XI98765432102" else "GB98765432101",
-        if (isXiClaim(caseNumber)) Some("XI98745632102") else Some("GB98745632101"),
-        Some("Duty Suspension"),
-        "20200501",
-        Some("Claimant name"),
-        Some("Claimant email address"),
-        if (closed) Some("20210501") else None,
-        if (entryNumber) Some(Seq.empty) else mrnDetails(multiple),
-        if (entryNumber) entryDetails(multiple) else Some(Seq.empty),
+        CDFPayCaseNumber = caseNumber,
+        declarationID = if (entryNumber) Some("123456789A12122022") else Some("MRN23014"),
+        claimType = claimType,
+        caseType = if (multiple) "Bulk" else "Individual",
+        caseStatus = caseStatus,
+        descOfGoods = Some("A description of goods"),
+        descOfRejectedGoods = None,
+        declarantEORI = if (isXiClaim(caseNumber)) "XI12345678914" else "GB12345678912",
+        importerEORI = if (isXiClaim(caseNumber)) "XI98765432102" else "GB98765432101",
+        claimantEORI = if (isXiClaim(caseNumber)) Some("XI98745632102") else Some(claimantEori),
+        basisOfClaim = Some("Duty Suspension"),
+        claimStartDate = "20200501",
+        claimantName = Some("Claimant name"),
+        claimantEmailAddress = Some("Claimant email address"),
+        closedDate = if (closed) Some("20210501") else None,
+        MRNDetails = if (entryNumber) Some(Seq.empty) else mrnDetails(multiple),
+        entryDetails = if (entryNumber) entryDetails(multiple) else Some(Seq.empty),
         reimbursement = Some(Seq(Reimbursement("20200501", "6402.06", "A30", "P")))
       )
     )
 
-  def isXiClaim(caseNumber: String): Boolean = {
+  def isXiClaim(caseNumber: String): Boolean =
     caseNumber
       .split("-")
-      .lastOption.exists(x => x.startsWith("15") || x.startsWith("105"))
-  }
+      .lastOption
+      .exists(x => x.startsWith("15") || x.startsWith("105"))
 }
