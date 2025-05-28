@@ -1539,7 +1539,9 @@ object MockHttpResponse {
         _ === MRN("10ABCDEFGHIJKLMNO1"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Left(Left(WafErrorResponse.FORBIDDEN))),
-        DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
+        DeclarationResponse(
+          Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001"))
+        )
       ),
       MockHttpResponse(
         _ === MRN("30ABCDEFGHIJKLMNO1"),
