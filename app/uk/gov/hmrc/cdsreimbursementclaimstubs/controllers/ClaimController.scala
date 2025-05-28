@@ -25,6 +25,7 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.tpi05.{Tpi05ErrorResponse, 
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.{MockHttpResponse, SchemaValidation}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.Logging
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
+import uk.gov.hmrc.cdsreimbursementclaimstubs.models.ids.MRN
 
 @Singleton()
 class ClaimController @Inject() (cc: ControllerComponents)
@@ -40,14 +41,16 @@ class ClaimController @Inject() (cc: ControllerComponents)
 
     logger.info(Json.prettyPrint(payload))
 
+    val eoriOpt: Option[EORI] =
+      (payload \ "postNewClaimsRequest" \ "requestDetail" \ "claimantEORI").asOpt[String].map(EORI.apply)
+
+    val mrnOpt: Option[MRN] =
+      (payload \ "postNewClaimsRequest" \ "requestDetail" \ "MRNDetails" \ 0 \ "MRNNumber").asOpt[String].map(MRN.apply)
+
     validateRequest(actualSchema, nextSchema) {
-      (payload \ "postNewClaimsRequest" \ "requestDetail" \ "claimantEORI")
-        .asOpt[String] match {
-        case None =>
-          logger.warn("could not find claimant eori")
-          BadRequest
-        case Some(str) =>
-          MockHttpResponse.getSubmitClaimHttpResponse(EORI(str)) match {
+      (eoriOpt, mrnOpt) match {
+        case (Some(eori), mrnOpt) =>
+          MockHttpResponse.getSubmitClaimHttpResponse(eori, mrnOpt) match {
             case Some(httpResponse) =>
               logger.info(httpResponse.toString)
               httpResponse.submitClaimResponse.response match {
@@ -68,9 +71,13 @@ class ClaimController @Inject() (cc: ControllerComponents)
                   Ok(Json.toJson(Tpi05Response.returnTpi05HttpResponse(tpi05Response).value))
               }
             case None =>
-              logger.warn(s"could not find profile with claimant eori: $str")
+              logger.warn(s"could not find profile with claimant eori: $eori")
               BadRequest
           }
+
+        case _ =>
+          logger.warn("wrong claim, could not find claimant's EORI")
+          BadRequest
       }
     }
   }

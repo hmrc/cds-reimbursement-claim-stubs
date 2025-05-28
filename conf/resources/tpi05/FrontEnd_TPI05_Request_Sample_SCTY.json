@@ -13,26 +13,26 @@
 			"claimantEORI": "GB345",
 			"claimantEmailAddress": "a@a.com",
 			"claimantName": "PART 575456994000 LTD",
-			"methodOfDisposals":[
-			{
-			"disposalMethod": "Export: Multiple Shipments",
-			"exportMRNs":[
-					{
-					 "MRNNumber": "21LLLLLLLLLLLLLL29"
-					},
-					{
-					 "MRNNumber": "21LLLLLLLLLLLLLL29"
-					}
-			]
-			},
-			{
-			"disposalMethod": "Other Temporary Admission"
-			}
+			"methodOfDisposals": [
+				{
+					"disposalMethod": "Export: Multiple Shipments",
+					"exportMRNs": [
+						{
+							"MRNNumber": "21LLLLLLLLLLLLLL29"
+						},
+						{
+							"MRNNumber": "21LLLLLLLLLLLLLL29"
+						}
+					]
+				},
+				{
+					"disposalMethod": "Other Temporary Admission"
+				}
 			],
 			"security": {
 				"dateClaimReceived": "20210601",
 				"reasonForSecurity": "MDP",
-				"declarationID": "KL0701190921141611",
+				"declarationID": "01AAAAAAAAAAAAAAA1",
 				"procedureCode": "71",
 				"acceptanceDate": "20210401",
 				"declarantReferenceNumber": "XFGLKJDSE5GDPOIJEW985T",
@@ -137,17 +137,17 @@
 							{
 								"taxType": "A00",
 								"amount": "100",
-								"claimAmount":"-0"
+								"claimAmount": "-0"
 							},
 							{
 								"taxType": "A20",
 								"amount": "200",
-								"claimAmount":"100"
+								"claimAmount": "100"
 							},
 							{
 								"taxType": "B00",
 								"amount": "200.09",
-								"claimAmount":"100"
+								"claimAmount": "100"
 							}
 						]
 					},
@@ -174,16 +174,16 @@
 					}
 				]
 			},
-				"claimantAddress": {
-				            "contactPerson": "PART 575456994000 LTD",
-							"addressLine1": "Smith Transportation Ltd",
-							"addressLine2": "Smithfield",
-							"addressLine3": "London",
-							"countryCode": "AD",
-							"postalCode": "E17 2DF",
-							"telephoneNumber": "012701123476",
-							"emailAddress": "klm@gmail.com"
-						}
+			"claimantAddress": {
+				"contactPerson": "PART 575456994000 LTD",
+				"addressLine1": "Smith Transportation Ltd",
+				"addressLine2": "Smithfield",
+				"addressLine3": "London",
+				"countryCode": "AD",
+				"postalCode": "E17 2DF",
+				"telephoneNumber": "012701123476",
+				"emailAddress": "klm@gmail.com"
+			}
 		}
 	}
 }
