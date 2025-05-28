@@ -34,9 +34,9 @@ final case class MockHttpResponse(
 
 object MockHttpResponse {
 
-  def getSubmitClaimHttpResponse(eori: EORI): Option[MockHttpResponse] =
+  def getSubmitClaimHttpResponse(eori: EORI, mrnOpt: Option[MRN]): Option[MockHttpResponse] =
     httpResponses
-      .find(_.eoriPredicate(eori))
+      .find(c => c.eoriPredicate(eori) && mrnOpt.forall(c.mrnPredicate(_)))
       .orElse(httpResponses.headOption)
 
   def getDeclarationHttpResponse(mrn: MRN): Option[MockHttpResponse] =
@@ -1536,11 +1536,11 @@ object MockHttpResponse {
         DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
       ),
       MockHttpResponse(
-        _ === MRN("10ABCDEFGHIJKLMNO1"),
+        _ === MRN("10ABCDEFGHIJKLMNO2"),
         _ === EORI("GB000000000000001"),
         SubmitClaimResponse(Left(Left(WafErrorResponse.FORBIDDEN))),
         DeclarationResponse(
-          Right(Acc14ResponseType.OK_FULL_RESPONSE("01AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001"))
+          Right(Acc14ResponseType.OK_FULL_RESPONSE("10ABCDEFGHIJKLMNO2", "GB000000000000001", "GB000000000000001"))
         )
       ),
       MockHttpResponse(

@@ -18,10 +18,10 @@
 			"basisOfClaim": "Evidence That Goods Have Not Entered The EU",
 			"claimant": "Importer",
 			"payeeIndicator": "Importer",
-			"newEORI": "AA0",
+			"newEORI": "GB000000000000001",
 			"newDAN": "String",
 			"authorityTypeProvided": "SpecAuth",
-			"claimantEORI": "AA0",
+			"claimantEORI": "GB000000000000001",
 			"claimantEmailAddress": "abc@def.com",
 			"claimantName": "PART 123994000 LTD",
 			"goodsDetails": {
@@ -48,7 +48,7 @@
 			},
 			"EORIDetails": {
 				"agentEORIDetails": {
-					"EORINumber": "AA0",
+					"EORINumber": "GB000000000000001",
 					"CDSFullName": "ABCDEFG",
 					"legalEntityType": "String",
 					"EORIStartDate": "00000000",
@@ -86,7 +86,7 @@
 					]
 				},
 				"importerEORIDetails": {
-					"EORINumber": "AA0",
+					"EORINumber": "GB000000000000001",
 					"CDSFullName": "hijklmop",
 					"legalEntityType": "String",
 					"EORIStartDate": "00000000",
@@ -126,13 +126,13 @@
 			},
 			"MRNDetails": [
 				{
-					"MRNNumber": "String",
+					"MRNNumber": "01AAAAAAAAAAAAAAA1",
 					"acceptanceDate": "00000000",
 					"declarantReferenceNumber": "String",
 					"mainDeclarationReference": true,
 					"procedureCode": "St",
 					"declarantDetails": {
-						"EORI": "AA0",
+						"EORI": "GB000000000000001",
 						"legalName": "String",
 						"establishmentAddress": {
 							"contactPerson": "String",
@@ -164,7 +164,7 @@
 						{
 							"accountType": "String",
 							"accountNumber": "String",
-							"EORI": "AA0",
+							"EORI": "GB000000000000001",
 							"legalName": "String",
 							"contactDetails": {
 								"contactPerson": "String",
@@ -182,7 +182,7 @@
 						}
 					],
 					"consigneeDetails": {
-						"EORI": "AA0",
+						"EORI": "GB000000000000001",
 						"legalName": "String",
 						"establishmentAddress": {
 							"contactPerson": "String",
@@ -242,7 +242,7 @@
 				"mainDeclarationReference": true,
 				"procedureCode": "St",
 				"declarantDetails": {
-					"EORI": "AA0",
+					"EORI": "GB000000000000001",
 					"legalName": "String",
 					"establishmentAddress": {
 						"contactPerson": "String",
@@ -274,7 +274,7 @@
 					{
 						"accountType": "String",
 						"accountNumber": "String",
-						"EORI": "AA0",
+						"EORI": "GB000000000000001",
 						"legalName": "String",
 						"contactDetails": {
 							"contactPerson": "String",
@@ -292,7 +292,7 @@
 					}
 				],
 				"consigneeDetails": {
-					"EORI": "AA0",
+					"EORI": "GB000000000000001",
 					"legalName": "String",
 					"establishmentAddress": {
 						"contactPerson": "String",
@@ -351,7 +351,7 @@
 					"declarantReferenceNumber": "String",
 					"mainDeclarationReference": true,
 					"declarantDetails": {
-						"EORI": "AA0",
+						"EORI": "GB000000000000001",
 						"legalName": "String",
 						"establishmentAddress": {
 							"contactPerson": "String",
@@ -383,7 +383,7 @@
 						{
 							"accountType": "String",
 							"accountNumber": "String",
-							"EORI": "AA0",
+							"EORI": "GB000000000000001",
 							"legalName": "String",
 							"contactDetails": {
 								"contactPerson": "String",
@@ -401,7 +401,7 @@
 						}
 					],
 					"consigneeDetails": {
-						"EORI": "AA0",
+						"EORI": "GB000000000000001",
 						"legalName": "String",
 						"establishmentAddress": {
 							"contactPerson": "String",
@@ -460,7 +460,7 @@
 				"declarantReferenceNumber": "String",
 				"mainDeclarationReference": true,
 				"declarantDetails": {
-					"EORI": "AA0",
+					"EORI": "GB000000000000001",
 					"legalName": "String",
 					"establishmentAddress": {
 						"contactPerson": "String",
@@ -492,7 +492,7 @@
 					{
 						"accountType": "String",
 						"accountNumber": "String",
-						"EORI": "AA0",
+						"EORI": "GB000000000000001",
 						"legalName": "String",
 						"contactDetails": {
 							"contactPerson": "String",
@@ -510,7 +510,7 @@
 					}
 				],
 				"consigneeDetails": {
-					"EORI": "AA0",
+					"EORI": "GB000000000000001",
 					"legalName": "String",
 					"establishmentAddress": {
 						"contactPerson": "String",
