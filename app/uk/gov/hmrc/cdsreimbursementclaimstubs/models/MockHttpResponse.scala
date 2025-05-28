@@ -1536,6 +1536,12 @@ object MockHttpResponse {
         DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
       ),
       MockHttpResponse(
+        _ === MRN("10ABCDEFGHIJKLMNO1"),
+        _ === EORI("GB000000000000001"),
+        SubmitClaimResponse(Left(Left(WafErrorResponse.FORBIDDEN))),
+        DeclarationResponse(Right(Acc14ResponseType.OK_MINIMUM_RESPONSE))
+      ),
+      MockHttpResponse(
         _ === MRN("30ABCDEFGHIJKLMNO1"),
         _ === EORI("FB12345678901234U"),
         SubmitClaimResponse(Left(Right(Tpi05ErrorResponseType.HTTP_METHOD_NOT_ALLOWED))),
