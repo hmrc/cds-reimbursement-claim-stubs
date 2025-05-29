@@ -47,33 +47,45 @@ class ClaimController @Inject() (cc: ControllerComponents)
     val mrnOpt: Option[MRN] =
       (payload \ "postNewClaimsRequest" \ "requestDetail" \ "MRNDetails" \ 0 \ "MRNNumber").asOpt[String].map(MRN.apply)
 
+    val descOfGoodsOpt: Option[String] =
+      (payload \ "postNewClaimsRequest" \ "requestDetail" \ "goodsDetails" \ "descOfGoods").asOpt[String]
+
     validateRequest(actualSchema, nextSchema) {
       (eoriOpt, mrnOpt) match {
         case (Some(eori), mrnOpt) =>
-          MockHttpResponse.getSubmitClaimHttpResponse(eori, mrnOpt) match {
-            case Some(httpResponse) =>
-              logger.info(httpResponse.toString)
-              httpResponse.submitClaimResponse.response match {
-                case Left(value) =>
-                  value match {
-                    case Left(wAFErrorResponse) => Forbidden(Json.toJson(wAFErrorResponse.value))
-                    case Right(tpi05ErrorResponse) =>
-                      val error = Tpi05ErrorResponse.returnTpi05ErrorHttpResponse(tpi05ErrorResponse)
-                      (error.httpStatus, error.value) match {
-                        case (BAD_REQUEST, responseBody) => BadRequest(Json.toJson(responseBody))
-                        case (UNAUTHORIZED, responseBody) => Unauthorized(Json.toJson(responseBody))
-                        case (METHOD_NOT_ALLOWED, responseBody) => MethodNotAllowed(Json.toJson(responseBody))
-                        case (INTERNAL_SERVER_ERROR, responseBody) => InternalServerError(Json.toJson(responseBody))
-                        case _ => InternalServerError
-                      }
-                  }
-                case Right(tpi05Response) =>
-                  Ok(Json.toJson(Tpi05Response.returnTpi05HttpResponse(tpi05Response).value))
-              }
-            case None =>
-              logger.warn(s"could not find profile with claimant eori: $eori")
-              BadRequest
-          }
+          if (descOfGoodsOpt.contains("Additional details are attached as a separate text file"))
+            Ok(
+              Json.toJson(
+                Tpi05Response
+                  .returnTpi05HttpResponse(Tpi05Response.Tpi05ResponseType.OK_RESPONSE)
+                  .value
+              )
+            )
+          else
+            MockHttpResponse.getSubmitClaimHttpResponse(eori, mrnOpt) match {
+              case Some(httpResponse) =>
+                logger.info(httpResponse.toString)
+                httpResponse.submitClaimResponse.response match {
+                  case Left(value) =>
+                    value match {
+                      case Left(wAFErrorResponse) => Forbidden(Json.toJson(wAFErrorResponse.value))
+                      case Right(tpi05ErrorResponse) =>
+                        val error = Tpi05ErrorResponse.returnTpi05ErrorHttpResponse(tpi05ErrorResponse)
+                        (error.httpStatus, error.value) match {
+                          case (BAD_REQUEST, responseBody) => BadRequest(Json.toJson(responseBody))
+                          case (UNAUTHORIZED, responseBody) => Unauthorized(Json.toJson(responseBody))
+                          case (METHOD_NOT_ALLOWED, responseBody) => MethodNotAllowed(Json.toJson(responseBody))
+                          case (INTERNAL_SERVER_ERROR, responseBody) => InternalServerError(Json.toJson(responseBody))
+                          case _ => InternalServerError
+                        }
+                    }
+                  case Right(tpi05Response) =>
+                    Ok(Json.toJson(Tpi05Response.returnTpi05HttpResponse(tpi05Response).value))
+                }
+              case None =>
+                logger.warn(s"could not find profile with claimant eori: $eori")
+                BadRequest
+            }
 
         case _ =>
           logger.warn("wrong claim, could not find claimant's EORI")
