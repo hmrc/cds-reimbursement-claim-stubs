@@ -1614,13 +1614,50 @@ object MockHttpResponse {
         DeclarationResponse(Left(Right(Acc14ErrorResponseType.TIME_OUT)))
       ),
       MockHttpResponse(
-        _ === MRN("70AAAAAAAAAAAAAAA1"),
-        _ === EORI("GB000000000000001"),
+        _ === MRN("11MRN0000000000001"),
+        _ === EORI("CLAIMANTEORI"),
         SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
         DeclarationResponse(
           Right(
             Acc14ResponseType
-              .OK_FULL_RESPONSE_DUPLICATED_ADDRESS_LINES("70AAAAAAAAAAAAAAA1", "GB000000000000001", "GB000000000000001")
+              .OK_MARKED(
+                "11MRN0000000000001",
+                "IMPORTEREORI",
+                "DECLARANTEORI",
+                includeImporterDetails = true
+              )
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("21MRN0000000000001"),
+        _ === EORI("ONEEORI"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_MARKED(
+                "21MRN0000000000001",
+                "ONEEORI",
+                "ONEEORI",
+                includeImporterDetails = true
+              )
+          )
+        )
+      ),
+      MockHttpResponse(
+        _ === MRN("31MRN0000000000001"),
+        _ === EORI("ONEEORI"),
+        SubmitClaimResponse(Right(Tpi05ResponseType.OK_RESPONSE)),
+        DeclarationResponse(
+          Right(
+            Acc14ResponseType
+              .OK_MARKED(
+                "31MRN0000000000001",
+                "ONEEORI",
+                "ONEEORI",
+                includeImporterDetails = false
+              )
           )
         )
       )
