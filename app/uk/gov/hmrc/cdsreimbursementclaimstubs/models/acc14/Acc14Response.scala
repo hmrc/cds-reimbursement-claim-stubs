@@ -202,6 +202,13 @@ object Acc14Response {
       importerEORI: String,
       declarantEORI: String
     ) extends Acc14ResponseType
+
+    case class OK_MARKED(
+      declarationId: String,
+      importerEORI: String,
+      declarantEORI: String,
+      includeImporterDetails: Boolean
+    ) extends Acc14ResponseType
   }
 
   def returnAcc14Response(acc14ResponseType: Acc14ResponseType): Acc14Response =
@@ -372,6 +379,9 @@ object Acc14Response {
             declarantEORI
           ) =>
         getFullAcc14ResponseWithDuplicatedAddressLines(declarationId, importerEORI, declarantEORI)
+
+      case Acc14ResponseType.OK_MARKED(declarationId, importerEORI, declarantEORI, includeImporterDetails) =>
+        getMarkedAcc14Response(declarationId, importerEORI, declarantEORI, includeImporterDetails)
     }
 
   def getMinimumAcc14Response = Acc14Response(
@@ -3552,5 +3562,103 @@ object Acc14Response {
          |""".stripMargin
       )
     )
+
+  def getMarkedAcc14Response(
+    declarationId: String,
+    importerEORI: String,
+    declarantEORI: String,
+    includeImporterDetails: Boolean
+  ) = Acc14Response(
+    Json.parse(
+      s"""
+         |{
+         |    "overpaymentDeclarationDisplayResponse": {
+         |        "responseCommon": {
+         |            "status": "OK",
+         |            "processingDate": "2025-05-21T11:05:29Z"
+         |        },
+         |        "responseDetail": {
+         |            "declarationId": "$declarationId",
+         |            "acceptanceDate": "2024-02-16",
+         |            "declarantReferenceNumber": "acc14.responseDetail.declarantReferenceNumber",
+         |            "procedureCode": "acc14.responseDetail.procedureCode",
+         |            "declarantDetails": {
+         |                "declarantEORI": "$declarantEORI",
+         |                "legalName": "acc14.responseDetail.declarantDetails.legalName",
+         |                "establishmentAddress": {
+         |                    "addressLine1": "acc14.responseDetail.declarantDetails.establishmentAddress.addressLine1",
+         |                    "addressLine3": "acc14.responseDetail.declarantDetails.establishmentAddress.addressLine3",
+         |                    "postalCode": "acc14.responseDetail.declarantDetails.establishmentAddress.postalCode",
+         |                    "countryCode": "acc14.responseDetail.declarantDetails.establishmentAddress.countryCode"
+         |                },
+         |                "contactDetails": {
+         |                    "addressLine1": "acc14.responseDetail.declarantDetails.contactDetails.addressLine1",
+         |                    "addressLine3": "acc14.responseDetail.declarantDetails.contactDetails.addressLine3",
+         |                    "postalCode": "acc14.responseDetail.declarantDetails.contactDetails.postalCode",
+         |                    "countryCode": "acc14.responseDetail.declarantDetails.contactDetails.countryCode",
+         |                    "emailAddress": "acc14.responseDetail.declarantDetails.contactDetails.emailAddress"
+         |                }
+         |            },${if (includeImporterDetails) s"""
+         |            "consigneeDetails": {
+         |                "consigneeEORI": "$importerEORI",
+         |                "legalName": "acc14.responseDetail.consigneeDetails.legalName",
+         |                "establishmentAddress": {
+         |                    "addressLine1": "acc14.responseDetail.consigneeDetails.establishmentAddress.addressLine1",
+         |                    "addressLine2": "acc14.responseDetail.consigneeDetails.establishmentAddress.addressLine2",
+         |                    "addressLine3": "acc14.responseDetail.consigneeDetails.establishmentAddress.addressLine3",
+         |                    "postalCode": "acc14.responseDetail.consigneeDetails.establishmentAddress.postalCode",
+         |                    "countryCode": "acc14.responseDetail.consigneeDetails.establishmentAddress.countryCode"
+         |                },
+         |                "contactDetails": {
+         |                    "addressLine1": "acc14.responseDetail.consigneeDetails.contactDetails.addressLine1",
+         |                    "postalCode": "acc14.responseDetail.consigneeDetails.contactDetails.postalCode",
+         |                    "countryCode": "acc14.responseDetail.consigneeDetails.contactDetails.countryCode",
+         |                    "emailAddress": "acc14.responseDetail.consigneeDetails.contactDetails.emailAddress"
+         |                }
+         |            },""".stripMargin else ""}
+         |            "accountDetails": [
+         |                {
+         |                    "accountType": "acc14.responseDetail.accountDetails.accountType",
+         |                    "accountNumber": "acc14.responseDetail.accountDetails.accountNumber",
+         |                    "eori": "acc14.responseDetail.accountDetails.eori",
+         |                    "legalName": "acc14.responseDetail.accountDetails.legalName",
+         |                    "contactDetails": {
+         |                        "contactName": "acc14.responseDetail.accountDetails.contactDetails.contactName",
+         |                        "addressLine1": "acc14.responseDetail.accountDetails.contactDetails.addressLine1",
+         |                        "addressLine2": "acc14.responseDetail.accountDetails.contactDetails.addressLine2",
+         |                        "addressLine3": "acc14.responseDetail.accountDetails.contactDetails.addressLine3",
+         |                        "addressLine4": "acc14.responseDetail.accountDetails.contactDetails.addressLine4",
+         |                        "postalCode": "acc14.responseDetail.accountDetails.contactDetails.postalCode",
+         |                        "countryCode": "acc14.responseDetail.accountDetails.contactDetails.countryCode",
+         |                        "emailAddress": "acc14.responseDetail.accountDetails.contactDetails.emailAddress"
+         |                    }
+         |                }
+         |            ],
+         |            "bankDetails": {${if (includeImporterDetails) s"""
+         |                "consigneeBankDetails": {
+         |                    "accountHolderName": "acc14.responseDetail.bankDetails.consigneeBankDetails.accountHolderName",
+         |                    "sortCode": "acc14.responseDetail.bankDetails.consigneeBankDetails.sortCode",
+         |                    "accountNumber": "acc14.responseDetail.bankDetails.consigneeBankDetails.accountNumber"
+         |                },""" else ""}
+         |                "declarantBankDetails": {
+         |                    "accountHolderName": "acc14.responseDetail.bankDetails.declarantBankDetails.accountHolderName",
+         |                    "sortCode": "acc14.responseDetail.bankDetails.declarantBankDetails.sortCode",
+         |                    "accountNumber": "acc14.responseDetail.bankDetails.declarantBankDetails.accountNumber"
+         |                }
+         |            },
+         |            "ndrcDetails": [
+         |                {
+         |                    "taxType": "A00",
+         |                    "amount": "1.23",
+         |                    "paymentMethod": "001",
+         |                    "paymentReference": "paymentReference",
+         |                    "cmaEligible": "acc14.responseDetail.ndrcDetails.A00.cmaEligible"
+         |                }
+         |            ]
+         |        }
+         |    }
+         |}""".stripMargin
+    )
+  )
 
 }

@@ -77,10 +77,10 @@ class DeclarationController @Inject() (cc: ControllerComponents)
                           Acc14ErrorResponse.returnAcc14ErrorResponse(acc14ErrorResponse) match {
                             case error if error.httpStatus === BAD_REQUEST =>
                               BadRequest(error.value)
-                            case error if error.httpStatus === INTERNAL_SERVER_ERROR =>
-                              InternalServerError(error.value)
                             case error if error.httpStatus === METHOD_NOT_ALLOWED =>
                               MethodNotAllowed(error.value)
+                            case error =>
+                              InternalServerError(error.value)
                           }
                       }
                     case Right(acc14Response) =>

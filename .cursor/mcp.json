@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "cds-reimbursement-claim-stubs-metals": {
+      "url": "http://localhost:50978/sse"
+    }
+  }
+}
