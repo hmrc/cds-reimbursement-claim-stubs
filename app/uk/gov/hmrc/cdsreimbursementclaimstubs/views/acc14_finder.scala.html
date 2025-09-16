@@ -63,7 +63,7 @@
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Acc14 Finder</h1>
 
   <div id="input-bar">
-      @formWithCSRF(postAction, 'novalidate -> "novalidate") {
+      @formWithCSRF(postAction) {
         @errorSummary(form.errors)
           @inputText(
               form = form,
@@ -76,7 +76,7 @@
           )
         @submitButton("Submit")
       }
-      @formWithCSRF(clearAction, 'novalidate -> "novalidate") {
+      @formWithCSRF(clearAction) {
         @submitButton("Clear")
       }
 

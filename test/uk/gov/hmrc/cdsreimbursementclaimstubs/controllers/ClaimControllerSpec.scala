@@ -82,7 +82,7 @@ class ClaimControllerSpec extends AnyWordSpec with Matchers with SchemaValidatio
           .validate(responseSchema, contentAsJson(response))
           .fold(
             e => fail(e.toString()),
-            s => ()
+            _ => ()
           )
       }
     }
