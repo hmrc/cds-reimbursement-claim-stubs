@@ -7,7 +7,7 @@ ThisBuild / scalaVersion := "3.3.6"
 ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always
 
 lazy val microservice = Project(appName, file("."))
-  .enablePlugins(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin)
+  .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(
     majorVersion := 0,
@@ -26,4 +26,3 @@ lazy val microservice = Project(appName, file("."))
   .settings(uglifyOps := UglifyOps.singleFile)
   .settings(Compile / resourceDirectory := baseDirectory.value / "/conf")
   .settings(PlayKeys.playDefaultPort := 7502)
-  .settings(resolvers ++= Seq(Resolver.jcenterRepo))
