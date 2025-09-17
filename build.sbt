@@ -3,19 +3,14 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 
 val appName = "cds-reimbursement-claim-stubs"
 
-ThisBuild / scalaVersion := "2.13.13"
-ThisBuild / scalafixDependencies += "com.github.liancheng"       %% "organize-imports" % "0.6.0"
-ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml"        % VersionScheme.Always
-
-addCommandAlias("fmt", "all scalafmtSbt scalafmt test:scalafmt")
-addCommandAlias("check", "all scalafmtSbtCheck scalafmtCheck test:scalafmtCheck")
+ThisBuild / scalaVersion := "3.3.6"
+ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always
 
 lazy val microservice = Project(appName, file("."))
-  .enablePlugins(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin)
+  .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(
     majorVersion := 0,
-    addCompilerPlugin(scalafixSemanticdb),
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test
   )
   .settings(routesImport := Seq("_root_.controllers.Assets.Asset"))
@@ -28,6 +23,6 @@ lazy val microservice = Project(appName, file("."))
     Test / scalacOptions --= Seq("-Ywarn-value-discard")
   )
   .settings(Assets / pipelineStages := Seq(uglify))
+  .settings(uglifyOps := UglifyOps.singleFile)
   .settings(Compile / resourceDirectory := baseDirectory.value / "/conf")
   .settings(PlayKeys.playDefaultPort := 7502)
-  .settings(resolvers ++= Seq(Resolver.jcenterRepo))

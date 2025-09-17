@@ -16,11 +16,12 @@ POST       /accounts/overpaymentdeclarationdisplay/v1                 uk.gov.hmr
 # DEC64
 POST       /filetransfer/init/v1                                      uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.CcsFileSubmission.submitFile
 
-POST       /personal/v3/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.personalReputation
-POST       /business/v2/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.businessReputation
+# Bank reputation
+POST       /personal/v3/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.personalReputation()
+POST       /business/v2/assess                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.businessReputation()
 
-POST       /verify/personal                                           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.verifyPersonal
-POST       /verify/business                                           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.verifyBusiness
+POST       /verify/personal                                           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.verifyPersonal()
+POST       /verify/business                                           uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.BankAccountReputationController.verifyBusiness()
 
 # TPI04
 POST       /tpi/getexistingclaim/v1                                   uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.DuplicateDeclarationController.getDuplicateDeclarations

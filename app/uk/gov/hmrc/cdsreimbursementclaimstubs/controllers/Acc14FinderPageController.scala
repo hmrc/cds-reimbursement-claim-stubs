@@ -29,6 +29,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import scala.concurrent.{ExecutionContext, Future}
 import uk.gov.hmrc.http.HttpReads.Implicits._
+import java.net.URL
 
 @Singleton
 class Acc14FinderPageController @Inject() (
@@ -76,7 +77,7 @@ class Acc14FinderPageController @Inject() (
           )
           http
             .POST[DeclarationRequest, HttpResponse](
-              s"http://localhost:7502${routes.DeclarationController.getDeclaration.url}",
+              new URL(s"http://localhost:7502${routes.DeclarationController.getDeclaration.url}"),
               declarationRequest
             )
             .map { item =>

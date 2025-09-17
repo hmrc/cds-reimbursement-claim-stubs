@@ -83,7 +83,7 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       "return a json error response for personal request parse failure" in {
         contentAsString(
           result
-        ) shouldBe "JsResultException(errors:List((,List(JsonValidationError(List(error.expected.jsobject),List())))))"
+        ) shouldBe "JsResultException(errors:List((,List(JsonValidationError(List(error.expected.jsobject),ArraySeq())))))"
       }
     }
 
@@ -99,7 +99,7 @@ class BankAccountReputationControllerSpec extends AnyWordSpec with Matchers with
       }
       "return a json error response for business request parse failure" in {
         contentAsString(result) should ===(
-          "JsResultException(errors:List((,List(JsonValidationError(List(error.expected.jsobject),List())))))"
+          "JsResultException(errors:List((,List(JsonValidationError(List(error.expected.jsobject),ArraySeq())))))"
         )
       }
     }
