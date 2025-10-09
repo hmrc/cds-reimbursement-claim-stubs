@@ -87,9 +87,9 @@ trait SUB09Generation extends SchemaValidation {
            |          "pbeAddressLine3": "city 1"
            |        },
            |        "XI_VATNumber": "GB123456789",
-           |        "EU_VATNumber": {
-           |          "countryCode": "GB",
-           |          "VATId": "123456891012"
-           |        }
+           |        "EU_VATNumber": [{
+           |          "countryCode": "FR",
+           |          "VATid": "123456891012"
+           |        }]
            |      }""".stripMargin
 }
