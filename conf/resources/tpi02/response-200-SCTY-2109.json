@@ -10,7 +10,7 @@
             "SCTYCase": {
                 "CDFPayCaseNumber": "SCTY-2109",
                 "declarationID": "21LLLLLLLLLL12345",
-                "reasonForSecurity": "ACS",
+                "reasonForSecurity": "MDL",
                 "procedureCode": "10",
                 "caseStatus": "Partial Refund",
                 "goods": [

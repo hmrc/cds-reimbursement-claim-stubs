@@ -59,7 +59,7 @@ class DuplicateDeclarationController @Inject() (cc: ControllerComponents) extend
                 s"We could not find either the declaration id or the reason for security, but this will only happen if the schema changes"
               )
               BadRequest
-            case Some(TPI04Request(_, "ACS")) =>
+            case Some(TPI04Request(_, "MDL")) =>
               Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-1234"), Some("Open"))))
             case Some(TPI04Request("08AAAAAAAAAAAAAAA2", "RED")) =>
               Ok(Json.toJson(TPI04Response(caseFound = true, Some("SEC-1234"), Some("Open"))))
