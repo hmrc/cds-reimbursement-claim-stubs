@@ -20,7 +20,6 @@ object ReasonForSecurity {
 
   val values =
     Seq(
-      "ACS",
       "MDC",
       "ENU",
       "IPR",
@@ -36,10 +35,7 @@ object ReasonForSecurity {
       "PDD",
       "CRQ",
       "CEP",
-      "CSD",
-      "ACS", // placeholder for future RfS code additions
-      "ACS", // placeholder for future RfS code additions
-      "ACS" // placeholder for future RfS code additions
+      "CSD"
     )
 
   def ofIndex(index: Long): String =

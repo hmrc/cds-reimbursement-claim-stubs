@@ -202,7 +202,6 @@ class DeclarationControllerSpec extends AnyWordSpec with Matchers with TypeCheck
 
   val ndrcFailingMRNs = Seq(
     ("01CEPAAAAAAAAAAAA1", 400),
-    ("01ACSAAAAAAAAAAAA1", 400),
     ("01CRQAAAAAAAAAAAA1", 400),
     ("01CSDAAAAAAAAAAAA1", 400),
     ("01ENUAAAAAAAAAAAA1", 400),
@@ -228,7 +227,6 @@ class DeclarationControllerSpec extends AnyWordSpec with Matchers with TypeCheck
   val securitiesSuccessfulMRNs = Seq(
     "01AAAAAAAAAAAAAAA1",
     "01AAAAAAAAAAAAAAA2",
-    "01ACSAAAAAAAAAAAA1",
     "01CEPAAAAAAAAAAAA1",
     "01CRQAAAAAAAAAAAA1",
     "01CSDAAAAAAAAAAAA1",

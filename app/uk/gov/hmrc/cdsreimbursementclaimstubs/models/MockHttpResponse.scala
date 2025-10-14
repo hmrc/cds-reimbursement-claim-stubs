@@ -2416,14 +2416,6 @@ object MockHttpResponse {
             )
           )
         )
-      case (MRN("01ACSAAAAAAAAAAAA1"), _) =>
-        Some(
-          DeclarationResponse(
-            Right(
-              Acc14ResponseType.OK_FULL_RESPONSE_SECURITIES(mrn.value, "ACS", "GB000000000000001", "GB000000000000001")
-            )
-          )
-        )
       case (MRN("01CEPAAAAAAAAAAAA1"), _) =>
         Some(
           DeclarationResponse(
