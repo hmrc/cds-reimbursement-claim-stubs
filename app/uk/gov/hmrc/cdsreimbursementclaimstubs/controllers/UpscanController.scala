@@ -58,23 +58,16 @@ class UpscanController @Inject() (cc: ControllerComponents, wsClient: WSClient, 
         "fields": {
             "acl": "private",
             "key": "$upscanReference",
-            "x-amz-date": "${LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)}Z",
             "x-amz-algorithm": "AWS4-HMAC-SHA256",
             "x-amz-credential": "ASIAxxxxxxxxx/20180202/eu-west-2/s3/aws4_request",
             "x-amz-meta-callback-url": "${upscanInitiateRequest.callbackUrl}",
             "success_action_redirect": "${upscanInitiateRequest.successRedirect}",
-            "error_action_redirect": "${upscanInitiateRequest.errorRedirect}",
-            "x-amz-meta-upscan-initiate-response": "dummy",
-            "x-amz-meta-upscan-initiate-received": "dummy",
-            "x-amz-meta-request-id": "${UUID.randomUUID().toString()}",
-            "x-amz-signature": "xyz",
-            "x-amz-meta-session-id": "${UUID.randomUUID().toString()}",
-            "policy": "xyz",
-            "x-amz-meta-original-filename": "foo.bar"
+            "error_action_redirect": "${upscanInitiateRequest.errorRedirect}"
         }
     }
 }"""))
         }
+
     }
 
   val upload: Action[MultipartFormData[Files.TemporaryFile]] = Action(parse.multipartFormData) { request =>
@@ -93,7 +86,7 @@ class UpscanController @Inject() (cc: ControllerComponents, wsClient: WSClient, 
                   case Some(upscanInitiateRequest) =>
                     fileUploadsCache.put(upscanReference, file.ref)
                     Future {
-                      Thread.sleep(1000)
+                      Thread.sleep(2000)
                       wsClient
                         .url(upscanInitiateRequest.callbackUrl)
                         .withMethod("POST")
