@@ -39,10 +39,4 @@ GET        /customs-data-store/eori/:eori/verified-email              uk.gov.hmr
 GET        /customs-data-store/eori/verified-email                    uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.VerifiedEmailController.getVerifiedEmailV2
 GET        /customs-data-store/eori/:eori/company-information         uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.CompanyInformationController.getCompanyInformation(eori: String)
 
-# UPSCAN PERFORMANCE TESTS SUPPORT
-POST       /upscan/v2/initiate                                        uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.UpscanController.prepareUpload
-POST       /upscan/upload-proxy                                       uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.UpscanController.upload
-GET        /upscan/download/:reference                                uk.gov.hmrc.cdsreimbursementclaimstubs.controllers.UpscanController.download(reference: String)
-
-
 ->         /                                                          health.Routes
