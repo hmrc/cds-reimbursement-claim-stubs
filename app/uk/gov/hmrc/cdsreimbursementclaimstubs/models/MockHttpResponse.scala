@@ -1895,6 +1895,22 @@ object MockHttpResponse {
             )
           )
         )
+      case (MRN("01AAAAAAAAAAHELLO1"), _) =>
+        Some(
+          DeclarationResponse(
+            Right(
+              Acc14ResponseType
+                .OK_FULL_RESPONSE_SECURITIES(
+                  mrn.value,
+                  reasonForSecurity,
+                  "HELLO",
+                  "LEEDS",
+                  numberOfSecurities = 1,
+                  numberOfSecuritiesDuties = 2
+                )
+            )
+          )
+        )
       case (MRN("01AAAAAAAAAAAAA110"), _) =>
         Some(
           DeclarationResponse(
