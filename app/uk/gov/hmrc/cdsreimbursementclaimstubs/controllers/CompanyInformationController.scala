@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.cdsreimbursementclaimstubs.controllers
 
-import play.api.libs.json.Json
-import play.api.mvc._
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.*
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.companyinformation.CompanyInformationResponse
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.companyinformation.AddressInformation
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -66,4 +66,22 @@ class CompanyInformationController @Inject() (cc: ControllerComponents) extends 
 
     }
 
+
+  def thirdPartyCompaniInformation: Action[JsValue] = Action(parse.json) { request =>
+    val requestBody = request.body
+    (requestBody \ "eori").asOpt[String] match {
+      case Some(eori) =>
+        eori match {
+          case "GB999999999999990" => NotFound
+          case "NOEMAIL" => Ok(Json.toJson(noEmailResponse))
+          case "ETMP503ERROR" => ServiceUnavailable(serviceUnavailableResponse)
+          case "GB333186811543" => Ok(Json.toJson(successfullResponse.copy(consent = "0", name = "ABC Ltd")))
+          case "EORINOTIMESTAMP" | _ => Ok(Json.toJson(successfullResponse))
+        }
+      case None =>
+        BadRequest("Missing 'eori' field in JSON Body")
+    }
+  }
+  
+  
 }
