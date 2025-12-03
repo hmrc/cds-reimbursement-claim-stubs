@@ -73,4 +73,26 @@ class VerifiedEmailController @Inject() (cc: ControllerComponents) extends Backe
       Ok(Json.toJson(successfullResponse))
     }
 
+
+  def thirdPartyEmailVerified: Action[JsValue] = Action(parse.json) { request =>
+    val requestBody = request.body
+    (requestBody \ "eori").asOpt[String] match {
+      case Some(eori) =>
+        eori match {
+          case "NOEMAIL" | "EORINOTIMESTAMP" | "GB999999999999999" => NotFound
+          case "ETMP503ERROR" => ServiceUnavailable(serviceUnavailableResponse)
+          case "GB123456789012" => Ok(Json.toJson(undeliverableResponse))
+          case "GB000000000000050" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+          case "GB000000000000051" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+          case "GB000000000000052" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+          case "GB000000000000053" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+          case "GB000000000000054" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+          case "GB000000000000055" => Ok(Json.toJson(VerifiedEmailResponse("", "2007-03-20T01:02:03.000Z")))
+          case "GB333186811543" | _ => Ok(Json.toJson(successfullResponse))
+        }
+      case None =>
+        BadRequest("Missing 'eori' field in JSON Body")
+    }
+  }
+  
 }
