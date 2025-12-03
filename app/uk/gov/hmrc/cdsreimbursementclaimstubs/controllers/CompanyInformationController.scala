@@ -82,6 +82,4 @@ class CompanyInformationController @Inject() (cc: ControllerComponents) extends 
         BadRequest("Missing 'eori' field in JSON Body")
     }
   }
-  
-  
 }
