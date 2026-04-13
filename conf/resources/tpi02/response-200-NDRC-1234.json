@@ -1,0 +1,35 @@
+{
+    "getSpecificCaseResponse": {
+        "responseCommon": {
+            "status": "OK",
+            "processingDate": "2026-02-24T13:12:58Z"
+        },
+        "responseDetail": {
+            "CDFPayService": "NDRC",
+            "CDFPayCaseFound": true,
+            "NDRCCase": {
+                "CDFPayCaseNumber": "NDRC-1234",
+                "declarationID": "MRN23014",
+                "claimType": "C285",
+                "caseType": "Individual",
+                "caseStatus": "Pending-Queried",
+                "descOfGoods": "description",
+                "declarantEORI": "GB744638982002",
+                "importerEORI": "GB744638982001",
+                "claimantEORI": "GB744638982002",
+                "totalCustomsClaimAmount": "30000.00",
+                "totalClaimAmount": "30000.00",
+                "basisOfClaim": "Miscellaneous",
+                "claimStartDate": "20260128",
+                "claimantName": "Joe Blogs",
+                "claimantEmailAddress": "joe.blogs@email.com",
+                "MRNDetails": [
+                    {
+                        "MRNNumber": "MRN23014",
+                        "mainDeclarationReference": true
+                    }
+                ]
+            }
+        }
+    }
+}
