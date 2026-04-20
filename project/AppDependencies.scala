@@ -18,6 +18,6 @@ object AppDependencies {
     "org.scalatest"          %% "scalatest"              % "3.2.19"         % Test,
     "com.vladsch.flexmark"    % "flexmark-all"           % "0.64.8"         % Test,
     "org.scalatestplus.play" %% "scalatestplus-play"     % "7.0.2"          % Test,
-    "org.scalacheck"         %% "scalacheck"             % "1.17.0"
+    "org.scalacheck"         %% "scalacheck"             % "1.17.0"         % Test
   )
 }
