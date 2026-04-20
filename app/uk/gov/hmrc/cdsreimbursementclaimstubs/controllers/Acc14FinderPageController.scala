@@ -24,16 +24,19 @@ import uk.gov.hmrc.cdsreimbursementclaimstubs.models.MockHttpResponse
 import uk.gov.hmrc.cdsreimbursementclaimstubs.models.declaration.request.{DeclarationRequest, OverpaymentDeclarationDisplayRequest, RequestCommon, RequestDetail}
 import uk.gov.hmrc.cdsreimbursementclaimstubs.utils.FormHelper.movementReferenceNumberForm
 import uk.gov.hmrc.cdsreimbursementclaimstubs.views.html.acc14_finder
-import uk.gov.hmrc.http.{HttpClient, HttpResponse}
+import uk.gov.hmrc.http.HttpResponse
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import scala.concurrent.{ExecutionContext, Future}
-import uk.gov.hmrc.http.HttpReads.Implicits._
-import java.net.URL
+import uk.gov.hmrc.http.HttpReads.Implicits.*
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.StringContextOps
+
+import play.api.libs.ws.JsonBodyWritables.writeableOf_JsValue
 
 @Singleton
 class Acc14FinderPageController @Inject() (
-  http: HttpClient,
+  http: HttpClientV2,
   val controllerComponents: MessagesControllerComponents,
   acc14Finder: acc14_finder
 )(implicit ec: ExecutionContext)
@@ -75,11 +78,11 @@ class Acc14FinderPageController @Inject() (
               RequestDetail(mrn.value, None)
             )
           )
+
           http
-            .POST[DeclarationRequest, HttpResponse](
-              new URL(s"http://localhost:7502${routes.DeclarationController.getDeclaration.url}"),
-              declarationRequest
-            )
+            .post(url"http://localhost:7502${routes.DeclarationController.getDeclaration.url}")
+            .withBody(Json.toJson(declarationRequest))
+            .execute[HttpResponse]
             .map { item =>
               val responseType: Option[String] = MockHttpResponse
                 .findMRN(mrn.value)

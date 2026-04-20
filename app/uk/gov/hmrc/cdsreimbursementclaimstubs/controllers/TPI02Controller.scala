@@ -55,6 +55,8 @@ class TPI02Controller @Inject() (cc: ControllerComponents)
             parseResponse("tpi02/response-200-SCTY-2109.json", Ok, Some("tpi02/tpi02-response-schema.json"))
           case "SCTY-2110" =>
             parseResponse("tpi02/response-200-SCTY-2110.json", Ok, Some("tpi02/tpi02-response-schema.json"))
+          case "NDRC-1234" =>
+            parseResponse("tpi02/response-200-NDRC-1234.json", Ok, Some("tpi02/tpi02-response-schema.json"))
           case e if e.startsWith("NDRC-200") =>
             tpi01AllSubstatusClaims().CDFPayCase.NDRCCases.find(_.CDFPayCaseNumber == e) match {
               case Some(value) =>
