@@ -61,6 +61,12 @@ sealed trait CaseSubStatusSCTY {
 
   }
 
+  case object ReworkPaymentDetailsSCTY extends CaseSubStatusSCTY {
+    override def toString: String = "Rework-Payment Details"
+
+    override val caseStatus: CaseStatus = InProgress
+  }
+
   case object PendingQuery extends CaseSubStatusSCTY {
     override def toString: String = "Pending-Query"
 

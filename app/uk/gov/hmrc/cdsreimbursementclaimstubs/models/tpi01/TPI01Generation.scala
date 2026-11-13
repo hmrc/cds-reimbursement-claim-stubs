@@ -338,7 +338,7 @@ trait TPI01Generation extends SchemaValidation {
     }
 
   def caseSubStatusSCTY(caseSubStatusSCTY: Int): CaseSubStatusSCTY =
-    modulo1(caseSubStatusSCTY, 20) match {
+    modulo1(caseSubStatusSCTY, 21) match {
       case 1 => OpenSCTY
       case 2 => PendingApprovalSCTY
       case 3 => PendingPayment
@@ -359,6 +359,7 @@ trait TPI01Generation extends SchemaValidation {
       case 18 => ResolvedManualBTARefund
       case 19 => OpenExtensionGranted
       case 20 => ResolvedWithdrawnSCTY
+      case 21 => ReworkPaymentDetailsSCTY
     }
 
   private def createNDRCCase(
